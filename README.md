@@ -15,6 +15,12 @@ with the duty cycle. Turning the model into a simulation exposed it:
 [the forerunner](docs/plans/swarm-3d-forerunner.md) records how, and a gate it
 produced now stops it.
 
+<p align="center">
+  <a href="docs/media/drone-swarm.mp4"><img src="docs/media/drone-swarm.gif" width="600" alt="A 36-second clip, from idea to simulation. A person writes the brief in plain English; AI agents write the model layer by layer, a deterministic checker gating each layer; a deterministic generator builds the 3D simulation; building it exposes an estimate of 0.92 of the area watched where the brief allows at most 0.40, at one sector per drone. A gate now stops it."></a>
+  <br>
+  <sub>From idea to simulation, in 36 seconds. Click for the full-quality video. The drone footage is a test flight shot for the clip, not the generated simulation.</sub>
+</p>
+
 The layers follow a well-established layered MBSE method, chosen because its
 layer transitions are mechanical enough to be a script: what one layer owes the
 next is carried by code, and the agents enrich it rather than invent it.
