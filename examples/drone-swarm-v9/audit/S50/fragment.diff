@@ -1,0 +1,1037 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v9/fragments/7_EPBS.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v9/fragments/7_EPBS.sysml (after)
+@@ -1,570 +1,498 @@
+     package EPBS {
+-        doc /* End-item breakdown of the SurveillanceDroneSwarm: every thing procured, built or delivered is one configuration item (CI). Each CI realises a physical part of the layer above, carries its contract as a requirement def with a subject, and is verified by one verification def. */
++      doc /* End-product breakdown: one configuration item per thing procured, built or delivered for the SurveillanceDroneSwarm. Each item realises a physical part of the layer above, carries its contract as a requirement definition and is verified by a verification definition. Counts are multiplicities on the usages, never on the definitions. */
+ 
+-        #CI_HWCI part def SwarmSystemAssembly {
+-            doc /* The delivered main assembly of the swarm: the fleet of drones, the ground station and their links, integrated and handed over as one system. */
+-            trace ci to SurveillanceDroneSwarm::PA::mainAssembly;
+-            attribute allItemsIntegrated : Boolean = true;
+-        }
++      // ---------------------------------------------------------------
++      // Hardware and commercial-off-the-shelf configuration items
++      // ---------------------------------------------------------------
+ 
+-        #CI_HWCI #Member part def SwarmMember {
+-            doc /* The drone, one of twelve identical small air vehicles: airframe, camera payload, on-board computing and storage. It is the replicable element of the fleet and is composed of the on-board CIs below. It carries its own #Mode and #State machines. */
+-            trace ci to SurveillanceDroneSwarm::PA::SwarmMember;
+-            attribute enduranceMinutes : Real = 40;
+-            attribute cruiseSpeedMetresPerSecond : Real = 18;
+-            attribute footprintSquareKilometres : Real = 3;
+-            attribute onboardClassificationCostUsd : Real = 300;
+-            attribute batteryFullyCharged : Boolean = true;
+-            attribute sensorHealthMonitored : Boolean = true;
+-            attribute obsolescenceWatchInPlace : Boolean = true;
++      #CI_HWCI part def DroneAirframe {
++        doc /* The drone itself: airframe, propulsion and flight controller. One item type, twelve fielded. Endurance and cruise speed are the brief's fixed numbers; transit to and from the recharge point is spent out of the same endurance. */
++        attribute enduranceMinutes : Real = 40;
++        attribute cruiseSpeedMetresPerSecond : Real = 18;
++        attribute startStateOfChargeFraction : Real = 1.0;
++      }
+ 
+-            out port meshOut : Common::MeshPort;
+-            in port meshIn : ~Common::MeshPort;
++      #CI_COTS part def SensorPayload {
++        doc /* The camera payload on each drone, bought as a commercial item. It sets the instantaneous footprint under watch and is the part most exposed to going out of production. */
++        attribute footprintSquareKilometres : Real = 3.0;
++        attribute qualifiedSourceCount : Real = 2;
++        attribute interfaceStandardised : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-            part battery : SwappableBatteryPack { doc /* The battery pack installed in this drone, swapped at the recharge point. */ }
+-            part meshRadio : MeshRadioUnit { doc /* The mesh radio carried by this drone; it backs meshOut and meshIn. */ }
+-            part flight : MemberFlightSoftware { doc /* Flight, geofence, recall, recovery and camera-against-map navigation software of this drone. */ }
+-            part coordination : MemberCoordinationSoftware { doc /* Coordination and admission software of this drone, working over the mesh. */ }
+-            part classifier : OnboardClassifierSoftware { doc /* The classifier build running on this drone. */ }
+-            part reportStore : ReportStoreAndForwardSoftware { doc /* The report store and forward software holding this drone's reports while it is cut off. */ }
++      #CI_COTS part def OnboardComputeModule {
++        doc /* The commercial computing module on each drone that runs classification, navigation against stored maps and the report store. Its unit cost decides how much classification sits on the drone rather than on the ground. */
++        attribute unitCostUsd : Real;
++        attribute reportStorageHoldMinutes : Real = 30;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-            #Mode state def MemberModes {
+-                doc /* The operating modes of one drone: nominal, without satellite positioning, with untrusted sensing, cut off from the other drones, or quarantined after a failed admission. */
+-                initial start;
+-                state Nominal { doc /* Satellite positioning, sensing and mesh are as expected and the drone takes part in coordination. */ }
+-                state NavigationDegraded { doc /* No satellite positioning; the drone navigates by what its camera sees against stored maps. */ }
+-                state SensingDegraded { doc /* The sensors cannot be trusted as they are; what the drone reports from them is marked accordingly. */ }
+-                state Isolated { doc /* The drone is cut off from the other drones and coordinates with none of them. */ }
+-                state Quarantined { doc /* The drone has failed admission and takes no part in coordination until readmitted. */ }
+-                state Readmitting { doc /* The drone has passed a new admission check and is rejoining coordination. */ }
+-                transition start -> Nominal;
+-                transition Nominal -> NavigationDegraded;
+-                transition NavigationDegraded -> Nominal;
+-                transition Nominal -> SensingDegraded;
+-                transition SensingDegraded -> Nominal;
+-                transition Nominal -> Isolated;
+-                transition Isolated -> Nominal;
+-                transition Nominal -> Quarantined;
+-                transition Quarantined -> Readmitting;
+-                transition Readmitting -> Nominal;
+-                @SysproseVerification::PropertyPattern {
+-                    doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
+-                    attribute pattern = "absence";
+-                    attribute scope = "between";
+-                    attribute q = "state Quarantined";
+-                    attribute r = "state Readmitting";
+-                    attribute p = "state Nominal";
+-                }
+-            }
++      #CI_COTS part def BatteryPack {
++        doc /* The swappable battery pack. Packs are swapped at the recharge point, not charged in the drone, in about twenty minutes of turnaround, so the pack supply is what keeps sectors filled while drones rotate. */
++        attribute packEnduranceMinutes : Real = 40;
++        attribute swapTurnaroundMinutes : Real = 20;
++        attribute qualifiedSourceCount : Real = 2;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-            #State state def MemberStates {
+-                doc /* The flight life cycle of one drone from landed through watching to landed again, including recall and leaving the cleared airspace. */
+-                initial start;
+-                state Landed { doc /* The drone is on the ground and not watching. */ }
+-                state Transiting { doc /* The drone flies from the recharge point to its sector. */ }
+-                state Watching { doc /* The drone holds watch over its sector. */ }
+-                state Returning { doc /* The drone flies back to the recharge point, or to the recovery point when it has lost contact. */ }
+-                state Recalled { doc /* A recall order has been received and the drone will land without watching again. */ }
+-                state OutsideClearance { doc /* The drone is outside its cleared airspace and only heads for landing. */ }
+-                state Landing { doc /* The drone is descending to land. */ }
+-                transition start -> Landed;
+-                transition Landed -> Transiting;
+-                transition Transiting -> Watching;
+-                transition Watching -> Returning;
+-                transition Returning -> Landing;
+-                transition Watching -> Recalled;
+-                transition Transiting -> Recalled;
+-                transition Returning -> Recalled;
+-                transition Recalled -> Landing;
+-                transition Watching -> OutsideClearance;
+-                transition Transiting -> OutsideClearance;
+-                transition OutsideClearance -> Landing;
+-                transition Landing -> Landed;
+-                @SysproseVerification::PropertyPattern {
+-                    doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
+-                    attribute pattern = "absence";
+-                    attribute scope = "between";
+-                    attribute q = "state Recalled";
+-                    attribute r = "state Landed";
+-                    attribute p = "state Watching";
+-                }
+-                @SysproseVerification::PropertyPattern {
+-                    doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
+-                    attribute pattern = "absence";
+-                    attribute scope = "between";
+-                    attribute q = "state OutsideClearance";
+-                    attribute r = "state Landed";
+-                    attribute p = "state Watching";
+-                }
+-                @SysproseVerification::PropertyPattern {
+-                    doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed; an isolated drone included. */
+-                    attribute pattern = "recovery";
+-                    attribute scope = "globally";
+-                    attribute p = "state Landed";
+-                }
+-            }
+-        }
++      #CI_COTS part def MeshRadioModule {
++        doc /* The radio on each drone that carries coordination traffic between drones over the mesh, independent of the link to the operations centre, and that holds the per-drone credential used at admission. */
++        attribute authenticatesPeers : Boolean = true;
++        attribute independentOfGroundLink : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_HWCI part def SwarmFleet {
+-            doc /* The fleet as a delivered item: the twelve identical drones counted together, delivered and configuration-controlled as one population. It realises the fleet of the layer above; the count itself lives on the fleet usage of SwarmMember below. */
+-            trace ci to SurveillanceDroneSwarm::PA::fleet;
+-            attribute memberCount : Real = 12;
+-        }
++      #CI_HWCI part def GroundStationEquipment {
++        doc /* The ground station hardware from which the swarm is tasked and watched and, in the ground-centred architecture, coordinated. One is fielded. */
++        attribute supervisedMembers : Real = 12;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_HWCI part def MemberRepresentativeA {
+-            doc /* The first named representative drone of the fleet, delivered as a configuration item so that a member-to-member mesh exchange can be tested end to end. It realises memberA of the layer above and is an ordinary SwarmMember in build. */
+-            trace ci to SurveillanceDroneSwarm::PA::memberA;
+-            attribute meshExchangeTested : Boolean = true;
+-        }
++      #CI_COTS part def GroundLinkRadio {
++        doc /* The commercial radio that forms the intermittent link between the ground station and the operations centre, carrying tasking, command, reports, status and acknowledgements. */
++        attribute carriesAcknowledgements : Boolean = true;
++        attribute toleratesGaps : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_HWCI part def MemberRepresentativeB {
+-            doc /* The second named representative drone of the fleet, the mesh peer of the first. It realises memberB of the layer above and is an ordinary SwarmMember in build. */
+-            trace ci to SurveillanceDroneSwarm::PA::memberB;
+-            attribute meshExchangeTested : Boolean = true;
+-        }
++      // ---------------------------------------------------------------
++      // Software configuration items
++      // ---------------------------------------------------------------
+ 
+-        #CI_COTS part def SwappableBatteryPack {
+-            doc /* The battery pack of a drone, bought off the shelf and swapped, not charged in place, at the recharge point by the ground crew in about 20 minutes. */
+-            trace ci to SurveillanceDroneSwarm::PA::BatterySwapAtRechargePoint;
+-            attribute turnaroundMinutes : Real = 20;
+-            attribute groundCrewAvailable : Boolean = true;
+-            attribute secondSourceQualified : Boolean = true;
+-        }
++      #CI_CSCI part def DroneFlightSoftware {
++        doc /* Flight and navigation software on each drone: stays inside the cleared airspace, lands on recall, on breach of clearance or above moderate wind, returns to the recovery point when isolated, and navigates by camera against stored maps when satellite positioning is out. */
++        attribute satelliteOutageMinutes : Real = 10;
++        attribute positionErrorMetres : Real;
++        attribute landsWhenRecalledOrOutsideClearance : Boolean = true;
++        attribute returnsToRecoveryPointWhenIsolated : Boolean = true;
++        attribute signedBaseline : Boolean = true;
++      }
+ 
+-        #CI_COTS part def MeshRadioUnit {
+-            doc /* The mesh radio fitted to each drone; it carries coordination traffic between drones and does not depend on the link to the operations centre. */
+-            trace ci to SurveillanceDroneSwarm::PA::MeshRadioBetweenDrones;
+-            attribute groundLinkIndependent : Boolean = true;
+-            attribute meshRelayDelaySeconds : Real = 15;
+-            attribute jammedLinksFraction : Real = 0.5;
+-        }
++      #CI_CSCI part def DetectionClassifierSoftware {
++        doc /* The on-board detection and classification software. It says Unknown rather than forcing a class below the reporting threshold and stamps every report with its own classifier version. */
++        attribute missedDetectionFraction : Real;
++        attribute falseAlarmsPerHour : Real;
++        attribute reportsUnknownBelowThreshold : Boolean = true;
++        attribute stampsClassifierVersion : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_COTS part def GroundLinkRadio {
+-            doc /* The intermittently available radio link between the ground station and the operations centre, carrying tasking, command, reports, status and acknowledgements. */
+-            trace ci to SurveillanceDroneSwarm::PA::GroundLinkToOperationsCentre;
+-            attribute linkUp : Boolean = true;
+-            attribute linkDelaySeconds : Real = 15;
+-            attribute carriesAcknowledgements : Boolean = true;
+-        }
++      #CI_CSCI part def ReportStoreForwardSoftware {
++        doc /* On-board software that holds each detection report while the drone is cut off, forwards it when a path exists and keeps it until the operations centre acknowledges it, so none is lost in a link gap. */
++        attribute holdWhileCutOffMinutes : Real = 30;
++        attribute reportsLost : Real = 0;
++        attribute retainsUntilAcknowledged : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_COTS part def GroundStationHardware {
+-            doc /* The ground station equipment that tasks and watches the swarm; one operator supervises the whole swarm from it. */
+-            trace ci to SurveillanceDroneSwarm::PA::GroundStation;
+-            attribute operatorsRequired : Real = 1;
+-            attribute tasksAndWatchesSwarm : Boolean = true;
+-        }
++      #CI_CSCI #Variant part def MemberCoordinationSoftware {
++        doc /* Variant for the member-centred architecture: the coordination software each drone runs to settle sector handover, recharge rotation, coverage redistribution, deconfliction, link relay, track correlation, track handover and member admission over the mesh. */
++        attribute areaUnderWatchFraction : Real;
++        attribute coverageLossAfterMemberLossFraction : Real;
++        attribute coverageUnderMeshJammingFraction : Real;
++        attribute meshLinksJammedFraction : Real = 0.5;
++        attribute admitsOnlyAuthenticated : Boolean = true;
++      }
+ 
+-        #CI_COTS part def RecallTransmitter {
+-            doc /* The ground transmitter that sends a recall order to one drone or to all of them, bought off the shelf and installed at the ground station. */
+-            trace ci to SurveillanceDroneSwarm::PA::groundRecallTransmitter;
+-            attribute transmitsRecallToAllDrones : Boolean = true;
+-            attribute transmitsRecallToOneDrone : Boolean = true;
+-        }
++      #CI_CSCI #Variant part def GroundCoordinationSoftware {
++        doc /* Variant for the ground-centred architecture: the coordination software that runs on the ground station and settles the same coordination functions for the drones. It is the alternative to member coordination, not an addition to it. */
++        attribute areaUnderWatchFraction : Real;
++        attribute coverageLossAfterMemberLossFraction : Real;
++        attribute coverageUnderMeshJammingFraction : Real;
++        attribute meshLinksJammedFraction : Real = 0.5;
++        attribute admitsOnlyAuthenticated : Boolean = true;
++      }
+ 
+-        #CI_CSCI part def MemberFlightSoftware {
+-            doc /* On-board flight software: keeps inside the cleared airspace, lands above moderate wind or on recall, returns to the recovery point when contact is lost, and navigates by camera against stored maps without satellite positioning. */
+-            trace ci to SurveillanceDroneSwarm::PA::SwarmMember;
+-            attribute positionErrorWithoutSatelliteMetres : Real = 50;
+-            attribute satelliteOutageMinutes : Real = 10;
+-            attribute staysInsideClearance : Boolean = true;
+-            attribute landsAboveModerateWind : Boolean = true;
+-            attribute recallHonouredAnytime : Boolean = true;
+-            attribute returnsToRecoveryPointWhenIsolated : Boolean = true;
+-        }
++      #CI_CSCI part def AlertTriageSoftware {
++        doc /* Ground software that ranks reports so that what is most likely to matter reaches the operator first and merges duplicates, keeping the alert rate inside what one operator can judge. */
++        attribute alertsReachingOperatorPerHour : Real;
++        attribute operatorSecondsPerAlert : Real = 30;
++        attribute mergesDuplicates : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_CSCI part def MemberCoordinationSoftware {
+-            doc /* On-board coordination software: sector handover, recharge rotation, coverage redistribution, deconfliction, report relay through a neighbour, track correlation, track handover and member admission, all over the mesh and independent of the ground link. */
+-            trace ci to SurveillanceDroneSwarm::PA::SwarmMember;
+-            attribute trackStaleAfterSeconds : Real = 120;
+-            attribute admitsOnlyAuthenticatedMembers : Boolean = true;
+-            attribute buildBaselineChecked : Boolean = true;
+-            attribute meshLinksJammedFraction : Real = 0.5;
+-            attribute areaUnderWatchFraction : Real = 0.9;
+-            attribute coverageLossAfterMemberLossFraction : Real = 0.25;
+-            attribute coverageUnderMeshJammingFraction : Real = 0.75;
+-        }
++      #CI_CSCI part def DecisionRecordSoftware {
++        doc /* Ground software that keeps, for every report, the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */
++        attribute recordsFrames : Boolean = true;
++        attribute recordsClassifierVersion : Boolean = true;
++        attribute recordsThreshold : Boolean = true;
++        attribute recordsAcknowledger : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_CSCI part def OnboardClassifierSoftware {
+-            doc /* On-board detection and classification software: detects moving objects, classifies them, and says Unknown rather than forcing a class below the reporting threshold. One version is held across the fleet. */
+-            trace ci to SurveillanceDroneSwarm::PA::SwarmMember;
+-            attribute reportingThresholdSet : Boolean = true;
+-            attribute reportsUnknownBelowThreshold : Boolean = true;
+-            attribute missedDetectionFraction : Real = 0.1;
+-            attribute classifierVersionCountInFleet : Real = 1;
+-            attribute signedUpdatesOnly : Boolean = true;
+-        }
++      #CI_CSCI part def OperatorConsoleSoftware {
++        doc /* Ground software through which one operator tasks, commands, recalls and watches the swarm and acknowledges each report. It presents the swarm tracks in a form that can be merged with the fixed camera network's tracks and marks a track stale after the stated time. */
++        attribute trackStaleAfterSeconds : Real = 120;
++        attribute offersTaskCommandRecall : Boolean = true;
++        attribute presentsStatusPicture : Boolean = true;
++        attribute acknowledgesEachReport : Boolean = true;
++        attribute tracksMergeableWithFixedNetwork : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_CSCI part def ReportStoreAndForwardSoftware {
+-            doc /* On-board report store: keeps detection reports while the drone is cut off, forwards them, and reconciles with the operations centre once the link is back so that none is lost. */
+-            trace ci to SurveillanceDroneSwarm::PA::SwarmMember;
+-            attribute linkGapMinutes : Real = 30;
+-            attribute reportHoldMinutes : Real = 30;
+-            attribute holdAndForwardDelaySeconds : Real = 15;
+-            attribute losesNoReportOnReconcile : Boolean = true;
+-            attribute storageOverflowGuarded : Boolean = true;
+-        }
++      #CI_CSCI part def FleetLoaderSoftware {
++        doc /* Ground software that loads one signed software baseline, classifier included, onto every drone and verifies what each drone runs before it flies, so no version drifts across the fleet. */
++        attribute distinctBaselinesInFleet : Real = 1;
++        attribute verifiesBeforeFlight : Boolean = true;
++        attribute withinOperatingEnvelope : Boolean = true;
++      }
+ 
+-        #CI_CSCI part def SupervisionConsoleSoftware {
+-            doc /* Ground software through which one operator tasks the swarm, gives supervisory commands, recalls one drone or all, sees the status picture and acknowledges each report, and which hands the track picture on in a form that merges with the fixed camera network's tracks. */
+-            trace ci to SurveillanceDroneSwarm::PA::GroundStation;
+-            attribute recallIssuableAtAnyTime : Boolean = true;
+-            attribute presentsStatusPicture : Boolean = true;
+-            attribute acknowledgesEachReport : Boolean = true;
+-            attribute tracksMergeableWithFixedCameras : Boolean = true;
+-        }
++      // ---------------------------------------------------------------
++      // Fielded usages: the cardinality is the multiplicity
++      // ---------------------------------------------------------------
+ 
+-        #CI_CSCI part def AlertTriageSoftware {
+-            doc /* Ground triage software: ranks reports so that what most likely matters reaches the operator first, merges duplicates, and keeps the alert rate inside what one operator can judge. It realises the ground alert triage of the layer above. */
+-            trace ci to SurveillanceDroneSwarm::PA::groundAlertTriage;
+-            attribute operatorSecondsPerAlert : Real = 30;
+-            attribute alertsReachingOperatorPerHour : Real = 20;
+-            attribute falseAlarmsPerHour : Real = 2;
+-            attribute acknowledgedReportsThatMatterFraction : Real = 0.8;
+-            attribute triageDelaySeconds : Real = 15;
+-            attribute mergesDuplicates : Boolean = true;
+-        }
++      part droneAirframes : DroneAirframe [12] {
++        doc /* The twelve fielded drone airframes; the fleet size is fixed by the brief. */
++      }
++      part sensorPayloads : SensorPayload [12] {
++        doc /* One camera payload per drone. */
++      }
++      part computeModules : OnboardComputeModule [12] {
++        doc /* One on-board computing module per drone. */
++      }
++      part batteryPacks : BatteryPack [24] {
++        doc /* Battery packs in circulation: one set in the drones and one set at the recharge point, so a swap never waits for a pack. The count is a sizing assumption held for the acquirer to confirm. */
++      }
++      part meshRadios : MeshRadioModule [12] {
++        doc /* One mesh radio per drone. */
++      }
++      part groundStationEquipment : GroundStationEquipment [1] {
++        doc /* The single ground station. */
++      }
++      part groundLinkRadio : GroundLinkRadio [1] {
++        doc /* The single radio to the operations centre. */
++      }
++      part flightSoftware : DroneFlightSoftware [12] {
++        doc /* Flight software installed on each drone. */
++      }
++      part classifierSoftware : DetectionClassifierSoftware [12] {
++        doc /* The same classifier baseline installed on each drone. */
++      }
++      part storeForwardSoftware : ReportStoreForwardSoftware [12] {
++        doc /* Report store-and-forward installed on each drone. */
++      }
++      #Variant part memberCoordination : MemberCoordinationSoftware [12] {
++        doc /* Member-centred variant: coordination software installed on each drone. */
++      }
++      #Variant part groundCoordination : GroundCoordinationSoftware [1] {
++        doc /* Ground-centred variant: coordination software installed on the ground station. */
++      }
++      part alertTriage : AlertTriageSoftware [1] {
++        doc /* Alert triage on the ground station. */
++      }
++      part decisionRecords : DecisionRecordSoftware [1] {
++        doc /* Decision record keeping on the ground station. */
++      }
++      part operatorConsole : OperatorConsoleSoftware [1] {
++        doc /* The operator console software on the ground station. */
++      }
++      part fleetLoader : FleetLoaderSoftware [1] {
++        doc /* The fleet baseline loader on the ground station. */
++      }
+ 
+-        #CI_CSCI part def DecisionRecordStore {
+-            doc /* Ground record store: keeps for every report the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. It realises the ground decision record store of the layer above. */
+-            trace ci to SurveillanceDroneSwarm::PA::groundDecisionRecordStore;
+-            attribute keepsFrames : Boolean = true;
+-            attribute keepsClassifierVersion : Boolean = true;
+-            attribute keepsThresholdInForce : Boolean = true;
+-            attribute keepsAcknowledger : Boolean = true;
+-        }
++      // ---------------------------------------------------------------
++      // Realisation: each configuration item traces to the part it realises
++      // ---------------------------------------------------------------
+ 
+-        part fleet : SwarmMember [12] {
+-            doc /* The twelve identical drones; the count lives here and never on the definition. It is the population delivered as the SwarmFleet configuration item. */
+-        }
+-        part memberA : SwarmMember {
+-            doc /* First representative of the fleet, named so that a member-to-member exchange can be written. It is delivered as the MemberRepresentativeA configuration item. */
+-        }
+-        part memberB : SwarmMember {
+-            doc /* Second representative of the fleet, the peer of memberA. It is delivered as the MemberRepresentativeB configuration item. */
+-        }
+-        interface peerLink : Common::MeshInterface connect memberA.meshOut to memberB.meshIn {
+-            doc /* One mesh exchange from memberA to memberB over the mesh radio. */
+-        }
+-        interface peerLinkBack : Common::MeshInterface connect memberB.meshOut to memberA.meshIn {
+-            doc /* The return direction of the mesh exchange, from memberB to memberA. */
+-        }
++      trace DroneAirframe to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace SensorPayload to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace OnboardComputeModule to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace BatteryPack to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace MeshRadioModule to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace DroneFlightSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace DetectionClassifierSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace ReportStoreForwardSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace MemberCoordinationSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
++      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::GroundStation;
++      trace GroundLinkRadio to SurveillanceDroneSwarm::PA::GroundStation;
++      trace GroundCoordinationSoftware to SurveillanceDroneSwarm::PA::GroundStation;
++      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::GroundStation;
++      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::GroundStation;
++      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::GroundStation;
++      trace FleetLoaderSoftware to SurveillanceDroneSwarm::PA::GroundStation;
+ 
+-        part deliveredSystem : SwarmSystemAssembly {
+-            doc /* The one delivered main assembly of the swarm system, an instance of the SwarmSystemAssembly configuration item. */
+-        }
++      // Realisation of the PA usages: the fleet and its two representatives are
++      // built from the drone airframe and the mesh radio; the ground-side usages
++      // are realised by the ground station hardware and the software that runs on it.
++      trace DroneAirframe to SurveillanceDroneSwarm::PA::fleet;
++      trace DroneAirframe to SurveillanceDroneSwarm::PA::memberA;
++      trace DroneAirframe to SurveillanceDroneSwarm::PA::memberB;
++      trace MeshRadioModule to SurveillanceDroneSwarm::PA::memberA;
++      trace MeshRadioModule to SurveillanceDroneSwarm::PA::memberB;
++      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::groundRecallTransmitter;
++      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::groundRecallTransmitter;
++      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::groundAlertTriage;
++      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::groundDecisionRecordStore;
++      trace DroneAirframe to SurveillanceDroneSwarm::PA::mainAssembly;
++      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::mainAssembly;
+ 
+-        part groundSegment : GroundStationHardware {
+-            doc /* The one ground station with the CIs installed on it. */
+-            part groundLinkRadio : GroundLinkRadio { doc /* The link to the operations centre at the ground station. */ }
+-            part recallTransmitter : RecallTransmitter { doc /* The recall transmitter at the ground station. */ }
+-            part consoleSoftware : SupervisionConsoleSoftware { doc /* The operator console software on the ground station. */ }
+-            part triageSoftware : AlertTriageSoftware { doc /* The triage software on the ground station. */ }
+-            part recordStore : DecisionRecordStore { doc /* The decision record store on the ground station. */ }
+-        }
++      // ---------------------------------------------------------------
++      // Contracts: one requirement definition per configuration item
++      // ---------------------------------------------------------------
+ 
+-        #Configuration state def FleetConfigurations {
+-            doc /* The configurations of the whole fleet with respect to the mesh: every link usable, or a share of the links jammed. */
+-            initial start;
+-            state FullMesh { doc /* All links between drones are usable. */ }
+-            state MeshDegraded { doc /* A share of the links between drones is jammed and the swarm coordinates over what is left. */ }
+-            transition start -> FullMesh;
+-            transition FullMesh -> MeshDegraded;
+-            transition MeshDegraded -> FullMesh;
+-        }
++      requirement def DroneAirframeContract {
++        subject airframe : DroneAirframe;
++        attribute id = "EPBS-CI-01";
++        doc /* Starting from a freshly swapped pack, the airframe flies about 40 minutes at about 18 m/s cruise; transit to and from the recharge point is spent from that endurance. */
++        assume constraint { airframe.startStateOfChargeFraction >= 1.0 }
++        require constraint { airframe.enduranceMinutes >= 40 and airframe.cruiseSpeedMetresPerSecond >= 18 }
++      }
+ 
+-        requirement def SwarmSystemAssemblyContract {
+-            subject assembly : SwarmSystemAssembly;
+-            require constraint { assembly.allItemsIntegrated }
+-            attribute id = "EPBS-13";
+-            doc /* The main assembly is delivered with every configuration item of the fleet and of the ground station integrated. */
+-        }
+-        requirement def SwarmMemberContract {
+-            subject drone : SwarmMember;
+-            assume constraint { drone.batteryFullyCharged }
+-            require constraint { drone.enduranceMinutes >= 40 }
+-            require constraint { drone.cruiseSpeedMetresPerSecond >= 18 }
+-            require constraint { drone.footprintSquareKilometres >= 3 }
+-            require constraint { drone.onboardClassificationCostUsd <= 300 }
+-            require constraint { drone.sensorHealthMonitored }
+-            require constraint { drone.obsolescenceWatchInPlace }
+-            attribute id = "EPBS-01";
+-            doc /* Each drone flies about 40 minutes at about 18 m/s keeping about 3.0 km2 under watch, its classification computing costs at most 300 USD (placeholder), it monitors its own sensor health, and its parts are watched for obsolescence. */
+-        }
+-        requirement def SwarmFleetContract {
+-            subject fleetItem : SwarmFleet;
+-            require constraint { fleetItem.memberCount <= 12 }
+-            attribute id = "EPBS-15";
+-            doc /* The fleet is delivered as at most twelve identical drones, all at one build baseline. */
+-        }
+-        requirement def MemberRepresentativeAContract {
+-            subject representative : MemberRepresentativeA;
+-            require constraint { representative.meshExchangeTested }
+-            attribute id = "EPBS-16";
+-            doc /* The first representative drone exchanges mesh traffic with its peer representative. */
+-        }
+-        requirement def MemberRepresentativeBContract {
+-            subject representative : MemberRepresentativeB;
+-            require constraint { representative.meshExchangeTested }
+-            attribute id = "EPBS-17";
+-            doc /* The second representative drone exchanges mesh traffic with its peer representative. */
+-        }
+-        requirement def SwappableBatteryPackContract {
+-            subject pack : SwappableBatteryPack;
+-            assume constraint { pack.groundCrewAvailable }
+-            require constraint { pack.turnaroundMinutes <= 20 }
+-            require constraint { pack.secondSourceQualified }
+-            attribute id = "EPBS-02";
+-            doc /* A battery is swapped in about 20 minutes, not charged in place, and has a second source qualified. */
+-        }
+-        requirement def MeshRadioUnitContract {
+-            subject radio : MeshRadioUnit;
+-            assume constraint { radio.jammedLinksFraction <= 0.5 }
+-            require constraint { radio.groundLinkIndependent }
+-            require constraint { radio.meshRelayDelaySeconds <= 15 }
+-            attribute id = "EPBS-03";
+-            doc /* The mesh radio does not depend on the ground link; with up to half the links jammed it relays within 15 s, an allocation of the 60 s report-age placeholder. */
+-        }
+-        requirement def GroundLinkRadioContract {
+-            subject uplink : GroundLinkRadio;
+-            assume constraint { uplink.linkUp }
+-            require constraint { uplink.linkDelaySeconds <= 15 }
+-            require constraint { uplink.carriesAcknowledgements }
+-            attribute id = "EPBS-04";
+-            doc /* With the link up it delivers within 15 s, an allocation of the 60 s report-age placeholder, and carries each acknowledgement back. */
+-        }
+-        requirement def GroundStationHardwareContract {
+-            subject station : GroundStationHardware;
+-            require constraint { station.operatorsRequired <= 1 }
+-            require constraint { station.tasksAndWatchesSwarm }
+-            attribute id = "EPBS-05";
+-            doc /* One operator can task and watch the whole swarm from the ground station. */
+-        }
+-        requirement def RecallTransmitterContract {
+-            subject transmitter : RecallTransmitter;
+-            require constraint { transmitter.transmitsRecallToAllDrones }
+-            require constraint { transmitter.transmitsRecallToOneDrone }
+-            attribute id = "EPBS-14";
+-            doc /* The recall transmitter can send a recall order to one drone or to all drones. */
+-        }
+-        requirement def MemberFlightSoftwareContract {
+-            subject flightSw : MemberFlightSoftware;
+-            assume constraint { flightSw.satelliteOutageMinutes <= 10 }
+-            require constraint { flightSw.positionErrorWithoutSatelliteMetres <= 50 }
+-            require constraint { flightSw.staysInsideClearance }
+-            require constraint { flightSw.landsAboveModerateWind }
+-            require constraint { flightSw.recallHonouredAnytime }
+-            require constraint { flightSw.returnsToRecoveryPointWhenIsolated }
+-            attribute id = "EPBS-06";
+-            doc /* After up to ten minutes without satellite positioning the position error is at most 50 m (placeholder); the drone stays in cleared airspace, lands above moderate wind, honours a recall at any time, and returns to the recovery point when isolated. */
+-        }
+-        requirement def MemberCoordinationSoftwareContract {
+-            subject coordSw : MemberCoordinationSoftware;
+-            assume constraint { coordSw.meshLinksJammedFraction <= 0.5 }
+-            require constraint { coordSw.trackStaleAfterSeconds <= 120 }
+-            require constraint { coordSw.admitsOnlyAuthenticatedMembers }
+-            require constraint { coordSw.buildBaselineChecked }
+-            require constraint { coordSw.areaUnderWatchFraction >= 0.9 }
+-            require constraint { coordSw.coverageLossAfterMemberLossFraction <= 0.25 }
+-            require constraint { coordSw.coverageUnderMeshJammingFraction >= 0.75 }
+-            attribute id = "EPBS-07";
+-            doc /* Coordination over the mesh keeps at least 0.9 of the area under watch, loses at most 0.25 of coverage when a drone is lost, keeps at least 0.75 (placeholder) with half the links jammed, marks tracks stale after 120 s, and admits only authenticated members at the fleet build baseline. */
+-        }
+-        requirement def OnboardClassifierSoftwareContract {
+-            subject classifierSw : OnboardClassifierSoftware;
+-            assume constraint { classifierSw.reportingThresholdSet }
+-            require constraint { classifierSw.reportsUnknownBelowThreshold }
+-            require constraint { classifierSw.missedDetectionFraction <= 0.1 }
+-            require constraint { classifierSw.classifierVersionCountInFleet <= 1 }
+-            require constraint { classifierSw.signedUpdatesOnly }
+-            attribute id = "EPBS-08";
+-            doc /* Below the reporting threshold the classifier says Unknown, misses at most 0.10 of real objects (placeholder), runs one version across the fleet and accepts only signed updates. */
+-        }
+-        requirement def ReportStoreAndForwardSoftwareContract {
+-            subject storeSw : ReportStoreAndForwardSoftware;
+-            assume constraint { storeSw.linkGapMinutes <= 30 }
+-            require constraint { storeSw.reportHoldMinutes >= 30 }
+-            require constraint { storeSw.holdAndForwardDelaySeconds <= 15 }
+-            require constraint { storeSw.losesNoReportOnReconcile }
+-            require constraint { storeSw.storageOverflowGuarded }
+-            attribute id = "EPBS-09";
+-            doc /* Holds reports for at least 30 minutes (placeholder) while cut off, loses none on reconcile, guards its storage against overflow, and forwards within 15 s, an allocation of the 60 s report-age placeholder. */
+-        }
+-        requirement def SupervisionConsoleSoftwareContract {
+-            subject consoleSw : SupervisionConsoleSoftware;
+-            require constraint { consoleSw.recallIssuableAtAnyTime }
+-            require constraint { consoleSw.presentsStatusPicture }
+-            require constraint { consoleSw.acknowledgesEachReport }
+-            require constraint { consoleSw.tracksMergeableWithFixedCameras }
+-            attribute id = "EPBS-10";
+-            doc /* One operator tasks, commands, recalls at any time, sees the status picture, acknowledges each report, and receives tracks that merge with the fixed camera network's tracks. */
+-        }
+-        requirement def AlertTriageSoftwareContract {
+-            subject triageSw : AlertTriageSoftware;
+-            assume constraint { triageSw.operatorSecondsPerAlert >= 30 }
+-            require constraint { triageSw.alertsReachingOperatorPerHour <= 20 }
+-            require constraint { triageSw.falseAlarmsPerHour <= 2 }
+-            require constraint { triageSw.acknowledgedReportsThatMatterFraction >= 0.8 }
+-            require constraint { triageSw.triageDelaySeconds <= 15 }
+-            require constraint { triageSw.mergesDuplicates }
+-            attribute id = "EPBS-11";
+-            doc /* With at least 30 s per alert available to the operator, at most 20 alerts per hour (placeholder) and 2 false alarms per hour (placeholder) reach the operator, at least 0.8 (placeholder) of acknowledged reports matter, duplicates are merged, and triage adds at most 15 s of the 60 s report-age placeholder. */
+-        }
+-        requirement def DecisionRecordStoreContract {
+-            subject recordSw : DecisionRecordStore;
+-            require constraint { recordSw.keepsFrames }
+-            require constraint { recordSw.keepsClassifierVersion }
+-            require constraint { recordSw.keepsThresholdInForce }
+-            require constraint { recordSw.keepsAcknowledger }
+-            attribute id = "EPBS-12";
+-            doc /* For every report the store keeps its frames, the classifier version, the reporting threshold in force and who acknowledged it. */
+-        }
++      requirement def SensorPayloadContract {
++        subject payload : SensorPayload;
++        attribute id = "EPBS-CI-02";
++        doc /* The payload keeps about 3.0 km2 under watch at once, has a standardised interface and has at least two qualified sources, so a discontinued model can be replaced without redesign. */
++        assume constraint { payload.withinOperatingEnvelope == true }
++        require constraint { payload.footprintSquareKilometres >= 3.0 and payload.qualifiedSourceCount >= 2 and payload.interfaceStandardised == true }
++      }
+ 
+-        verification def VerifySwarmSystemAssembly {
+-            doc /* Verifies the main assembly contract by an integration inspection that every fleet and ground station item is present and integrated. */
+-            subject assembly : SwarmSystemAssembly;
+-            objective { verify SwarmSystemAssemblyContract; }
+-        }
+-        verification def VerifySwarmMember {
+-            doc /* Verifies the drone contract by flight test and by measurement of endurance, cruise speed, footprint and computing cost. */
+-            subject drone : SwarmMember;
+-            objective { verify SwarmMemberContract; }
+-        }
+-        verification def VerifySwarmFleet {
+-            doc /* Verifies the fleet contract by a count of delivered drones and a build baseline audit across them. */
+-            subject fleetItem : SwarmFleet;
+-            objective { verify SwarmFleetContract; }
+-        }
+-        verification def VerifyMemberRepresentativeA {
+-            doc /* Verifies the first representative by a mesh exchange test with its peer representative. */
+-            subject representative : MemberRepresentativeA;
+-            objective { verify MemberRepresentativeAContract; }
+-        }
+-        verification def VerifyMemberRepresentativeB {
+-            doc /* Verifies the second representative by a mesh exchange test with its peer representative. */
+-            subject representative : MemberRepresentativeB;
+-            objective { verify MemberRepresentativeBContract; }
+-        }
+-        verification def VerifySwappableBatteryPack {
+-            doc /* Verifies the battery contract by timed swaps at the recharge point and a supplier qualification review. */
+-            subject pack : SwappableBatteryPack;
+-            objective { verify SwappableBatteryPackContract; }
+-        }
+-        verification def VerifyMeshRadioUnit {
+-            doc /* Verifies the mesh radio contract by relay delay measurement with half the links jammed. */
+-            subject radio : MeshRadioUnit;
+-            objective { verify MeshRadioUnitContract; }
+-        }
+-        verification def VerifyGroundLinkRadio {
+-            doc /* Verifies the ground link contract by delivery delay measurement with the link up. */
+-            subject uplink : GroundLinkRadio;
+-            objective { verify GroundLinkRadioContract; }
+-        }
+-        verification def VerifyGroundStationHardware {
+-            doc /* Verifies the ground station contract by an operator demonstration with one operator. */
+-            subject station : GroundStationHardware;
+-            objective { verify GroundStationHardwareContract; }
+-        }
+-        verification def VerifyRecallTransmitter {
+-            doc /* Verifies the recall transmitter contract by sending a recall to one drone and to all drones in a range test. */
+-            subject transmitter : RecallTransmitter;
+-            objective { verify RecallTransmitterContract; }
+-        }
+-        verification def VerifyMemberFlightSoftware {
+-            doc /* Verifies the flight software contract by flight test with satellite positioning withheld for ten minutes, geofence, wind and recall injections. */
+-            subject flightSw : MemberFlightSoftware;
+-            objective { verify MemberFlightSoftwareContract; }
+-        }
+-        verification def VerifyMemberCoordinationSoftware {
+-            doc /* Verifies the coordination contract by swarm simulation with a lost drone and half the links jammed, and by admission tests with a foreign device and an off-baseline build. */
+-            subject coordSw : MemberCoordinationSoftware;
+-            objective { verify MemberCoordinationSoftwareContract; }
+-        }
+-        verification def VerifyOnboardClassifierSoftware {
+-            doc /* Verifies the classifier contract on labelled scenes including deceptive paint and shapes, and by a fleet version audit. */
+-            subject classifierSw : OnboardClassifierSoftware;
+-            objective { verify OnboardClassifierSoftwareContract; }
+-        }
+-        verification def VerifyReportStoreAndForwardSoftware {
+-            doc /* Verifies the store contract by cutting the link for 30 minutes and reconciling, counting reports before and after. */
+-            subject storeSw : ReportStoreAndForwardSoftware;
+-            objective { verify ReportStoreAndForwardSoftwareContract; }
+-        }
+-        verification def VerifySupervisionConsoleSoftware {
+-            doc /* Verifies the console contract by an operator demonstration of tasking, command, recall, acknowledgement and a merge of tracks with recorded fixed camera tracks. */
+-            subject consoleSw : SupervisionConsoleSoftware;
+-            objective { verify SupervisionConsoleSoftwareContract; }
+-        }
+-        verification def VerifyAlertTriageSoftware {
+-            doc /* Verifies the triage contract by replaying recorded alert streams and counting alerts, false alarms and ranking quality. */
+-            subject triageSw : AlertTriageSoftware;
+-            objective { verify AlertTriageSoftwareContract; }
+-        }
+-        verification def VerifyDecisionRecordStore {
+-            doc /* Verifies the record contract by tracing sampled reports back to frames, version, threshold and acknowledger. */
+-            subject recordSw : DecisionRecordStore;
+-            objective { verify DecisionRecordStoreContract; }
+-        }
++      requirement def OnboardComputeModuleContract {
++        subject compute : OnboardComputeModule;
++        attribute id = "EPBS-CI-03";
++        doc /* On-board classification computing costs no more than 300 USD per drone (a placeholder awaiting the customer's number) and its storage holds reports for at least 30 minutes while cut off. */
++        assume constraint { compute.withinOperatingEnvelope == true }
++        require constraint { compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30 }
++      }
+ 
+-        satisfy SwarmSystemAssemblyContract by SwarmSystemAssembly;
+-        satisfy SwarmMemberContract by SwarmMember;
+-        satisfy SwarmFleetContract by SwarmFleet;
+-        satisfy MemberRepresentativeAContract by MemberRepresentativeA;
+-        satisfy MemberRepresentativeBContract by MemberRepresentativeB;
+-        satisfy SwappableBatteryPackContract by SwappableBatteryPack;
+-        satisfy MeshRadioUnitContract by MeshRadioUnit;
+-        satisfy GroundLinkRadioContract by GroundLinkRadio;
+-        satisfy GroundStationHardwareContract by GroundStationHardware;
+-        satisfy RecallTransmitterContract by RecallTransmitter;
+-        satisfy MemberFlightSoftwareContract by MemberFlightSoftware;
+-        satisfy MemberCoordinationSoftwareContract by MemberCoordinationSoftware;
+-        satisfy OnboardClassifierSoftwareContract by OnboardClassifierSoftware;
+-        satisfy ReportStoreAndForwardSoftwareContract by ReportStoreAndForwardSoftware;
+-        satisfy SupervisionConsoleSoftwareContract by SupervisionConsoleSoftware;
+-        satisfy AlertTriageSoftwareContract by AlertTriageSoftware;
+-        satisfy DecisionRecordStoreContract by DecisionRecordStore;
++      requirement def BatteryPackContract {
++        subject pack : BatteryPack;
++        attribute id = "EPBS-CI-04";
++        doc /* A pack gives at least 40 minutes of flight, is swapped in no more than 20 minutes, and is available from at least two qualified sources so that one supplier stopping does not stop the rotation. */
++        assume constraint { pack.withinOperatingEnvelope == true }
++        require constraint { pack.packEnduranceMinutes >= 40 and pack.swapTurnaroundMinutes <= 20 and pack.qualifiedSourceCount >= 2 }
++      }
+ 
+-        package Hazards {
+-            doc /* Hazards that the configuration items themselves introduce: supply, build drift, obsolescence, unvetted updates and storage overflow. */
++      requirement def MeshRadioModuleContract {
++        subject radio : MeshRadioModule;
++        attribute id = "EPBS-CI-05";
++        doc /* The mesh radio works without the link to the operations centre and admits only peers that present a valid credential. */
++        assume constraint { radio.withinOperatingEnvelope == true }
++        require constraint { radio.independentOfGroundLink == true and radio.authenticatesPeers == true }
++      }
+ 
+-            #Hazard requirement BatterySupplyStopsHazard {
+-                subject affected : SurveillanceDroneSwarm::EPBS::SwappableBatteryPack;
+-                attribute id = "EPBS-H1";
+-                doc /* The single supplier of the battery pack stops shipping, drones cannot be turned round in 20 minutes and the watch thins out. */
+-            }
+-            #Hazard requirement SoftwareBuildDriftAcrossFleetHazard {
+-                subject affected : SurveillanceDroneSwarm::EPBS::MemberCoordinationSoftware;
+-                attribute id = "EPBS-H2";
+-                doc /* Drones drift onto different software builds after swaps and updates, and coordination between them behaves inconsistently. */
+-            }
+-            #Hazard requirement ComputeModuleObsolescenceHazard {
+-                subject affected : SurveillanceDroneSwarm::EPBS::SwarmMember;
+-                attribute id = "EPBS-H3";
+-                doc /* The on-board computing module becomes obsolete or unobtainable while the fleet is in service, so replacements differ from the qualified item. */
+-            }
+-            #Hazard requirement UnvettedClassifierUpdateHazard {
+-                subject affected : SurveillanceDroneSwarm::EPBS::OnboardClassifierSoftware;
+-                attribute id = "EPBS-H4";
+-                doc /* A classifier update is loaded that is unsigned or untested, and drones classify wrongly or differently from each other. */
+-            }
+-            #Hazard requirement ReportStoreOverflowHazard {
+-                subject affected : SurveillanceDroneSwarm::EPBS::ReportStoreAndForwardSoftware;
+-                attribute id = "EPBS-H5";
+-                doc /* The on-board store fills during a long link gap and reports are lost before they can be reconciled. */
+-            }
++      requirement def GroundStationEquipmentContract {
++        subject station : GroundStationEquipment;
++        attribute id = "EPBS-CI-06";
++        doc /* The ground station supervises all twelve drones at once. */
++        assume constraint { station.withinOperatingEnvelope == true }
++        require constraint { station.supervisedMembers >= 12 }
++      }
++
++      requirement def GroundLinkRadioContract {
++        subject linkRadio : GroundLinkRadio;
++        attribute id = "EPBS-CI-07";
++        doc /* The ground link carries acknowledgements and tolerates gaps in availability without losing what it carries. */
++        assume constraint { linkRadio.withinOperatingEnvelope == true }
++        require constraint { linkRadio.carriesAcknowledgements == true and linkRadio.toleratesGaps == true }
++      }
++
++      requirement def DroneFlightSoftwareContract {
++        subject software : DroneFlightSoftware;
++        attribute id = "EPBS-CI-08";
++        doc /* After ten minutes without satellite positioning the position error is at most 50 m (a placeholder awaiting the customer's number); the drone lands on recall or outside clearance and returns to the recovery point when isolated; it runs a signed baseline. */
++        assume constraint { software.satelliteOutageMinutes <= 10 }
++        require constraint { software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true }
++      }
++
++      requirement def DetectionClassifierSoftwareContract {
++        subject detector : DetectionClassifierSoftware;
++        attribute id = "EPBS-CI-09";
++        doc /* Missed detections stay at or below 0.10 of real objects and false alarms at or below 2 per hour (placeholders awaiting the customer's numbers); below the reporting threshold the class is Unknown; every report carries the classifier version. */
++        assume constraint { detector.withinOperatingEnvelope == true }
++        require constraint { detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true }
++      }
++
++      requirement def ReportStoreForwardSoftwareContract {
++        subject store : ReportStoreForwardSoftware;
++        attribute id = "EPBS-CI-10";
++        doc /* A drone that is cut off holds its reports for at least 30 minutes (a placeholder awaiting the customer's number) without losing any, and keeps each until it is acknowledged. */
++        assume constraint { store.withinOperatingEnvelope == true }
++        require constraint { store.holdWhileCutOffMinutes >= 30 and store.reportsLost <= 0 and store.retainsUntilAcknowledged == true }
++      }
++
++      requirement def MemberCoordinationSoftwareContract {
++        subject coordination : MemberCoordinationSoftware;
++        attribute id = "EPBS-CI-11";
++        doc /* With drones coordinating among themselves, at least 0.9 of the area stays under watch, one lost drone costs at most 0.25 of coverage before re-spreading, and with half the links jammed at least 0.75 stays under watch (a placeholder). Only authenticated drones are admitted. */
++        assume constraint { coordination.meshLinksJammedFraction <= 0.5 }
++        require constraint { coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true }
++      }
++
++      requirement def GroundCoordinationSoftwareContract {
++        subject coordination : GroundCoordinationSoftware;
++        attribute id = "EPBS-CI-12";
++        doc /* With the ground station coordinating, the same coverage figures hold: at least 0.9 of the area under watch, at most 0.25 lost with one drone, at least 0.75 kept with half the links jammed (a placeholder). Only authenticated drones are admitted. */
++        assume constraint { coordination.meshLinksJammedFraction <= 0.5 }
++        require constraint { coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true }
++      }
++
++      requirement def AlertTriageSoftwareContract {
++        subject triage : AlertTriageSoftware;
++        attribute id = "EPBS-CI-13";
++        doc /* No more than 20 alerts an hour reach the operator (a placeholder awaiting the customer's number), which at 30 seconds an alert stays inside what one operator can judge; duplicates are merged. */
++        assume constraint { triage.withinOperatingEnvelope == true }
++        require constraint { triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true }
++      }
++
++      requirement def DecisionRecordSoftwareContract {
++        subject records : DecisionRecordSoftware;
++        attribute id = "EPBS-CI-14";
++        doc /* For every report the record holds the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */
++        assume constraint { records.withinOperatingEnvelope == true }
++        require constraint { records.recordsFrames == true and records.recordsClassifierVersion == true and records.recordsThreshold == true and records.recordsAcknowledger == true }
++      }
++
++      requirement def OperatorConsoleSoftwareContract {
++        subject console : OperatorConsoleSoftware;
++        attribute id = "EPBS-CI-15";
++        doc /* One operator can task, command, recall and watch the whole swarm and acknowledge each report; tracks go stale after 120 seconds unseen (a placeholder) and are mergeable with the fixed camera network's tracks. */
++        assume constraint { console.withinOperatingEnvelope == true }
++        require constraint { console.trackStaleAfterSeconds <= 120 and console.offersTaskCommandRecall == true and console.presentsStatusPicture == true and console.acknowledgesEachReport == true and console.tracksMergeableWithFixedNetwork == true }
++      }
++
++      requirement def FleetLoaderSoftwareContract {
++        subject loader : FleetLoaderSoftware;
++        attribute id = "EPBS-CI-16";
++        doc /* The whole fleet runs one baseline, and each drone's baseline is verified before it flies. */
++        assume constraint { loader.withinOperatingEnvelope == true }
++        require constraint { loader.distinctBaselinesInFleet <= 1 and loader.verifiesBeforeFlight == true }
++      }
++
++      // ---------------------------------------------------------------
++      // Verification: one case per contract
++      // ---------------------------------------------------------------
++
++      verification def VerifyDroneAirframe {
++        doc /* Flight test of endurance and cruise speed from a freshly swapped pack. */
++        subject airframe : DroneAirframe;
++        objective { verify DroneAirframeContract; }
++      }
++      verification def VerifySensorPayload {
++        doc /* Measurement of footprint under watch and audit of the interface specification and sources. */
++        subject payload : SensorPayload;
++        objective { verify SensorPayloadContract; }
++      }
++      verification def VerifyOnboardComputeModule {
++        doc /* Cost check and a storage hold test at the report rate. */
++        subject compute : OnboardComputeModule;
++        objective { verify OnboardComputeModuleContract; }
++      }
++      verification def VerifyBatteryPack {
++        doc /* Discharge test for endurance, timed swap at the recharge point and audit of sources. */
++        subject pack : BatteryPack;
++        objective { verify BatteryPackContract; }
++      }
++      verification def VerifyMeshRadioModule {
++        doc /* Mesh test with the ground link off and admission test with a valid and an invalid credential. */
++        subject radio : MeshRadioModule;
++        objective { verify MeshRadioModuleContract; }
++      }
++      verification def VerifyGroundStationEquipment {
++        doc /* Demonstration of supervising twelve drones at once. */
++        subject station : GroundStationEquipment;
++        objective { verify GroundStationEquipmentContract; }
++      }
++      verification def VerifyGroundLinkRadio {
++        doc /* Link test with gaps: acknowledgements survive and nothing carried is lost. */
++        subject linkRadio : GroundLinkRadio;
++        objective { verify GroundLinkRadioContract; }
++      }
++      verification def VerifyDroneFlightSoftware {
++        doc /* Flight test with satellite positioning withheld for ten minutes, recall, clearance breach and isolation. */
++        subject software : DroneFlightSoftware;
++        objective { verify DroneFlightSoftwareContract; }
++      }
++      verification def VerifyDetectionClassifierSoftware {
++        doc /* Scored run on recorded and live scenes, including misleading paint and shapes, for missed detections, false alarms and Unknown below threshold. */
++        subject detector : DetectionClassifierSoftware;
++        objective { verify DetectionClassifierSoftwareContract; }
++      }
++      verification def VerifyReportStoreForwardSoftware {
++        doc /* Cut-off test of 30 minutes then reconciliation against the operations centre's acknowledgements. */
++        subject store : ReportStoreForwardSoftware;
++        objective { verify ReportStoreForwardSoftwareContract; }
++      }
++      verification def VerifyMemberCoordinationSoftware {
++        doc /* Swarm simulation and field trial: member rotation, one member lost, half the mesh links jammed. */
++        subject coordination : MemberCoordinationSoftware;
++        objective { verify MemberCoordinationSoftwareContract; }
++      }
++      verification def VerifyGroundCoordinationSoftware {
++        doc /* The same swarm simulation and field trial with coordination on the ground station. */
++        subject coordination : GroundCoordinationSoftware;
++        objective { verify GroundCoordinationSoftwareContract; }
++      }
++      verification def VerifyAlertTriageSoftware {
++        doc /* Replay of a recorded alert stream measuring alerts reaching the operator per hour and duplicate merging. */
++        subject triage : AlertTriageSoftware;
++        objective { verify AlertTriageSoftwareContract; }
++      }
++      verification def VerifyDecisionRecordSoftware {
++        doc /* Inspection of the record of a sample of reports for all four items. */
++        subject records : DecisionRecordSoftware;
++        objective { verify DecisionRecordSoftwareContract; }
++      }
++      verification def VerifyOperatorConsoleSoftware {
++        doc /* Operator demonstration of task, command, recall, acknowledgement and stale marking, and a merge with fixed-network tracks. */
++        subject console : OperatorConsoleSoftware;
++        objective { verify OperatorConsoleSoftwareContract; }
++      }
++      verification def VerifyFleetLoaderSoftware {
++        doc /* Load to all twelve drones and check that the baseline each reports is the same. */
++        subject loader : FleetLoaderSoftware;
++        objective { verify FleetLoaderSoftwareContract; }
++      }
++
++      // ---------------------------------------------------------------
++      // Satisfaction of the contracts by the fielded items
++      // ---------------------------------------------------------------
++
++      satisfy DroneAirframeContract by droneAirframes;
++      satisfy SensorPayloadContract by sensorPayloads;
++      satisfy OnboardComputeModuleContract by computeModules;
++      satisfy BatteryPackContract by batteryPacks;
++      satisfy MeshRadioModuleContract by meshRadios;
++      satisfy GroundStationEquipmentContract by groundStationEquipment;
++      satisfy GroundLinkRadioContract by groundLinkRadio;
++      satisfy DroneFlightSoftwareContract by flightSoftware;
++      satisfy DetectionClassifierSoftwareContract by classifierSoftware;
++      satisfy ReportStoreForwardSoftwareContract by storeForwardSoftware;
++      satisfy MemberCoordinationSoftwareContract by memberCoordination;
++      satisfy GroundCoordinationSoftwareContract by groundCoordination;
++      satisfy AlertTriageSoftwareContract by alertTriage;
++      satisfy DecisionRecordSoftwareContract by decisionRecords;
++      satisfy OperatorConsoleSoftwareContract by operatorConsole;
++      satisfy FleetLoaderSoftwareContract by fleetLoader;
++
++      // ---------------------------------------------------------------
++      // Hazards this layer adds, and their mitigation
++      // ---------------------------------------------------------------
++
++      package Hazards {
++        doc /* Hazards introduced by what is procured: a supplier that stops shipping, a software version that drifts across the fleet, a part that goes out of production. */
++
++        #Hazard requirement BatterySupplierStopsShippingHazard {
++          subject pack : BatteryPack;
++          doc /* The only source of battery packs stops shipping, swaps at the recharge point stop being possible, drones cannot rotate and the area under watch falls below what is required. */
+         }
+ 
+-        satisfy SurveillanceDroneSwarm::EPBS::Hazards::BatterySupplyStopsHazard by SwappableBatteryPack;
+-        satisfy SurveillanceDroneSwarm::EPBS::Hazards::SoftwareBuildDriftAcrossFleetHazard by MemberCoordinationSoftware;
+-        satisfy SurveillanceDroneSwarm::EPBS::Hazards::ComputeModuleObsolescenceHazard by SwarmMember;
+-        satisfy SurveillanceDroneSwarm::EPBS::Hazards::UnvettedClassifierUpdateHazard by OnboardClassifierSoftware;
+-        satisfy SurveillanceDroneSwarm::EPBS::Hazards::ReportStoreOverflowHazard by ReportStoreAndForwardSoftware;
++        #Hazard requirement FleetFlightSoftwareVersionDriftHazard {
++          subject software : DroneFlightSoftware;
++          doc /* Field updates reach some drones and not others, so the fleet runs different flight and coordination builds that disagree on handover, admission or clearance handling. */
++        }
+ 
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by MemberFlightSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by MemberCoordinationSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by OnboardClassifierSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by SwarmMember;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by MemberCoordinationSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by MemberCoordinationSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by OnboardClassifierSoftware;
+-        satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by AlertTriageSoftware;
++        #Hazard requirement SensorPayloadObsolescenceHazard {
++          subject payload : SensorPayload;
++          doc /* The camera model goes out of production; a substitute with different optics is fitted to some drones, the footprint shrinks and the classifier meets images it was not validated on. */
++        }
++      }
++
++      satisfy Hazards::BatterySupplierStopsShippingHazard by batteryPacks;
++      satisfy Hazards::FleetFlightSoftwareVersionDriftHazard by fleetLoader;
++      satisfy Hazards::SensorPayloadObsolescenceHazard by sensorPayloads;
++
++      // Hazards stated above that a configuration item here also mitigates.
++      satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by fleetLoader;
++      satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by meshRadios;
++      satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by flightSoftware;
+     }

@@ -1,0 +1,1242 @@
+{
+  "step": "S32",
+  "layer": "LA",
+  "alternative": 1,
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml",
+  "prefixHash": "1c808793b5448ddb",
+  "elements": 2492,
+  "durationMs": 4559,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 1,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/check.json",
+      "findings": 53
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 7,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/requirements-hazards.json",
+      "findings": 1
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 25,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/elements.json",
+      "findings": 2
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 68,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 22,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/trace-allocate.json",
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 9,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/connectivity.json",
+      "findings": 62
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 5,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/orphans.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v8/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 19,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S32/alt-1/reach.json",
+      "findings": 5
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchMeetsTarget",
+      "layer": "Common",
+      "line": 645,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "watchEnduranceMeetsTarget",
+      "layer": "Common",
+      "line": 655,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHoursWithoutPeople >= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportLatencyMeetsTarget",
+      "layer": "Common",
+      "line": 664,
+      "message": "Constraint could not be evaluated (\"reportDeliveryLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorMeetsTarget",
+      "layer": "Common",
+      "line": 673,
+      "message": "Constraint could not be evaluated (\"positionErrorAfterGnssLossMetres <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedCoverageMeetsTarget",
+      "layer": "Common",
+      "line": 683,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldMeetsTarget",
+      "layer": "Common",
+      "line": 691,
+      "message": "Constraint could not be evaluated (\"reportHoldDurationMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionMeetsTarget",
+      "layer": "Common",
+      "line": 699,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsMeetTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertRateMeetsTarget",
+      "layer": "Common",
+      "line": 717,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedPrecisionMeetsTarget",
+      "layer": "Common",
+      "line": 726,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageDropMeetsTarget",
+      "layer": "Common",
+      "line": 734,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "classifierCostMeetsTarget",
+      "layer": "Common",
+      "line": 743,
+      "message": "Constraint could not be evaluated (\"onboardClassifierCostUsdPerDrone <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeWithinBudget",
+      "layer": "Common",
+      "line": 752,
+      "message": "Constraint could not be evaluated (\"fleetSizeDrones <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "flightEnduranceWithinBudget",
+      "layer": "Common",
+      "line": 761,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes >= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "turnaroundWithinBudget",
+      "layer": "Common",
+      "line": 770,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedWithinBudget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond >= 18\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "sensorFootprintWithinBudget",
+      "layer": "Common",
+      "line": 789,
+      "message": "Constraint could not be evaluated (\"sensorFootprintSquareKilometres >= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaWithinBudget",
+      "layer": "Common",
+      "line": 797,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorCapacityWithinBudget",
+      "layer": "Common",
+      "line": 806,
+      "message": "Constraint could not be evaluated (\"operatorAlertCapacityPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorTimeWithinBudget",
+      "layer": "Common",
+      "line": 814,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "staleThresholdWithinBudget",
+      "layer": "Common",
+      "line": 823,
+      "message": "Constraint could not be evaluated (\"trackStaleThresholdSeconds <= 120\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "gnssOutageWithinBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"gnssOutageToleratedMinutes >= 10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedShareWithinBudget",
+      "layer": "Common",
+      "line": 841,
+      "message": "Constraint could not be evaluated (\"jammedLinkShareFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 540,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 541,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 542,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 543,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 544,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 545,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 546,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 547,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 548,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 549,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 550,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 551,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 552,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 553,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 556,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 559,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 562,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 565,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 568,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 571,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 574,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 577,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 580,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 583,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 586,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 589,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "GroundLinkC2SinglePathHazard",
+      "layer": "LA",
+      "line": 382,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::LA::Hazards::GroundLinkC2SinglePathHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 744,
+      "message": "Constraint violated: areaUnderWatchFraction == coverageCapacity / areaOfInterestValue",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 745,
+      "message": "Constraint violated: coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1.0 - jammedLinkShareValue * meshDependentCoverageShare)",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 746,
+      "message": "Constraint violated: coverageDropAfterMemberLossFraction == footprintValue / coverageCapacity",
+      "check": "check"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::PeerCoordinationSinglePointHazard",
+      "rule": "CV-09",
+      "message": "hazard `PeerCoordinationSinglePointHazard` is mitigated by no component of this architecture (only by `redistributeCoverage`, which every alternative shares). Add `satisfy LA::Hazards::PeerCoordinationSinglePointHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "replicas.topology",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "alternative 1: 2 of 13 coordination and command-and-control function(s) on board, 11 on the ground; 1 link(s) between members; fleet [12].",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.scenario",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-08",
+      "message": "no exchange scenario between two members: an `occurrence def` with `ref part a : SurveillanceDrone; ref part b : SurveillanceDrone;` and the messages of a sector handover is what shows the peer protocol (A1-C-15).",
+      "check": "elements"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::missionTaskingIn",
+      "rule": "CV-05",
+      "message": "port `missionTaskingIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::supervisoryCommandIn",
+      "rule": "CV-05",
+      "message": "port `supervisoryCommandIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::recallOrderIn",
+      "rule": "CV-05",
+      "message": "port `recallOrderIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::statusPictureOut",
+      "rule": "CV-05",
+      "message": "port `statusPictureOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::reportAcknowledgementIn",
+      "rule": "CV-05",
+      "message": "port `reportAcknowledgementIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::detectionReportsOut",
+      "rule": "CV-05",
+      "message": "port `detectionReportsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::correlatedTracksOut",
+      "rule": "CV-05",
+      "message": "port `correlatedTracksOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::triagedAlertStreamOut",
+      "rule": "CV-05",
+      "message": "port `triagedAlertStreamOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::decisionRecordOut",
+      "rule": "CV-05",
+      "message": "port `decisionRecordOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::airspaceClearanceIn",
+      "rule": "CV-05",
+      "message": "port `airspaceClearanceIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::movingObjectsInAreaIn",
+      "rule": "CV-05",
+      "message": "port `movingObjectsInAreaIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::sceneConditionsIn",
+      "rule": "CV-05",
+      "message": "port `sceneConditionsIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::radioInterferenceIn",
+      "rule": "CV-05",
+      "message": "port `radioInterferenceIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::satellitePositioningOutageIn",
+      "rule": "CV-05",
+      "message": "port `satellitePositioningOutageIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::weatherLimitIn",
+      "rule": "CV-05",
+      "message": "port `weatherLimitIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SwarmSupervisor::missionTaskingOut",
+      "rule": "CV-05",
+      "message": "port `missionTaskingOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SwarmSupervisor::supervisoryCommandOut",
+      "rule": "CV-05",
+      "message": "port `supervisoryCommandOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SwarmSupervisor::recallOrderOut",
+      "rule": "CV-05",
+      "message": "port `recallOrderOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SwarmSupervisor::statusPictureIn",
+      "rule": "CV-05",
+      "message": "port `statusPictureIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentreAnalyst::reportAcknowledgementOut",
+      "rule": "CV-05",
+      "message": "port `reportAcknowledgementOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentreAnalyst::detectionReportsIn",
+      "rule": "CV-05",
+      "message": "port `detectionReportsIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentreAnalyst::correlatedTracksIn",
+      "rule": "CV-05",
+      "message": "port `correlatedTracksIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentreAnalyst::triagedAlertStreamIn",
+      "rule": "CV-05",
+      "message": "port `triagedAlertStreamIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentreAnalyst::decisionRecordIn",
+      "rule": "CV-05",
+      "message": "port `decisionRecordIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AirspaceAuthority::airspaceClearanceOut",
+      "rule": "CV-05",
+      "message": "port `airspaceClearanceOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperatingEnvironment::movingObjectsInAreaOut",
+      "rule": "CV-05",
+      "message": "port `movingObjectsInAreaOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperatingEnvironment::sceneConditionsOut",
+      "rule": "CV-05",
+      "message": "port `sceneConditionsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperatingEnvironment::radioInterferenceOut",
+      "rule": "CV-05",
+      "message": "port `radioInterferenceOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperatingEnvironment::satellitePositioningOutageOut",
+      "rule": "CV-05",
+      "message": "port `satellitePositioningOutageOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperatingEnvironment::weatherLimitOut",
+      "rule": "CV-05",
+      "message": "port `weatherLimitOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::HandOverSector::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::HandOverSector::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RotateRecharge::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RotateRecharge::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RedistributeCoverage::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RedistributeCoverage::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DeconflictFlight::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DeconflictFlight::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RelayThroughNeighbour::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RelayThroughNeighbour::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::CorrelateTracks::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::CorrelateTracks::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::HandOverTrack::reqOut",
+      "rule": "CV-05",
+      "message": "port `reqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::HandOverTrack::reqIn",
+      "rule": "CV-05",
+      "message": "port `reqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AdmitMember::admitReqOut",
+      "rule": "CV-05",
+      "message": "port `admitReqOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AdmitMember::admitReqIn",
+      "rule": "CV-05",
+      "message": "port `admitReqIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AdmitMember::admitDecOut",
+      "rule": "CV-05",
+      "message": "port `admitDecOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AdmitMember::admitDecIn",
+      "rule": "CV-05",
+      "message": "port `admitDecIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::TaskSurveillanceMission::cmdOut",
+      "rule": "CV-05",
+      "message": "port `cmdOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::TaskSurveillanceMission::cmdIn",
+      "rule": "CV-05",
+      "message": "port `cmdIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::IssueSupervisoryCommand::cmdOut",
+      "rule": "CV-05",
+      "message": "port `cmdOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::IssueSupervisoryCommand::cmdIn",
+      "rule": "CV-05",
+      "message": "port `cmdIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RecallToLand::cmdOut",
+      "rule": "CV-05",
+      "message": "port `cmdOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::RecallToLand::cmdIn",
+      "rule": "CV-05",
+      "message": "port `cmdIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::PresentStatusPicture::cmdOut",
+      "rule": "CV-05",
+      "message": "port `cmdOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::PresentStatusPicture::cmdIn",
+      "rule": "CV-05",
+      "message": "port `cmdIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AcknowledgeDetectionReport::ackOut",
+      "rule": "CV-05",
+      "message": "port `ackOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::AcknowledgeDetectionReport::ackIn",
+      "rule": "CV-05",
+      "message": "port `ackIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::ReportDetection::reportOut",
+      "rule": "CV-05",
+      "message": "port `reportOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::ReportDetection::reportIn",
+      "rule": "CV-05",
+      "message": "port `reportIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::triageReports::triagedAlertOut",
+      "rule": "CV-05",
+      "message": "port `triagedAlertOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::triageReports::decisionRecordOut",
+      "rule": "CV-05",
+      "message": "port `decisionRecordOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Watching`: 6 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> NavigationDegraded` (declaration order) and never `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> AirspaceBreach`, `Watching -> Recalled`, `Watching -> Quarantined`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::Isolated",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Isolated`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Watching` (declaration order) and never `Isolated -> Recalled`, `Isolated -> Grounded`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberOperationalState::Available`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Available -> Constrained` (declaration order) and never `Available -> Unavailable`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Constrained -> Available` (declaration order) and never `Constrained -> Unavailable`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDrone::MemberMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::MemberMode::Watching`: 5 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Recalled` (declaration order) and never `Watching -> AirspaceBreach`, `Watching -> Isolated`, `Watching -> NavigationDegraded`, `Watching -> SensingDegraded`.",
+      "check": "reach"
+    }
+  ]
+}

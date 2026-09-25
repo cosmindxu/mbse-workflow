@@ -1,0 +1,47 @@
+# The run's settings. The step table is not here: a step's checks and
+# post-conditions are the workflow itself, and live in src/spec/steps.ts.
+
+# Confirmed for this project (05-decision.md §5).
+knobs:
+  modes_states: true          # states must be reachable, from SA down
+  interfaces: true            # ports and connections are checked
+  variability: true           # design options are tagged #Variant
+  safety: true                # every layer states its hazards
+  views: false                # `expose` does not exist; the audit packet replaces views
+  verification: true          # run the solver lanes, report, never block
+  requirements_intake: false  # on when the customer supplies requirements
+  infrastructure_intake: false # on for a brownfield customer
+
+limits:
+  repair_iterations: 3
+  n_alternatives:
+    LA: 2
+    PA: 2
+  full_prefix_max_elements: 200
+  prompt_max_chars: 60000
+  llm_concurrency: 2          # claude processes; Sysprose still runs one at a time
+  llm_call_timeout_ms: 3000000  # v6's largest PA alternative ran 1425 s; 900 s killed 3 calls in v4 and 8 in v5, billed or not
+  llm_max_output_tokens: 128000 # per turn; the CLI default is 64k and v6 spent 58k in one turn
+  run_budget_usd: 25
+  doc_coverage_min: 0.8       # share of a layer's elements that must carry a doc; 0 turns it off
+
+llm:
+  backend: claude
+  models:
+    default: sonnet
+    SEED: opus
+    EVALUATE: opus
+
+sysprose:
+  dir: ''                     # empty: $SYSPROSE_DIR, else ~/sysprose
+  expected_commit: 2486d72    # the commit the predicates were last calibrated against (record-fixtures + npm test, 2026-09-18; the HMI merge touched only src/ui, and re-recording changed no fixture)
+
+evaluate:
+  weights:
+    moe: 0.4
+    rubric: 0.35
+    structure: 0.25
+    resilience: 0.15   # ground-link and ground-node loss, scored when the system is a population
+  accepted_hazard_penalty:   # off the structure score, per hazard an alternative accepts rather than mitigates
+    per: 0.05
+    cap: 0.25

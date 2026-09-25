@@ -1,0 +1,34 @@
+{
+  "name": "mbse-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "LLM-agent workflow that authors layered, SysML-like models and gates every step on Sysprose checks",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "mbse-workflow": "tsx src/cli.ts",
+    "test": "vitest run",
+    "test:live": "MBSE_LIVE=1 vitest run test/live",
+    "typecheck": "tsc --noEmit",
+    "record-fixtures": "tsx scripts/record-fixtures.ts",
+    "test:sim": "python3 -m unittest discover -s sim/agents -p 'test_*.py' -v",
+    "sim:offline": "python3 sim/runtime/run.py --offline --run",
+    "sim:replay": "python3 sim/runtime/overlay.py --run"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "diff": "^7.0.0",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/diff": "^6.0.0",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

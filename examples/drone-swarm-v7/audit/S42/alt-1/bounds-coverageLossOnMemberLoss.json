@@ -1,0 +1,70 @@
+{
+  "toolAbsent": false,
+  "measure": {
+    "id": "40cc5f68-8bcd-4564-b3b9-db8d7a216654",
+    "qualifiedName": "SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss",
+    "declaredName": "coverageLossOnMemberLoss",
+    "unit": null,
+    "siFactor": 1,
+    "siOffset": 0
+  },
+  "bounds": [
+    {
+      "sense": "max",
+      "value": 0.25,
+      "siValue": 0.25,
+      "term": "(/ 1.0 4.0)",
+      "witness": [
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::airborneMembersPA",
+          "term": "4.0",
+          "value": 4
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss",
+          "term": "(/ 1.0 4.0)",
+          "value": 0.25
+        }
+      ],
+      "checks": 1,
+      "outcome": "bound-without-optimality",
+      "code": "verification/optimality-not-established",
+      "detail": "max `SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss`: bound found at 0.25 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 3 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+    }
+  ],
+  "withRequirements": false,
+  "released": [],
+  "requirements": [],
+  "axioms": 3,
+  "refused": 0,
+  "nonlinear": true,
+  "fragment": "qf-lra",
+  "logic": "QF_NRA",
+  "vacuityCore": [],
+  "checks": 2,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:571918a663df76b3ddd7d06aad7aee92116ef3dcf549b7a1d489757b93c581d8",
+    "source": "sha256:df465f339f73e43e5c99d9cdad3c0ef128e77ec1f61a10f2d310229a917f7358",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "9babce089c0d472d7d2293665d8c4522caac15e4"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "max `SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss` was not established: max `SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss`: bound found at 0.25 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 3 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "elementId": "40cc5f68-8bcd-4564-b3b9-db8d7a216654",
+      "elementName": "SurveillanceDroneSwarm::PA::coverageLossOnMemberLoss",
+      "code": "verification/optimality-not-established",
+      "hint": "The value on the row is a bound z3 reached, not one it established as the tightest: νZ is complete for linear real arithmetic, and a product or a quotient of two features is not that. Pin the feature that makes the objective nonlinear, or read the row as the bound it is. It exits 2, and no flag lowers it — a non-optimal bound presented as the optimum is the one sentence this command may never write."
+    }
+  ]
+}

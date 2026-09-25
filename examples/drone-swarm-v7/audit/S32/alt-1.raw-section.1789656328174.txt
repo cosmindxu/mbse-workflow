@@ -1,0 +1,312 @@
+doc /* Logical Architecture, alternative 1 of 2: Ground-Centralised Coordination. The deciding half of
+     every #Coordination function and all five #C2 functions are hosted in one ground logical
+     component, groundControlStation; the twelve-member fleet keeps the per-member mission functions
+     (watch, detect and classify, navigate against stored maps, hold and send its own reports, keep
+     its own decision-record contribution) on board, so the data path survives a ground-link gap even
+     though re-planning coordination does not. Alternative 2 is expected to move at least half of the
+     eight #Coordination functions onto the members instead. */
+
+// ---- Ground logical component ----
+
+part def GroundControlStation {
+    doc /* the ground-hosted logical component of this alternative: takes in tasking, supervision,
+         recall and acknowledgement from the operations centre and duty controller, forwards them to
+         the fleet, aggregates the fleet's detections, decision-record contributions and status, and
+         makes the deciding half of inter-member coordination -- sector handover, recharge rotation,
+         coverage redistribution, deconfliction, mesh relay assignment, track correlation, track
+         handover and admission -- issuing its directives to the fleet. */
+    in port taskingIn : Common::MissionTasking { doc /* mission tasking taken in from the operations centre. */ }
+    in port supervisionIn : Common::SupervisoryAndRecallCommands { doc /* supervisory commands taken in from the duty controller. */ }
+    in port recallIn : Common::SupervisoryAndRecallCommands { doc /* recall-and-land orders taken in from the duty controller. */ }
+    in port ackIn : Common::ReportAcknowledgements { doc /* report acknowledgements taken in from the duty controller. */ }
+    out port reportsOut : Common::DetectionReportsAndTracks { doc /* triaged, de-duplicated reports and tracks sent to the operations centre. */ }
+    out port decisionsOut : Common::DecisionRecords { doc /* decision records sent to the operations centre. */ }
+    out port statusOut : Common::StatusPicture { doc /* the aggregated status picture sent to the duty controller. */ }
+    out port rechargeRequestOut : Common::CoordinationMessage { doc /* recharge-slot requests sent to the ground crew. */ }
+    out port missionOut : Common::MissionTasking { doc /* mission tasking forwarded down to the fleet. */ }
+    out port commandOut : Common::SupervisoryAndRecallCommands { doc /* supervisory and recall-and-land commands forwarded down to the fleet. */ }
+    out port ackForwardOut : Common::ReportAcknowledgements { doc /* acknowledgement forwarded to the member whose decision record it closes out. */ }
+    out port directiveOut : Common::CoordinationMessage { doc /* the deciding coordination directives -- handover, rotation, redistribution, deconfliction, relay assignment, correlation, track handover, admission -- issued to the fleet. */ }
+    in port detectionsIn : Common::DetectionReportsAndTracks { doc /* each member's local detections and tracks, taken in for correlation and triage. */ }
+    in port decisionsIn : Common::DecisionRecords { doc /* each member's decision-record contribution, taken in for completion. */ }
+    in port statusIn : Common::StatusPicture { doc /* each member's status contribution, taken in for aggregation. */ }
+}
+
+part groundControlStation : GroundControlStation {
+    doc /* the single ground logical component of this alternative; hosts every deciding #Coordination usage and every #C2 usage. */
+}
+
+// ---- Population: one member definition, a fleet usage carrying the count, two representatives ----
+
+#Member part def SurveillanceDrone {
+    doc /* one member of the fielded population: replicable and identical, carrying its own onboard
+         watch, detect-and-classify, navigate-against-stored-maps and report/decision-record functions,
+         plus the mesh peer ports used for peer-to-peer traffic and directive relay. In this
+         alternative the member executes locally but does not decide sector handover, recharge
+         rotation, redistribution, deconfliction, relay assignment, track correlation, track handover
+         or admission -- those are decided by the ground control station. */
+    out port meshOut : Common::MeshPort { doc /* outbound peer mesh traffic to another member. */ }
+    in port meshIn : ~Common::MeshPort { doc /* inbound peer mesh traffic from another member. */ }
+    in port directiveIn : Common::CoordinationMessage { doc /* the ground control station's coordination directive for this member. */ }
+    in port missionIn : Common::MissionTasking { doc /* mission tasking forwarded from the ground control station. */ }
+    in port commandIn : Common::SupervisoryAndRecallCommands { doc /* supervisory and recall-and-land commands forwarded from the ground control station. */ }
+    in port ackForwardIn : Common::ReportAcknowledgements { doc /* acknowledgement forwarded from the ground control station for a report this member sent. */ }
+    out port detectionsOut : Common::DetectionReportsAndTracks { doc /* this member's own local detections and tracks, sent up for correlation and triage. */ }
+    out port decisionOut : Common::DecisionRecords { doc /* this member's decision-record contribution, sent up for completion. */ }
+    out port statusOut : Common::StatusPicture { doc /* this member's position, activity, coverage and degradation, sent up for aggregation. */ }
+
+    #Variant attribute localFallbackOnIsolation = true { doc /* design option: whether an isolated member falls back to its last ground-issued directive instead of holding position; on in this alternative to bound coverage loss during brief ground-link gaps. */ }
+
+    state mode : MemberMode { doc /* this member's operating mode. */ }
+    state status : MemberStatus { doc /* this member's coarse platform status. */ }
+}
+
+part fleet : SurveillanceDrone [12] {
+    doc /* the population: twelve identical member drones, replicated from the SurveillanceDrone
+         member definition; each carries its own MemberMode/MemberStatus, and together they carry the
+         fleet-level FleetConfiguration. */
+    state config : FleetConfiguration { doc /* the fleet-level watch configuration shared by the population. */ }
+}
+
+part memberA : SurveillanceDrone { doc /* representative member, used to show the peer mesh interface between two drones. */ }
+part memberB : SurveillanceDrone { doc /* representative peer of memberA across the mesh link. */ }
+
+interface peerLink : Common::MeshLink connect memberA.meshOut to memberB.meshIn {
+    doc /* the peer mesh link between two representative drones, carried by MeshRadio; models the
+         drone-to-drone traffic -- directive relay, handover execution, track handover -- that does
+         not depend on the ground link. */
+}
+
+// ---- Ground <-> external actors (this layer's boundary, not the SA system's ports) ----
+
+connection taskingLinkLA connect SurveillanceDroneSwarm::SA::operationsCentre.taskingOut to groundControlStation.taskingIn {
+    doc /* carries mission tasking from the operations centre into the ground control station. */
+}
+connection supervisionLinkLA connect SurveillanceDroneSwarm::SA::dutyController.supervisionOut to groundControlStation.supervisionIn {
+    doc /* carries supervisory commands from the duty controller into the ground control station. */
+}
+connection recallLinkLA connect SurveillanceDroneSwarm::SA::dutyController.recallOut to groundControlStation.recallIn {
+    doc /* carries recall-and-land orders from the duty controller into the ground control station. */
+}
+connection ackLinkLA connect SurveillanceDroneSwarm::SA::dutyController.ackOut to groundControlStation.ackIn {
+    doc /* carries report acknowledgements from the duty controller into the ground control station. */
+}
+connection reportsLinkLA connect groundControlStation.reportsOut to SurveillanceDroneSwarm::SA::operationsCentre.reportsIn {
+    doc /* carries the ground-finalised, triaged detection reports and tracks to the operations centre. */
+}
+connection decisionsLinkLA connect groundControlStation.decisionsOut to SurveillanceDroneSwarm::SA::operationsCentre.decisionsIn {
+    doc /* carries decision records to the operations centre. */
+}
+connection statusLinkLA connect groundControlStation.statusOut to SurveillanceDroneSwarm::SA::dutyController.statusIn {
+    doc /* carries the aggregated status picture to the duty controller. */
+}
+connection rechargeLinkLA connect groundControlStation.rechargeRequestOut to SurveillanceDroneSwarm::SA::groundCrew.rechargeIn {
+    doc /* carries recharge-slot requests to the ground crew. */
+}
+
+// ---- Ground <-> fleet (internal) ----
+
+connection missionForward connect groundControlStation.missionOut to fleet.missionIn {
+    doc /* forwards mission tasking from the ground control station to every member. */
+}
+connection commandForward connect groundControlStation.commandOut to fleet.commandIn {
+    doc /* forwards supervisory and recall-and-land commands from the ground control station to every member. */
+}
+connection ackForward connect groundControlStation.ackForwardOut to fleet.ackForwardIn {
+    doc /* forwards acknowledgement to the member whose decision record it closes out. */
+}
+connection directiveForward connect groundControlStation.directiveOut to fleet.directiveIn {
+    doc /* carries the ground control station's coordination directives to the fleet. */
+}
+connection detectionsUp connect fleet.detectionsOut to groundControlStation.detectionsIn {
+    doc /* carries each member's local detections and tracks up for correlation and triage. */
+}
+connection decisionsUp connect fleet.decisionOut to groundControlStation.decisionsIn {
+    doc /* carries each member's decision-record contribution up for completion. */
+}
+connection statusUp connect fleet.statusOut to groundControlStation.statusIn {
+    doc /* carries each member's status contribution up for aggregation. */
+}
+
+// ---- Function allocation: one allocate per function ----
+
+allocate holdSectorWatch to fleet;
+allocate detectAndClassifyObjects to fleet;
+allocate navigateAgainstStoredMaps to fleet;
+allocate reportDetections to fleet;
+allocate recordDecision to fleet;
+
+allocate manageClassifierVersion to groundControlStation;
+allocate presentStatusPicture to groundControlStation;
+allocate taskMission to groundControlStation;
+allocate commandSupervision to groundControlStation;
+allocate recallAndLand to groundControlStation;
+allocate acknowledgeReport to groundControlStation;
+allocate handOverSector to groundControlStation;
+allocate rotateRecharge to groundControlStation;
+allocate redistributeCoverage to groundControlStation;
+allocate deconflictMembers to groundControlStation;
+allocate relayLink to groundControlStation;
+allocate correlateTracks to groundControlStation;
+allocate handOverTrack to groundControlStation;
+allocate admitMember to groundControlStation;
+
+// ---- Modes and states ----
+
+#Mode state def MemberMode {
+    doc /* the operating mode of one member drone: nominal watching, the degraded and constrained
+         conditions the brief names, and landed. Carries the rules RecallWins, ReturnsWhenIsolated,
+         GeofenceBreachEndsWatch and QuarantinedStaysOut, restated here from SA. */
+    initial start; transition start -> Landed;
+
+    state Landed { doc /* grounded, not watching: recalled, out of cleared airspace, quarantined, or recharging. */ }
+    state Watching { doc /* actively holding assigned sector watch under normal conditions. */ }
+    state NavigationDegraded { doc /* no satellite positioning; navigating by matching camera views against stored maps. */ }
+    state SensingDegraded { doc /* this drone's sensors cannot be trusted as they are. */ }
+    state Isolated { doc /* cut off from the other drones. */ }
+    state Quarantined { doc /* failed admission; takes no part in coordination until readmitted. */ }
+    state Recalled { doc /* under a recall-and-land order; no longer watching, heading to land. */ }
+    state OutsideClearedAirspace { doc /* outside the airspace authority's cleared limits; no longer watching, heading to land. */ }
+
+    transition Landed -> Watching;
+    transition Watching -> NavigationDegraded;
+    transition NavigationDegraded -> Watching;
+    transition Watching -> SensingDegraded;
+    transition SensingDegraded -> Watching;
+    transition Watching -> Isolated;
+    transition Isolated -> Watching;
+    transition Watching -> Quarantined;
+    transition Quarantined -> Landed;
+    transition Watching -> Recalled;
+    transition NavigationDegraded -> Recalled;
+    transition SensingDegraded -> Recalled;
+    transition Isolated -> Recalled;
+    transition Recalled -> Landed;
+    transition Watching -> OutsideClearedAirspace;
+    transition OutsideClearedAirspace -> Landed;
+
+    @SysproseVerification::PropertyPattern {
+        doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
+        attribute pattern = "absence";
+        attribute scope = "between";
+        attribute q = "state Recalled";
+        attribute r = "state Landed";
+        attribute p = "state Watching";
+    }
+    @SysproseVerification::PropertyPattern {
+        doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed. */
+        attribute pattern = "recovery";
+        attribute scope = "globally";
+        attribute p = "state Landed";
+    }
+    @SysproseVerification::PropertyPattern {
+        doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
+        attribute pattern = "absence";
+        attribute scope = "between";
+        attribute q = "state OutsideClearedAirspace";
+        attribute r = "state Landed";
+        attribute p = "state Watching";
+    }
+    @SysproseVerification::PropertyPattern {
+        doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
+        attribute pattern = "absence";
+        attribute scope = "between";
+        attribute q = "state Quarantined";
+        attribute r = "state Landed";
+        attribute p = "state Watching";
+    }
+}
+
+#State state def MemberStatus {
+    doc /* the coarse platform status of one member drone, independent of its watch mode. */
+    initial start; transition start -> Idle;
+    state Idle { doc /* on the ground, available but not tasked. */ }
+    state Active { doc /* airborne and performing tasked activity. */ }
+    state Recharging { doc /* at a recharge point being serviced by the ground crew, about 60 minutes. */ }
+    transition Idle -> Active;
+    transition Active -> Recharging;
+    transition Recharging -> Idle;
+}
+
+#Configuration state def FleetConfiguration {
+    doc /* the fleet-level watch configuration: normal mesh conditions, or a share of the inter-member
+         links jammed (the brief's named fleet mode). */
+    initial start; transition start -> Nominal;
+    state Nominal { doc /* every member's mesh links to its peers are intact; ground-directed coordination operates over the full mesh. */ }
+    state MeshDegraded { doc /* a share of the links between drones is jammed; the brief's named fleet mode. Ground-directed coordination continues over the ground link, but relay and track correlation between affected members is reduced. */ }
+    transition Nominal -> MeshDegraded;
+    transition MeshDegraded -> Nominal;
+}
+
+// ---- Rules, carried from SA, satisfied by the member's state machine ----
+
+satisfy SurveillanceDroneSwarm::SA::RecallWins by fleet;
+satisfy SurveillanceDroneSwarm::SA::ReturnsWhenIsolated by fleet;
+satisfy SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch by fleet;
+satisfy SurveillanceDroneSwarm::SA::QuarantinedStaysOut by fleet;
+
+// ---- Hazards stated at SA, satisfied by path here ----
+
+satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
+satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by groundControlStation;
+satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;
+satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by fleet;
+satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by groundControlStation;
+satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by groundControlStation;
+satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by groundControlStation;
+satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by groundControlStation;
+
+// ---- Hazards this layer adds ----
+
+package Hazards {
+    doc /* hazards added at LA: risks visible once the coordination-decision and command-and-control
+         functions are allocated to specific logical components. */
+
+    #Hazard #Accepted requirement GroundLinkSinglePointOfFailureHazard {
+        doc /* Because this alternative centralises the deciding half of inter-member coordination at
+             the ground control station, a lost ground link stalls sector handover, recharge rotation,
+             redistribution, deconfliction, relay assignment, track correlation, track handover and
+             admission fleet-wide, even though detection, classification, navigation and local
+             report-holding continue on board. Accepted for this alternative: the trade study's second
+             alternative addresses it by moving at least half of the coordination functions onto the
+             members so they keep settling among themselves without the ground link; the low
+             groundLinkLossAreaUnderWatchShare estimate below states the residual risk this alternative
+             carries instead of mitigating it. */
+        subject s : GroundControlStation;
+    }
+}
+
+// ---- Measures of effectiveness: this architecture's own worst-case estimate ----
+
+attribute laFleetSize = 12.0 { doc /* restated from the brief's fixed fleet-size budget (fleetSize), to derive coverageLossOnMemberLoss. */ }
+attribute laMemberFlightEnduranceMinutes = 40.0 { doc /* restated from the brief's fixed flight-endurance budget (memberFlightEnduranceMinutes), to derive coverageLossOnMemberLoss. */ }
+attribute laMemberRechargeMinutes = 60.0 { doc /* restated from the brief's fixed recharge-time budget (memberRechargeMinutes), to derive coverageLossOnMemberLoss. */ }
+
+#Estimate attribute areaUnderWatchShare :> Common::areaUnderWatchShare = 0.90 { doc /* worst case with the ground link up: ground-scheduled rotation across 12 drones (40 min flight, 60 min recharge) keeps the tasked sectors watched at the brief's 0.9 continuous-watch figure; basis: FleetOfTwelveDrones, memberFlightEnduranceMinutes, memberRechargeMinutes. */ }
+
+#Estimate attribute coverageLossOnMemberLoss :> Common::coverageLossOnMemberLoss { doc /* derived worst case: the share of coverage lost when one drone is lost is the reciprocal of the number of members concurrently active under the flight/recharge duty cycle, before the ground control station redistributes coverage; basis: fleetSize, memberFlightEnduranceMinutes, memberRechargeMinutes restated above. */ }
+assert constraint { coverageLossOnMemberLoss == 1.0 / (laFleetSize * laMemberFlightEnduranceMinutes / (laMemberFlightEnduranceMinutes + laMemberRechargeMinutes)) }
+
+#Estimate attribute jammedMeshAreaUnderWatchShare :> Common::jammedMeshAreaUnderWatchShare = 0.80 { doc /* worst case with half the mesh links jammed: normal tasking and rotation are directed over the ground link, not the mesh, so watch continues; only relay-for-isolated-members, track correlation and track handover degrade; basis: RadioInterference, ground-link-directed coordination. */ }
+
+#Estimate attribute groundLinkLossAreaUnderWatchShare :> Common::groundLinkLossAreaUnderWatchShare = 0.55 { doc /* worst case while the ground link or ground station is down: sector handover, recharge rotation, redistribution, deconfliction, relay assignment, track correlation, track handover and admission are all decided at the ground control station in this alternative, so re-planning stalls fleet-wide and coverage decays below the 0.9 target until the link returns; basis: this alternative's ground-centralised coordination allocation, contrasted with alternative 2. */ }
+
+#Estimate attribute watchEnduranceHours :> Common::watchEnduranceHours = 20.0 { doc /* worst case: ground-scheduled rotation sustains the watch indefinitely while the ground link holds, but a prolonged ground-link outage degrades scheduling within a working day, so the guaranteed endurance without people is capped below the brief's 24 h target; basis: memberFlightEnduranceMinutes, memberRechargeMinutes, RechargePointAndGroundCrew. */ }
+
+#Estimate attribute reportLatencySeconds :> Common::reportLatencySeconds = 45.0 { doc /* worst case with the ground link up: a mesh hop to a ground-link-capable member plus ground-station triage before forwarding to the operations centre; basis: MeshRadio and GroundLinkRadio hop budget. */ }
+
+#Estimate attribute positionErrorWithoutGnssMeters :> Common::positionErrorWithoutGnssMeters = 40.0 { doc /* worst case after 10 minutes without satellite positioning: onboard camera-against-stored-map navigation, unaffected by where coordination is decided; basis: StoredMaps, NavigateWithoutSatellitePositioning. */ }
+
+#Estimate attribute reportHoldMinutes :> Common::reportHoldMinutes = 45.0 { doc /* worst case: a cut-off member holds its reports on board regardless of coordination placement, since detection, classification and report-holding stay onboard; basis: OperateThroughLinkGap, reportDetections and recordDecision allocated to fleet. */ }
+
+#Estimate attribute reportsLostInLinkGap :> Common::reportsLostInLinkGap = 0 { doc /* worst case: none, since report generation and holding are allocated to the fleet, not the ground control station, so a ground-link gap cannot lose a held report; basis: fleet allocation of reportDetections and recordDecision. */ }
+
+#Estimate attribute missedDetectionShare :> Common::missedDetectionShare = 0.08 { doc /* worst case: onboard detection and classification are unaffected by coordination placement; basis: DetectClassifyAndReport, onboard sensing. */ }
+
+#Estimate attribute falseAlarmsPerHour :> Common::falseAlarmsPerHour = 1.8 { doc /* worst case: raw member detections queue without the ground station's correlation during a ground-link gap, raising duplicate/false alarms until the link returns and correlateTracks resumes; basis: correlateTracks and handOverTrack allocated to the ground control station in this alternative. */ }
+
+#Estimate attribute operatorAlertsPerHour :> Common::operatorAlertsPerHour = 15.0 { doc /* worst case: centralising triage at the single ground control station gives one choke point to cap the rate reaching the duty controller, comfortably under the 20/h OperatorWorkloadLimit; basis: ground-centralised triage before reportsOut. */ }
+
+#Estimate attribute acknowledgedReportsThatMatterShare :> Common::acknowledgedReportsThatMatterShare = 0.82 { doc /* worst case: centralised, consistent triage at the ground control station improves the precision of what reaches the duty controller; basis: correlateTracks and recordDecision allocated to the ground control station. */ }
+
+#Estimate attribute onboardClassificationCostUsd :> Common::onboardClassificationCostUsd = 280.0 { doc /* worst case per drone: the same onboard classifier hardware is assumed regardless of coordination placement, since detectAndClassifyObjects stays onboard; basis: ComputingCostCap. */ }

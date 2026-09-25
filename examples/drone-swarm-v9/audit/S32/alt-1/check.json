@@ -1,0 +1,721 @@
+{
+  "ok": true,
+  "fileName": "/home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml",
+  "format": "sysml-text",
+  "normalization": {
+    "bomStripped": false,
+    "crlfNormalized": false,
+    "tabs": false
+  },
+  "diagnostics": [
+    {
+      "id": "parse#0",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved reference 'ScalarValues::Real'",
+      "code": "ref/unresolved-specialization",
+      "range": {
+        "start": {
+          "line": 77,
+          "column": 39,
+          "offset": 4653
+        },
+        "end": {
+          "line": 77,
+          "column": 60,
+          "offset": 4674
+        }
+      },
+      "hint": "Check the specialized name is declared and visible from here.",
+      "source": "mapper"
+    },
+    {
+      "id": "constraint-violation#0",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "bf3f6906-66ab-4947-9e74-dcb33990d2d7",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 711,
+          "column": 9,
+          "offset": 35625
+        },
+        "end": {
+          "line": 714,
+          "column": 10,
+          "offset": 35800
+        }
+      },
+      "elementName": "areaUnderWatchTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#1",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "a5c2836c-93d3-4415-b5c2-843c6502ae64",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 719,
+          "column": 9,
+          "offset": 36140
+        },
+        "end": {
+          "line": 722,
+          "column": 10,
+          "offset": 36378
+        }
+      },
+      "elementName": "coverageLossAfterMemberLossTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#2",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "8fda7af3-ecac-441c-89fb-b5102df07bcb",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 727,
+          "column": 9,
+          "offset": 36706
+        },
+        "end": {
+          "line": 730,
+          "column": 10,
+          "offset": 36948
+        }
+      },
+      "elementName": "coverageUnderMeshJammingTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#3",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "9049aff3-c83e-42cf-ab67-c815ec9fea7b",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 735,
+          "column": 9,
+          "offset": 37268
+        },
+        "end": {
+          "line": 738,
+          "column": 10,
+          "offset": 37517
+        }
+      },
+      "elementName": "reportAgeAtOperationsCentreTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#4",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "ab1b7be9-c836-4933-8788-d1008be7d3ec",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 743,
+          "column": 9,
+          "offset": 37881
+        },
+        "end": {
+          "line": 746,
+          "column": 10,
+          "offset": 38135
+        }
+      },
+      "elementName": "positionErrorWithoutSatelliteTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#5",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "2056a84e-96a7-4232-8dd7-5f480b1c9c77",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 751,
+          "column": 9,
+          "offset": 38421
+        },
+        "end": {
+          "line": 754,
+          "column": 10,
+          "offset": 38645
+        }
+      },
+      "elementName": "reportHoldWhileCutOffTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#6",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "27aded9e-b42b-4663-9aff-339815b8e7b7",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 759,
+          "column": 9,
+          "offset": 38942
+        },
+        "end": {
+          "line": 762,
+          "column": 10,
+          "offset": 39127
+        }
+      },
+      "elementName": "missedDetectionTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#7",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "3d866b81-d6dd-4541-8f83-9b1dd32a4eed",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 767,
+          "column": 9,
+          "offset": 39409
+        },
+        "end": {
+          "line": 770,
+          "column": 10,
+          "offset": 39599
+        }
+      },
+      "elementName": "falseAlarmsPerHourTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#8",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "822a0bdc-a361-4969-9fac-e05ae8e382cc",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 775,
+          "column": 9,
+          "offset": 39912
+        },
+        "end": {
+          "line": 778,
+          "column": 10,
+          "offset": 40132
+        }
+      },
+      "elementName": "alertsReachingOperatorTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#9",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "3334ad63-c2d2-47d1-a775-07b2ea91fbef",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 783,
+          "column": 9,
+          "offset": 40453
+        },
+        "end": {
+          "line": 786,
+          "column": 10,
+          "offset": 40691
+        }
+      },
+      "elementName": "acknowledgedReportsThatMatterTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#10",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "0e397977-4c20-4171-a80a-9d3f97285f5f",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 791,
+          "column": 9,
+          "offset": 41032
+        },
+        "end": {
+          "line": 794,
+          "column": 10,
+          "offset": 41272
+        }
+      },
+      "elementName": "onboardClassificationCostTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#11",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "2f3535fe-4b54-4f23-8ce4-91ebd6976a3d",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 799,
+          "column": 9,
+          "offset": 41659
+        },
+        "end": {
+          "line": 802,
+          "column": 10,
+          "offset": 41911
+        }
+      },
+      "elementName": "unattendedWatchDurationTarget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#12",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "4478f564-882c-4593-9ace-1dd52c256c58",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 811,
+          "column": 9,
+          "offset": 42316
+        },
+        "end": {
+          "line": 814,
+          "column": 10,
+          "offset": 42443
+        }
+      },
+      "elementName": "fleetSizeBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#13",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "5c01b384-1b69-4186-ab53-8c7160ff9b1e",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 819,
+          "column": 9,
+          "offset": 42802
+        },
+        "end": {
+          "line": 822,
+          "column": 10,
+          "offset": 42988
+        }
+      },
+      "elementName": "memberEnduranceBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#14",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "1888b029-8cdd-4939-a3d8-24349fd6563f",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 827,
+          "column": 9,
+          "offset": 43248
+        },
+        "end": {
+          "line": 830,
+          "column": 10,
+          "offset": 43453
+        }
+      },
+      "elementName": "groundTurnaroundBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#15",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "997f19c4-9790-44d5-8698-d77625fc2ba1",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 835,
+          "column": 9,
+          "offset": 43813
+        },
+        "end": {
+          "line": 838,
+          "column": 10,
+          "offset": 43980
+        }
+      },
+      "elementName": "cruiseSpeedBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#16",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "6f2cac05-41b7-4f3c-b261-e4d5c1ce2bf8",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 843,
+          "column": 9,
+          "offset": 44235
+        },
+        "end": {
+          "line": 846,
+          "column": 10,
+          "offset": 44449
+        }
+      },
+      "elementName": "instantaneousFootprintBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#17",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "cd78170e-8253-4ba8-a60d-019e8bf7ffec",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 851,
+          "column": 9,
+          "offset": 44685
+        },
+        "end": {
+          "line": 854,
+          "column": 10,
+          "offset": 44842
+        }
+      },
+      "elementName": "areaOfInterestBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#18",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "37fa2110-b8b0-4a48-8180-162b970f11d6",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 859,
+          "column": 9,
+          "offset": 45159
+        },
+        "end": {
+          "line": 862,
+          "column": 10,
+          "offset": 45359
+        }
+      },
+      "elementName": "operatorSecondsPerAlertBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#19",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "35f6775e-d6e8-4503-ad0f-bf5e47e4e381",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 867,
+          "column": 9,
+          "offset": 45644
+        },
+        "end": {
+          "line": 870,
+          "column": 10,
+          "offset": 45866
+        }
+      },
+      "elementName": "trackStaleAfterBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#20",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "df6b37fb-306e-4eb7-8799-38ae6aa3fa61",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 875,
+          "column": 9,
+          "offset": 46202
+        },
+        "end": {
+          "line": 878,
+          "column": 10,
+          "offset": 46448
+        }
+      },
+      "elementName": "satellitePositioningOutageBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#21",
+      "ruleId": "constraint-violation",
+      "severity": "info",
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "elementId": "c3f1c90e-5c74-4ead-9364-5c7734202744",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 883,
+          "column": 9,
+          "offset": 46748
+        },
+        "end": {
+          "line": 886,
+          "column": 10,
+          "offset": 46968
+        }
+      },
+      "elementName": "meshLinksJammedBudget",
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "parse#1",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved allocation target 'dutyController'",
+      "code": "ref/unresolved-allocation-end",
+      "range": {
+        "start": {
+          "line": 2407,
+          "column": 13,
+          "offset": 152274
+        },
+        "end": {
+          "line": 2407,
+          "column": 61,
+          "offset": 152322
+        }
+      },
+      "hint": "Declare the allocated element, or correct the name.",
+      "source": "mapper"
+    },
+    {
+      "id": "parse#2",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved allocation target 'dutyController'",
+      "code": "ref/unresolved-allocation-end",
+      "range": {
+        "start": {
+          "line": 2409,
+          "column": 13,
+          "offset": 152427
+        },
+        "end": {
+          "line": 2409,
+          "column": 69,
+          "offset": 152483
+        }
+      },
+      "hint": "Declare the allocated element, or correct the name.",
+      "source": "mapper"
+    },
+    {
+      "id": "parse#3",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved allocation target 'dutyController'",
+      "code": "ref/unresolved-allocation-end",
+      "range": {
+        "start": {
+          "line": 2411,
+          "column": 13,
+          "offset": 152604
+        },
+        "end": {
+          "line": 2411,
+          "column": 54,
+          "offset": 152645
+        }
+      },
+      "hint": "Declare the allocated element, or correct the name.",
+      "source": "mapper"
+    },
+    {
+      "id": "parse#4",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved allocation target 'groundStation'",
+      "code": "ref/unresolved-allocation-end",
+      "range": {
+        "start": {
+          "line": 2413,
+          "column": 13,
+          "offset": 152736
+        },
+        "end": {
+          "line": 2413,
+          "column": 60,
+          "offset": 152783
+        }
+      },
+      "hint": "Declare the allocated element, or correct the name.",
+      "source": "mapper"
+    },
+    {
+      "id": "parse#5",
+      "ruleId": "parse",
+      "severity": "warning",
+      "message": "Unresolved allocation target 'operationsCentreAnalyst'",
+      "code": "ref/unresolved-allocation-end",
+      "range": {
+        "start": {
+          "line": 2415,
+          "column": 13,
+          "offset": 152888
+        },
+        "end": {
+          "line": 2415,
+          "column": 76,
+          "offset": 152951
+        }
+      },
+      "hint": "Declare the allocated element, or correct the name.",
+      "source": "mapper"
+    },
+    {
+      "id": "constraint-violation#22",
+      "ruleId": "constraint-violation",
+      "severity": "warning",
+      "message": "Constraint violated: areaUnderWatchFraction == watchingMembers * footprintSquareKm / taskedAreaSquareKm",
+      "elementId": "c85bdbf8-20f9-4be2-81e5-de504715ae0d",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 2665,
+          "column": 9,
+          "offset": 178607
+        },
+        "end": {
+          "line": 2665,
+          "column": 113,
+          "offset": 178711
+        }
+      },
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#23",
+      "ruleId": "constraint-violation",
+      "severity": "warning",
+      "message": "Constraint violated: coverageLossAfterMemberLossFraction == 1.0 / watchingMembers",
+      "elementId": "a2e85684-ad69-4425-bea1-bdc32edc441b",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 2666,
+          "column": 9,
+          "offset": 178720
+        },
+        "end": {
+          "line": 2666,
+          "column": 91,
+          "offset": 178802
+        }
+      },
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    },
+    {
+      "id": "constraint-violation#24",
+      "ruleId": "constraint-violation",
+      "severity": "warning",
+      "message": "Constraint violated: coverageUnderMeshJammingFraction == watchingMembers * footprintSquareKm / taskedAreaSquareKm * (1.0 - jammedLinkFraction * turnaroundMinutes / (sortieMinutes + turnaroundMinutes))",
+      "elementId": "29fdca32-d964-4be8-a0b0-4f68e75be09d",
+      "code": "validation/constraint-violation",
+      "source": "validation",
+      "range": {
+        "start": {
+          "line": 2667,
+          "column": 9,
+          "offset": 178811
+        },
+        "end": {
+          "line": 2667,
+          "column": 210,
+          "offset": 179012
+        }
+      },
+      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 9,
+    "infos": 22
+  },
+  "elements": {
+    "count": 2720,
+    "roots": [
+      "SurveillanceDroneSwarm"
+    ]
+  }
+}

@@ -1,0 +1,357 @@
+
+    /* ===================== Common-typed local infrastructure ===================== */
+
+    doc /* physical ground-link radio node type flown aboard each drone; the member-side end of every GroundLinkRadio channel */
+    part def MemberGroundRadio {
+        out port uplinkOut : Common::GroundLinkPort;
+        in port downlinkIn : ~Common::GroundLinkPort;
+    }
+    doc /* physical ground-link radio node type at the operations centre; the ground end of every drone's GroundLinkRadio channel */
+    part def GroundStationRadio {
+        in port uplinkIn : ~Common::GroundLinkPort;
+        out port downlinkOut : Common::GroundLinkPort;
+    }
+    doc /* physical mesh radio node aboard each drone; carries MeshRadio traffic, decides nothing itself */
+    part def MemberMeshRadio {
+        doc /* the #Node that realises meshOut/meshIn on SurveillanceDrone; carries #Coordination traffic to and from other members */
+    }
+    doc /* off-the-shelf on-board classifier tier: higher accuracy, closer to the 300 USD cap */
+    part def COTSClassifierModule {
+        doc /* the classifier variant this architecture's onboardClassificationCostUsd estimate assumes */
+    }
+    doc /* lighter on-board classifier tier: trades accuracy for cost margin */
+    part def LowPowerClassifierModule {
+        doc /* kept as the fallback #Variant, not the one this estimate assumes */
+    }
+    doc /* on-board compute that runs the classifier against sensorPod frames; cost-capped by ComputingCostCap */
+    part def MissionComputer {
+        doc /* the on-board classifier tier is an alternative-1 design choice, tagged #Variant so it can be traded against cost and missedDetectionShare */
+        variation part classifierModule : COTSClassifierModule {
+            doc /* variability point: which classifier tier missionComputer runs */
+            #Variant variant part cots : COTSClassifierModule {
+                doc /* the tier this architecture's onboardClassificationCostUsd estimate assumes */
+            }
+            #Variant variant part lowPower : LowPowerClassifierModule {
+                doc /* the lighter tier, kept as the cost-margin alternative */
+            }
+        }
+    }
+    doc /* the drone's camera/sensor payload that MissionComputer classifies frames from */
+    part def SensorPod {
+        doc /* source of MovingObjectsInArea frames; degrades under WeatherLightingAndDecoys */
+    }
+    doc /* matches live camera views against StoredMaps to hold a position estimate while SatellitePositioningOutage lasts */
+    part def MapMatchNavigator {
+        doc /* realises NavigateWithoutSatellitePositioning; bounds positionErrorWithoutGnssMeters */
+    }
+    doc /* flies the drone inside AirspaceClearance and WeatherLightingAndDecoys limits, and executes recall and landing */
+    part def FlightController {
+        doc /* carries the airborne side of RecallWins and GeofenceBreachEndsWatch */
+    }
+    doc /* holds DetectionReportsAndTracks and DecisionRecords produced while the ground link is down, until it returns */
+    part def ReportStore {
+        doc /* realises OperateThroughLinkGap; bounded by reportHoldMinutes so reportsLostInLinkGap stays at zero */
+    }
+    doc /* alternative 1's centralised swarm coordination: decides handOverSector, rotateRecharge, redistributeCoverage, deconflictMembers, correlateTracks, handOverTrack and admitMember for the whole fleet; the architecture decision this alternative makes */
+    part def SwarmCoordinator {
+        doc /* every deciding #Coordination function except relayLink, which stays on the fleet because every member performs it */
+    }
+    doc /* the DutyController's single seat: taskMission, commandSupervision, recallAndLand, presentStatusPicture and acknowledgeReport */
+    part def SupervisionConsole {
+        doc /* keeps all five #C2 functions on the ground, as both alternatives must */
+    }
+    doc /* ranks and de-duplicates DetectionReportsAndTracks before they reach the operator, and keeps the DecisionRecord for each */
+    part def ReportTriage {
+        doc /* realises TriageReports and KeepDecisionRecord centrally, using full-swarm context */
+    }
+    doc /* the operations-centre ground station hosting alternative 1's centralised coordination, supervision and triage (CV-06: hosting is nesting) */
+    part def GroundStationNode {
+        part swarmCoordinator : SwarmCoordinator;
+        part supervisionConsole : SupervisionConsole;
+        part reportTriage : ReportTriage;
+        #Node part groundLinkRadio : GroundStationRadio;
+    }
+    doc /* the ground crew's servicing activity between sorties */
+    part def GroundCrewService {
+        doc /* realises RechargePointAndGroundCrew's servicing side */
+    }
+    doc /* where a drone lands, recharges for about memberRechargeMinutesPA, and is serviced before rejoining rotateRecharge */
+    part def RechargePointNode {
+        part groundCrewService : GroundCrewService;
+    }
+    /* ===================== The population (CV-16) ===================== */
+
+    doc /* the replicable surveillance drone; CV-16's one member definition for the fleet usage and both named representatives. Its own #Mode and #State machines are nested here so RecallWins, ReturnsWhenIsolated, GeofenceBreachEndsWatch and QuarantinedStaysOut are carried directly by SurveillanceDrone, and NavigationDegraded, SensingDegraded, Isolated and Quarantined are states of this machine. */
+    #Member part def SurveillanceDrone {
+        out port meshOut : Common::MeshPort;
+        in port meshIn : ~Common::MeshPort;
+
+        doc /* the drone's sensing and navigation operating condition, independent of its lifecycle status */
+        #Mode state def SurveillanceDroneMode {
+            initial modeStart;
+            doc /* satellite positioning and sensing both trusted */
+            state Nominal;
+            doc /* NavigationDegraded: no satellite positioning; navigates by matching camera views against StoredMaps */
+            state NavigationDegraded;
+            doc /* SensingDegraded: the drone's sensors cannot be trusted as they are */
+            state SensingDegraded;
+
+            transition modeStart -> Nominal;
+            transition Nominal -> NavigationDegraded;
+            transition NavigationDegraded -> Nominal;
+            transition Nominal -> SensingDegraded;
+            transition SensingDegraded -> Nominal;
+        }
+        doc /* the drone's operational lifecycle: airborne watch and coordination status, admission and clearance status; carries the rules the swarm never breaks */
+        #State state def SurveillanceDroneState {
+            initial start;
+            doc /* on the ground, not flying */
+            state Landed;
+            doc /* departing towards its assigned sector */
+            state TakingOff;
+            doc /* holding watch over its assigned sector */
+            state Watching;
+            doc /* exchanging handover, rotation, redistribution, deconfliction, relay, track-correlation or admission traffic with other members */
+            state Coordinating;
+            doc /* Isolated: cut off from the other drones over the mesh */
+            state Isolated;
+            doc /* recalled by the operator or by swarmCoordinator; must land before it may watch again (RecallWins) */
+            state Recalled;
+            doc /* outside its cleared airspace; must land before it may watch again (GeofenceBreachEndsWatch) */
+            state OutsideClearance;
+            doc /* descending to land */
+            state Landing;
+            doc /* Quarantined: failed admission; takes no part in coordination until readmitted (QuarantinedStaysOut) */
+            state Quarantined;
+            doc /* passed a repeated admission check by admitMember and may resume coordination */
+            state Readmitted;
+
+            transition start -> Landed;
+            transition Landed -> TakingOff;
+            transition TakingOff -> Watching;
+            transition TakingOff -> Quarantined;
+            transition Watching -> Coordinating;
+            transition Coordinating -> Watching;
+            transition Watching -> Isolated;
+            transition Isolated -> Landing;
+            transition Isolated -> Coordinating;
+            transition Watching -> Recalled;
+            transition Coordinating -> Recalled;
+            transition Recalled -> Landing;
+            transition Watching -> OutsideClearance;
+            transition Coordinating -> OutsideClearance;
+            transition OutsideClearance -> Landing;
+            transition Quarantined -> Readmitted;
+            transition Readmitted -> Watching;
+            transition Readmitted -> Coordinating;
+            transition Landing -> Landed;
+
+            @SysproseVerification::PropertyPattern {
+                doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state Recalled";
+                attribute r = "state Landed";
+                attribute p = "state Watching";
+            }
+            @SysproseVerification::PropertyPattern {
+                doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state OutsideClearance";
+                attribute r = "state Landed";
+                attribute p = "state Watching";
+            }
+            @SysproseVerification::PropertyPattern {
+                doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state Quarantined";
+                attribute r = "state Readmitted";
+                attribute p = "state Coordinating";
+            }
+            @SysproseVerification::PropertyPattern {
+                doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed; an isolated drone included. */
+                attribute pattern = "recovery";
+                attribute scope = "globally";
+                attribute p = "state Landed";
+            }
+        }
+
+        state mode : SurveillanceDroneMode;
+        state status : SurveillanceDroneState;
+
+        doc /* carries MeshRadio traffic for #Coordination handover, rotation, redistribution, deconfliction, relay, track-correlation and admission exchanges with peers */
+        #Node part meshRadio : MemberMeshRadio;
+        doc /* carries GroundLinkRadio traffic to and from groundStation */
+        #Node part groundLinkRadio : MemberGroundRadio;
+        part missionComputer : MissionComputer;
+        part sensorPod : SensorPod;
+        part mapMatchNavigator : MapMatchNavigator;
+        part flightController : FlightController;
+        part reportStore : ReportStore;
+    }
+    doc /* the fielded population: up to fleetSizePA identical drones; CV-16's fleet usage carrying the count, never one instance */
+    part fleet : SurveillanceDrone [12] {
+        state fleetStatus : FleetConfiguration;
+    }
+    doc /* CV-16 representative A, standing for either end of any pair of fleet members exchanging mesh traffic */
+    part memberA : SurveillanceDrone;
+    doc /* CV-16 representative B */
+    part memberB : SurveillanceDrone;
+    doc /* the physical medium type that carries mesh traffic between two members: the intermittent, jammable mesh radio bearer (CV-05) */
+    connection def MeshRadioLink {
+        end a : Common::MeshPort;
+        end b : ~Common::MeshPort;
+    }
+    doc /* the mesh link between two drones, carried by MeshRadio and typed by MeshRadioLink; carries #Coordination traffic between peers */
+    connection peerLink : MeshRadioLink connect memberA.meshOut to memberB.meshIn;
+    doc /* every drone's report and status uplink to the ground station, over GroundLinkRadio; not always available (bounds groundLinkLossAreaUnderWatchShare) */
+    connection uplink : Common::GroundLinkChannel connect fleet.groundLinkRadio.uplinkOut to groundStation.groundLinkRadio.uplinkIn;
+    doc /* tasking, supervisory and recall commands, and swarmCoordinator's/supervisionConsole's decisions, from the ground to every drone */
+    connection downlink : Common::GroundLinkChannel connect groundStation.groundLinkRadio.downlinkOut to fleet.groundLinkRadio.downlinkIn;
+    /* ===================== Top-level physical nodes ===================== */
+
+    doc /* the operations centre's ground station */
+    #Node part groundStation : GroundStationNode;
+    doc /* the recharge point and ground crew */
+    #Node part rechargePoint : RechargePointNode;
+    /* ===================== State definitions (modes and states option) ===================== */
+
+    doc /* the fleet-wide share of jammed mesh links, tracked so the swarm can tell nominal mesh conditions from degraded ones */
+    #Configuration state def FleetConfiguration {
+        initial fleetStart;
+        doc /* fewer than half the mesh links are jammed */
+        state MeshNominal;
+        doc /* MeshDegraded: a share of the links between drones is jammed */
+        state MeshDegraded;
+
+        transition fleetStart -> MeshNominal;
+        transition MeshNominal -> MeshDegraded;
+        transition MeshDegraded -> MeshNominal;
+    }
+    /* ===================== Allocations: every function to a physical part ===================== */
+
+    doc /* alternative 1 keeps the deciding #Coordination functions on the ground */
+    allocate handOverSector to groundStation.swarmCoordinator;
+    allocate rotateRecharge to groundStation.swarmCoordinator;
+    allocate redistributeCoverage to groundStation.swarmCoordinator;
+    allocate deconflictMembers to groundStation.swarmCoordinator;
+    allocate correlateTracks to groundStation.swarmCoordinator;
+    allocate handOverTrack to groundStation.swarmCoordinator;
+    allocate admitMember to groundStation.swarmCoordinator;
+    doc /* relayLink is something every member performs, so it stays on the fleet rather than being a ground decision */
+    allocate relayLink to fleet;
+    doc /* every #C2 function keeps a ground usage, as both alternatives require */
+    allocate taskMission to groundStation.supervisionConsole;
+    allocate commandSupervision to groundStation.supervisionConsole;
+    allocate recallAndLand to groundStation.supervisionConsole;
+    allocate presentStatusPicture to groundStation.supervisionConsole;
+    allocate acknowledgeReport to groundStation.supervisionConsole;
+    doc /* on-board functions every member performs for itself: sensing, classification, navigation, reporting and decision-keeping */
+    allocate holdSectorWatch to fleet;
+    allocate detectAndClassifyObjects to fleet;
+    allocate navigateAgainstStoredMaps to fleet;
+    allocate reportDetections to fleet;
+    allocate recordDecision to fleet;
+    doc /* classifier version consistency across the fleet is a central decision in this ground-centric alternative, held alongside triage and supervision */
+    allocate manageClassifierVersion to groundStation.supervisionConsole;
+    /* ===================== Hazards this layer adds (CV-19 / safety option) ===================== */
+
+    package Hazards {
+        doc /* hazards alternative 1 (ground-decided coordination) adds on top of the ones already stated above; none of the brief's names are restated here */
+
+        #Hazard #Accepted requirement GroundCoordinatorLossHazard {
+            subject coordinator : SwarmCoordinator;
+            doc /* Accepted: alternative 1 puts every deciding #Coordination function on groundStation.swarmCoordinator. When the ground link or the ground station is down, no new handover, rotation or redistribution decision is made; members hold their last assignment and keep watching, and relayLink (allocated to the fleet) keeps relaying detections towards each member's reportStore. This is why groundLinkLossAreaUnderWatchShare is estimated well below target for this alternative rather than mitigated further here; alternative 2 removes this single point by moving #Coordination onto the members themselves. */
+        }
+
+        #Hazard requirement CentralAdmissionGapHazard {
+            doc /* A quarantined drone cannot be readmitted while the ground link is down, because admitMember is decided on the ground by groundStation.swarmCoordinator; it stays quarantined, taking no part in coordination, for as long as the gap lasts. */
+        }
+    }
+    doc /* PositionDriftHazard: mitigated on board, by mapMatchNavigator inside every fleet member */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
+    doc /* MeshJammingHazard: mitigated by the fleet's mesh radios and relayLink redundancy */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by fleet;
+    doc /* MisclassificationHazard: mitigated by each member's on-board classifier, which may report Unknown */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;
+    doc /* SensingDegradedUnnoticedHazard: mitigated by the member's SensingDegraded mode, which makes degraded sensing visible rather than silent */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by fleet;
+    doc /* StaleTrackHazard: mitigated by correlateTracks and handOverTrack, decided centrally by groundStation, marking a track's staleness */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by groundStation;
+    doc /* SpoofedMemberHazard: mitigated by admitMember, decided centrally by groundStation, the effective gatekeeper in this alternative */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by groundStation;
+    doc /* MixedClassifierVersionsHazard: mitigated by groundStation.supervisionConsole holding one classifier version across the fleet */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by groundStation;
+    doc /* OperatorOverloadHazard: mitigated by groundStation.reportTriage, which caps what reaches the operator */
+    satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by groundStation;
+    doc /* CentralAdmissionGapHazard: mitigated by the member holding Quarantined until the ground link returns and admitMember can run */
+    satisfy Hazards::CentralAdmissionGapHazard by fleet;
+    /* ===================== Resource budgets restated locally, for derivation (CV-17) ===================== */
+
+    doc /* restates the brief-fixed fleetSize budget (<= 12) so coverageLossOnMemberLoss can be derived below; a constraint body cannot reach Common's fleetSize directly */
+    attribute fleetSizePA : Real = 12;
+    doc /* restates the brief-fixed memberFlightEnduranceMinutes budget (about 40 min) */
+    attribute memberFlightEnduranceMinutesPA : Real = 40;
+    doc /* restates the brief-fixed memberRechargeMinutes budget (about 60 min) */
+    attribute memberRechargeMinutesPA : Real = 60;
+    doc /* worst-case members concurrently airborne: fleetSizePA * memberFlightEnduranceMinutesPA / (memberFlightEnduranceMinutesPA + memberRechargeMinutesPA) = 12*40/100 = 4.8, floored to the worst case of 4 evenly-spread members before the swarm re-spreads */
+    attribute airborneMembersPA : Real = 4;
+    require constraint computingCostBudget {
+        doc /* ComputingCostCap: on-board classification computing must not exceed 300 USD per drone */
+        onboardClassificationCostUsd <= 300
+    }
+    require constraint operatorWorkloadBudget {
+        doc /* OperatorWorkloadLimit: at most 20 alerts reach the operator per hour */
+        operatorAlertsPerHour <= 20
+    }
+    require constraint rechargeCycleBudget {
+        doc /* RechargePointAndGroundCrew: a drone's recharge, restated here in minutes, must not exceed the fixed budget rotateRecharge plans against */
+        memberRechargeMinutesPA <= 60
+    }
+    /* ===================== Estimates: this architecture's worst-case value per MoE (CV-17) ===================== */
+
+    #Estimate attribute coverageLossOnMemberLoss :> Common::coverageLossOnMemberLoss {
+        doc /* derived, not stated: with about airborneMembersPA members concurrently airborne, losing one costs about one airborne member's share of the watch before the swarm re-spreads */
+    }
+    assert constraint { coverageLossOnMemberLoss == 1 / airborneMembersPA }
+    #Estimate attribute areaUnderWatchShare :> Common::areaUnderWatchShare = 0.9 {
+        doc /* nominal case, ground link up: sectors are sized so at least one of the airborneMembersPA concurrently airborne drones watches every sector at all times, matching HoldContinuousWatch */
+    }
+    #Estimate attribute jammedMeshAreaUnderWatchShare :> Common::jammedMeshAreaUnderWatchShare = 0.8 {
+        doc /* the mesh carries only handover/rotation/relay #Coordination traffic in this alternative, not the deciding function itself, which runs on groundStation over the ground link; jamming half the mesh links slows handover and relay but a drone with its ground link up keeps watching its assigned sector */
+    }
+    #Estimate attribute groundLinkLossAreaUnderWatchShare :> Common::groundLinkLossAreaUnderWatchShare = 0.55 {
+        doc /* alternative 1's weak point, see Hazards::GroundCoordinatorLossHazard: every deciding #Coordination function and all #C2 sit on groundStation, so when the ground link or ground station is down no new handover, rotation or redistribution decision is made and coverage decays below target for the outage's duration */
+    }
+    #Estimate attribute watchEnduranceHours :> Common::watchEnduranceHours = 26 {
+        doc /* continuous rotateRecharge decisions from groundStation.swarmCoordinator keep members cycling through rechargePoint indefinitely while the ground link holds; bounded here by an assumed 26 h before ground crew need to intervene on equipment, not by the swarm's own endurance */
+    }
+    #Estimate attribute reportLatencySeconds :> Common::reportLatencySeconds = 45 [SI::s] {
+        doc /* detection to ground: on-board classification, one groundLinkRadio hop over GroundLinkRadio, then reportTriage; no extra mesh hop, since the deciding path in this alternative runs straight to the ground */
+    }
+    #Estimate attribute positionErrorWithoutGnssMeters :> Common::positionErrorWithoutGnssMeters = 40 [SI::m] {
+        doc /* mapMatchNavigator matching camera views against StoredMaps for 10 minutes without satellite positioning */
+    }
+    #Estimate attribute reportHoldMinutes :> Common::reportHoldMinutes = 35 {
+        doc /* reportStore is sized to outlast the expected ground-link gap by a margin above the 30-minute target */
+    }
+    #Estimate attribute reportsLostInLinkGap :> Common::reportsLostInLinkGap = 0 {
+        doc /* reportStore holds every report until the ground link returns, within reportHoldMinutes; OperateThroughLinkGap loses none */
+    }
+    #Estimate attribute missedDetectionShare :> Common::missedDetectionShare = 0.08 {
+        doc /* missionComputer's on-board classifier (see the classifierModule variation), with SensingDegraded reported rather than silently trusted */
+    }
+    #Estimate attribute falseAlarmsPerHour :> Common::falseAlarmsPerHour = 1.5 {
+        doc /* groundStation.reportTriage runs with full-swarm context, de-duplicating before an alert reaches the operator */
+    }
+    #Estimate attribute operatorAlertsPerHour :> Common::operatorAlertsPerHour = 18 {
+        doc /* groundStation.reportTriage caps what reaches supervisionConsole, inside OperatorWorkloadLimit */
+    }
+    #Estimate attribute acknowledgedReportsThatMatterShare :> Common::acknowledgedReportsThatMatterShare = 0.82 {
+        doc /* centralised triage improves the precision of what the DutyController is asked to acknowledge */
+    }
+    #Estimate attribute onboardClassificationCostUsd :> Common::onboardClassificationCostUsd = 280 {
+        doc /* USD per drone, missionComputer's cots classifier variant (see classifierModule); the ground carries the heavier cross-checking (correlateTracks, reportTriage), so the on-board tier can stay under the 300 USD ComputingCostCap */
+    }

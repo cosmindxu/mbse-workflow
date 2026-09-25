@@ -1,0 +1,353 @@
+{
+  "step": "S21",
+  "layer": "SA",
+  "blocking": false,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml",
+  "prefixHash": "cbee8cfb1b5c6cf3",
+  "elements": 1438,
+  "durationMs": 748,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/check.json",
+      "findings": 19
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 18,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/elements.json",
+      "findings": 1
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 55,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 16,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/trace-allocate.json",
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 8,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/connectivity.json",
+      "findings": 2
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 8,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/reach.json",
+      "findings": 3
+    },
+    {
+      "name": "requirements",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 7,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/requirements.json",
+      "findings": 4
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 6,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/requirements-hazards.json",
+      "findings": 0
+    },
+    {
+      "name": "consistency",
+      "command": "npm run sysprose -- consistency /home/xcos/Work/mbse-workflow/runs/v7/build/4_SA.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 264,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S21/consistency.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 167,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 171,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 175,
+      "message": "Constraint could not be evaluated (\"jammedMeshAreaUnderWatchShare >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 179,
+      "message": "Constraint could not be evaluated (\"groundLinkLossAreaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 183,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHours >= 24\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 187,
+      "message": "Constraint could not be evaluated (\"reportLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 191,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutGnssMeters <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 195,
+      "message": "Constraint could not be evaluated (\"reportHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 199,
+      "message": "Constraint could not be evaluated (\"reportsLostInLinkGap <= 0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 203,
+      "message": "Constraint could not be evaluated (\"missedDetectionShare <= 0.1\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 207,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 211,
+      "message": "Constraint could not be evaluated (\"operatorAlertsPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 215,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterShare >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 219,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsd <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 224,
+      "message": "Constraint could not be evaluated (\"fleetSize <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 228,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 232,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes <= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 236,
+      "message": "Constraint could not be evaluated (\"memberRechargeMinutes >= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 240,
+      "message": "Constraint could not be evaluated (\"areaOfInterestKm2 <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "sa.chains",
+      "severity": "info",
+      "blocking": false,
+      "message": "no functional chain for HoldContinuousWatch, DetectClassifyAndReport, CoordinateSwarm, SuperviseSwarm, OperateThroughLinkGap, StayWithinClearedAirspace, NavigateWithoutSatellitePositioning, TriageReports, KeepDecisionRecord, ManageClassifierVersion. A chain is `#Chain occurrence def <Capability>Chain { doc /* the functions, in order */ }` with `succession` lines between its functions; it is what a latency budget and an integration test attach to.",
+      "check": "elements"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SurveillanceDrone::meshOut",
+      "rule": "CV-05",
+      "message": "port `meshOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SurveillanceDrone::meshIn",
+      "rule": "CV-05",
+      "message": "port `meshIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SurveillanceDroneMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::SA::SurveillanceDroneMode::Watching`: 6 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> NavigationDegraded` (declaration order) and never `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> Quarantined`, `Watching -> Recalled`, `Watching -> OutsideClearedAirspace`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SurveillanceDroneMode::Isolated",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::SA::SurveillanceDroneMode::Isolated`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Landed` (declaration order) and never `Isolated -> Watching`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SurveillanceDroneStatus::Active",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::SA::SurveillanceDroneStatus::Active`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Active -> Idle` (declaration order) and never `Active -> Recharging`.",
+      "check": "reach"
+    },
+    {
+      "code": "requirements.coverage",
+      "severity": "info",
+      "blocking": false,
+      "element": "RecallWins",
+      "rule": "CV-09",
+      "message": "requirement `RecallWins` is satisfied by nothing. Add `satisfy RecallWins by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.",
+      "check": "requirements"
+    },
+    {
+      "code": "requirements.coverage",
+      "severity": "info",
+      "blocking": false,
+      "element": "ReturnsWhenIsolated",
+      "rule": "CV-09",
+      "message": "requirement `ReturnsWhenIsolated` is satisfied by nothing. Add `satisfy ReturnsWhenIsolated by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.",
+      "check": "requirements"
+    },
+    {
+      "code": "requirements.coverage",
+      "severity": "info",
+      "blocking": false,
+      "element": "GeofenceBreachEndsWatch",
+      "rule": "CV-09",
+      "message": "requirement `GeofenceBreachEndsWatch` is satisfied by nothing. Add `satisfy GeofenceBreachEndsWatch by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.",
+      "check": "requirements"
+    },
+    {
+      "code": "requirements.coverage",
+      "severity": "info",
+      "blocking": false,
+      "element": "QuarantinedStaysOut",
+      "rule": "CV-09",
+      "message": "requirement `QuarantinedStaysOut` is satisfied by nothing. Add `satisfy QuarantinedStaysOut by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.",
+      "check": "requirements"
+    }
+  ]
+}

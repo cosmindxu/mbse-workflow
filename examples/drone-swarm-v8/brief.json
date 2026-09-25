@@ -1,0 +1,622 @@
+{
+  "systemName": "SurveillanceDroneSwarm",
+  "systemEntity": "watchAsset",
+  "mission": "The SurveillanceDroneSwarm holds continuous watch over a tasked area of up to 25 km² for an operations centre: it takes tasking, supervisory command, recall and report acknowledgement from the centre and what its sensors see of the area, and returns triaged detection reports, correlated tracks, decision records and a status picture, while constrained by airspace clearance, radio interference, satellite-positioning outages, weather and a fleet of twelve drones, and supplied by a mesh radio, a ground-station link, a battery-swap ground crew and stored maps.",
+  "functionSentence": "SurveillanceDroneSwarm carries the tasked area from unwatched and unreported to continuously watched with acknowledged detection reports at the operations centre.",
+  "stakeholders": [
+    {
+      "name": "OperationsCentreAnalyst",
+      "role": "Watches the feeds and reports, judges what matters, acknowledges each detection report; the one whose attention the triage has to protect."
+    },
+    {
+      "name": "DutyController",
+      "role": "Today assigns sectors, hands sectors over, re-spreads assets, keeps them apart and relays reports by hand; the operational entity's supervisor, and the role the swarm's coordination takes over."
+    },
+    {
+      "name": "SwarmSupervisor",
+      "role": "The single operator who tasks, commands, recalls and watches the whole swarm rather than flying each drone."
+    },
+    {
+      "name": "AirspaceAuthority",
+      "role": "Clears when and where anything may fly; its geofence and window constrain every sortie."
+    },
+    {
+      "name": "GroundCrew",
+      "role": "Services drones between sorties and swaps batteries at the recharge point in about twenty minutes."
+    },
+    {
+      "name": "FixedCameraNetworkOperator",
+      "role": "Keeps the existing camera network and its own tracks; what the swarm reports is merged with those tracks at the operations centre."
+    },
+    {
+      "name": "ProcuringCustomer",
+      "role": "Fields the twelve drones, states the numbers still marked placeholder, and chooses between the ground-centred and drone-centred architectures."
+    },
+    {
+      "name": "SafetyAuthority",
+      "role": "Holds the swarm to the rules it never breaks — recall, geofence, return when isolated, quarantine — enforced by something independent of the detection software."
+    }
+  ],
+  "environment": [
+    {
+      "name": "MissionTasking",
+      "quadrant": "input",
+      "doc": "The area of interest, its sectors and the mission window, issued by the operations centre."
+    },
+    {
+      "name": "SupervisoryCommand",
+      "quadrant": "input",
+      "doc": "Priorities, a sector to look at more closely, and the reporting threshold — the least confidence a classification needs before it becomes a report."
+    },
+    {
+      "name": "RecallOrder",
+      "quadrant": "input",
+      "doc": "An order to recall and land the whole swarm or one drone, arriving at any time."
+    },
+    {
+      "name": "ReportAcknowledgement",
+      "quadrant": "input",
+      "doc": "The operations centre confirming each detection report, so nothing is lost in a link gap."
+    },
+    {
+      "name": "MovingObjectsInArea",
+      "quadrant": "input",
+      "doc": "The objects in the watched area that have to be detected, classified and reported — the thing the mission is about."
+    },
+    {
+      "name": "SceneConditions",
+      "quadrant": "input",
+      "doc": "Lighting, weather and deliberately misleading paint or shapes, which degrade what the sensors can tell apart."
+    },
+    {
+      "name": "DetectionReports",
+      "quadrant": "output",
+      "doc": "Position, time, class, confidence and provenance for each detected object, delivered to the operations centre."
+    },
+    {
+      "name": "CorrelatedTracks",
+      "quadrant": "output",
+      "doc": "One track per object rather than one per observing drone, for merging with the fixed camera network's tracks at the operations centre."
+    },
+    {
+      "name": "TriagedAlertStream",
+      "quadrant": "output",
+      "doc": "What is most likely to matter, first, with duplicates merged, sized to what one operator can judge."
+    },
+    {
+      "name": "StatusPicture",
+      "quadrant": "output",
+      "doc": "Where every drone is, what it is doing, how much coverage there is and what is degraded."
+    },
+    {
+      "name": "DecisionRecord",
+      "quadrant": "output",
+      "doc": "For every report: the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it."
+    },
+    {
+      "name": "AirspaceClearance",
+      "quadrant": "constraining",
+      "doc": "Airspace authorities constrain when and where anything may fly; outside the cleared volume a drone does not watch."
+    },
+    {
+      "name": "RadioInterference",
+      "quadrant": "constraining",
+      "doc": "A source of interference may degrade the mesh between drones as well as the link to the operations centre."
+    },
+    {
+      "name": "SatellitePositioningOutage",
+      "quadrant": "constraining",
+      "doc": "Satellite positioning may be unavailable for minutes at a time; a drone then navigates by camera against stored maps."
+    },
+    {
+      "name": "WeatherLimit",
+      "quadrant": "constraining",
+      "doc": "The swarm operates in weather up to moderate wind; above that it lands."
+    },
+    {
+      "name": "FleetAndEnduranceBudget",
+      "quadrant": "constraining",
+      "doc": "Twelve drones, about 40 minutes of flight each, about 20 minutes of turnaround, 18 m/s cruise and about 3.0 km² under watch from altitude — the arithmetic coverage has to come out of."
+    },
+    {
+      "name": "OperatorAttention",
+      "quadrant": "constraining",
+      "doc": "One operator can judge at most 20 alerts an hour and needs at least 30 seconds for each."
+    },
+    {
+      "name": "ScopeExclusion",
+      "quadrant": "constraining",
+      "doc": "Weapons, interception and anything done to what is detected are out of scope: this system watches and reports."
+    },
+    {
+      "name": "MeshRadio",
+      "quadrant": "resource",
+      "doc": "The bearer of member-to-member coordination traffic, independent of the link to the operations centre — what lets the watch survive a ground-link drop."
+    },
+    {
+      "name": "GroundStationLink",
+      "quadrant": "resource",
+      "doc": "The radio link between the swarm and the ground station, not always available; the swarm works through a gap and reconciles afterwards."
+    },
+    {
+      "name": "GroundStation",
+      "quadrant": "resource",
+      "doc": "The fixed part of the system: tasking, watching, and in one architecture the coordinator that assigns sectors and rotations."
+    },
+    {
+      "name": "RechargePointAndBatterySwap",
+      "quadrant": "resource",
+      "doc": "The ground point and crew where batteries are swapped rather than charged in place, giving a 20-minute turnaround."
+    },
+    {
+      "name": "RecoveryPoint",
+      "quadrant": "resource",
+      "doc": "The point a drone that has lost contact with the swarm returns to on its own rather than becoming a hazard."
+    },
+    {
+      "name": "StoredMaps",
+      "quadrant": "resource",
+      "doc": "The reference imagery a drone navigates against when satellite positioning is unavailable."
+    },
+    {
+      "name": "ClassifierRelease",
+      "quadrant": "resource",
+      "doc": "One classifier version held across the fleet, with each drone's running version known."
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "ContinuousAreaWatch",
+      "doc": "Hold continuous surveillance of the tasked area: at any moment at least one drone is watching each sector of it, through recharge rotations."
+    },
+    {
+      "name": "DetectionClassificationAndReporting",
+      "doc": "Detect moving objects, classify them well enough to say whether they matter — saying Unknown rather than forcing a class — and report them with a position and a time."
+    },
+    {
+      "name": "SwarmSelfCoordination",
+      "doc": "Settle sector handover, recharge rotation, coverage redistribution, deconfliction, relay, track correlation, track handover and member admission between the drones over the mesh."
+    },
+    {
+      "name": "SupervisedCommandAndControl",
+      "doc": "Let one operator task, command, recall, watch and acknowledge for the whole swarm rather than fly each drone."
+    },
+    {
+      "name": "DisconnectedOperationAndReconciliation",
+      "doc": "Keep detecting while cut off from the operations centre, hold the reports, and deliver them once the link is back — none lost."
+    },
+    {
+      "name": "ReportTriageAndDecisionRecord",
+      "doc": "Triage reports before they reach the operator, merge duplicates, and keep a decision record for every report."
+    },
+    {
+      "name": "GracefulDegradation",
+      "doc": "Keep flying and watching as drones leave, rejoin or are lost, with the loss of coverage bounded rather than the watch stopping."
+    },
+    {
+      "name": "AirspaceComplianceAndSafeRecovery",
+      "doc": "Stay inside the cleared airspace, land safely when it is not available, and return to a recovery point when contact with the swarm is lost."
+    }
+  ],
+  "moes": [
+    {
+      "name": "areaUnderWatchFraction",
+      "unit": "",
+      "sense": "max",
+      "target": 0.9,
+      "doc": "The share of the area of interest under watch at any moment; the brief requires at least 0.9 and it is the first thing an architecture is judged on.",
+      "placeholder": false,
+      "kind": "measure"
+    },
+    {
+      "name": "watchEnduranceHoursWithoutPeople",
+      "unit": "hours",
+      "sense": "max",
+      "target": 12,
+      "doc": "How long the swarm holds the watch before it needs people to intervene. The brief names this as a thing that matters but states no number; 12 hours is set here by the architect as a working target and must be confirmed with the customer.",
+      "placeholder": false,
+      "kind": "measure"
+    },
+    {
+      "name": "reportDeliveryLatencySeconds",
+      "unit": "seconds",
+      "sense": "min",
+      "target": 60,
+      "doc": "How old a report is when it reaches the operations centre with the link up; distinguishes architectures by where triage and correlation sit.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "positionErrorAfterGnssLossMetres",
+      "unit": "metres",
+      "sense": "min",
+      "target": 50,
+      "doc": "How accurately a drone knows where it is after ten minutes without satellite positioning; it sets where its reports place objects.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "coverageUnderMeshJammingFraction",
+      "unit": "",
+      "sense": "max",
+      "target": 0.75,
+      "doc": "The share of the area still under watch with half the links between drones jammed; the sharpest discriminator between ground-held and drone-held coordination.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "reportHoldDurationMinutes",
+      "unit": "minutes",
+      "sense": "max",
+      "target": 30,
+      "doc": "How long a cut-off drone holds its reports without losing any before the link returns.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "missedDetectionFraction",
+      "unit": "",
+      "sense": "min",
+      "target": 0.1,
+      "doc": "The share of real objects that go undetected; with the false-alarm rate it fixes how much the reporting threshold can be tightened.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "falseAlarmsPerHour",
+      "unit": "alerts per hour",
+      "sense": "min",
+      "target": 2,
+      "doc": "False alarms reaching the operator each hour; traded against missed detections by the reporting threshold.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "alertsReachingOperatorPerHour",
+      "unit": "alerts per hour",
+      "sense": "min",
+      "target": 20,
+      "doc": "How many alerts actually reach the operator after triage and duplicate merging; an architecture that floods the operator fails whatever else it does.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "acknowledgedReportsThatMatterFraction",
+      "unit": "",
+      "sense": "max",
+      "target": 0.8,
+      "doc": "The share of the reports the operator acknowledges that turn out to matter; measures whether triage ranks the right things first.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "coverageDropAfterMemberLossFraction",
+      "unit": "",
+      "sense": "min",
+      "target": 0.25,
+      "doc": "How much coverage is lost when one drone is lost, before the remaining drones re-spread; the brief bounds it at 0.25.",
+      "placeholder": false,
+      "kind": "measure"
+    },
+    {
+      "name": "onboardClassifierCostUsdPerDrone",
+      "unit": "USD",
+      "sense": "min",
+      "target": 300,
+      "doc": "What the on-board computing for classification costs per drone; multiplied by twelve it decides whether classification can live on the drones at all.",
+      "placeholder": true,
+      "kind": "measure"
+    },
+    {
+      "name": "fleetSizeDrones",
+      "unit": "",
+      "sense": "min",
+      "target": 12,
+      "doc": "Twelve drones is the fleet the design has to work with — fixed by the brief, held as a requirement and never scored.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "memberFlightEnduranceMinutes",
+      "unit": "minutes",
+      "sense": "max",
+      "target": 40,
+      "doc": "About 40 minutes of flight per drone, fixed by the brief. Transit out and back is spent from this same budget, so it is read together with the cruise-speed budget below, which the brief does give as 18 m/s.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "groundTurnaroundMinutes",
+      "unit": "minutes",
+      "sense": "min",
+      "target": 20,
+      "doc": "About 20 minutes on the ground because batteries are swapped, not charged in place; with endurance it fixes the airborne share the fleet can hold.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "cruiseSpeedMetresPerSecond",
+      "unit": "m/s",
+      "sense": "max",
+      "target": 18,
+      "doc": "About 18 m/s between recharge point and sector, fixed by the brief; without it nothing can say a drone reaches its station and returns inside its 40 minutes over an area several kilometres across.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "sensorFootprintSquareKilometres",
+      "unit": "km2",
+      "sense": "max",
+      "target": 3,
+      "doc": "About 3.0 km² under watch from a drone's watch altitude; this makes the coverage figure arithmetic rather than a hope.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "areaOfInterestSquareKilometres",
+      "unit": "km2",
+      "sense": "min",
+      "target": 25,
+      "doc": "The area of interest is up to 25 km², divided into sectors — fixed by the brief.",
+      "placeholder": false,
+      "kind": "budget"
+    },
+    {
+      "name": "operatorAlertCapacityPerHour",
+      "unit": "alerts per hour",
+      "sense": "min",
+      "target": 20,
+      "doc": "The most alerts one operator can judge in an hour; fixed by the brief as a property of the operator, not something an architecture improves.",
+      "placeholder": true,
+      "kind": "budget"
+    },
+    {
+      "name": "operatorSecondsPerAlert",
+      "unit": "seconds",
+      "sense": "max",
+      "target": 30,
+      "doc": "The least time the operator needs for each alert; fixed by the brief and never scored.",
+      "placeholder": true,
+      "kind": "budget"
+    },
+    {
+      "name": "trackStaleThresholdSeconds",
+      "unit": "seconds",
+      "sense": "min",
+      "target": 120,
+      "doc": "A track is stale once nothing has been seen for 120 seconds; the value the stale field of a Track is set from.",
+      "placeholder": true,
+      "kind": "budget"
+    },
+    {
+      "name": "gnssOutageToleratedMinutes",
+      "unit": "minutes",
+      "sense": "max",
+      "target": 10,
+      "doc": "The satellite-positioning outage the position-error measure is stated against: ten minutes.",
+      "placeholder": true,
+      "kind": "budget"
+    },
+    {
+      "name": "jammedLinkShareFraction",
+      "unit": "",
+      "sense": "max",
+      "target": 0.5,
+      "doc": "The share of links between drones assumed jammed when the degraded-coverage measure is taken: half.",
+      "placeholder": true,
+      "kind": "budget"
+    }
+  ],
+  "population": {
+    "memberDef": "SurveillanceDrone",
+    "fleetPart": "fleet",
+    "size": 12,
+    "meshPort": "MeshPeerPort",
+    "meshInterface": "MeshLink",
+    "coordinationCapability": "SwarmSelfCoordination",
+    "bearer": "MeshRadio",
+    "doc": "Twelve identical small drones, each able to watch a sector for about forty minutes, which must settle sector handover, recharge rotation, coverage redistribution, deconfliction, relay, track correlation, track handover and admission with each other over a mesh radio that does not depend on the ground link."
+  },
+  "coordinationFunctions": [
+    {
+      "name": "handOverSector",
+      "doc": "A drone leaving to recharge hands its sector to one arriving, without a gap in the watch."
+    },
+    {
+      "name": "rotateRecharge",
+      "doc": "The drones settle who goes to recharge next, so the airborne share never falls below what the sectors need."
+    },
+    {
+      "name": "redistributeCoverage",
+      "doc": "When a drone is lost, the remaining ones re-spread over the sectors and the loss of coverage stays within its bound."
+    },
+    {
+      "name": "deconflictFlight",
+      "doc": "The drones keep apart from each other in the air and at the recharge point."
+    },
+    {
+      "name": "relayThroughNeighbour",
+      "doc": "A drone out of range of the ground station passes its reports and status through a neighbour."
+    },
+    {
+      "name": "correlateTracks",
+      "doc": "When two drones see the same object the swarm reports one track, not two."
+    },
+    {
+      "name": "handOverTrack",
+      "doc": "When an object moves from one sector to the next, the drone watching the next sector takes over the track without losing it."
+    },
+    {
+      "name": "admitMember",
+      "doc": "A drone joins the coordination only after the others have authenticated it; one that fails is quarantined until readmitted."
+    }
+  ],
+  "c2Functions": [
+    {
+      "name": "taskSurveillanceMission",
+      "doc": "The operator gives the swarm the area, its sectors and the mission window."
+    },
+    {
+      "name": "issueSupervisoryCommand",
+      "doc": "The operator sets priorities, points the swarm at a sector to look at more closely, and sets the reporting threshold — the least confidence a classification needs before it becomes a report."
+    },
+    {
+      "name": "recallToLand",
+      "doc": "The operator recalls and lands the whole swarm or one drone, at any time."
+    },
+    {
+      "name": "presentStatusPicture",
+      "doc": "The swarm shows where every drone is, what it is doing, how much coverage there is and what is degraded."
+    },
+    {
+      "name": "acknowledgeDetectionReport",
+      "doc": "The operations centre confirms each detection report, so nothing is lost in a link gap."
+    }
+  ],
+  "hazards": [
+    {
+      "name": "PositionDriftHazard",
+      "doc": "Without satellite positioning, a drone's position estimate drifts and its reports place objects in the wrong place."
+    },
+    {
+      "name": "MeshJammingHazard",
+      "doc": "Interference cuts the links between drones, and coordination stalls."
+    },
+    {
+      "name": "MisclassificationHazard",
+      "doc": "A detection is reported as the wrong class, or a forced class where Unknown was the truth."
+    },
+    {
+      "name": "SensingDegradedUnnoticedHazard",
+      "doc": "A sensor degrades and nobody knows the reports from it are unreliable."
+    },
+    {
+      "name": "StaleTrackHazard",
+      "doc": "A track is shown as current after nothing has seen the object for a while."
+    },
+    {
+      "name": "SpoofedMemberHazard",
+      "doc": "Something that is not one of the drones joins the mesh and takes part in coordination."
+    },
+    {
+      "name": "MixedClassifierVersionsHazard",
+      "doc": "Drones run different classifier versions and classify the same object differently."
+    },
+    {
+      "name": "OperatorOverloadHazard",
+      "doc": "More alerts reach the operator than they can judge, and they accept what is in front of them."
+    }
+  ],
+  "rules": [
+    {
+      "name": "RecallWins",
+      "doc": "Once a drone is recalled, it does not watch again until it has landed.",
+      "kind": "winsUntil",
+      "of": "member"
+    },
+    {
+      "name": "ReturnsWhenIsolated",
+      "doc": "From any situation a drone can be in, it can always get back to landed; an isolated drone included.",
+      "kind": "canAlwaysReturn",
+      "of": "member"
+    },
+    {
+      "name": "GeofenceBreachEndsWatch",
+      "doc": "Once a drone is outside its cleared airspace, it does not watch until it has landed.",
+      "kind": "winsUntil",
+      "of": "member"
+    },
+    {
+      "name": "QuarantinedStaysOut",
+      "doc": "Once a drone is quarantined, it takes no part in coordination until it has been readmitted.",
+      "kind": "winsUntil",
+      "of": "member"
+    }
+  ],
+  "modes": [
+    {
+      "name": "NavigationDegraded",
+      "doc": "The drone has no satellite positioning and navigates by what its camera sees against stored maps.",
+      "of": "member"
+    },
+    {
+      "name": "SensingDegraded",
+      "doc": "The drone's sensors cannot be trusted as they are.",
+      "of": "member"
+    },
+    {
+      "name": "Isolated",
+      "doc": "The drone is cut off from the other drones.",
+      "of": "member"
+    },
+    {
+      "name": "Quarantined",
+      "doc": "The drone has failed admission and takes no part in coordination until readmitted.",
+      "of": "member"
+    },
+    {
+      "name": "MeshDegraded",
+      "doc": "A share of the links between drones is jammed and the swarm coordinates over what is left.",
+      "of": "fleet"
+    }
+  ],
+  "items": [
+    {
+      "name": "DetectionReport",
+      "fields": [
+        {
+          "name": "position",
+          "doc": "Where the detected object was, as the reporting drone estimated it."
+        },
+        {
+          "name": "time",
+          "doc": "When the detection was made."
+        },
+        {
+          "name": "objectClass",
+          "doc": "One of the known classes, or Unknown when confidence is below the reporting threshold."
+        },
+        {
+          "name": "confidence",
+          "doc": "How sure the classifier is of objectClass; compared against the reporting threshold in force."
+        },
+        {
+          "name": "sensorId",
+          "doc": "Which sensor the detection came from, so a degraded sensor's reports can be found."
+        },
+        {
+          "name": "memberId",
+          "doc": "Which drone reported it."
+        },
+        {
+          "name": "classifierVersion",
+          "doc": "The classifier version that produced the class, so mixed versions across the fleet can be detected."
+        },
+        {
+          "name": "ageSeconds",
+          "doc": "How long ago the detection was made, so a report held through a link gap is not read as current."
+        }
+      ]
+    },
+    {
+      "name": "Track",
+      "fields": [
+        {
+          "name": "trackId",
+          "doc": "The identity of the tracked object, one per object after correlation rather than one per observing drone."
+        },
+        {
+          "name": "lastSeenTime",
+          "doc": "When anything last saw the object."
+        },
+        {
+          "name": "stale",
+          "doc": "Set once nothing has been seen for the stale threshold — 120 seconds, a placeholder awaiting the customer's number."
+        }
+      ]
+    }
+  ],
+  "extraKinds": [],
+  "commonFragment": "package Common {\n    doc /* Definitions every layer of the surveillance drone swarm model shares: what flows between\n         * drones, ground station and operations centre; the ports and interfaces they flow through;\n         * and one #MoE attribute per measure of effectiveness, each held to its target by a named\n         * require constraint. Nothing happens here — behaviour belongs to a layer. */\n\n    attribute def GeoPosition {\n        doc /* A place in the world: what a detection report says about where an object was and what a\n             * status message says about where a drone is. */\n        attribute latitudeDegrees : ScalarValues::Real {\n            doc /* Latitude of the point, in degrees. */\n        }\n        attribute longitudeDegrees : ScalarValues::Real {\n            doc /* Longitude of the point, in degrees. */\n        }\n        attribute altitudeMetres : ScalarValues::Real {\n            doc /* Height above the reference surface, in metres. */\n        }\n        attribute estimatedErrorMetres : ScalarValues::Real {\n            doc /* How far the estimate may be wrong; it grows while satellite positioning is unavailable. */\n        }\n    }\n\n    item def DetectionReport {\n        doc /* What one drone says about one detected object. The brief fixes these eight fields and no\n             * others; everything the operator sees is built from them. */\n        attribute position : GeoPosition {\n            doc /* Where the detected object was, as the reporting drone estimated it. */\n        }\n        attribute time : ScalarValues::Real {\n            doc /* When the detection was made, in seconds on the mission clock. */\n        }\n        attribute objectClass : ScalarValues::String {\n            doc /* One of the known classes, or Unknown when nothing can be said with enough confidence —\n                 * the swarm says Unknown rather than forcing a class. */\n        }\n        attribute confidence : ScalarValues::Real {\n            doc /* How sure the classifier is of objectClass, compared against the reporting threshold in force. */\n        }\n        attribute sensorId : ScalarValues::String {\n            doc /* Which sensor the detection came from, so the reports of a degraded sensor can be found again. */\n        }\n        attribute memberId : ScalarValues::String {\n            doc /* Which drone reported it. */\n        }\n        attribute classifierVersion : ScalarValues::String {\n            doc /* The classifier version that produced the class, so drones running different versions can be told apart. */\n        }\n        attribute ageSeconds : ScalarValues::Real {\n            doc /* How long ago the detection was made, so a report held through a link gap is not read as current. */\n        }\n    }\n\n    item def Track {\n        doc /* One object followed over time. The brief fixes these three fields: after correlation there is\n             * one track per object, not one per observing drone. */\n        attribute trackId : ScalarValues::String {\n            doc /* The identity of the tracked object, kept across sector handover. */\n        }\n        attribute lastSeenTime : ScalarValues::Real {\n            doc /* When anything last saw the object, in seconds on the mission clock. */\n        }\n        attribute stale : ScalarValues::Boolean {\n            doc /* Set once nothing has been seen for the stale threshold, so a track is never shown as current\n                 * when it is not. */\n        }\n    }\n\n    item def TaskingOrder {\n        doc /* What the operations centre gives the swarm to start a mission: the area, its sectors and the window. */\n        attribute areaIdentifier : ScalarValues::String {\n            doc /* Which area of interest is tasked. */\n        }\n        attribute sectorList : ScalarValues::String {\n            doc /* The sectors the area is divided into, each of which must have a drone watching it. */\n        }\n        attribute windowStartTime : ScalarValues::Real {\n            doc /* When the mission window opens. */\n        }\n        attribute windowEndTime : ScalarValues::Real {\n            doc /* When the mission window closes. */\n        }\n    }\n\n    item def SupervisoryCommand {\n        doc /* What the operator changes while the mission runs, without flying any drone. */\n        attribute priorityOrder : ScalarValues::String {\n            doc /* Which sectors or object classes matter most at the moment. */\n        }\n        attribute focusSector : ScalarValues::String {\n            doc /* A sector the operator wants looked at more closely. */\n        }\n        attribute reportingThreshold : ScalarValues::Real {\n            doc /* The least confidence a classification needs before it becomes a report. */\n        }\n    }\n\n    item def RecallOrder {\n        doc /* An order to recall and land, for the whole swarm or one drone, arriving at any time. */\n        attribute targetMemberId : ScalarValues::String {\n            doc /* Which drone is recalled; empty when the whole swarm is. */\n        }\n        attribute wholeFleet : ScalarValues::Boolean {\n            doc /* True when every drone is recalled. */\n        }\n        attribute issuedTime : ScalarValues::Real {\n            doc /* When the order was issued, so a recall is never overtaken by an older command. */\n        }\n    }\n\n    item def ReportAcknowledgement {\n        doc /* The operations centre confirming a detection report, so nothing is lost in a link gap. */\n        attribute acknowledgedReportId : ScalarValues::String {\n            doc /* Which report is confirmed. */\n        }\n        attribute acknowledgedBy : ScalarValues::String {\n            doc /* Which analyst or operator confirmed it; it goes into the decision record. */\n        }\n        attribute acknowledgementTime : ScalarValues::Real {\n            doc /* When the confirmation was made. */\n        }\n    }\n\n    item def MemberStatus {\n        doc /* What one drone says about itself: the raw material of the status picture. */\n        attribute memberId : ScalarValues::String {\n            doc /* Which drone this is about. */\n        }\n        attribute position : GeoPosition {\n            doc /* Where the drone is. */\n        }\n        attribute activitySummary : ScalarValues::String {\n            doc /* What it is doing: watching a sector, transiting, recharging, recalled, landed. */\n        }\n        attribute assignedSector : ScalarValues::String {\n            doc /* The sector it is responsible for, if any. */\n        }\n        attribute flightMinutesRemaining : ScalarValues::Real {\n            doc /* How much of its endurance is left, including the transit home. */\n        }\n        attribute degradationSummary : ScalarValues::String {\n            doc /* Which of NavigationDegraded, SensingDegraded, Isolated or Quarantined hold. */\n        }\n        attribute classifierVersion : ScalarValues::String {\n            doc /* The classifier version this drone is running, so mixed versions are visible. */\n        }\n    }\n\n    item def StatusPicture {\n        doc /* What the operator sees of the whole swarm: where every drone is, what it is doing, how much\n             * coverage there is and what is degraded. */\n        attribute pictureTime : ScalarValues::Real {\n            doc /* When the picture was made, so the operator knows how current it is. */\n        }\n        attribute memberSummaries : ScalarValues::String {\n            doc /* One line per drone, drawn from MemberStatus. */\n        }\n        attribute coverageFraction : ScalarValues::Real {\n            doc /* The share of the tasked area under watch at this moment. */\n        }\n        attribute degradationSummary : ScalarValues::String {\n            doc /* What is degraded across the swarm, including MeshDegraded. */\n        }\n    }\n\n    item def TriagedAlert {\n        doc /* What actually reaches the operator after triage: what is most likely to matter first, with\n             * duplicates merged. */\n        attribute alertId : ScalarValues::String {\n            doc /* The identity of the alert, carried into the acknowledgement and the decision record. */\n        }\n        attribute priorityRank : ScalarValues::Integer {\n            doc /* Where the alert sits in the order presented to the operator. */\n        }\n        attribute mergedReportCount : ScalarValues::Integer {\n            doc /* How many detection reports were merged into this one alert. */\n        }\n        attribute summaryText : ScalarValues::String {\n            doc /* What the operator reads to judge it inside the time they have. */\n        }\n    }\n\n    item def DecisionRecord {\n        doc /* The record kept for every report: what it was built from and who accepted it, so a decision can\n             * be reconstructed afterwards. */\n        attribute reportId : ScalarValues::String {\n            doc /* Which report the record is about. */\n        }\n        attribute frameReferences : ScalarValues::String {\n            doc /* The frames the detection came from. */\n        }\n        attribute classifierVersion : ScalarValues::String {\n            doc /* The classifier version that produced the class. */\n        }\n        attribute thresholdInForce : ScalarValues::Real {\n            doc /* The reporting threshold that was in force when the report was made. */\n        }\n        attribute acknowledgedBy : ScalarValues::String {\n            doc /* Who acknowledged it at the operations centre. */\n        }\n    }\n\n    item def CoordinationUpdate {\n        doc /* The unit of member-to-member traffic over the mesh: every coordination matter the drones settle\n             * between themselves travels as one of these. */\n        attribute originMemberId : ScalarValues::String {\n            doc /* Which drone the update came from. */\n        }\n        attribute updateKind : ScalarValues::String {\n            doc /* Which coordination matter it concerns: handover, rotation, redistribution, deconfliction,\n                 * relay, correlation, track handover or admission. */\n        }\n        attribute sequenceNumber : ScalarValues::Integer {\n            doc /* The order of updates from that drone, so a late update never undoes a newer one. */\n        }\n        attribute hopCount : ScalarValues::Integer {\n            doc /* How many drones have relayed it, so relay does not loop. */\n        }\n        attribute payloadSummary : ScalarValues::String {\n            doc /* What the update says, in the terms of its kind. */\n        }\n    }\n\n    item def SectorAssignment {\n        doc /* Which drone is responsible for which sector, and from when. */\n        attribute memberId : ScalarValues::String {\n            doc /* The drone taking the sector. */\n        }\n        attribute sectorId : ScalarValues::String {\n            doc /* The sector assigned. */\n        }\n        attribute takesEffectTime : ScalarValues::Real {\n            doc /* When the assignment starts, so two drones are never responsible for the same sector at once. */\n        }\n    }\n\n    item def SectorHandover {\n        doc /* A drone leaving to recharge handing its sector to one arriving, without a gap in the watch. */\n        attribute sectorId : ScalarValues::String {\n            doc /* The sector being handed over. */\n        }\n        attribute fromMemberId : ScalarValues::String {\n            doc /* The drone leaving. */\n        }\n        attribute toMemberId : ScalarValues::String {\n            doc /* The drone arriving. */\n        }\n        attribute handoverTime : ScalarValues::Real {\n            doc /* When responsibility passes; the arriving drone is on station before it. */\n        }\n    }\n\n    item def RotationPlan {\n        doc /* Who goes to recharge next, so the airborne share never falls below what the sectors need. */\n        attribute nextToRechargeMemberId : ScalarValues::String {\n            doc /* The drone due to leave for the recharge point. */\n        }\n        attribute airborneShare : ScalarValues::Real {\n            doc /* The share of the fleet that stays airborne under this plan. */\n        }\n        attribute planTime : ScalarValues::Real {\n            doc /* When the plan was settled. */\n        }\n    }\n\n    item def CoverageRedistribution {\n        doc /* How the remaining drones re-spread over the sectors when one is lost. */\n        attribute lostMemberId : ScalarValues::String {\n            doc /* The drone that was lost. */\n        }\n        attribute reassignments : ScalarValues::String {\n            doc /* The new sector assignments for the drones that remain. */\n        }\n        attribute expectedCoverageFraction : ScalarValues::Real {\n            doc /* The coverage the swarm expects to hold once the re-spread is done. */\n        }\n    }\n\n    item def DeconflictionAdvisory {\n        doc /* What keeps two drones apart in the air and at the recharge point. */\n        attribute memberId : ScalarValues::String {\n            doc /* The drone the advisory is for. */\n        }\n        attribute conflictWithMemberId : ScalarValues::String {\n            doc /* The other drone in the conflict. */\n        }\n        attribute avoidanceAction : ScalarValues::String {\n            doc /* What the drone is to do to keep separation. */\n        }\n    }\n\n    item def RelayedMessage {\n        doc /* A report or status from a drone out of range of the ground station, carried through a neighbour. */\n        attribute originMemberId : ScalarValues::String {\n            doc /* The drone whose traffic this is. */\n        }\n        attribute relayMemberId : ScalarValues::String {\n            doc /* The neighbour carrying it. */\n        }\n        attribute hopCount : ScalarValues::Integer {\n            doc /* How many relays it has been through. */\n        }\n        attribute payloadSummary : ScalarValues::String {\n            doc /* What is being relayed: a detection report or a status. */\n        }\n    }\n\n    item def TrackCorrelation {\n        doc /* Two drones seeing the same object resolved into one track. */\n        attribute primaryTrackId : ScalarValues::String {\n            doc /* The track that survives the merge. */\n        }\n        attribute mergedTrackId : ScalarValues::String {\n            doc /* The track folded into it. */\n        }\n        attribute correlationConfidence : ScalarValues::Real {\n            doc /* How sure the swarm is that the two are the same object. */\n        }\n    }\n\n    item def TrackHandover {\n        doc /* An object moving from one sector to the next, with the drone watching the next sector taking\n             * over the track without losing it. */\n        attribute trackId : ScalarValues::String {\n            doc /* The track being handed over. */\n        }\n        attribute fromMemberId : ScalarValues::String {\n            doc /* The drone giving it up. */\n        }\n        attribute toMemberId : ScalarValues::String {\n            doc /* The drone taking it on. */\n        }\n        attribute lastSeenTime : ScalarValues::Real {\n            doc /* When the object was last seen, so the receiving drone knows how stale the track is. */\n        }\n    }\n\n    item def AdmissionRequest {\n        doc /* A drone asking to join the coordination, with what the others check it by. */\n        attribute candidateMemberId : ScalarValues::String {\n            doc /* The drone asking to join. */\n        }\n        attribute credential : ScalarValues::String {\n            doc /* What the others authenticate it against. */\n        }\n        attribute classifierVersion : ScalarValues::String {\n            doc /* The classifier version the candidate runs, checked against the fleet's. */\n        }\n    }\n\n    item def AdmissionVerdict {\n        doc /* What the others decide about a candidate: admitted, or quarantined until readmitted. */\n        attribute candidateMemberId : ScalarValues::String {\n            doc /* The drone the verdict is about. */\n        }\n        attribute admitted : ScalarValues::Boolean {\n            doc /* True when it may take part in coordination. */\n        }\n        attribute reason : ScalarValues::String {\n            doc /* Why it was refused, when it was. */\n        }\n    }\n\n    item def ClassifierVersionManifest {\n        doc /* Which classifier version the fleet is to run and which version each drone is running. */\n        attribute fleetClassifierVersion : ScalarValues::String {\n            doc /* The one version that is to be held across the fleet. */\n        }\n        attribute memberId : ScalarValues::String {\n            doc /* The drone whose running version is being declared. */\n        }\n        attribute memberClassifierVersion : ScalarValues::String {\n            doc /* The version that drone is actually running. */\n        }\n    }\n\n    item def SceneObservation {\n        doc /* What a sensor gives the classifier: the frames a detection and its decision record are built from. */\n        attribute frameId : ScalarValues::String {\n            doc /* The identity of the frame, referenced by the decision record. */\n        }\n        attribute captureTime : ScalarValues::Real {\n            doc /* When the frame was taken. */\n        }\n        attribute sensorId : ScalarValues::String {\n            doc /* Which sensor took it. */\n        }\n        attribute qualityIndicator : ScalarValues::Real {\n            doc /* How good the frame is under the lighting and weather of the moment; it is what makes a\n                 * degrading sensor visible rather than silent. */\n        }\n    }\n\n    item def NavigationFix {\n        doc /* Where a drone believes it is and how it came to believe it. */\n        attribute position : GeoPosition {\n            doc /* The fix itself, with its estimated error. */\n        }\n        attribute fixSource : ScalarValues::String {\n            doc /* Satellite positioning, or camera against stored maps when satellite positioning is unavailable. */\n        }\n        attribute fixTime : ScalarValues::Real {\n            doc /* When the fix was taken. */\n        }\n    }\n\n    item def AirspaceClearance {\n        doc /* What the airspace authority allows: when and where anything may fly. */\n        attribute clearanceId : ScalarValues::String {\n            doc /* The identity of the clearance. */\n        }\n        attribute geofenceDescription : ScalarValues::String {\n            doc /* The volume outside which a drone does not watch. */\n        }\n        attribute validFromTime : ScalarValues::Real {\n            doc /* When the clearance begins. */\n        }\n        attribute validUntilTime : ScalarValues::Real {\n            doc /* When it ends. */\n        }\n    }\n\n    item def FlightIntent {\n        doc /* What the swarm tells the airspace authority it means to do, so the clearance can be held against it. */\n        attribute memberId : ScalarValues::String {\n            doc /* The drone whose intent this is. */\n        }\n        attribute sectorId : ScalarValues::String {\n            doc /* Where it means to fly. */\n        }\n        attribute altitudeBand : ScalarValues::String {\n            doc /* The height band it means to use. */\n        }\n        attribute intentWindow : ScalarValues::String {\n            doc /* When it means to be there. */\n        }\n    }\n\n    item def ServiceRequest {\n        doc /* A drone asking the ground crew for a battery swap or other servicing. */\n        attribute memberId : ScalarValues::String {\n            doc /* The drone asking. */\n        }\n        attribute requestTime : ScalarValues::Real {\n            doc /* When it asked, so the turnaround can be measured from it. */\n        }\n        attribute serviceKind : ScalarValues::String {\n            doc /* Battery swap, or other servicing between sorties. */\n        }\n    }\n\n    item def ServiceCompletion {\n        doc /* The ground crew saying a drone is ready to fly again. */\n        attribute memberId : ScalarValues::String {\n            doc /* The drone that was serviced. */\n        }\n        attribute completionTime : ScalarValues::Real {\n            doc /* When the servicing finished. */\n        }\n        attribute flightMinutesAvailable : ScalarValues::Real {\n            doc /* How much flight the fresh battery gives, out of which transit and watch are both paid. */\n        }\n    }\n\n    port def MeshPeerPort {\n        doc /* How one drone exchanges coordination traffic with a peer over the mesh radio, independently of\n             * the link to the operations centre. Every member is wired through this from LA down. */\n        out item update : CoordinationUpdate {\n            doc /* The coordination update this drone offers its peer. */\n        }\n    }\n\n    interface def MeshLink {\n        doc /* The mesh between two drones: the bearer of everything the members settle between themselves,\n             * and the thing MeshDegraded is about. */\n        end sender : MeshPeerPort {\n            doc /* The drone offering the update. */\n        }\n        end receiver : ~MeshPeerPort {\n            doc /* The peer taking it. */\n        }\n    }\n\n    port def MemberGroundLinkPort {\n        doc /* The air side of the radio link between one drone and the ground station: reports and status out,\n             * command in. It is not always available, and the swarm works through a gap. */\n        out item report : DetectionReport {\n            doc /* Detection reports, held while cut off and delivered when the link returns. */\n        }\n        out item track : Track {\n            doc /* The tracks the drone holds, for correlation and merging further up. */\n        }\n        out item status : MemberStatus {\n            doc /* What the drone says about itself, for the status picture. */\n        }\n        out item relayed : RelayedMessage {\n            doc /* Traffic carried for a neighbour that is out of range of the ground station. */\n        }\n        in item tasking : TaskingOrder {\n            doc /* The area, its sectors and the mission window. */\n        }\n        in item supervisory : SupervisoryCommand {\n            doc /* Priorities, focus sector and the reporting threshold. */\n        }\n        in item recall : RecallOrder {\n            doc /* The order to recall and land. */\n        }\n        in item acknowledgement : ReportAcknowledgement {\n            doc /* Confirmation that a report arrived, so it need not be held any longer. */\n        }\n        in item manifest : ClassifierVersionManifest {\n            doc /* The classifier version the fleet is to run. */\n        }\n    }\n\n    interface def GroundLink {\n        doc /* The radio link between a drone and the ground station; the one whose loss the swarm has to\n             * survive without dropping the watch. */\n        end airSide : MemberGroundLinkPort {\n            doc /* The drone's end of the link. */\n        }\n        end groundSide : ~MemberGroundLinkPort {\n            doc /* The ground station's end of the link. */\n        }\n    }\n\n    port def OperationsLinkPort {\n        doc /* The ground station's side of what passes to and from the operations centre. */\n        out item alert : TriagedAlert {\n            doc /* What reaches the operator, ranked and with duplicates merged. */\n        }\n        out item track : Track {\n            doc /* Correlated tracks, to be merged at the centre with the fixed camera network's tracks. */\n        }\n        out item picture : StatusPicture {\n            doc /* Where every drone is, what it is doing, how much coverage there is, what is degraded. */\n        }\n        out item record : DecisionRecord {\n            doc /* The record kept for every report. */\n        }\n        in item tasking : TaskingOrder {\n            doc /* The mission the centre tasks. */\n        }\n        in item supervisory : SupervisoryCommand {\n            doc /* The operator's priorities, focus and reporting threshold. */\n        }\n        in item recall : RecallOrder {\n            doc /* Recall and land, for the swarm or one drone. */\n        }\n        in item acknowledgement : ReportAcknowledgement {\n            doc /* The centre confirming each detection report. */\n        }\n    }\n\n    interface def OperationsLink {\n        doc /* What joins the swarm's ground station to the operations centre where analysts watch and\n             * acknowledge. */\n        end systemSide : OperationsLinkPort {\n            doc /* The ground station's end. */\n        }\n        end centreSide : ~OperationsLinkPort {\n            doc /* The operations centre's end. */\n        }\n    }\n\n    port def AirspaceAuthorityPort {\n        doc /* How the system takes its clearance and declares what it means to fly. */\n        in item clearance : AirspaceClearance {\n            doc /* When and where anything may fly. */\n        }\n        out item intent : FlightIntent {\n            doc /* What the swarm means to do, declared against the clearance. */\n        }\n    }\n\n    interface def AirspaceCoordinationLink {\n        doc /* What joins the system to the airspace authority that constrains every sortie. */\n        end systemSide : AirspaceAuthorityPort {\n            doc /* The system's end. */\n        }\n        end authoritySide : ~AirspaceAuthorityPort {\n            doc /* The authority's end. */\n        }\n    }\n\n    port def GroundServicePort {\n        doc /* How a drone and the ground crew settle a turnaround at the recharge point. */\n        out item request : ServiceRequest {\n            doc /* The drone asking for a battery swap. */\n        }\n        in item completion : ServiceCompletion {\n            doc /* The crew saying it is ready to fly again. */\n        }\n    }\n\n    interface def GroundServiceLink {\n        doc /* What joins a drone at the recharge point to the crew that swaps its battery in about twenty minutes. */\n        end droneSide : GroundServicePort {\n            doc /* The drone's end. */\n        }\n        end crewSide : ~GroundServicePort {\n            doc /* The ground crew's end. */\n        }\n    }\n\n    port def SensorFeedPort {\n        doc /* How the frames a sensor takes reach whatever classifies them. */\n        out item observation : SceneObservation {\n            doc /* A frame with the time, the sensor and how good it is under the lighting and weather. */\n        }\n    }\n\n    interface def SensorFeed {\n        doc /* What joins a sensor to the classification that reads its frames; the path along which a\n             * degrading sensor has to become visible. */\n        end sensorSide : SensorFeedPort {\n            doc /* The sensor's end. */\n        }\n        end processingSide : ~SensorFeedPort {\n            doc /* The classifier's end. */\n        }\n    }\n\n    port def NavigationFeedPort {\n        doc /* How a position estimate reaches whatever stamps a report with it. */\n        out item fix : NavigationFix {\n            doc /* Where the drone believes it is, from satellite positioning or from camera against stored maps. */\n        }\n    }\n\n    interface def NavigationFeed {\n        doc /* What joins navigation to the functions that depend on knowing where the drone is: reporting,\n             * geofence keeping and deconfliction. */\n        end navigationSide : NavigationFeedPort {\n            doc /* The navigation end. */\n        }\n        end consumerSide : ~NavigationFeedPort {\n            doc /* The end that uses the fix. */\n        }\n    }\n\n    #MoE attribute areaUnderWatchFraction : ScalarValues::Real {\n        doc /* The share of the tasked area under watch at any moment. The brief requires at least 0.9 and it\n             * follows arithmetically from how many drones are airborne and how much each of them sees. */\n        require constraint areaUnderWatchMeetsTarget {\n            doc /* At any moment at least 0.9 of the area is under watch. */\n            areaUnderWatchFraction >= 0.9\n        }\n    }\n\n    #MoE attribute watchEnduranceHoursWithoutPeople : ScalarValues::Real {\n        doc /* How long the swarm holds the watch before it needs people to intervene. The brief names this as\n             * a thing that matters but states no number: 12 hours is the architect's working target and is not\n             * the customer's. */\n        require constraint watchEnduranceMeetsTarget {\n            doc /* The swarm holds the watch for at least 12 hours unaided. */\n            watchEnduranceHoursWithoutPeople >= 12\n        }\n    }\n\n    #MoE attribute reportDeliveryLatencySeconds : ScalarValues::Real {\n        doc /* How old a report is when it reaches the operations centre with the link up. Placeholder: the\n             * customer has not yet stated this number. */\n        require constraint reportLatencyMeetsTarget {\n            doc /* With the link up, a report is no older than 60 seconds on arrival — a placeholder. */\n            reportDeliveryLatencySeconds <= 60\n        }\n    }\n\n    #MoE attribute positionErrorAfterGnssLossMetres : ScalarValues::Real {\n        doc /* How far a drone's position estimate may be wrong after ten minutes without satellite positioning.\n             * Placeholder: not yet the customer's number. */\n        require constraint positionErrorMeetsTarget {\n            doc /* After ten minutes without satellite positioning the position error stays within 50 m — a placeholder. */\n            positionErrorAfterGnssLossMetres <= 50\n        }\n    }\n\n    #MoE attribute coverageUnderMeshJammingFraction : ScalarValues::Real {\n        doc /* The share of the area still under watch with half the links between drones jammed. Placeholder:\n             * not yet the customer's number. It is the sharpest discriminator between ground-held and\n             * drone-held coordination. */\n        require constraint jammedCoverageMeetsTarget {\n            doc /* With half the links jammed, at least 0.75 of the area stays under watch — a placeholder. */\n            coverageUnderMeshJammingFraction >= 0.75\n        }\n    }\n\n    #MoE attribute reportHoldDurationMinutes : ScalarValues::Real {\n        doc /* How long a cut-off drone holds its reports and loses none. Placeholder: not yet the customer's number. */\n        require constraint reportHoldMeetsTarget {\n            doc /* While cut off, a drone holds its reports for at least 30 minutes — a placeholder. */\n            reportHoldDurationMinutes >= 30\n        }\n    }\n\n    #MoE attribute missedDetectionFraction : ScalarValues::Real {\n        doc /* The share of real objects that go undetected. Placeholder: not yet the customer's number. */\n        require constraint missedDetectionMeetsTarget {\n            doc /* No more than 0.10 of real objects go undetected — a placeholder. */\n            missedDetectionFraction <= 0.10\n        }\n    }\n\n    #MoE attribute falseAlarmsPerHour : ScalarValues::Real {\n        doc /* False alarms reaching the operator each hour; traded against missed detections by the reporting\n             * threshold. Placeholder: not yet the customer's number. */\n        require constraint falseAlarmsMeetTarget {\n            doc /* No more than 2 false alarms an hour reach the operator — a placeholder. */\n            falseAlarmsPerHour <= 2\n        }\n    }\n\n    #MoE attribute alertsReachingOperatorPerHour : ScalarValues::Real {\n        doc /* How many alerts actually reach the operator after triage and duplicate merging. Placeholder: it\n             * is set against the operator capacity the brief marks as a placeholder. */\n        require constraint alertRateMeetsTarget {\n            doc /* No more than 20 alerts an hour reach the operator — a placeholder. */\n            alertsReachingOperatorPerHour <= 20\n        }\n    }\n\n    #MoE attribute acknowledgedReportsThatMatterFraction : ScalarValues::Real {\n        doc /* The share of the reports the operator acknowledges that turn out to matter. Placeholder: not yet\n             * the customer's number. */\n        require constraint acknowledgedPrecisionMeetsTarget {\n            doc /* At least 0.8 of acknowledged reports turn out to matter — a placeholder. */\n            acknowledgedReportsThatMatterFraction >= 0.8\n        }\n    }\n\n    #MoE attribute coverageDropAfterMemberLossFraction : ScalarValues::Real {\n        doc /* How much coverage is lost when one drone is lost, before the remaining drones re-spread. */\n        require constraint coverageDropMeetsTarget {\n            doc /* No more than 0.25 of the coverage drops before the swarm re-spreads. */\n            coverageDropAfterMemberLossFraction <= 0.25\n        }\n    }\n\n    #MoE attribute onboardClassifierCostUsdPerDrone : ScalarValues::Real {\n        doc /* What the on-board computing for classification costs per drone. Placeholder: not yet the\n             * customer's number. Multiplied by twelve it decides whether classification can live on the drones. */\n        require constraint classifierCostMeetsTarget {\n            doc /* The on-board computing for classification costs no more than 300 USD per drone — a placeholder. */\n            onboardClassifierCostUsdPerDrone <= 300\n        }\n    }\n\n    #MoE attribute fleetSizeDrones : ScalarValues::Integer {\n        doc /* Budget: twelve drones is the fleet the design has to work with. Fixed by the brief, held as a\n             * requirement and never scored between architectures. */\n        require constraint fleetSizeWithinBudget {\n            doc /* The design works with no more than 12 drones. */\n            fleetSizeDrones <= 12\n        }\n    }\n\n    #MoE attribute memberFlightEnduranceMinutes : ScalarValues::Real {\n        doc /* Budget: about 40 minutes of flight per drone, fixed by the brief. Transit out and back is spent\n             * from this same budget, so it is read with cruiseSpeedMetresPerSecond, which the brief does give. */\n        require constraint flightEnduranceWithinBudget {\n            doc /* A drone flies for at least 40 minutes on one battery. */\n            memberFlightEnduranceMinutes >= 40\n        }\n    }\n\n    #MoE attribute groundTurnaroundMinutes : ScalarValues::Real {\n        doc /* Budget: about 20 minutes on the ground, because batteries are swapped rather than charged in\n             * place. With endurance it fixes the airborne share the fleet can hold. */\n        require constraint turnaroundWithinBudget {\n            doc /* Turnaround on the ground is no more than 20 minutes. */\n            groundTurnaroundMinutes <= 20\n        }\n    }\n\n    #MoE attribute cruiseSpeedMetresPerSecond : ScalarValues::Real {\n        doc /* Budget: about 18 m/s between recharge point and sector, fixed by the brief. Without it nothing\n             * can say a drone reaches its station and returns inside its 40 minutes over an area several\n             * kilometres across. */\n        require constraint cruiseSpeedWithinBudget {\n            doc /* A drone cruises at no less than 18 m/s between recharge point and sector. */\n            cruiseSpeedMetresPerSecond >= 18\n        }\n    }\n\n    #MoE attribute sensorFootprintSquareKilometres : ScalarValues::Real {\n        doc /* Budget: about 3.0 km² under watch from a drone's watch altitude. This is what makes the coverage\n             * figure arithmetic rather than a hope. */\n        require constraint sensorFootprintWithinBudget {\n            doc /* A drone keeps at least 3.0 km² under watch at once. */\n            sensorFootprintSquareKilometres >= 3.0\n        }\n    }\n\n    #MoE attribute areaOfInterestSquareKilometres : ScalarValues::Real {\n        doc /* Budget: the area of interest is up to 25 km², divided into sectors. Fixed by the brief. */\n        require constraint areaWithinBudget {\n            doc /* The tasked area is no more than 25 km². */\n            areaOfInterestSquareKilometres <= 25\n        }\n    }\n\n    #MoE attribute operatorAlertCapacityPerHour : ScalarValues::Real {\n        doc /* Budget: the most alerts one operator can judge in an hour. A property of the operator, not\n             * something an architecture improves. Placeholder: not yet the customer's number. */\n        require constraint operatorCapacityWithinBudget {\n            doc /* The operator judges at most 20 alerts an hour — a placeholder. */\n            operatorAlertCapacityPerHour <= 20\n        }\n    }\n\n    #MoE attribute operatorSecondsPerAlert : ScalarValues::Real {\n        doc /* Budget: the least time the operator needs for each alert. Placeholder: not yet the customer's number. */\n        require constraint operatorTimeWithinBudget {\n            doc /* The operator has at least 30 seconds for each alert — a placeholder. */\n            operatorSecondsPerAlert >= 30\n        }\n    }\n\n    #MoE attribute trackStaleThresholdSeconds : ScalarValues::Real {\n        doc /* Budget: a track is stale once nothing has been seen for this long. It is the value the stale field\n             * of a Track is set from. Placeholder: not yet the customer's number. */\n        require constraint staleThresholdWithinBudget {\n            doc /* A track is marked stale after no more than 120 seconds without a sighting — a placeholder. */\n            trackStaleThresholdSeconds <= 120\n        }\n    }\n\n    #MoE attribute gnssOutageToleratedMinutes : ScalarValues::Real {\n        doc /* Budget: the satellite-positioning outage the position-error measure is stated against.\n             * Placeholder: not yet the customer's number. */\n        require constraint gnssOutageWithinBudget {\n            doc /* The drone tolerates at least 10 minutes without satellite positioning — a placeholder. */\n            gnssOutageToleratedMinutes >= 10\n        }\n    }\n\n    #MoE attribute jammedLinkShareFraction : ScalarValues::Real {\n        doc /* Budget: the share of links between drones assumed jammed when degraded coverage is measured.\n             * Placeholder: not yet the customer's number. */\n        require constraint jammedShareWithinBudget {\n            doc /* Degraded coverage is measured with at least half the links between drones jammed — a placeholder. */\n            jammedLinkShareFraction >= 0.5\n        }\n    }\n}",
+  "rationale": "The brief describes a population, not a single system: twelve identical drones that settle eight named matters with each other over a mesh that is deliberately independent of the ground link. That independence is the whole point of the architecture decision, so the mesh peer port and its interface are declared in Common in the mandated shape and every member is wired through them from LA down; collapsing the swarm into one instance would make the decision unaskable. The operational entity the system takes over is one representative watch asset — today a crewed sortie flown to a sector under a duty controller's hand-made plan — which is why the controller's eight coordination activities become the coordination functions and the operations centre's five become the C2 functions.\n\nHazards, rules, modes and items are exactly those the brief names and no more: the eight known hazards go to SA::Hazards once and are satisfied by path below; the four rules are all carried by one member's state machine, since each is about what a single drone does after recall, geofence breach, isolation or quarantine; MeshDegraded is the only fleet-level mode. DetectionReport and Track carry exactly the fields the brief lists and nothing else, so a layer cannot quietly add an identifier to make its own life easier — acknowledgement therefore carries its own reference field and is documented as doing so.\n\nOn the measures: every target that the brief states is taken from the brief, and every number it marks as awaiting the customer is flagged as a placeholder so no report can claim a design has met a customer requirement. Three numbers the brief fixes rather than asks for — the fleet of twelve, the operator's 20 alerts an hour and 30 seconds each — are budgets, declared and never scored. The cruise speed is declared as a budget because the brief gives it (18 m/s) and because endurance and area alone cannot say whether a drone reaches its sector and returns: transit out and back is paid from the same forty minutes as the watching, and a model without the speed would let an architecture spend its whole flight budget on the return leg. Only watchEnduranceHoursWithoutPeople has a target nobody asked for; its doc says so.\n\nCommon holds definitions only, so it declares no state machines and no hazards of its own: modes, states and layer hazards belong where there are parts to carry and mitigate them. The ports declared here are the ones the layers will actually wire — mesh, ground link, operations link, airspace, ground service, sensor feed and navigation feed — so that the interfaces check does not report a port that connects to nothing."
+}

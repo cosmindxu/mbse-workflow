@@ -1,0 +1,291 @@
+{
+  "total": 16,
+  "satisfied": 16,
+  "coverage": 1,
+  "libraryExcluded": 24,
+  "implicitExcluded": 0,
+  "nonNormativeExcluded": 0,
+  "kind": "requirement",
+  "rows": [
+    {
+      "id": "293cc634-bfae-4524-9159-b3f445cb9a2c",
+      "number": "1",
+      "reqId": "",
+      "name": "RecallWins",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Once a drone is recalled, it does not watch again until it has landed.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "mainComponent"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "adce194c-355f-432a-ae86-798a90a575ce",
+      "number": "2",
+      "reqId": "",
+      "name": "ReturnsWhenIsolated",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "From any situation a drone can be in, it can always get back to landed; an isolated drone included.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "mainComponent"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "a637eeb8-9e64-451e-8688-c38786bb1000",
+      "number": "3",
+      "reqId": "",
+      "name": "GeofenceBreachEndsWatch",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Once a drone is outside its cleared airspace, it does not watch until it has landed.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "mainComponent"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "dc740a03-320c-4c62-8ab2-94edbf559427",
+      "number": "4",
+      "reqId": "",
+      "name": "QuarantinedStaysOut",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Once a drone is quarantined, it takes no part in coordination until it has been readmitted.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "mainComponent"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "429312a2-7af0-475f-92c4-d7255332d725",
+      "number": "5",
+      "reqId": "",
+      "name": "PositionDriftHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Without satellite positioning, a drone's position estimate drifts and its reports place objects in the wrong place.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "navigateAgainstStoredMaps",
+        "navigateAgainstStoredMaps"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "32ca12f2-bf51-4470-a521-52a00f03e56f",
+      "number": "6",
+      "reqId": "",
+      "name": "MeshJammingHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Interference cuts the links between drones, and coordination stalls.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relayLink",
+        "relayLink"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "ad78fd37-a2fb-4f65-a3d6-103a77978c94",
+      "number": "7",
+      "reqId": "",
+      "name": "MisclassificationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "A detection is reported as the wrong class, or given a forced class where Unknown was the truth.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "detectAndClassifyObjects",
+        "detectAndClassifyObjects"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "bd6f54af-4a2d-4f6e-aa3c-bf3bfcac591b",
+      "number": "8",
+      "reqId": "",
+      "name": "SensingDegradedUnnoticedHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "A sensor degrades and nobody knows the reports from it are unreliable.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "presentStatusPicture",
+        "presentStatusPicture"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "0754d57d-51f9-415b-bbe0-c46270f652f9",
+      "number": "9",
+      "reqId": "",
+      "name": "StaleTrackHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "A track is shown as current after nothing has seen the object for a while.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "correlateTracks",
+        "correlateTracks"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "18bdf939-a742-4820-8fd3-b43dcb404285",
+      "number": "10",
+      "reqId": "",
+      "name": "SpoofedMemberHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Something that is not one of the drones joins the mesh and takes part in coordination.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "admitMember",
+        "admitMember"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "8e8c186c-9f23-4411-85cb-db2ca7ed75b6",
+      "number": "11",
+      "reqId": "",
+      "name": "MixedClassifierVersionsHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Drones run different classifier versions and classify the same object differently.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "manageClassifierVersion",
+        "manageClassifierVersion"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "86b46718-f945-487b-a2ab-71f76463ac56",
+      "number": "12",
+      "reqId": "",
+      "name": "OperatorOverloadHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "More alerts reach the operator than they can judge, and they accept what is in front of them.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "reportDetections",
+        "reportDetections"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "cd37e1d7-2e37-41c5-b28a-aa67db8d624f",
+      "number": "13",
+      "reqId": "",
+      "name": "MemberCollisionHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "two members sharing the same airspace fail to deconflict their flight paths and risk collision.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "deconflictMembers"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "3820a33a-36eb-4b48-8b5f-f1c6d14d465e",
+      "number": "14",
+      "reqId": "",
+      "name": "PrematureDepartureHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a member leaves its sector for recall or recharge before a handover to a peer completes, leaving a gap in watch.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "handOverSector"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "c13c3a13-6528-40af-a894-6178bf52d79a",
+      "number": "15",
+      "reqId": "",
+      "name": "UncoveredMemberLossHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a member is lost or grounded and the fleet does not redistribute coverage quickly enough, leaving its sector unwatched.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "redistributeCoverage"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "16970061-cefb-4607-9aa2-f7be994cf9b9",
+      "number": "16",
+      "reqId": "",
+      "name": "UnrelayedIsolationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "an isolated member finds no peer able to relay for it and drops out of coordination without anyone noticing.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relayLink"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    }
+  ]
+}

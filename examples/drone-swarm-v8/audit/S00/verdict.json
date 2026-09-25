@@ -1,0 +1,261 @@
+{
+  "step": "S00",
+  "layer": "Common",
+  "blocking": false,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v8/build/1_Common.sysml",
+  "prefixHash": "7a95c248030854d8",
+  "elements": 552,
+  "durationMs": 1612,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/1_Common.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S00/check.json",
+      "findings": 23
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v8/build/1_Common.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 21,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S00/elements.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchMeetsTarget",
+      "layer": "Common",
+      "line": 645,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "watchEnduranceMeetsTarget",
+      "layer": "Common",
+      "line": 655,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHoursWithoutPeople >= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportLatencyMeetsTarget",
+      "layer": "Common",
+      "line": 664,
+      "message": "Constraint could not be evaluated (\"reportDeliveryLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorMeetsTarget",
+      "layer": "Common",
+      "line": 673,
+      "message": "Constraint could not be evaluated (\"positionErrorAfterGnssLossMetres <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedCoverageMeetsTarget",
+      "layer": "Common",
+      "line": 683,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldMeetsTarget",
+      "layer": "Common",
+      "line": 691,
+      "message": "Constraint could not be evaluated (\"reportHoldDurationMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionMeetsTarget",
+      "layer": "Common",
+      "line": 699,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsMeetTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertRateMeetsTarget",
+      "layer": "Common",
+      "line": 717,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedPrecisionMeetsTarget",
+      "layer": "Common",
+      "line": 726,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageDropMeetsTarget",
+      "layer": "Common",
+      "line": 734,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "classifierCostMeetsTarget",
+      "layer": "Common",
+      "line": 743,
+      "message": "Constraint could not be evaluated (\"onboardClassifierCostUsdPerDrone <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeWithinBudget",
+      "layer": "Common",
+      "line": 752,
+      "message": "Constraint could not be evaluated (\"fleetSizeDrones <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "flightEnduranceWithinBudget",
+      "layer": "Common",
+      "line": 761,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes >= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "turnaroundWithinBudget",
+      "layer": "Common",
+      "line": 770,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedWithinBudget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond >= 18\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "sensorFootprintWithinBudget",
+      "layer": "Common",
+      "line": 789,
+      "message": "Constraint could not be evaluated (\"sensorFootprintSquareKilometres >= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaWithinBudget",
+      "layer": "Common",
+      "line": 797,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorCapacityWithinBudget",
+      "layer": "Common",
+      "line": 806,
+      "message": "Constraint could not be evaluated (\"operatorAlertCapacityPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorTimeWithinBudget",
+      "layer": "Common",
+      "line": 814,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "staleThresholdWithinBudget",
+      "layer": "Common",
+      "line": 823,
+      "message": "Constraint could not be evaluated (\"trackStaleThresholdSeconds <= 120\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "gnssOutageWithinBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"gnssOutageToleratedMinutes >= 10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedShareWithinBudget",
+      "layer": "Common",
+      "line": 841,
+      "message": "Constraint could not be evaluated (\"jammedLinkShareFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    }
+  ]
+}

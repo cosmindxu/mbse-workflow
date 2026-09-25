@@ -1,0 +1,486 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v9/fragments/3_OA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v9/fragments/3_OA.sysml (after)
+@@ -0,0 +1,482 @@
++    package OA {
++        doc /* Operational analysis: how the tasked area is watched and reported today, without any system named. The entities, what each does, what they exchange, and the operational modes. */
++
++        // ---------- Entities ----------
++
++        #Actor part def DutyController {
++            doc /* Operations-centre operator who tasks the swarm, issues supervisory command and recall, and today does sector assignment, handover, re-spread, deconfliction and relay by hand. */
++        }
++        part dutyController : DutyController {
++            doc /* The one operator who supervises the whole swarm. */
++        }
++
++        #Actor part def OperationsCentreAnalyst {
++            doc /* Judges the alerts that arrive, acknowledges each detection report and merges swarm tracks with the fixed camera network's tracks. */
++        }
++        part operationsCentreAnalyst : OperationsCentreAnalyst {
++            doc /* The analyst at the operations centre. */
++        }
++
++        #Actor part def AirspaceAuthority {
++            doc /* Grants and withdraws the clearance that says when and where anything may fly. */
++        }
++        part airspaceAuthority : AirspaceAuthority {
++            doc /* The authority whose clearance bounds every flight. */
++        }
++
++        #Actor part def GroundCrew {
++            doc /* Services drones between sorties, swapping batteries at the recharge point in about 20 minutes, and recovers drones that return on their own. */
++        }
++        part groundCrew : GroundCrew {
++            doc /* The crew at the recharge point and the recovery point. */
++        }
++
++        #Actor part def FixedCameraNetworkOperator {
++            doc /* Keeps the existing fixed camera network and its own tracks in service. */
++        }
++        part fixedCameraNetworkOperator : FixedCameraNetworkOperator {
++            doc /* The operator of the fixed camera network. */
++        }
++
++        #Member part def SwarmMember {
++            doc /* One of the twelve identical small drones: about 40 minutes of flight, about 18 m/s cruise, about 3.0 km2 under watch at a time, battery swapped on the ground. Declared once; every member is a usage of it. */
++        }
++
++        part watchAsset : SwarmMember [12] {
++            doc /* The operational entity that holds the watch over the tasked area: the population of twelve identical drones. */
++        }
++        part memberA : SwarmMember {
++            doc /* First representative of the twelve-drone population watchAsset; not an extra drone. */
++        }
++        part memberB : SwarmMember {
++            doc /* Second representative of the twelve-drone population watchAsset; not an extra drone. */
++        }
++
++        #Node part def GroundStationNode {
++            doc /* The station that tasks and watches the swarm and shows its status picture. */
++        }
++        part groundStation : GroundStationNode {
++            doc /* The ground station used today. */
++        }
++
++        #Node part def MeshRadio {
++            doc /* The radio mesh carrying coordination traffic between drones; it does not depend on the link to the operations centre. */
++        }
++        part meshRadioBetweenDrones : MeshRadio {
++            doc /* The mesh radio that carries the traffic between drones. */
++        }
++
++        #Node part def GroundLinkRadio {
++            doc /* The intermittently available radio link carrying tasking, command, reports, status and acknowledgements to and from the operations centre. */
++        }
++        part groundLinkToOperationsCentre : GroundLinkRadio {
++            doc /* The intermittent link to the operations centre. */
++        }
++
++        #Node part def RechargePoint {
++            doc /* Where batteries are swapped, not charged in place; about 20 minutes of turnaround. */
++        }
++        part batterySwapAtRechargePoint : RechargePoint {
++            doc /* The recharge point where ground crew swap batteries. */
++        }
++
++        #Node part def RecoveryPoint {
++            doc /* The point a drone that has lost contact with the swarm returns to on its own rather than becoming a hazard. */
++        }
++        part recoveryPoint : RecoveryPoint {
++            doc /* The recovery point for drones that return on their own. */
++        }
++
++        #Node part def FixedCameraNetwork {
++            doc /* The existing camera network; it stays and keeps its own tracks, which swarm reports must be mergeable with. */
++        }
++        part fixedCameraNetwork : FixedCameraNetwork {
++            doc /* The existing fixed camera network. */
++        }
++
++        // ---------- Coordination between members ----------
++
++        #Coordination action def HandOverSector {
++            doc /* A drone hands its sector to a neighbour when it leaves to recharge, so the sector stays watched. */
++            out port handoverOut;
++            in port handoverIn;
++        }
++        #Coordination action def RotateRecharge {
++            doc /* Members agree who leaves to recharge and who takes the place, so the rotation never empties a sector. */
++            out port rotationOut;
++            in port rotationIn;
++        }
++        #Coordination action def RedistributeCoverage {
++            doc /* Members re-spread over the area when one is lost or leaves, so the share of area under watch stays high. */
++            out port coverageOut;
++            in port coverageIn;
++        }
++        #Coordination action def DeconflictFlight {
++            doc /* Members announce flight intent to each other so that two drones do not occupy the same airspace. */
++            out port intentOut;
++            in port intentIn;
++        }
++        #Coordination action def RelayReportsThroughNeighbour {
++            doc /* A member that cannot reach the operations centre sends its reports through a neighbour that can. */
++            out port relayOut;
++            in port relayIn;
++        }
++        #Coordination action def CorrelateTracks {
++            doc /* Members agree that tracks seen by different drones are the same object, giving one track per object. */
++            out port correlationOut;
++            in port correlationIn;
++        }
++        #Coordination action def HandOverTrack {
++            doc /* A track is handed to the drone that watches the sector the object moves into. */
++            out port trackHandoverOut;
++            in port trackHandoverIn;
++        }
++        #Coordination action def AdmitMember {
++            doc /* A drone is checked before it takes part in coordination; one that fails takes no part until readmitted. */
++            out port admissionOut;
++            in port admissionIn;
++        }
++
++        // ---------- Command and control ----------
++
++        #C2 action def TaskSurveillanceArea {
++            doc /* The duty controller tasks the swarm with the area of interest, its sectors and the mission window. */
++            out port taskingOut;
++        }
++        #C2 action def CommandSupervisoryPriorities {
++            doc /* The duty controller gives priorities, a sector to look at more closely and the reporting threshold. */
++            out port priorityOut;
++        }
++        #C2 action def RecallAndLand {
++            doc /* An order to recall and land the whole swarm or one drone, issuable at any time. */
++            out port recallOut;
++        }
++        #C2 action def PresentStatusPicture {
++            doc /* Shows where every drone is, what it is doing, how much of the area is under watch and what is degraded. */
++            in port statusIn;
++        }
++        #C2 action def AcknowledgeDetectionReport {
++            doc /* The operations centre confirms each detection report, so nothing is lost in a link gap. */
++            in port reportIn;
++            out port receiptOut;
++        }
++
++        // ---------- Other operational activities ----------
++
++        action def DetectAndClassifyObject {
++            doc /* A drone detects a moving object in its sector and classifies it, saying Unknown when confidence is short of the reporting threshold. */
++            out port detectionOut;
++        }
++        action def DeliverDetectionReport {
++            doc /* A drone delivers a report with position and time to the operations centre, holds it while cut off, and clears it on acknowledgement. */
++            in port detectionIn;
++            out port reportOut;
++            in port receiptIn;
++        }
++        action def ApplySupervisoryDirectives {
++            doc /* A drone takes up the tasking, priorities and recall given by the duty controller, and lands on recall. */
++            in port taskingIn;
++            in port priorityIn;
++            in port recallIn;
++        }
++        action def ReportMemberStatus {
++            doc /* A drone reports its position, activity and degradations for the status picture. */
++            out port statusOut;
++        }
++        action def ReportTrackPicture {
++            doc /* A drone reports the tracks it holds so the analyst can merge them with the camera network's tracks. */
++            out port trackPictureOut;
++        }
++        action def ReturnToRecoveryPoint {
++            doc /* A drone that has lost contact with the swarm returns to the recovery point on its own. */
++        }
++        action def SwapBattery {
++            doc /* Ground crew swap a landed drone's battery at the recharge point, about 20 minutes. */
++        }
++        action def RecoverReturnedDrone {
++            doc /* Ground crew recover a drone that returned to the recovery point on its own. */
++        }
++        action def GrantAirspaceClearance {
++            doc /* The airspace authority grants or withdraws the clearance that bounds when and where anything may fly. */
++        }
++        action def ProvideCameraTracks {
++            doc /* The fixed camera network provides its own tracks. */
++            out port cameraTrackOut;
++        }
++        action def MergeSwarmTracks {
++            doc /* The analyst merges swarm tracks with the camera network's tracks, one track per object. */
++            in port swarmTrackIn;
++            in port cameraTrackIn;
++        }
++
++        // ---------- Activity usages, written here and allocated to the entity that performs them ----------
++
++        action issueTasking : TaskSurveillanceArea { doc /* Duty controller's tasking activity. */ }
++        action issuePriorities : CommandSupervisoryPriorities { doc /* Duty controller's supervisory-command activity. */ }
++        action issueRecall : RecallAndLand { doc /* Duty controller's recall activity. */ }
++        action presentStatus : PresentStatusPicture { doc /* Ground station's status presentation. */ }
++        action acknowledgeReports : AcknowledgeDetectionReport { doc /* Analyst's acknowledgement activity. */ }
++        action mergeTracks : MergeSwarmTracks { doc /* Analyst's track merge. */ }
++        action provideCameraTracks : ProvideCameraTracks { doc /* Camera network's own track output. */ }
++        action swapBatteryAct : SwapBattery { doc /* Ground crew battery swap. */ }
++        action recoverDroneAct : RecoverReturnedDrone { doc /* Ground crew recovery of a returned drone. */ }
++        action grantClearanceAct : GrantAirspaceClearance { doc /* Airspace authority clearance. */ }
++
++        allocate issueTasking to dutyController;
++        allocate issuePriorities to dutyController;
++        allocate issueRecall to dutyController;
++        allocate presentStatus to groundStation;
++        allocate acknowledgeReports to operationsCentreAnalyst;
++        allocate mergeTracks to operationsCentreAnalyst;
++        allocate provideCameraTracks to fixedCameraNetwork;
++        allocate swapBatteryAct to groundCrew;
++        allocate recoverDroneAct to groundCrew;
++        allocate grantClearanceAct to airspaceAuthority;
++
++        // memberA
++        action alphaHandOverSector : HandOverSector { doc /* memberA hands over its sector. */ }
++        action alphaRotateRecharge : RotateRecharge { doc /* memberA takes part in the recharge rotation. */ }
++        action alphaRedistributeCoverage : RedistributeCoverage { doc /* memberA re-spreads coverage. */ }
++        action alphaDeconflictFlight : DeconflictFlight { doc /* memberA deconflicts its flight. */ }
++        action alphaRelayReports : RelayReportsThroughNeighbour { doc /* memberA relays reports through a neighbour. */ }
++        action alphaCorrelateTracks : CorrelateTracks { doc /* memberA correlates tracks with neighbours. */ }
++        action alphaHandOverTrack : HandOverTrack { doc /* memberA hands a track over. */ }
++        action alphaAdmitMember : AdmitMember { doc /* memberA takes part in member admission. */ }
++        action alphaDetect : DetectAndClassifyObject { doc /* memberA detects and classifies. */ }
++        action alphaDeliver : DeliverDetectionReport { doc /* memberA delivers and holds reports. */ }
++        action alphaDirectives : ApplySupervisoryDirectives { doc /* memberA takes up directives. */ }
++        action alphaStatus : ReportMemberStatus { doc /* memberA reports its status. */ }
++        action alphaTrackPicture : ReportTrackPicture { doc /* memberA reports its tracks. */ }
++        action alphaReturn : ReturnToRecoveryPoint { doc /* memberA returns to the recovery point when cut off. */ }
++
++        allocate alphaHandOverSector to memberA;
++        allocate alphaRotateRecharge to memberA;
++        allocate alphaRedistributeCoverage to memberA;
++        allocate alphaDeconflictFlight to memberA;
++        allocate alphaRelayReports to memberA;
++        allocate alphaCorrelateTracks to memberA;
++        allocate alphaHandOverTrack to memberA;
++        allocate alphaAdmitMember to memberA;
++        allocate alphaDetect to memberA;
++        allocate alphaDeliver to memberA;
++        allocate alphaDirectives to memberA;
++        allocate alphaStatus to memberA;
++        allocate alphaTrackPicture to memberA;
++        allocate alphaReturn to memberA;
++
++        // memberB
++        action bravoHandOverSector : HandOverSector { doc /* memberB hands over its sector. */ }
++        action bravoRotateRecharge : RotateRecharge { doc /* memberB takes part in the recharge rotation. */ }
++        action bravoRedistributeCoverage : RedistributeCoverage { doc /* memberB re-spreads coverage. */ }
++        action bravoDeconflictFlight : DeconflictFlight { doc /* memberB deconflicts its flight. */ }
++        action bravoRelayReports : RelayReportsThroughNeighbour { doc /* memberB relays reports through a neighbour. */ }
++        action bravoCorrelateTracks : CorrelateTracks { doc /* memberB correlates tracks with neighbours. */ }
++        action bravoHandOverTrack : HandOverTrack { doc /* memberB hands a track over. */ }
++        action bravoAdmitMember : AdmitMember { doc /* memberB takes part in member admission. */ }
++        action bravoDetect : DetectAndClassifyObject { doc /* memberB detects and classifies. */ }
++        action bravoDeliver : DeliverDetectionReport { doc /* memberB delivers and holds reports. */ }
++        action bravoDirectives : ApplySupervisoryDirectives { doc /* memberB takes up directives. */ }
++        action bravoStatus : ReportMemberStatus { doc /* memberB reports its status. */ }
++        action bravoTrackPicture : ReportTrackPicture { doc /* memberB reports its tracks. */ }
++        action bravoReturn : ReturnToRecoveryPoint { doc /* memberB returns to the recovery point when cut off. */ }
++
++        allocate bravoHandOverSector to memberB;
++        allocate bravoRotateRecharge to memberB;
++        allocate bravoRedistributeCoverage to memberB;
++        allocate bravoDeconflictFlight to memberB;
++        allocate bravoRelayReports to memberB;
++        allocate bravoCorrelateTracks to memberB;
++        allocate bravoHandOverTrack to memberB;
++        allocate bravoAdmitMember to memberB;
++        allocate bravoDetect to memberB;
++        allocate bravoDeliver to memberB;
++        allocate bravoDirectives to memberB;
++        allocate bravoStatus to memberB;
++        allocate bravoTrackPicture to memberB;
++        allocate bravoReturn to memberB;
++
++        // ---------- What members exchange with each other (over the mesh) ----------
++
++        flow handOverSectorAtoB of Common::SectorHandoverProposal from alphaHandOverSector.handoverOut to bravoHandOverSector.handoverIn { doc /* memberA proposes a sector handover to memberB. */ }
++        flow handOverSectorBtoA of Common::SectorHandoverProposal from bravoHandOverSector.handoverOut to alphaHandOverSector.handoverIn { doc /* memberB proposes a sector handover to memberA. */ }
++        flow rotateRechargeAtoB of Common::RechargeRotationSlot from alphaRotateRecharge.rotationOut to bravoRotateRecharge.rotationIn { doc /* memberA tells memberB its place in the recharge rotation. */ }
++        flow rotateRechargeBtoA of Common::RechargeRotationSlot from bravoRotateRecharge.rotationOut to alphaRotateRecharge.rotationIn { doc /* memberB tells memberA its place in the recharge rotation. */ }
++        flow redistributeCoverageAtoB of Common::CoverageAssignment from alphaRedistributeCoverage.coverageOut to bravoRedistributeCoverage.coverageIn { doc /* memberA sends its share of coverage to memberB. */ }
++        flow redistributeCoverageBtoA of Common::CoverageAssignment from bravoRedistributeCoverage.coverageOut to alphaRedistributeCoverage.coverageIn { doc /* memberB sends its share of coverage to memberA. */ }
++        flow deconflictFlightAtoB of Common::FlightIntent from alphaDeconflictFlight.intentOut to bravoDeconflictFlight.intentIn { doc /* memberA announces flight intent to memberB. */ }
++        flow deconflictFlightBtoA of Common::FlightIntent from bravoDeconflictFlight.intentOut to alphaDeconflictFlight.intentIn { doc /* memberB announces flight intent to memberA. */ }
++        flow relayReportsAtoB of Common::DetectionReport from alphaRelayReports.relayOut to bravoRelayReports.relayIn { doc /* memberA passes a report to memberB to carry onward. */ }
++        flow relayReportsBtoA of Common::DetectionReport from bravoRelayReports.relayOut to alphaRelayReports.relayIn { doc /* memberB passes a report to memberA to carry onward. */ }
++        flow correlateTracksAtoB of Common::Track from alphaCorrelateTracks.correlationOut to bravoCorrelateTracks.correlationIn { doc /* memberA shares a track for correlation. */ }
++        flow correlateTracksBtoA of Common::Track from bravoCorrelateTracks.correlationOut to alphaCorrelateTracks.correlationIn { doc /* memberB shares a track for correlation. */ }
++        flow handOverTrackAtoB of Common::Track from alphaHandOverTrack.trackHandoverOut to bravoHandOverTrack.trackHandoverIn { doc /* memberA hands a track to memberB. */ }
++        flow handOverTrackBtoA of Common::Track from bravoHandOverTrack.trackHandoverOut to alphaHandOverTrack.trackHandoverIn { doc /* memberB hands a track to memberA. */ }
++        flow admitMemberAtoB of Common::AdmissionExchange from alphaAdmitMember.admissionOut to bravoAdmitMember.admissionIn { doc /* memberA exchanges admission evidence with memberB. */ }
++        flow admitMemberBtoA of Common::AdmissionExchange from bravoAdmitMember.admissionOut to alphaAdmitMember.admissionIn { doc /* memberB exchanges admission evidence with memberA. */ }
++
++        // ---------- Detection, reporting and acknowledgement ----------
++
++        flow detectionAlpha of Common::DetectionReport from alphaDetect.detectionOut to alphaDeliver.detectionIn { doc /* memberA passes a classified detection to its delivery. */ }
++        flow detectionBravo of Common::DetectionReport from bravoDetect.detectionOut to bravoDeliver.detectionIn { doc /* memberB passes a classified detection to its delivery. */ }
++        flow reportFromAlpha of Common::DetectionReport from alphaDeliver.reportOut to acknowledgeReports.reportIn { doc /* memberA's report reaches the operations centre over the ground link. */ }
++        flow reportFromBravo of Common::DetectionReport from bravoDeliver.reportOut to acknowledgeReports.reportIn { doc /* memberB's report reaches the operations centre over the ground link. */ }
++        flow receiptToAlpha of Common::ReportReceipt from acknowledgeReports.receiptOut to alphaDeliver.receiptIn { doc /* The acknowledgement returns to memberA. */ }
++        flow receiptToBravo of Common::ReportReceipt from acknowledgeReports.receiptOut to bravoDeliver.receiptIn { doc /* The acknowledgement returns to memberB. */ }
++
++        // ---------- Status and tracks ----------
++
++        flow statusFromAlpha of Common::MemberStatus from alphaStatus.statusOut to presentStatus.statusIn { doc /* memberA's status feeds the status picture. */ }
++        flow statusFromBravo of Common::MemberStatus from bravoStatus.statusOut to presentStatus.statusIn { doc /* memberB's status feeds the status picture. */ }
++        flow trackPictureFromAlpha of Common::Track from alphaTrackPicture.trackPictureOut to mergeTracks.swarmTrackIn { doc /* memberA's tracks go to the analyst for merging. */ }
++        flow trackPictureFromBravo of Common::Track from bravoTrackPicture.trackPictureOut to mergeTracks.swarmTrackIn { doc /* memberB's tracks go to the analyst for merging. */ }
++        flow cameraTracksToMerge of Common::Track from provideCameraTracks.cameraTrackOut to mergeTracks.cameraTrackIn { doc /* The camera network's own tracks go to the analyst for merging. */ }
++
++        // ---------- Command from the duty controller ----------
++
++        flow taskingToAlpha of Common::TaskingOrder from issueTasking.taskingOut to alphaDirectives.taskingIn { doc /* Tasking reaches memberA. */ }
++        flow taskingToBravo of Common::TaskingOrder from issueTasking.taskingOut to bravoDirectives.taskingIn { doc /* Tasking reaches memberB. */ }
++        flow prioritiesToAlpha of Common::PriorityDirective from issuePriorities.priorityOut to alphaDirectives.priorityIn { doc /* Priorities and the reporting threshold reach memberA. */ }
++        flow prioritiesToBravo of Common::PriorityDirective from issuePriorities.priorityOut to bravoDirectives.priorityIn { doc /* Priorities and the reporting threshold reach memberB. */ }
++        flow recallToAlpha of Common::RecallDirective from issueRecall.recallOut to alphaDirectives.recallIn { doc /* A recall order reaches memberA. */ }
++        flow recallToBravo of Common::RecallDirective from issueRecall.recallOut to bravoDirectives.recallIn { doc /* A recall order reaches memberB. */ }
++
++        // ---------- Capabilities and mission ----------
++
++        #Mission use case def WatchTheTaskedArea {
++            doc /* Hold continuous watch over a tasked area of up to 25 km2 and turn what happens there into acknowledged, triaged detection reports at the operations centre, inside airspace clearance, weather, radio interference and satellite-positioning outages. */
++            subject holder : SwarmMember;
++        }
++
++        #Capability use case def ContinuousSectorWatch {
++            doc /* Hold continuous surveillance: at any moment at least one drone watches each sector, as members leave to recharge and rejoin. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def MovingObjectDetectionAndClassification {
++            doc /* Detect moving objects, classify them well enough to say whether they matter, and say Unknown rather than force a class below the reporting threshold. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def ReportDeliveryAndReconciliation {
++            doc /* Deliver each report with position and time, keep detecting and holding reports while cut off, and reconcile with none lost once the link is back. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def SwarmSelfCoordination {
++            doc /* Settle sector handover, recharge rotation, coverage redistribution, deconfliction, link relay, track correlation, track handover and member admission between the drones over the mesh. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def OperatorSupervisionOfTheSwarm {
++            doc /* Let one operator task, command, recall and watch the whole swarm rather than fly each drone, and acknowledge each report. */
++            subject holder : DutyController;
++        }
++        #Capability use case def AlertTriage {
++            doc /* Triage reports before they reach the operator, most likely to matter first and duplicates merged, so the alert rate stays inside what one operator can judge. */
++            subject holder : OperationsCentreAnalyst;
++        }
++        #Capability use case def DecisionRecordKeeping {
++            doc /* Keep, for every report, the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */
++            subject holder : OperationsCentreAnalyst;
++        }
++        #Capability use case def GracefulDegradationUnderLoss {
++            doc /* Keep flying and watching when a drone is lost, the mesh is jammed or the ground link or ground station drops, with the loss of coverage bounded. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def AirspaceComplianceAndSafeRecovery {
++            doc /* Stay inside cleared airspace, land when it is not cleared or wind exceeds moderate, and return to a recovery point when contact with the swarm is lost. */
++            subject holder : SwarmMember;
++        }
++        #Capability use case def ClassifierVersionConsistency {
++            doc /* Keep one classifier version across the fleet and know which version each drone runs, so one object is not classified differently by different drones. */
++            subject holder : SwarmMember;
++        }
++
++        // ---------- Operational modes and states ----------
++
++        #Mode state def SwarmMemberModes {
++            doc /* Operating conditions of one drone: nominal, without satellite positioning, sensors not trustworthy, cut off from the other drones, or failed admission. */
++            initial start;
++            transition start -> Nominal;
++            state Nominal { doc /* The drone has positioning, trusted sensors, contact with the swarm and admission. */ }
++            state NavigationDegraded { doc /* The drone has no satellite positioning and navigates by what its camera sees against stored maps. */ }
++            state SensingDegraded { doc /* The drone's sensors cannot be trusted as they are, and what it reports from them is marked accordingly. */ }
++            state Isolated { doc /* The drone is cut off from the other drones and coordinates with none of them. */ }
++            state Quarantined { doc /* The drone has failed admission and takes no part in coordination until it has been readmitted. */ }
++            transition losePositioning first Nominal accept positioningLostNotice : Common::ConditionNotice do action navigateByCamera then NavigationDegraded;
++            transition regainPositioning first NavigationDegraded accept positioningBackNotice : Common::ConditionNotice do action resumeSatelliteNavigation then Nominal;
++            transition degradeSensing first Nominal accept sensingDegradedNotice : Common::ConditionNotice do action markReportsUnreliable then SensingDegraded;
++            transition restoreSensing first SensingDegraded accept sensingRestoredNotice : Common::ConditionNotice do action clearReportMarking then Nominal;
++            transition loseContact first Nominal accept contactLostNotice : Common::ConditionNotice do action coordinateWithNone then Isolated;
++            transition regainContact first Isolated accept contactBackNotice : Common::ConditionNotice do action rejoinCoordination then Nominal;
++            transition failAdmission first Nominal accept admissionFailed : Common::AdmissionExchange do action withdrawFromCoordination then Quarantined;
++            transition readmit first Quarantined accept readmission : Common::AdmissionExchange do action resumeCoordination then Nominal;
++        }
++
++        #State state def SwarmMemberStates {
++            doc /* Where one drone is in its sortie: on the ground, flying out, watching, flying back, recalled, or returning to the recovery point on its own. */
++            initial start;
++            transition start -> Landed;
++            state Landed { doc /* On the ground, battery being swapped or waiting for tasking. */ }
++            state Transiting { doc /* Flying from the recharge point to its sector. */ }
++            state Watching { doc /* Holding watch over its sector. */ }
++            state Returning { doc /* Flying back to the recharge point to swap the battery. */ }
++            state Recalled { doc /* Recalled by order and on its way down; it does not watch until landed. */ }
++            state Recovering { doc /* Cut off from the swarm and returning to the recovery point on its own. */ }
++            transition launch first Landed accept taskingReceived : Common::TaskingOrder do action beginTransit then Transiting;
++            transition Transiting -> Watching;
++            transition Watching -> Returning;
++            transition Returning -> Landed;
++            transition recallWhileTransiting first Transiting accept recallReceivedEarly : Common::RecallDirective do action abortTransit then Recalled;
++            transition recallWhileWatching first Watching accept recallReceived : Common::RecallDirective do action abortWatch then Recalled;
++            transition Recalled -> Landed;
++            transition loseSwarmContact first Watching accept swarmContactLost : Common::ConditionNotice do action headForRecoveryPoint then Recovering;
++            transition Recovering -> Landed;
++        }
++
++        #Mode state def FleetModes {
++            doc /* Condition of the mesh between drones, taken over the whole population watchAsset. */
++            initial start;
++            transition start -> MeshIntact;
++            state MeshIntact { doc /* The links between drones are all usable. */ }
++            state MeshDegraded { doc /* A share of the links between drones is jammed and the swarm coordinates over what is left. */ }
++            transition meshJammed first MeshIntact accept jammingNotice : Common::ConditionNotice do action coordinateOverRemainingLinks then MeshDegraded;
++            transition meshRestored first MeshDegraded accept jammingClearedNotice : Common::ConditionNotice do action restoreFullCoordination then MeshIntact;
++        }
++
++        #State state def FleetStates {
++            doc /* Where the whole population watchAsset is in the mission: on the ground, on watch, or recalled. */
++            initial start;
++            transition start -> Grounded;
++            state Grounded { doc /* No drone is flying. */ }
++            state OnWatch { doc /* The population holds the watch, rotating members through recharge. */ }
++            state Recalled { doc /* The whole population has been recalled and lands. */ }
++            transition fleetLaunch first Grounded accept fleetTasking : Common::TaskingOrder do action launchRotation then OnWatch;
++            transition fleetRecall first OnWatch accept fleetRecallOrder : Common::RecallDirective do action landPopulation then Recalled;
++            transition Recalled -> Grounded;
++        }
++
++        // ---------- Hazards this layer adds ----------
++
++        package Hazards {
++            doc /* Hazards of the operation as it is, without the system. */
++
++            #Hazard requirement ManualCoordinationLagHazard {
++                doc /* Sector assignment, handover, re-spread and deconfliction done by hand lag behind events, and a sector goes unwatched. */
++                subject holder : DutyController;
++            }
++            #Hazard requirement UnrecoveredDroneHazard {
++                doc /* A drone that has lost contact with the swarm keeps flying with nowhere to go and becomes a hazard. */
++                subject holder : SwarmMember;
++            }
++            #Hazard requirement ReportLostInLinkGapHazard {
++                doc /* A detection report is sent into a link gap and nobody knows it never arrived. */
++                subject holder : OperationsCentreAnalyst;
++            }
++            #Hazard requirement WatchBeyondClearanceHazard {
++                doc /* A drone keeps flying its watch after the airspace clearance has been withdrawn. */
++                subject holder : SwarmMember;
++            }
++        }
++
++        satisfy Hazards::ManualCoordinationLagHazard by alphaRedistributeCoverage;
++        satisfy Hazards::UnrecoveredDroneHazard by alphaReturn;
++        satisfy Hazards::ReportLostInLinkGapHazard by acknowledgeReports;
++        satisfy Hazards::WatchBeyondClearanceHazard by alphaDirectives;
++    }

@@ -1,0 +1,598 @@
+{
+  "step": "S32",
+  "layer": "LA",
+  "alternative": 1,
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml",
+  "prefixHash": "cf9cedf658ae8fc7",
+  "elements": 2280,
+  "durationMs": 4116,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/check.json",
+      "findings": 20
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 7,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/requirements-hazards.json",
+      "findings": 4
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 26,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/elements.json",
+      "findings": 6
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 70,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 18,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/trace-allocate.json",
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 9,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/connectivity.json",
+      "findings": 16
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 5,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/orphans.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v7/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 18,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S32/alt-1/reach.json",
+      "findings": 12
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 167,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 171,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 175,
+      "message": "Constraint could not be evaluated (\"jammedMeshAreaUnderWatchShare >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 179,
+      "message": "Constraint could not be evaluated (\"groundLinkLossAreaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 183,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHours >= 24\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 187,
+      "message": "Constraint could not be evaluated (\"reportLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 191,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutGnssMeters <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 195,
+      "message": "Constraint could not be evaluated (\"reportHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 199,
+      "message": "Constraint could not be evaluated (\"reportsLostInLinkGap <= 0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 203,
+      "message": "Constraint could not be evaluated (\"missedDetectionShare <= 0.1\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 207,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 211,
+      "message": "Constraint could not be evaluated (\"operatorAlertsPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 215,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterShare >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 219,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsd <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 224,
+      "message": "Constraint could not be evaluated (\"fleetSize <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 228,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 232,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes <= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 236,
+      "message": "Constraint could not be evaluated (\"memberRechargeMinutes >= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 240,
+      "message": "Constraint could not be evaluated (\"areaOfInterestKm2 <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "LA",
+      "line": 778,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss == 1.0 / (laFleetSize * laMemberFlightEnduranceMinutes / (laMemberFlightEnduranceMinutes + laMemberRechargeMinutes))\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::MemberCollisionHazard",
+      "rule": "CV-09",
+      "message": "hazard `MemberCollisionHazard` is mitigated by no component of this architecture (only by `deconflictMembers`, which every alternative shares). Add `satisfy LA::Hazards::MemberCollisionHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::PrematureDepartureHazard",
+      "rule": "CV-09",
+      "message": "hazard `PrematureDepartureHazard` is mitigated by no component of this architecture (only by `handOverSector`, which every alternative shares). Add `satisfy LA::Hazards::PrematureDepartureHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::UncoveredMemberLossHazard",
+      "rule": "CV-09",
+      "message": "hazard `UncoveredMemberLossHazard` is mitigated by no component of this architecture (only by `redistributeCoverage`, which every alternative shares). Add `satisfy LA::Hazards::UncoveredMemberLossHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::UnrelayedIsolationHazard",
+      "rule": "CV-09",
+      "message": "hazard `UnrelayedIsolationHazard` is mitigated by no component of this architecture (only by `relayLink`, which every alternative shares). Add `satisfy LA::Hazards::UnrelayedIsolationHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "replicas.topology",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "alternative 1: 0 of 13 coordination and command-and-control function(s) on board, 13 on the ground; 1 link(s) between members; fleet [12].",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.scenario",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-08",
+      "message": "no exchange scenario between two members: an `occurrence def` with `ref part a : SurveillanceDrone; ref part b : SurveillanceDrone;` and the messages of a sector handover is what shows the peer protocol (A1-C-15).",
+      "check": "elements"
+    },
+    {
+      "code": "rules.carried",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-18",
+      "message": "`RecallWins` is carried by `LA::SurveillanceDroneMode`, and it is a rule of `SurveillanceDrone`: carry it on that machine.",
+      "check": "elements"
+    },
+    {
+      "code": "rules.carried",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-18",
+      "message": "`ReturnsWhenIsolated` is carried by `LA::SurveillanceDroneMode`, and it is a rule of `SurveillanceDrone`: carry it on that machine.",
+      "check": "elements"
+    },
+    {
+      "code": "rules.carried",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-18",
+      "message": "`GeofenceBreachEndsWatch` is carried by `LA::SurveillanceDroneMode`, and it is a rule of `SurveillanceDrone`: carry it on that machine.",
+      "check": "elements"
+    },
+    {
+      "code": "rules.carried",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-18",
+      "message": "`QuarantinedStaysOut` is carried by `LA::SurveillanceDroneMode`, and it is a rule of `SurveillanceDrone`: carry it on that machine.",
+      "check": "elements"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::taskingIn",
+      "rule": "CV-05",
+      "message": "port `taskingIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::reportsOut",
+      "rule": "CV-05",
+      "message": "port `reportsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::decisionsOut",
+      "rule": "CV-05",
+      "message": "port `decisionsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::supervisionIn",
+      "rule": "CV-05",
+      "message": "port `supervisionIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::recallIn",
+      "rule": "CV-05",
+      "message": "port `recallIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::ackIn",
+      "rule": "CV-05",
+      "message": "port `ackIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::statusOut",
+      "rule": "CV-05",
+      "message": "port `statusOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneSwarmLogical::rechargeRequestOut",
+      "rule": "CV-05",
+      "message": "port `rechargeRequestOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DutyController::supervisionOut",
+      "rule": "CV-05",
+      "message": "port `supervisionOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DutyController::recallOut",
+      "rule": "CV-05",
+      "message": "port `recallOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DutyController::ackOut",
+      "rule": "CV-05",
+      "message": "port `ackOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::DutyController::statusIn",
+      "rule": "CV-05",
+      "message": "port `statusIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentre::taskingOut",
+      "rule": "CV-05",
+      "message": "port `taskingOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentre::reportsIn",
+      "rule": "CV-05",
+      "message": "port `reportsIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::OperationsCentre::decisionsIn",
+      "rule": "CV-05",
+      "message": "port `decisionsIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::GroundCrew::rechargeIn",
+      "rule": "CV-05",
+      "message": "port `rechargeIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Landed",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Landed`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Landed -> Watching` (declaration order) and never `Landed -> Quarantined`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Watching`: 5 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> NavigationDegraded` (declaration order) and never `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> Recalled`, `Watching -> OutsideClearedAirspace`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Isolated",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDroneMode::Isolated`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Watching` (declaration order) and never `Isolated -> Landed`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SurveillanceDroneStatus::Active",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDroneStatus::Active`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Active -> Recharging` (declaration order) and never `Active -> Idle`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Watching`: 6 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> NavigationDegraded` (declaration order) and never `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> Quarantined`, `Watching -> Recalled`, `Watching -> OutsideClearedAirspace`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `NavigationDegraded -> Watching` (declaration order) and never `NavigationDegraded -> Recalled`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `SensingDegraded -> Watching` (declaration order) and never `SensingDegraded -> Recalled`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::MemberMode::Isolated",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Isolated`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Watching` (declaration order) and never `Isolated -> Recalled`.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `NavigationDegraded` of the member, and no state machine of `SurveillanceDrone` at this layer has `state NavigationDegraded;`. It is a state of `LA::SurveillanceDroneMode`, `LA::MemberMode`, which is not `SurveillanceDrone`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `SensingDegraded` of the member, and no state machine of `SurveillanceDrone` at this layer has `state SensingDegraded;`. It is a state of `LA::SurveillanceDroneMode`, `LA::MemberMode`, which is not `SurveillanceDrone`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `Isolated` of the member, and no state machine of `SurveillanceDrone` at this layer has `state Isolated;`. It is a state of `LA::SurveillanceDroneMode`, `LA::MemberMode`, which is not `SurveillanceDrone`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `Quarantined` of the member, and no state machine of `SurveillanceDrone` at this layer has `state Quarantined;`. It is a state of `LA::SurveillanceDroneMode`, `LA::MemberMode`, which is not `SurveillanceDrone`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    }
+  ]
+}

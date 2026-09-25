@@ -1,0 +1,168 @@
+{
+  "chosen": 1,
+  "scores": [
+    {
+      "k": 1,
+      "moe": 1,
+      "rubric": 0.5,
+      "structure": 0.8571428571428571,
+      "resilience": 0.1875,
+      "total": 0.8174107142857142
+    }
+  ],
+  "metrics": [
+    {
+      "k": 1,
+      "population": {
+        "peerLinks": 1,
+        "onBoard": 2,
+        "tagged": 13,
+        "fleet": "12",
+        "acceptedHazards": 0
+      },
+      "elements": 2009,
+      "connections": 197,
+      "unconnectedPorts": 37,
+      "orphanDefinitions": 4,
+      "functionsRealised": 17,
+      "functionsAbove": 17,
+      "repairIterations": 1,
+      "warnings": 41,
+      "acceptedHazards": 0,
+      "moes": [
+        {
+          "name": "areaUnderWatchFraction",
+          "sense": "max",
+          "target": 0.9,
+          "unit": "",
+          "outcome": "derived",
+          "value": 0.96,
+          "met": true,
+          "basis": "derived, not stated: each airborne member covers its 3 km2 footprint, which is larger than its 25/12 km2 equal share of the area of interest, so the covered fraction is the airborne count times the per-member footprint over the area of interest, not simply the airborne share itself",
+          "detail": "min `SurveillanceDroneSwarm::PA::areaUnderWatchFraction`: bound found at 0.96 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 15 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "watchEnduranceHoursWithoutPeople",
+          "sense": "max",
+          "target": 12,
+          "unit": "hours",
+          "outcome": "optimum",
+          "value": 18,
+          "met": true,
+          "basis": "battery swaps are the only human touch this architecture needs; with stored spares at rechargePoint and a standing ground crew shift, recharge rotation runs unattended for most of an 18-hour shift before the crew must reload spares",
+          "detail": "min `SurveillanceDroneSwarm::PA::watchEnduranceHoursWithoutPeople` = 18 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "reportDeliveryLatencySeconds",
+          "sense": "min",
+          "target": 60,
+          "unit": "seconds",
+          "outcome": "optimum",
+          "value": 45,
+          "met": true,
+          "basis": "worst case: detection, uplink over the ground link, ground-side triage and correlation, then display — this alternative's centralised triage adds a ground round-trip a drone-held triage would not need",
+          "detail": "max `SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds` = 45 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "positionErrorAfterGnssLossMetres",
+          "sense": "min",
+          "target": 50,
+          "unit": "metres",
+          "outcome": "optimum",
+          "value": 35,
+          "met": true,
+          "basis": "camera-against-StoredMaps navigation over the ten-minute tolerated outage, per member, independent of where coordination is decided",
+          "detail": "max `SurveillanceDroneSwarm::PA::positionErrorAfterGnssLossMetres` = 35 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "coverageUnderMeshJammingFraction",
+          "sense": "max",
+          "target": 0.75,
+          "unit": "",
+          "outcome": "derived",
+          "value": 0.816,
+          "met": true,
+          "basis": "derived from the achieved area coverage and how much of this alternative's coordination actually needs the mesh",
+          "detail": "min `SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction`: bound found at 0.816 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 15 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "reportHoldDurationMinutes",
+          "sense": "max",
+          "target": 30,
+          "unit": "minutes",
+          "outcome": "optimum",
+          "value": 45,
+          "met": true,
+          "basis": "the onboard reportHold buffer is sized above the brief's 30-minute target so a member cut off from the ground link outlasts a typical gap",
+          "detail": "min `SurveillanceDroneSwarm::PA::reportHoldDurationMinutes` = 45 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "missedDetectionFraction",
+          "sense": "min",
+          "target": 0.1,
+          "unit": "",
+          "outcome": "optimum",
+          "value": 0.08,
+          "met": true,
+          "basis": "a single ClassifierRelease tracked centrally by classifierRegistry, with a threshold set once by groundStation.c2, keeps detection performance consistent across the fleet",
+          "detail": "max `SurveillanceDroneSwarm::PA::missedDetectionFraction` = 0.08 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "falseAlarmsPerHour",
+          "sense": "min",
+          "target": 2,
+          "unit": "alerts per hour",
+          "outcome": "optimum",
+          "value": 1.5,
+          "met": true,
+          "basis": "groundStation.triage merges duplicates across the whole fleet's reports before anything counts as an alarm",
+          "detail": "max `SurveillanceDroneSwarm::PA::falseAlarmsPerHour` = 1.5 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "alertsReachingOperatorPerHour",
+          "sense": "min",
+          "target": 20,
+          "unit": "alerts per hour",
+          "outcome": "optimum",
+          "value": 18,
+          "met": true,
+          "basis": "triage caps the TriagedAlertStream to under the 20/hour OperatorAttention budget with margin, mitigating OperatorOverloadHazard",
+          "detail": "max `SurveillanceDroneSwarm::PA::alertsReachingOperatorPerHour` = 18 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "acknowledgedReportsThatMatterFraction",
+          "sense": "max",
+          "target": 0.8,
+          "unit": "",
+          "outcome": "optimum",
+          "value": 0.85,
+          "met": true,
+          "basis": "centralised triage ranks reports by the ground-set reporting threshold before anything reaches the operator",
+          "detail": "min `SurveillanceDroneSwarm::PA::acknowledgedReportsThatMatterFraction` = 0.85 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "coverageDropAfterMemberLossFraction",
+          "sense": "min",
+          "target": 0.25,
+          "unit": "",
+          "outcome": "derived",
+          "value": 0.125,
+          "met": true,
+          "basis": "derived: losing one of the airborne members drops coverage by that one member's share of the airborne count, before redistributeCoverage re-spreads the rest",
+          "detail": "max `SurveillanceDroneSwarm::PA::coverageDropAfterMemberLossFraction`: bound found at 0.125 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 15 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        },
+        {
+          "name": "onboardClassifierCostUsdPerDrone",
+          "sense": "min",
+          "target": 300,
+          "unit": "USD",
+          "outcome": "optimum",
+          "value": 220,
+          "met": true,
+          "basis": "this ground-centred alternative needs only a lightweight onboard feature extractor per drone; classification authority and the release registry stay on the ground, keeping onboard compute cheap",
+          "detail": "max `SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone` = 220 (coherent SI; the feature declares no unit) exactly (linear optimum, optimality established by z3’s νZ) over 1 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+        }
+      ]
+    }
+  ]
+}

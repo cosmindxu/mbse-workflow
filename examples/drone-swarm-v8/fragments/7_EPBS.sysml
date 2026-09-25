@@ -1,0 +1,288 @@
+    package EPBS {
+        #prompt part epbsGuidance {
+            doc /* EPBS: one configuration item per thing that is procured, built or delivered. Each realises a physical part from PA, carries its contract as a requirement, and is verified by a verification case. */
+        }
+
+        // ---- shared lifecycle/mode state definitions every configuration item carries ----
+        #Mode state def CIOperationalMode {
+            doc /* the operational mode common to every configuration item in this package: nominal service or degraded pending maintenance or replacement */
+            initial start;
+            transition start -> InService;
+            state InService {
+                doc /* the item is fielded and operating within its delivery contract */
+            }
+            state Degraded {
+                doc /* the item is fielded but operating outside its contract, pending service or replacement */
+            }
+            transition InService -> Degraded;
+            transition Degraded -> InService;
+        }
+
+        #State state def CILifecycleState {
+            doc /* the procurement lifecycle common to every configuration item in this package, from receipt to retirement */
+            initial start;
+            transition start -> Received;
+            state Received {
+                doc /* delivered by the supplier or accepted from build, not yet integrated */
+            }
+            state Fielded {
+                doc /* integrated and in service as part of the system */
+            }
+            state Retired {
+                doc /* withdrawn from service, superseded or made obsolete */
+            }
+            transition Received -> Fielded;
+            transition Fielded -> Retired;
+        }
+
+        // ---- fleet: drone airframe (HWCI) ----
+        #CI_HWCI part def SurveillanceDroneAirframeItem {
+            doc /* the physical, procured drone airframe and its integrated hardware for one member of the fleet; realises SurveillanceDroneSwarm::PA::fleet */
+            state opMode : CIOperationalMode {
+                doc /* this airframe's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this airframe's current procurement lifecycle stage */
+            }
+        }
+        part fleetCi : SurveillanceDroneAirframeItem [12];
+        trace fleetCi to SurveillanceDroneSwarm::PA::fleet;
+
+        requirement def SurveillanceDroneAirframeItemContract {
+            doc /* the delivery contract for one drone airframe: bounded by the fleet size, endurance and cruise budgets the mission fixes */
+            subject ci : SurveillanceDroneAirframeItem;
+            attribute id = "EPBS-REQ-FLEET-001";
+            assume constraint { SurveillanceDroneSwarm::PA::fleetSizeDrones > 0 }
+            require constraint { SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12 }
+        }
+        requirement fleetAirframeContract : SurveillanceDroneAirframeItemContract {
+            doc /* the instance of the airframe contract carried by each delivered unit of the fleet */
+        }
+        satisfy SurveillanceDroneAirframeItemContract by fleetCi;
+        satisfy fleetAirframeContract by fleetCi;
+
+        verification def VerifySurveillanceDroneAirframeItem {
+            doc /* acceptance inspection and flight test confirming a delivered airframe meets its contract before it joins the fleet */
+            subject ci : SurveillanceDroneAirframeItem;
+            objective { verify SurveillanceDroneAirframeItemContract; }
+        }
+
+        // ---- fleet: onboard mission software (CSCI) ----
+        #CI_CSCI part def OnboardMissionSoftwareItem {
+            doc /* the built software load (sensing, classification, navigation, local deconfliction, relay, report hold, watchdog) installed on each airframe; realises the onboard functions of SurveillanceDroneSwarm::PA::fleet */
+            state opMode : CIOperationalMode {
+                doc /* this software load's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this software load's current procurement lifecycle stage */
+            }
+        }
+        part onboardSoftwareCi : OnboardMissionSoftwareItem [12];
+        trace onboardSoftwareCi to SurveillanceDroneSwarm::PA::fleet;
+
+        requirement def OnboardMissionSoftwareItemContract {
+            doc /* the build contract for the onboard software load: one baseline installed identically on every member, meeting the fleet's detection performance budget */
+            subject ci : OnboardMissionSoftwareItem;
+            attribute id = "EPBS-REQ-FLEET-002";
+            assume constraint { SurveillanceDroneSwarm::PA::missedDetectionFraction >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::missedDetectionFraction <= 0.1 }
+        }
+        requirement onboardSoftwareContract : OnboardMissionSoftwareItemContract {
+            doc /* the instance of the software contract carried by each installed load */
+        }
+        satisfy OnboardMissionSoftwareItemContract by onboardSoftwareCi;
+        satisfy onboardSoftwareContract by onboardSoftwareCi;
+
+        verification def VerifyOnboardMissionSoftwareItem {
+            doc /* release test confirming an onboard software build meets its contract and matches the fleet baseline before installation */
+            subject ci : OnboardMissionSoftwareItem;
+            objective { verify OnboardMissionSoftwareItemContract; }
+        }
+
+        // ---- classifier release: single fleet-wide baseline (CSCI) ----
+        #CI_CSCI part def ClassifierReleaseItem {
+            doc /* the single classifier model release built and delivered for the whole fleet, tracked by SurveillanceDroneSwarm::PA::GroundStationNode::classifierRegistry */
+            state opMode : CIOperationalMode {
+                doc /* this release's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this release's current procurement lifecycle stage */
+            }
+        }
+        part classifierReleaseCi : ClassifierReleaseItem;
+        trace classifierReleaseCi to SurveillanceDroneSwarm::PA::GroundStationNode::classifierRegistry;
+
+        requirement def ClassifierReleaseItemContract {
+            doc /* the release contract: exactly one classifier version is current across the fleet at any time, within the per-drone onboard compute cost budget */
+            subject ci : ClassifierReleaseItem;
+            attribute id = "EPBS-REQ-CLS-001";
+            assume constraint { SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone <= 300.0 }
+        }
+        requirement classifierReleaseContract : ClassifierReleaseItemContract {
+            doc /* the instance of the release contract carried by the fielded classifier release */
+        }
+        satisfy ClassifierReleaseItemContract by classifierReleaseCi;
+        satisfy classifierReleaseContract by classifierReleaseCi;
+
+        verification def VerifyClassifierReleaseItem {
+            doc /* release verification confirming the classifier version installed on every member matches the single approved baseline */
+            subject ci : ClassifierReleaseItem;
+            objective { verify ClassifierReleaseItemContract; }
+        }
+
+        // ---- radio module: shared COTS item on drones and ground station ----
+        #CI_COTS part def RadioModuleItem {
+            doc /* the commercial-off-the-shelf radio module carrying mesh and ground-link traffic; procured, not built; a sourcing variant point against supplier risk */
+            #Variant attribute supplierOption : String = "PrimarySupplier" {
+                doc /* sourcing variant: the primary approved radio supplier; an approved form-fit-function equivalent may be substituted under this item's contract */
+            }
+            state opMode : CIOperationalMode {
+                doc /* this radio module's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this radio module's current procurement lifecycle stage */
+            }
+        }
+        part radioModuleCi : RadioModuleItem [13];
+        trace radioModuleCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::meshRadioUnit;
+        trace radioModuleCi to SurveillanceDroneSwarm::PA::GroundStationNode::groundRadioUnit;
+
+        requirement def RadioModuleItemContract {
+            doc /* the procurement contract for the radio module: carries mesh and ground-link traffic within the jammed-link share the brief assumes, with an approved equivalent substitutable for the primary part number */
+            subject ci : RadioModuleItem;
+            attribute id = "EPBS-REQ-RADIO-001";
+            assume constraint { SurveillanceDroneSwarm::PA::jammedLinkShareFraction >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::jammedLinkShareFraction <= 1.0 }
+        }
+        requirement radioModuleContract : RadioModuleItemContract {
+            doc /* the instance of the radio module contract carried by each delivered unit */
+        }
+        satisfy RadioModuleItemContract by radioModuleCi;
+        satisfy radioModuleContract by radioModuleCi;
+
+        verification def VerifyRadioModuleItem {
+            doc /* incoming inspection and bench test confirming a delivered radio module, primary or approved-equivalent, meets its contract */
+            subject ci : RadioModuleItem;
+            objective { verify RadioModuleItemContract; }
+        }
+
+        // ---- ground station (HWCI) ----
+        #CI_HWCI part def GroundStationItem {
+            doc /* the fixed ground installation, procured and built as one item; realises SurveillanceDroneSwarm::PA::groundStation */
+            state opMode : CIOperationalMode {
+                doc /* this installation's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this installation's current procurement lifecycle stage */
+            }
+        }
+        part groundStationCi : GroundStationItem;
+        trace groundStationCi to SurveillanceDroneSwarm::PA::groundStation;
+
+        requirement def GroundStationItemContract {
+            doc /* the delivery contract for the ground installation: hosts coordination, command and control, triage and the classifier registry within the fleet's report-delivery latency budget */
+            subject ci : GroundStationItem;
+            attribute id = "EPBS-REQ-GS-001";
+            assume constraint { SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds <= 60.0 }
+        }
+        requirement groundStationContract : GroundStationItemContract {
+            doc /* the instance of the ground station contract carried by the delivered installation */
+        }
+        satisfy GroundStationItemContract by groundStationCi;
+        satisfy groundStationContract by groundStationCi;
+
+        verification def VerifyGroundStationItem {
+            doc /* site acceptance test confirming the delivered ground installation meets its contract before cutover */
+            subject ci : GroundStationItem;
+            objective { verify GroundStationItemContract; }
+        }
+
+        // ---- recharge point (HWCI) ----
+        #CI_HWCI part def RechargePointItem {
+            doc /* the ground point and battery-swap fixture, procured and built as one item; realises SurveillanceDroneSwarm::PA::rechargePoint */
+            state opMode : CIOperationalMode {
+                doc /* this recharge point's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this recharge point's current procurement lifecycle stage */
+            }
+        }
+        part rechargePointCi : RechargePointItem;
+        trace rechargePointCi to SurveillanceDroneSwarm::PA::rechargePoint;
+
+        requirement def RechargePointItemContract {
+            doc /* the delivery contract for the recharge point: swaps a battery and returns a member to flight within the fleet's turnaround budget */
+            subject ci : RechargePointItem;
+            attribute id = "EPBS-REQ-RCP-001";
+            assume constraint { SurveillanceDroneSwarm::PA::groundTurnaroundMinutes >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::groundTurnaroundMinutes <= 20.0 }
+        }
+        requirement rechargePointContract : RechargePointItemContract {
+            doc /* the instance of the recharge point contract carried by the delivered installation */
+        }
+        satisfy RechargePointItemContract by rechargePointCi;
+        satisfy rechargePointContract by rechargePointCi;
+
+        verification def VerifyRechargePointItem {
+            doc /* timed acceptance test confirming the delivered recharge point swaps a battery within the turnaround budget */
+            subject ci : RechargePointItem;
+            objective { verify RechargePointItemContract; }
+        }
+
+        // ---- recovery point (HWCI) ----
+        #CI_HWCI part def RecoveryPointItem {
+            doc /* the designated recovery point an isolated member returns to on its own, procured and built as one item; realises SurveillanceDroneSwarm::PA::recoveryPoint */
+            state opMode : CIOperationalMode {
+                doc /* this recovery point's current operational mode */
+            }
+            state lifecycle : CILifecycleState {
+                doc /* this recovery point's current procurement lifecycle stage */
+            }
+        }
+        part recoveryPointCi : RecoveryPointItem;
+        trace recoveryPointCi to SurveillanceDroneSwarm::PA::recoveryPoint;
+
+        requirement def RecoveryPointItemContract {
+            doc /* the delivery contract for the recovery point: reachable and usable by any of up to the fleet's twelve members when isolated, per ReturnsWhenIsolated */
+            subject ci : RecoveryPointItem;
+            attribute id = "EPBS-REQ-RCV-001";
+            assume constraint { SurveillanceDroneSwarm::PA::fleetSizeDrones >= 0.0 }
+            require constraint { SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12.0 }
+        }
+        requirement recoveryPointContract : RecoveryPointItemContract {
+            doc /* the instance of the recovery point contract carried by the delivered installation */
+        }
+        satisfy RecoveryPointItemContract by recoveryPointCi;
+        satisfy recoveryPointContract by recoveryPointCi;
+
+        verification def VerifyRecoveryPointItem {
+            doc /* site acceptance confirming the delivered recovery point is reachable and usable by any member */
+            subject ci : RecoveryPointItem;
+            objective { verify RecoveryPointItemContract; }
+        }
+
+        // ---- hazards this layer adds: procurement and version-management risks, beyond SA's and PA's functional hazards ----
+        package Hazards {
+            doc /* configuration-item hazards introduced by procuring, building and delivering these items: a supplier that stops shipping, a version that drifts across the fleet, a part that becomes obsolete. Each names the item it is about and is satisfied or accepted below, under names no layer above uses. */
+
+            #Hazard requirement ClassifierReleaseVersionDriftHazard {
+                doc /* the classifier release procured for the fleet can drift into more than one version across the twelve installed copies if configuration control lapses between builds, independent of the behavioural MixedClassifierVersionsHazard already stated at SA */
+                subject ci : ClassifierReleaseItem;
+            }
+
+            #Hazard requirement RadioModuleSupplierDiscontinuationHazard {
+                doc /* the commercial supplier of the radio module can stop shipping the qualified part number, leaving no replacement for repair or fleet growth */
+                subject ci : RadioModuleItem;
+            }
+
+            #Hazard #Accepted requirement RechargePointPartObsolescenceHazard {
+                doc /* accepted: the battery-swap fixture's mechanical connector is a wear part from a narrow supplier base and may become obsolete over the programme's life; accepted because spares are stocked at procurement and the ground crew's per-cycle wear check, which satisfies BatterySwapWearHazard at PA, would catch a failing connector before it strands a member */
+                subject ci : RechargePointItem;
+            }
+        }
+
+        satisfy Hazards::ClassifierReleaseVersionDriftHazard by classifierReleaseCi;
+        satisfy Hazards::RadioModuleSupplierDiscontinuationHazard by radioModuleCi;
+    }

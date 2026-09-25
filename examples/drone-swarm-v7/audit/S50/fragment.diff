@@ -1,0 +1,360 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v7/fragments/7_EPBS.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v7/fragments/7_EPBS.sysml (after)
+@@ -0,0 +1,356 @@
++    package EPBS {
++        #prompt part epbsGuidance {
++            doc /* EPBS: the configuration items actually procured, built or delivered to realise SurveillanceDroneSwarm's PA physical breakdown. Alternative 2's physical gaps (mission compute, report store, on-board triage, classifier-version/admission control) are closed here as named CIs, each carrying its own contract and verification case. Ground-side and drone-side software are split from the hardware they run on so a HWCI can be re-hosted without re-procuring its CSCI, and vice versa. */
++        }
++
++        // --- Drone air-vehicle hardware CI: airframe, flight controller, sensors, mission computer and on-board report store ---
++        #CI_HWCI part def DroneAirVehicleItem {
++            doc /* Hardware configuration item for one surveillance drone: airframe, flight controller, sensor payload, mission computer and on-board report-store hardware. Folds in the compute/storage hardware the PA trade-off flagged as missing from alternative 2. */
++            attribute flightEnduranceMinutes = 40;
++            attribute onboardClassificationCostUsd = 275;
++        }
++        part fleetCi : DroneAirVehicleItem [12] {
++            doc /* The 12 fielded drone air-vehicle HWCIs, one per fleet member. */
++        }
++        trace fleetCi to SurveillanceDroneSwarm::PA::fleet;
++        trace fleetCi to SurveillanceDroneSwarm::PA::memberA;
++        trace fleetCi to SurveillanceDroneSwarm::PA::memberB;
++
++        requirement def DroneAirVehicleContract {
++            doc /* Contract a drone air-vehicle HWCI must meet: sortie endurance and on-board compute cost. */
++            subject ci : DroneAirVehicleItem;
++            attribute id = "EPBS-01";
++            assume constraint {
++                doc /* Assumes the brief-fixed fleet size this CI is procured against. */
++                SurveillanceDroneSwarm::PA::fleetSizeValue <= 12
++            }
++            require constraint {
++                doc /* memberFlightEnduranceMinutes budget: at least 40 minutes per sortie. */
++                ci.flightEnduranceMinutes >= 40
++            }
++            require constraint {
++                doc /* onboardClassificationCostUsd cap: at most 300 USD of on-board classification compute per drone. */
++                ci.onboardClassificationCostUsd <= 300
++            }
++        }
++        satisfy DroneAirVehicleContract by fleetCi;
++        verification def VerifyDroneAirVehicleContract {
++            doc /* Verifies the drone air-vehicle HWCI against its endurance and compute-cost contract. */
++            subject ci : DroneAirVehicleItem;
++            objective { verify DroneAirVehicleContract; }
++        }
++
++        // --- Drone mission software CI: on-board detect/classify/report, navigation fallback, triage and 7-of-8 coordination ---
++        #CI_CSCI part def DroneMissionSoftwareItem {
++            doc /* Software configuration item hosted on the drone air-vehicle HWCI: detection, classification and Unknown-when-uncertain reporting, stored-map-matching navigation, hold-and-forward buffering across a link gap, and the on-board coordination functions (handover, rotation, redistribution, deconfliction, relay, track correlation, track handover). Closes the PA trade-off's 'no function or component' gap behind on-board triage. */
++            attribute reportHoldMinutes = 45;
++            attribute reportsLostInLinkGap = 0;
++            attribute missedDetectionShare = 0.08;
++            attribute reportLatencySeconds = 45;
++        }
++        part droneMissionSoftwareCi : DroneMissionSoftwareItem [12] {
++            doc /* The on-board mission software CSCI running on each of the 12 drones. */
++        }
++        trace droneMissionSoftwareCi to SurveillanceDroneSwarm::PA::SurveillanceDrone;
++        trace droneMissionSoftwareCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::navigationFallback;
++        trace droneMissionSoftwareCi to SurveillanceDroneSwarm::PA::StoredMapMatchingNav;
++
++        requirement def DroneMissionSoftwareContract {
++            doc /* Contract the drone mission software CSCI must meet: report holding, no reports lost in a link gap, detection quality, and report latency once the link is up. */
++            subject ci : DroneMissionSoftwareItem;
++            attribute id = "EPBS-02";
++            assume constraint {
++                doc /* Assumes the brief-fixed area of interest this CI's detection/triage load is sized against. */
++                SurveillanceDroneSwarm::PA::areaOfInterestBudget <= 25
++            }
++            require constraint {
++                doc /* reportHoldMinutes target: hold at least 30 minutes of reports while cut off. */
++                ci.reportHoldMinutes >= 30
++            }
++            require constraint {
++                doc /* reportsLostInLinkGap target: none lost across a link gap. */
++                ci.reportsLostInLinkGap <= 0
++            }
++            require constraint {
++                doc /* missedDetectionShare target: at most 0.10 of real objects go undetected. */
++                ci.missedDetectionShare <= 0.1
++            }
++            require constraint {
++                doc /* reportLatencySeconds target: at most 60 seconds old when the link is up. */
++                ci.reportLatencySeconds <= 60
++            }
++        }
++        satisfy DroneMissionSoftwareContract by droneMissionSoftwareCi;
++        verification def VerifyDroneMissionSoftwareContract {
++            doc /* Verifies the drone mission software CSCI against its hold, no-loss, detection and latency contract. */
++            subject ci : DroneMissionSoftwareItem;
++            objective { verify DroneMissionSoftwareContract; }
++        }
++
++        // --- Safety monitor CI: dedicated override-authority hardware, kept separate from mission software ---
++        #CI_HWCI part def SafetyMonitorItem {
++            doc /* Dedicated on-board override-authority hardware/firmware module, procured and integrated separately from the drone mission software CSCI, so recall, geofence-breach and quarantine outcomes are enforced independently of detection, classification or coordination behaviour. */
++            attribute isolationLevel = 1;
++        }
++        part safetyMonitorCi : SafetyMonitorItem [12] {
++            doc /* One safety-monitor HWCI per drone, nested in but procured independently of the drone air-vehicle HWCI. */
++        }
++        trace safetyMonitorCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::safetyMonitor;
++
++        requirement def SafetyMonitorContract {
++            doc /* Contract the safety-monitor CI must meet: independence from the mission software it can override. */
++            subject ci : SafetyMonitorItem;
++            attribute id = "EPBS-03";
++            assume constraint {
++                doc /* Assumes the brief-fixed fleet size this CI is procured against. */
++                SurveillanceDroneSwarm::PA::fleetSizeValue <= 12
++            }
++            require constraint {
++                doc /* Must be a physically/logically separate isolation domain from the drone mission software CSCI. */
++                ci.isolationLevel >= 1
++            }
++        }
++        satisfy SafetyMonitorContract by safetyMonitorCi;
++        verification def VerifySafetyMonitorContract {
++            doc /* Verifies the safety-monitor CI keeps its override authority independent of the mission software. */
++            subject ci : SafetyMonitorItem;
++            objective { verify SafetyMonitorContract; }
++        }
++
++        // --- Mesh radio CI: COTS drone-to-drone radio hardware ---
++        #CI_COTS part def MeshRadioItem {
++            doc /* COTS mesh radio hardware carrying inter-drone coordination traffic, independent of the ground link. */
++            attribute jammedLinkAvailability = 0.6;
++        }
++        part meshRadioCi : MeshRadioItem [12] {
++            doc /* One COTS mesh radio unit per drone. */
++        }
++        trace meshRadioCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::meshRadio;
++        trace meshRadioCi to SurveillanceDroneSwarm::PA::MeshRadio;
++
++        requirement def MeshRadioContract {
++            doc /* Contract the mesh radio CI must meet: keep a usable share of peer links available even when half the mesh is jammed. */
++            subject ci : MeshRadioItem;
++            attribute id = "EPBS-04";
++            assume constraint {
++                doc /* Assumes the brief-fixed fleet size this CI is procured against. */
++                SurveillanceDroneSwarm::PA::fleetSizeValue <= 12
++            }
++            require constraint {
++                doc /* At least half the mesh's links stay usable under jamming, matching the FleetConfiguration::MeshDegraded assumption on-board coordination relies on. */
++                ci.jammedLinkAvailability >= 0.5
++            }
++        }
++        satisfy MeshRadioContract by meshRadioCi;
++        verification def VerifyMeshRadioContract {
++            doc /* Verifies the mesh radio CI's usable-link share under jamming. */
++            subject ci : MeshRadioItem;
++            objective { verify MeshRadioContract; }
++        }
++
++        // --- Ground-link radio CI: COTS radio hardware, one def shared by drone-side and ground-side usages ---
++        #CI_COTS part def GroundLinkRadioItem {
++            doc /* COTS ground-link radio hardware, procured identically for every drone (so any drone can relay) and for the ground station. Procuring one unit per drone provides fleet-wide redundancy against a single radio failing outright (PA::Hazards::GroundLinkRadioFailureHazard). */
++            attribute fleetRedundantUnits = 12;
++        }
++        part droneGroundRadioCi : GroundLinkRadioItem [12] {
++            doc /* The ground-link radio hardware carried by every drone. */
++        }
++        trace droneGroundRadioCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::groundRadio;
++        part groundStationRadioCi : GroundLinkRadioItem {
++            doc /* The ground station's own ground-link radio hardware, the fixed end of the link. */
++        }
++        trace groundStationRadioCi to SurveillanceDroneSwarm::PA::GroundStation::groundRadioNode;
++
++        requirement def GroundLinkRadioContract {
++            doc /* Contract the ground-link radio CI must meet: enough independently procured units across the fleet that one radio failing outright does not lose the ground link for good. */
++            subject ci : GroundLinkRadioItem;
++            attribute id = "EPBS-05";
++            assume constraint {
++                doc /* Assumes the brief-fixed fleet size this CI is procured against. */
++                SurveillanceDroneSwarm::PA::fleetSizeValue <= 12
++            }
++            require constraint {
++                doc /* At least dual redundancy across the fleet's ground-link radios. */
++                ci.fleetRedundantUnits >= 2
++            }
++        }
++        satisfy GroundLinkRadioContract by droneGroundRadioCi;
++        satisfy GroundLinkRadioContract by groundStationRadioCi;
++        verification def VerifyGroundLinkRadioContract {
++            doc /* Verifies the ground-link radio CI's fleet-wide redundancy. */
++            subject ci : GroundLinkRadioItem;
++            objective { verify GroundLinkRadioContract; }
++        }
++
++        // --- Stored-map store CI: COTS reference-imagery storage each drone matches against without GNSS ---
++        #CI_COTS part def StoredMapsStoreItem {
++            doc /* COTS on-board storage holding the reference imagery each drone matches its camera view against when satellite positioning is unavailable. The currency and coverage of this store is what bounds a drone's position drift (PositionDriftHazard mitigation). */
++            attribute positionErrorWithoutGnssMeters = 35;
++        }
++        part storedMapsStoreCi : StoredMapsStoreItem [12] {
++            doc /* One stored-map store per drone. */
++        }
++        trace storedMapsStoreCi to SurveillanceDroneSwarm::PA::SurveillanceDrone::storedMaps;
++        trace storedMapsStoreCi to SurveillanceDroneSwarm::PA::StoredMapsStore;
++
++        requirement def StoredMapsStoreContract {
++            doc /* Contract the stored-map store CI must meet: bound a drone's position error after 10 minutes without GNSS. */
++            subject ci : StoredMapsStoreItem;
++            attribute id = "EPBS-06";
++            assume constraint {
++                doc /* Assumes the brief-fixed fleet size this CI is procured against. */
++                SurveillanceDroneSwarm::PA::fleetSizeValue <= 12
++            }
++            require constraint {
++                doc /* positionErrorWithoutGnssMeters target: at most 50 m after 10 minutes without GNSS. */
++                ci.positionErrorWithoutGnssMeters <= 50
++            }
++        }
++        satisfy StoredMapsStoreContract by storedMapsStoreCi;
++        verification def VerifyStoredMapsStoreContract {
++            doc /* Verifies the stored-map store CI keeps position drift within budget. */
++            subject ci : StoredMapsStoreItem;
++            objective { verify StoredMapsStoreContract; }
++        }
++
++        // --- Ground station hardware CI ---
++        #CI_HWCI part def GroundStationItem {
++            doc /* Hardware configuration item for the operations centre's physical ground node: console, mounting for the ground-link radio, and the physical hosting for the ground control software CI. */
++            attribute groundLinkPortCount = 2;
++        }
++        part groundStationCi : GroundStationItem {
++            doc /* The single fielded ground station hardware CI. */
++        }
++        trace groundStationCi to SurveillanceDroneSwarm::PA::groundStation;
++
++        requirement def GroundStationContract {
++            doc /* Contract the ground station hardware CI must meet: enough ground-link port capacity to host the link. */
++            subject ci : GroundStationItem;
++            attribute id = "EPBS-07";
++            assume constraint {
++                doc /* Assumes the brief-fixed area of interest the ground station's mission serves. */
++                SurveillanceDroneSwarm::PA::areaOfInterestBudget <= 25
++            }
++            require constraint {
++                doc /* At least two ground-link ports, matching PA::GroundStation's two port usages. */
++                ci.groundLinkPortCount >= 2
++            }
++        }
++        satisfy GroundStationContract by groundStationCi;
++        verification def VerifyGroundStationContract {
++            doc /* Verifies the ground station hardware CI's port capacity. */
++            subject ci : GroundStationItem;
++            objective { verify GroundStationContract; }
++        }
++
++        // --- Ground control software CI: C2, admission and merge/triage software hosted on the ground station ---
++        #CI_CSCI part def GroundControlSoftwareItem {
++            doc /* Software configuration item hosted on the ground station HWCI: mission tasking, supervision, recall, status picture, report acknowledgement, mesh admission (the one Coordination function kept off the drones in alternative 2), classifier-version registration at admission, camera-network track merge, and alert throttling before reports reach the duty controller. */
++            attribute operatorAlertsPerHour = 16;
++            attribute operatorSecondsPerAlert = 30;
++            attribute falseAlarmsPerHour = 1.5;
++        }
++        part groundControlSoftwareCi : GroundControlSoftwareItem {
++            doc /* The single ground control software CSCI running on the ground station. */
++        }
++        trace groundControlSoftwareCi to SurveillanceDroneSwarm::PA::groundStation;
++
++        requirement def GroundControlSoftwareContract {
++            doc /* Contract the ground control software CI must meet: keep alerts within what the single duty controller can judge, with enough time per alert, and few false alarms. */
++            subject ci : GroundControlSoftwareItem;
++            attribute id = "EPBS-08";
++            assume constraint {
++                doc /* Assumes the brief-fixed operator-alert budget this CI's triage is sized against. */
++                SurveillanceDroneSwarm::PA::GroundStation::operatorAlertsPerHourBudget <= 20
++            }
++            require constraint {
++                doc /* operatorAlertsPerHour target: at most 20 alerts per hour reach the duty controller. */
++                ci.operatorAlertsPerHour <= 20
++            }
++            require constraint {
++                doc /* operatorSecondsPerAlert budget: at least 30 seconds available to judge each alert. */
++                ci.operatorSecondsPerAlert >= 30
++            }
++            require constraint {
++                doc /* falseAlarmsPerHour target: at most 2 false alarms per hour reach the operator. */
++                ci.falseAlarmsPerHour <= 2
++            }
++        }
++        satisfy GroundControlSoftwareContract by groundControlSoftwareCi;
++        verification def VerifyGroundControlSoftwareContract {
++            doc /* Verifies the ground control software CI's alert throughput, judging time and false-alarm rate. */
++            subject ci : GroundControlSoftwareItem;
++            objective { verify GroundControlSoftwareContract; }
++        }
++
++        // --- Recharge point CI: shared ground infrastructure and ground-crew station ---
++        #CI_HWCI part def RechargePointItem {
++            doc /* Hardware configuration item for the shared recharge point the fleet rotates through: charging bays, ground-crew servicing station. Sized with enough simultaneous bays that a scheduled handover always has a relieving drone (mitigates RechargeContentionHazard). */
++            attribute rechargeMinutes = 60;
++            attribute simultaneousDroneSlots = 2;
++        }
++        part rechargePointCi : RechargePointItem {
++            doc /* The single fielded recharge point and ground-crew station. */
++        }
++        trace rechargePointCi to SurveillanceDroneSwarm::PA::rechargePoint;
++
++        requirement def RechargePointContract {
++            doc /* Contract the recharge point CI must meet: turnaround time per drone and enough simultaneous capacity to avoid recharge contention. */
++            subject ci : RechargePointItem;
++            attribute id = "EPBS-09";
++            assume constraint {
++                doc /* Assumes the brief-fixed recharge-time budget this CI is procured against. */
++                SurveillanceDroneSwarm::PA::RechargePoint::rechargeMinutesBudget <= 60
++            }
++            require constraint {
++                doc /* memberRechargeMinutes budget: at most about 60 minutes per drone. */
++                ci.rechargeMinutes <= 60
++            }
++            require constraint {
++                doc /* At least two simultaneous bays, so one scheduled handover is never left without a relieving drone. */
++                ci.simultaneousDroneSlots >= 2
++            }
++        }
++        satisfy RechargePointContract by rechargePointCi;
++        verification def VerifyRechargePointContract {
++            doc /* Verifies the recharge point CI's turnaround time and simultaneous capacity. */
++            subject ci : RechargePointItem;
++            objective { verify RechargePointContract; }
++        }
++
++        // --- EPBS-added hazards: procurement-level failure modes this layer's configuration-item choices introduce. None of SA's or PA's hazards are restated. ---
++        package Hazards {
++            #Hazard requirement CiClassifierAdmissionSkewHazard {
++                doc /* EPBS hazard: procuring the ground control software CI and the on-board drone mission software CI as independently released configuration items risks the admission gate's registered classifier version drifting out of sync with what a drone is actually running, letting a stale or unregistered classifier version reach the fleet undetected. Distinct from SA::Hazards::MixedClassifierVersionsHazard, which is about the fleet-behaviour effect; this is the CI-release-discipline cause. */
++                subject ci : GroundControlSoftwareItem;
++                attribute id = "EPBS-HZ-01";
++            }
++
++            #Hazard #Accepted requirement SafetyMonitorSoleSourceHazard {
++                doc /* EPBS hazard, accepted: the safety-monitor HWCI is sole-sourced from one supplier line; a disruption or recall of that line would leave the fleet without independently procured override-authority hardware. Accepted per program baseline — managed operationally by contract sparing, outside this model's scope. */
++                subject ci : SafetyMonitorItem;
++                attribute id = "EPBS-HZ-02";
++            }
++
++            #Hazard #Accepted requirement RechargePointSoleFacilityHazard {
++                doc /* EPBS hazard, accepted: fielding a single recharge point and ground-crew station is itself a single point of failure for the whole fleet's turnaround, distinct from PA::Hazards::RechargeContentionHazard's bay-scheduling risk — an outage of the facility itself removes charging capability fleet-wide, not just contends for it. Accepted per the program's fixed single-site plan at this fleet size; a redundant site is out of procurement scope. */
++                subject ci : RechargePointItem;
++                attribute id = "EPBS-HZ-03";
++            }
++        }
++
++        // --- Hazard satisfaction: every hazard stated so far (SA's eight, PA's two, this layer's one non-accepted), by the CI that mitigates it. None of SA's/PA's are restated; EPBS's two accepted hazards are tagged #Accepted above instead of satisfied. ---
++        satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by storedMapsStoreCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by meshRadioCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by droneMissionSoftwareCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by droneMissionSoftwareCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by droneMissionSoftwareCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by groundControlSoftwareCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by groundControlSoftwareCi;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by groundControlSoftwareCi;
++        satisfy SurveillanceDroneSwarm::PA::Hazards::GroundLinkRadioFailureHazard by droneGroundRadioCi;
++        satisfy SurveillanceDroneSwarm::PA::Hazards::GroundLinkRadioFailureHazard by groundStationRadioCi;
++        satisfy SurveillanceDroneSwarm::PA::Hazards::RechargeContentionHazard by rechargePointCi;
++        satisfy SurveillanceDroneSwarm::EPBS::Hazards::CiClassifierAdmissionSkewHazard by groundControlSoftwareCi;
++    }

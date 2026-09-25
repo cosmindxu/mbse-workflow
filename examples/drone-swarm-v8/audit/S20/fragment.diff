@@ -1,0 +1,95 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v8/fragments/4_SA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v8/fragments/4_SA.sysml (after)
+@@ -124,9 +124,9 @@
+         action def DetectAndClassify {
+             doc /* TODO: what the system does for `detectAndClassify`. */
+         }
+         action def ReportDetection {
+-            doc /* TODO: what the system does for `reportDetection`. */
++            doc /* TODO: what the system does for `reportDetection`, `analystReportDetection`. */
+             out reportOut : Common::DetectionReport;
+             in reportIn : Common::DetectionReport;
+         }
+         action def HandOverSector {
+@@ -171,29 +171,29 @@
+             out admitDecOut : Common::MembershipDecision;
+             in admitDecIn : Common::MembershipDecision;
+         }
+         action def TaskSurveillanceMission {
+-            doc /* TODO: what the system does for `taskSurveillanceMission`. */
++            doc /* TODO: what the system does for `taskSurveillanceMission`, `supervisorTaskSurveillanceMission`. */
+             out cmdOut : Common::MissionTasking;
+             in cmdIn : Common::MissionTasking;
+         }
+         action def IssueSupervisoryCommand {
+-            doc /* TODO: what the system does for `issueSupervisoryCommand`. */
++            doc /* TODO: what the system does for `issueSupervisoryCommand`, `supervisorIssueSupervisoryCommand`. */
+             out cmdOut : Common::SupervisoryCommand;
+             in cmdIn : Common::SupervisoryCommand;
+         }
+         action def RecallToLand {
+-            doc /* TODO: what the system does for `recallToLand`. */
++            doc /* TODO: what the system does for `recallToLand`, `supervisorRecallToLand`. */
+             out cmdOut : Common::RecallOrder;
+             in cmdIn : Common::RecallOrder;
+         }
+         action def PresentStatusPicture {
+-            doc /* TODO: what the system does for `presentStatusPicture`. */
++            doc /* TODO: what the system does for `presentStatusPicture`, `supervisorPresentStatusPicture`. */
+             out cmdOut : Common::StatusPicture;
+             in cmdIn : Common::StatusPicture;
+         }
+         action def AcknowledgeDetectionReport {
+-            doc /* TODO: what the system does for `acknowledgeDetectionReport`. */
++            doc /* TODO: what the system does for `acknowledgeDetectionReport`, `analystAcknowledgeDetectionReport`. */
+             out ackOut : Common::ReportAcknowledgement;
+             in ackIn : Common::ReportAcknowledgement;
+         }
+         // one function for `alphaWatchSector`, `bravoWatchSector`: members performing one activity
+@@ -275,8 +275,26 @@
+         #C2 action acknowledgeDetectionReport : AcknowledgeDetectionReport;
+         allocate acknowledgeDetectionReport to system;
+         trace acknowledgeDetectionReport to SurveillanceDroneSwarm::OA::alphaAcknowledgeDetectionReport;
+         trace acknowledgeDetectionReport to SurveillanceDroneSwarm::OA::bravoAcknowledgeDetectionReport;
++        #C2 action supervisorTaskSurveillanceMission : TaskSurveillanceMission;
++        allocate supervisorTaskSurveillanceMission to swarmSupervisor;
++        trace supervisorTaskSurveillanceMission to SurveillanceDroneSwarm::OA::supervisorTaskSurveillanceMission;
++        #C2 action supervisorIssueSupervisoryCommand : IssueSupervisoryCommand;
++        allocate supervisorIssueSupervisoryCommand to swarmSupervisor;
++        trace supervisorIssueSupervisoryCommand to SurveillanceDroneSwarm::OA::supervisorIssueSupervisoryCommand;
++        #C2 action supervisorRecallToLand : RecallToLand;
++        allocate supervisorRecallToLand to swarmSupervisor;
++        trace supervisorRecallToLand to SurveillanceDroneSwarm::OA::supervisorRecallToLand;
++        #C2 action supervisorPresentStatusPicture : PresentStatusPicture;
++        allocate supervisorPresentStatusPicture to swarmSupervisor;
++        trace supervisorPresentStatusPicture to SurveillanceDroneSwarm::OA::supervisorPresentStatusPicture;
++        action analystReportDetection : ReportDetection;
++        allocate analystReportDetection to opsCentreAnalyst;
++        trace analystReportDetection to SurveillanceDroneSwarm::OA::analystReportDetection;
++        #C2 action analystAcknowledgeDetectionReport : AcknowledgeDetectionReport;
++        allocate analystAcknowledgeDetectionReport to opsCentreAnalyst;
++        trace analystAcknowledgeDetectionReport to SurveillanceDroneSwarm::OA::analystAcknowledgeDetectionReport;
+ 
+         // interactions, carried over as functional exchanges
+         // between members at OA: alphaHandOverSector.reqOut to bravoHandOverSector.reqIn
+         flow sectorHandoverFlow of Common::SectorAssignment from handOverSector.reqOut to handOverSector.reqIn;
+@@ -295,12 +313,12 @@
+         // between members at OA: alphaAdmitMember.admitReqOut to bravoAdmitMember.admitReqIn
+         flow admissionRequestFlow of Common::MembershipRequest from admitMember.admitReqOut to admitMember.admitReqIn;
+         // between members at OA: bravoAdmitMember.admitDecOut to alphaAdmitMember.admitDecIn
+         flow admissionDecisionFlow of Common::MembershipDecision from admitMember.admitDecOut to admitMember.admitDecIn;
+-        flow missionTaskingFlow of Common::MissionTasking from swarmSupervisor.taskSurveillanceMission.cmdOut to taskSurveillanceMission.cmdIn;
+-        flow supervisoryCommandFlow of Common::SupervisoryCommand from swarmSupervisor.issueSupervisoryCommand.cmdOut to issueSupervisoryCommand.cmdIn;
+-        flow recallFlow of Common::RecallOrder from swarmSupervisor.recallToLand.cmdOut to recallToLand.cmdIn;
+-        flow statusPictureFlow of Common::StatusPicture from presentStatusPicture.cmdOut to swarmSupervisor.presentStatusPicture.cmdIn;
+-        flow detectionReportFlow of Common::DetectionReport from reportDetection.reportOut to opsCentreAnalyst.reportDetection.reportIn;
+-        flow ackFlow of Common::ReportAcknowledgement from opsCentreAnalyst.acknowledgeDetectionReport.ackOut to acknowledgeDetectionReport.ackIn;
++        flow missionTaskingFlow of Common::MissionTasking from supervisorTaskSurveillanceMission.cmdOut to taskSurveillanceMission.cmdIn;
++        flow supervisoryCommandFlow of Common::SupervisoryCommand from supervisorIssueSupervisoryCommand.cmdOut to issueSupervisoryCommand.cmdIn;
++        flow recallFlow of Common::RecallOrder from supervisorRecallToLand.cmdOut to recallToLand.cmdIn;
++        flow statusPictureFlow of Common::StatusPicture from presentStatusPicture.cmdOut to supervisorPresentStatusPicture.cmdIn;
++        flow detectionReportFlow of Common::DetectionReport from reportDetection.reportOut to analystReportDetection.reportIn;
++        flow ackFlow of Common::ReportAcknowledgement from analystAcknowledgeDetectionReport.ackOut to acknowledgeDetectionReport.ackIn;
+ 
+     }

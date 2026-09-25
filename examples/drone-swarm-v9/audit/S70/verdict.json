@@ -1,0 +1,698 @@
+{
+  "step": "S70",
+  "blocking": false,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml",
+  "prefixHash": "0dfca41cba950a9b",
+  "elements": 3671,
+  "durationMs": 830,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/check.json",
+      "findings": 43
+    },
+    {
+      "name": "stats",
+      "command": "npm run sysprose -- stats /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 10,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/stats.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --relation trace --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 193,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 29,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/trace-allocate.json",
+      "findings": 0
+    },
+    {
+      "name": "requirements",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 8,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/requirements.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 20,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/reach.json",
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 12,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/connectivity.json",
+      "findings": 0
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 5,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/orphans.json",
+      "findings": 0
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 27,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/elements.json",
+      "findings": 22
+    },
+    {
+      "name": "evidence-status",
+      "command": "npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 91,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final/evidence-status.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "Common",
+      "line": 58,
+      "message": "Unresolved reference 'ScalarValues::Real'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchTarget",
+      "layer": "Common",
+      "line": 692,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageLossAfterMemberLossTarget",
+      "layer": "Common",
+      "line": 700,
+      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageUnderMeshJammingTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportAgeAtOperationsCentreTarget",
+      "layer": "Common",
+      "line": 716,
+      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorWithoutSatelliteTarget",
+      "layer": "Common",
+      "line": 724,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldWhileCutOffTarget",
+      "layer": "Common",
+      "line": 732,
+      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionTarget",
+      "layer": "Common",
+      "line": 740,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsPerHourTarget",
+      "layer": "Common",
+      "line": 748,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertsReachingOperatorTarget",
+      "layer": "Common",
+      "line": 756,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedReportsThatMatterTarget",
+      "layer": "Common",
+      "line": 764,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "onboardClassificationCostTarget",
+      "layer": "Common",
+      "line": 772,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "unattendedWatchDurationTarget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeBudget",
+      "layer": "Common",
+      "line": 792,
+      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "memberEnduranceBudget",
+      "layer": "Common",
+      "line": 800,
+      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "groundTurnaroundBudget",
+      "layer": "Common",
+      "line": 808,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedBudget",
+      "layer": "Common",
+      "line": 816,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "instantaneousFootprintBudget",
+      "layer": "Common",
+      "line": 824,
+      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaOfInterestBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorSecondsPerAlertBudget",
+      "layer": "Common",
+      "line": 840,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "trackStaleAfterBudget",
+      "layer": "Common",
+      "line": 848,
+      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "satellitePositioningOutageBudget",
+      "layer": "Common",
+      "line": 856,
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "meshLinksJammedBudget",
+      "layer": "Common",
+      "line": 864,
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 311,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 313,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 315,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 319,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'operationsCentreAnalyst'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 577,
+      "message": "Constraint violated: areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 527,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour == alertCapPerHour\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 534,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 206,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 207,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 208,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 209,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 210,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 211,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 212,
+      "rule": "CV-09",
+      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 254,
+      "message": "Constraint could not be evaluated (\"compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 294,
+      "message": "Constraint could not be evaluated (\"software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 302,
+      "message": "Constraint could not be evaluated (\"detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 318,
+      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 326,
+      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "EPBS",
+      "line": 334,
+      "message": "Constraint could not be evaluated (\"triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical",
+      "message": "`SurveillanceDroneSwarmPhysical` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::HandOverSector",
+      "message": "`HandOverSector` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::RotateRecharge",
+      "message": "`RotateRecharge` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::RedistributeCoverage",
+      "message": "`RedistributeCoverage` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::DeconflictFlight",
+      "message": "`DeconflictFlight` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::RelayReportsThroughNeighbour",
+      "message": "`RelayReportsThroughNeighbour` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::CorrelateTracks",
+      "message": "`CorrelateTracks` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::HandOverTrack",
+      "message": "`HandOverTrack` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::AdmitMember",
+      "message": "`AdmitMember` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::TaskSurveillanceArea",
+      "message": "`TaskSurveillanceArea` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::CommandSupervisoryPriorities",
+      "message": "`CommandSupervisoryPriorities` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::RecallAndLand",
+      "message": "`RecallAndLand` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::PresentStatusPicture",
+      "message": "`PresentStatusPicture` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::AcknowledgeDetectionReport",
+      "message": "`AcknowledgeDetectionReport` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::DetectAndClassifyObject",
+      "message": "`DetectAndClassifyObject` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::DeliverDetectionReport",
+      "message": "`DeliverDetectionReport` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::ApplySupervisoryDirectives",
+      "message": "`ApplySupervisoryDirectives` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::ReportMemberStatus",
+      "message": "`ReportMemberStatus` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::ReportTrackPicture",
+      "message": "`ReportTrackPicture` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::ReturnToRecoveryPoint",
+      "message": "`ReturnToRecoveryPoint` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::TriageAlerts",
+      "message": "`TriageAlerts` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    },
+    {
+      "code": "final.todos",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::KeepDecisionRecords",
+      "message": "`KeepDecisionRecords` still carries a TODO from the transition skeleton.",
+      "check": "elements"
+    }
+  ]
+}

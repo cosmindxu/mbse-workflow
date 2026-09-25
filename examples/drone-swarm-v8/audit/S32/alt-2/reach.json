@@ -1,0 +1,3957 @@
+{
+  "machines": [
+    {
+      "machine": {
+        "id": "9cd67615-e734-4059-91b6-43b801241098",
+        "name": "WatchAssetOperatingMode",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 4,
+      "depth": 2,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 4,
+        "reachable": [
+          {
+            "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+          },
+          {
+            "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+            "name": "Transiting",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+          },
+          {
+            "id": "3c32bb9b-2398-446c-908c-9dc3735a4308",
+            "name": "Recharging",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Recharging"
+          },
+          {
+            "id": "4517e6eb-c8df-4efe-8131-1d4fc6f3c0d8",
+            "name": "Grounded",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 7,
+        "fired": 7,
+        "dead": []
+      },
+      "census": {
+        "total": 8,
+        "rows": [
+          {
+            "id": "fd43c0c3-6f17-424e-927c-674d2075ef91",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "17ac2247-eb10-4697-94f8-bd20a2d7b8fc",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "7244e342-682c-4f1c-9d27-5cfb3aa690c2",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e0c3d81b-f02c-4d03-80a6-fea91735729a",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Recharging`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "2157602c-c678-48e8-9e5d-8ca7be04c3e0",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "312f697a-f50d-43ac-abda-4ffd04f45f9f",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "3cc6df5f-de3c-427f-acc5-1df275315fa0",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ed9b0f10-e3bc-44ef-96f7-0a6bb85d8e4e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 7,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 7,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "17ac2247-eb10-4697-94f8-bd20a2d7b8fc",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+              },
+              "to": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "label": ""
+            },
+            {
+              "id": "312f697a-f50d-43ac-abda-4ffd04f45f9f",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+              },
+              "to": {
+                "id": "4517e6eb-c8df-4efe-8131-1d4fc6f3c0d8",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "17ac2247-eb10-4697-94f8-bd20a2d7b8fc",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "from": {
+              "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+            },
+            "to": {
+              "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+              "name": "Transiting",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "312f697a-f50d-43ac-abda-4ffd04f45f9f",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+              },
+              "to": {
+                "id": "4517e6eb-c8df-4efe-8131-1d4fc6f3c0d8",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+            "name": "Transiting",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "7244e342-682c-4f1c-9d27-5cfb3aa690c2",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "to": {
+                "id": "3c32bb9b-2398-446c-908c-9dc3735a4308",
+                "name": "Recharging",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Recharging"
+              },
+              "label": ""
+            },
+            {
+              "id": "2157602c-c678-48e8-9e5d-8ca7be04c3e0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "to": {
+                "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "3cc6df5f-de3c-427f-acc5-1df275315fa0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "to": {
+                "id": "4517e6eb-c8df-4efe-8131-1d4fc6f3c0d8",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "7244e342-682c-4f1c-9d27-5cfb3aa690c2",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+            "from": {
+              "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+              "name": "Transiting",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+            },
+            "to": {
+              "id": "3c32bb9b-2398-446c-908c-9dc3735a4308",
+              "name": "Recharging",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Recharging"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "2157602c-c678-48e8-9e5d-8ca7be04c3e0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "to": {
+                "id": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "3cc6df5f-de3c-427f-acc5-1df275315fa0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting"
+              },
+              "to": {
+                "id": "4517e6eb-c8df-4efe-8131-1d4fc6f3c0d8",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Grounded"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "e53cb329-6a95-4e02-b5a6-ef6dcd5b7aa4",
+        "name": "WatchAssetAvailabilityState",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 3,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 3,
+        "reachable": [
+          {
+            "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+            "name": "Available",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+          },
+          {
+            "id": "06db5458-0763-4f9b-a04a-0bdc776de12b",
+            "name": "Committed",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Committed"
+          },
+          {
+            "id": "02033a32-806c-4e09-ba19-b0cf28f10a33",
+            "name": "Unavailable",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Unavailable"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 4,
+        "fired": 4,
+        "dead": []
+      },
+      "census": {
+        "total": 5,
+        "rows": [
+          {
+            "id": "afb793b0-c2c9-4351-aa35-31beb4844a28",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "cd40756d-a3bb-480a-b645-2d3a2c3c5e7d",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e2fde6cd-120b-4ead-bb1c-cab6a2c51be4",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Committed`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "6ccded28-5f7a-478e-aa9f-c81d056ccfec",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "5ab765b6-fde7-4e75-8289-5f6aac7baf68",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Unavailable`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 4,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 4,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+            "name": "Available",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "cd40756d-a3bb-480a-b645-2d3a2c3c5e7d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+              },
+              "to": {
+                "id": "06db5458-0763-4f9b-a04a-0bdc776de12b",
+                "name": "Committed",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Committed"
+              },
+              "label": ""
+            },
+            {
+              "id": "6ccded28-5f7a-478e-aa9f-c81d056ccfec",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+              },
+              "to": {
+                "id": "02033a32-806c-4e09-ba19-b0cf28f10a33",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "cd40756d-a3bb-480a-b645-2d3a2c3c5e7d",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+            "from": {
+              "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+              "name": "Available",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+            },
+            "to": {
+              "id": "06db5458-0763-4f9b-a04a-0bdc776de12b",
+              "name": "Committed",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Committed"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "6ccded28-5f7a-478e-aa9f-c81d056ccfec",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available"
+              },
+              "to": {
+                "id": "02033a32-806c-4e09-ba19-b0cf28f10a33",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "76f3269c-dc96-494a-a15a-372c354f12b4",
+        "name": "SwarmOperatingMode",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 10,
+      "depth": 2,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 10,
+        "reachable": [
+          {
+            "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+          },
+          {
+            "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+            "name": "Degraded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+          },
+          {
+            "id": "2333748c-0d4b-49a7-8575-5586306c689c",
+            "name": "NavigationDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::NavigationDegraded"
+          },
+          {
+            "id": "38e52994-d96c-4964-9e6b-db4d4ffca097",
+            "name": "SensingDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::SensingDegraded"
+          },
+          {
+            "id": "1d163d20-5702-4827-bc0b-bd5149bc282a",
+            "name": "Isolated",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Isolated"
+          },
+          {
+            "id": "594fe3ac-ec69-4157-8971-793b0864164f",
+            "name": "MeshDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::MeshDegraded"
+          },
+          {
+            "id": "cf7eedd8-517c-4a5e-80ff-bfd64a236789",
+            "name": "AirspaceBreach",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::AirspaceBreach"
+          },
+          {
+            "id": "edee121f-62b7-4e66-a7b8-16aae305c4a6",
+            "name": "Quarantined",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Quarantined"
+          },
+          {
+            "id": "7ed25ccd-2918-46a3-8ef6-e709a496a1cd",
+            "name": "Recalled",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled"
+          },
+          {
+            "id": "b1077e1d-08ec-4005-ace1-b02fa7a1b1bd",
+            "name": "Grounded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Grounded"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 18,
+        "fired": 18,
+        "dead": []
+      },
+      "census": {
+        "total": 19,
+        "rows": [
+          {
+            "id": "56cbb061-d5e1-4e50-86b9-a18c4bbcce76",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "630374c3-cc2a-4791-b714-7147ed5abea6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "d573365e-9249-4c94-be93-0ce437737dd6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "3e55b088-397a-47d7-942a-791fca4660e6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "347905dd-9505-4a8b-96ad-dc7c8f27efa6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::NavigationDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "f1849887-0a09-4b69-b6c2-2bcfe067854e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "0ee3a27b-40f1-4159-b003-9179d20364f6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::SensingDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "da4bda8c-d0a7-46a2-a82d-dc53b462dae3",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "6ea51b06-9f80-4805-a94d-97e8bf70b1ff",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "5a925a98-56a1-45d0-b75a-f9940c3d4d42",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e920099a-84b4-49b1-abdf-bdb67421f4ae",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::MeshDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "7e64bfad-e50a-45d1-8a00-84bdb25a3fd9",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "a81049fc-f85f-4aeb-8eaa-db0e93583961",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::AirspaceBreach`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ff38a130-e809-4f15-bd86-c11f93045c4d",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "bcee1ff8-795d-4997-af44-3b2c6d6891a7",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Quarantined`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "db4a67e5-2f42-4f78-af24-8d5d174930ff",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "d925c4a6-2dca-46f8-8045-927f81a838d7",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "52f95a3f-c105-460b-867c-7cb8fa5a1b4a",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "af8ccf3f-4b86-41ef-89b6-537ba5d62dfe",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 18,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 18,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "630374c3-cc2a-4791-b714-7147ed5abea6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+                "name": "Degraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "3e55b088-397a-47d7-942a-791fca4660e6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "2333748c-0d4b-49a7-8575-5586306c689c",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::NavigationDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "f1849887-0a09-4b69-b6c2-2bcfe067854e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "38e52994-d96c-4964-9e6b-db4d4ffca097",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "da4bda8c-d0a7-46a2-a82d-dc53b462dae3",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "1d163d20-5702-4827-bc0b-bd5149bc282a",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "5a925a98-56a1-45d0-b75a-f9940c3d4d42",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "594fe3ac-ec69-4157-8971-793b0864164f",
+                "name": "MeshDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::MeshDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "7e64bfad-e50a-45d1-8a00-84bdb25a3fd9",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "cf7eedd8-517c-4a5e-80ff-bfd64a236789",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "ff38a130-e809-4f15-bd86-c11f93045c4d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "edee121f-62b7-4e66-a7b8-16aae305c4a6",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Quarantined"
+              },
+              "label": ""
+            },
+            {
+              "id": "db4a67e5-2f42-4f78-af24-8d5d174930ff",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "7ed25ccd-2918-46a3-8ef6-e709a496a1cd",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "630374c3-cc2a-4791-b714-7147ed5abea6",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "from": {
+              "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+            },
+            "to": {
+              "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+              "name": "Degraded",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "3e55b088-397a-47d7-942a-791fca4660e6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "2333748c-0d4b-49a7-8575-5586306c689c",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::NavigationDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "f1849887-0a09-4b69-b6c2-2bcfe067854e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "38e52994-d96c-4964-9e6b-db4d4ffca097",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "da4bda8c-d0a7-46a2-a82d-dc53b462dae3",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "1d163d20-5702-4827-bc0b-bd5149bc282a",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "5a925a98-56a1-45d0-b75a-f9940c3d4d42",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "594fe3ac-ec69-4157-8971-793b0864164f",
+                "name": "MeshDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::MeshDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "7e64bfad-e50a-45d1-8a00-84bdb25a3fd9",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "cf7eedd8-517c-4a5e-80ff-bfd64a236789",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "ff38a130-e809-4f15-bd86-c11f93045c4d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "edee121f-62b7-4e66-a7b8-16aae305c4a6",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Quarantined"
+              },
+              "label": ""
+            },
+            {
+              "id": "db4a67e5-2f42-4f78-af24-8d5d174930ff",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "to": {
+                "id": "7ed25ccd-2918-46a3-8ef6-e709a496a1cd",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+            "name": "Degraded",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "d573365e-9249-4c94-be93-0ce437737dd6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+                "name": "Degraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+              },
+              "to": {
+                "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "d925c4a6-2dca-46f8-8045-927f81a838d7",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+                "name": "Degraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+              },
+              "to": {
+                "id": "7ed25ccd-2918-46a3-8ef6-e709a496a1cd",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "d573365e-9249-4c94-be93-0ce437737dd6",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+            "from": {
+              "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+              "name": "Degraded",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+            },
+            "to": {
+              "id": "60036678-dd18-4f1c-bdff-a758e604528d",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "d925c4a6-2dca-46f8-8045-927f81a838d7",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::«TransitionUsage»",
+              "from": {
+                "id": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+                "name": "Degraded",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded"
+              },
+              "to": {
+                "id": "7ed25ccd-2918-46a3-8ef6-e709a496a1cd",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Recalled"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "b353abe5-5f3b-49bf-ad15-286c2d94fd5a",
+        "name": "SwarmAvailabilityState",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 3,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 3,
+        "reachable": [
+          {
+            "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+            "name": "Nominal",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+          },
+          {
+            "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+            "name": "Constrained",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+          },
+          {
+            "id": "b24a37a5-785a-4e9e-8ef4-ae2b7ddc1bae",
+            "name": "Unavailable",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 5,
+        "fired": 5,
+        "dead": []
+      },
+      "census": {
+        "total": 6,
+        "rows": [
+          {
+            "id": "9a291351-deea-4be2-9b16-a7fc1a072088",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "bcd79583-19df-4ac9-b473-46a59ea86592",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "1d5f73df-467e-4f0b-90bd-504cf7c86d31",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "87fd1b85-34d6-4b0c-980f-be9e97ad758a",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "5e9fc93b-adc8-44a6-bdaa-a4b6176a2e17",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "8cb3d03e-b33b-457c-8159-25e3f2f9a1c9",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 5,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 5,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+            "name": "Nominal",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "bcd79583-19df-4ac9-b473-46a59ea86592",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+                "name": "Nominal",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+              },
+              "to": {
+                "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+              },
+              "label": ""
+            },
+            {
+              "id": "87fd1b85-34d6-4b0c-980f-be9e97ad758a",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+                "name": "Nominal",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+              },
+              "to": {
+                "id": "b24a37a5-785a-4e9e-8ef4-ae2b7ddc1bae",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "bcd79583-19df-4ac9-b473-46a59ea86592",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "from": {
+              "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+              "name": "Nominal",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+            },
+            "to": {
+              "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+              "name": "Constrained",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "87fd1b85-34d6-4b0c-980f-be9e97ad758a",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+                "name": "Nominal",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+              },
+              "to": {
+                "id": "b24a37a5-785a-4e9e-8ef4-ae2b7ddc1bae",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+            "name": "Constrained",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "1d5f73df-467e-4f0b-90bd-504cf7c86d31",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+              },
+              "to": {
+                "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+                "name": "Nominal",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+              },
+              "label": ""
+            },
+            {
+              "id": "5e9fc93b-adc8-44a6-bdaa-a4b6176a2e17",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+              },
+              "to": {
+                "id": "b24a37a5-785a-4e9e-8ef4-ae2b7ddc1bae",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "1d5f73df-467e-4f0b-90bd-504cf7c86d31",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+            "from": {
+              "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+              "name": "Constrained",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+            },
+            "to": {
+              "id": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+              "name": "Nominal",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "5e9fc93b-adc8-44a6-bdaa-a4b6176a2e17",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::«TransitionUsage»",
+              "from": {
+                "id": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained"
+              },
+              "to": {
+                "id": "b24a37a5-785a-4e9e-8ef4-ae2b7ddc1bae",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Unavailable"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "3e1ca58b-ae1a-4997-bf17-07ae350657e4",
+        "name": "MemberMode",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 8,
+      "depth": 2,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 8,
+        "reachable": [
+          {
+            "id": "869262e6-e2d1-4997-858d-4f255d117470",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+          },
+          {
+            "id": "b10d62d0-e450-427a-87e4-90155df52010",
+            "name": "NavigationDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded"
+          },
+          {
+            "id": "059724ae-ccfb-4684-b4dd-d464de54b33d",
+            "name": "SensingDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded"
+          },
+          {
+            "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+            "name": "Isolated",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+          },
+          {
+            "id": "8708d844-e2a6-4fe6-a324-7aad194557de",
+            "name": "Quarantined",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Quarantined"
+          },
+          {
+            "id": "f95282a5-592d-4c19-9c81-ca88055dd23d",
+            "name": "AirspaceBreach",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::AirspaceBreach"
+          },
+          {
+            "id": "9227e231-27b8-4c6f-b1bd-d32d0881da4a",
+            "name": "Recalled",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Recalled"
+          },
+          {
+            "id": "0ad9d4ae-ae9b-4145-a6f2-440836b25956",
+            "name": "Grounded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Grounded"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 15,
+        "fired": 15,
+        "dead": []
+      },
+      "census": {
+        "total": 16,
+        "rows": [
+          {
+            "id": "2c620179-c158-4533-b531-6233cbdd0354",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "3c489af6-27a6-4a88-96fa-3ab581c96a49",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ecad1f6f-277f-4047-b979-089a66a9d343",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "c1a6e43a-681c-454a-a20e-c4aac7e0ff54",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "9c014bd0-fb07-41bf-872f-0239d0bae1f2",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "7c1148f2-dc06-48ff-8095-1db15778cfc0",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "55b69677-757e-42ce-a02b-9d36d96da31b",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "33051802-e6b1-41b3-9c47-6b251e4c2e27",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "92dc3ae2-6742-4127-ba84-309908e452e6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "bcde7cad-1a97-49c1-90a0-e2c0f434f12d",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e460be41-09d4-4813-b4bc-296f99a1c962",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::AirspaceBreach`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "8f107e3e-b15e-41e1-b7f0-13b0df3973de",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "f02af311-4ff0-48ba-9e15-2a9294ac931e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Recalled`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "a5058f99-e35e-408f-9a79-4ece7a92ebbf",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "070f55a0-21d3-461f-8ddc-6a35dbc1457a",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Quarantined`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "5c27b3ad-8644-45a0-b604-670b7193fa85",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberMode::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 15,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 15,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "869262e6-e2d1-4997-858d-4f255d117470",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "3c489af6-27a6-4a88-96fa-3ab581c96a49",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "b10d62d0-e450-427a-87e4-90155df52010",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "c1a6e43a-681c-454a-a20e-c4aac7e0ff54",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "059724ae-ccfb-4684-b4dd-d464de54b33d",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "7c1148f2-dc06-48ff-8095-1db15778cfc0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "bcde7cad-1a97-49c1-90a0-e2c0f434f12d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "f95282a5-592d-4c19-9c81-ca88055dd23d",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "8f107e3e-b15e-41e1-b7f0-13b0df3973de",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "9227e231-27b8-4c6f-b1bd-d32d0881da4a",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Recalled"
+              },
+              "label": ""
+            },
+            {
+              "id": "a5058f99-e35e-408f-9a79-4ece7a92ebbf",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "8708d844-e2a6-4fe6-a324-7aad194557de",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Quarantined"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "3c489af6-27a6-4a88-96fa-3ab581c96a49",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "from": {
+              "id": "869262e6-e2d1-4997-858d-4f255d117470",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+            },
+            "to": {
+              "id": "b10d62d0-e450-427a-87e4-90155df52010",
+              "name": "NavigationDegraded",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::NavigationDegraded"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "c1a6e43a-681c-454a-a20e-c4aac7e0ff54",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "059724ae-ccfb-4684-b4dd-d464de54b33d",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "7c1148f2-dc06-48ff-8095-1db15778cfc0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "bcde7cad-1a97-49c1-90a0-e2c0f434f12d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "f95282a5-592d-4c19-9c81-ca88055dd23d",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "8f107e3e-b15e-41e1-b7f0-13b0df3973de",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "9227e231-27b8-4c6f-b1bd-d32d0881da4a",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Recalled"
+              },
+              "label": ""
+            },
+            {
+              "id": "a5058f99-e35e-408f-9a79-4ece7a92ebbf",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "to": {
+                "id": "8708d844-e2a6-4fe6-a324-7aad194557de",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Quarantined"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+            "name": "Isolated",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "55b69677-757e-42ce-a02b-9d36d96da31b",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "to": {
+                "id": "869262e6-e2d1-4997-858d-4f255d117470",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "33051802-e6b1-41b3-9c47-6b251e4c2e27",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "to": {
+                "id": "9227e231-27b8-4c6f-b1bd-d32d0881da4a",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Recalled"
+              },
+              "label": ""
+            },
+            {
+              "id": "92dc3ae2-6742-4127-ba84-309908e452e6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "to": {
+                "id": "0ad9d4ae-ae9b-4145-a6f2-440836b25956",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Grounded"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "55b69677-757e-42ce-a02b-9d36d96da31b",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+            "from": {
+              "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+              "name": "Isolated",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+            },
+            "to": {
+              "id": "869262e6-e2d1-4997-858d-4f255d117470",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Watching"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "33051802-e6b1-41b3-9c47-6b251e4c2e27",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "to": {
+                "id": "9227e231-27b8-4c6f-b1bd-d32d0881da4a",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Recalled"
+              },
+              "label": ""
+            },
+            {
+              "id": "92dc3ae2-6742-4127-ba84-309908e452e6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::«TransitionUsage»",
+              "from": {
+                "id": "85741605-4d44-4f6b-b535-8002ca232bd7",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated"
+              },
+              "to": {
+                "id": "0ad9d4ae-ae9b-4145-a6f2-440836b25956",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberMode::Grounded"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "366f5a3d-c44b-4a5a-adfe-1d3b543666e9",
+        "name": "MemberOperationalState",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 3,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 3,
+        "reachable": [
+          {
+            "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+            "name": "Available",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+          },
+          {
+            "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+            "name": "Constrained",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+          },
+          {
+            "id": "55ace02f-6ec5-4c43-bc19-e1791b1e1f60",
+            "name": "Unavailable",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 5,
+        "fired": 5,
+        "dead": []
+      },
+      "census": {
+        "total": 6,
+        "rows": [
+          {
+            "id": "60d606ef-8a8d-473d-aeed-3edee6c41f8e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "9511782f-ceb3-41d2-b6a0-330c5bf2a556",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberOperationalState::Available`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "88e25611-cc87-4896-9e41-91f45839f60a",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ae690dfc-e76e-4296-a8fc-3513bca8773e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberOperationalState::Available`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "f2f4e49b-41d8-4239-afc1-7763d4862a0c",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "a993f0a3-4fe9-4485-89bd-eb6f4a15c7ef",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 5,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 5,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+            "name": "Available",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "9511782f-ceb3-41d2-b6a0-330c5bf2a556",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+              },
+              "to": {
+                "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+              },
+              "label": ""
+            },
+            {
+              "id": "ae690dfc-e76e-4296-a8fc-3513bca8773e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+              },
+              "to": {
+                "id": "55ace02f-6ec5-4c43-bc19-e1791b1e1f60",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "9511782f-ceb3-41d2-b6a0-330c5bf2a556",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "from": {
+              "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+              "name": "Available",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+            },
+            "to": {
+              "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+              "name": "Constrained",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "ae690dfc-e76e-4296-a8fc-3513bca8773e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+              },
+              "to": {
+                "id": "55ace02f-6ec5-4c43-bc19-e1791b1e1f60",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+            "name": "Constrained",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "88e25611-cc87-4896-9e41-91f45839f60a",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+              },
+              "to": {
+                "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+                "name": "Available",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+              },
+              "label": ""
+            },
+            {
+              "id": "f2f4e49b-41d8-4239-afc1-7763d4862a0c",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+              },
+              "to": {
+                "id": "55ace02f-6ec5-4c43-bc19-e1791b1e1f60",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "88e25611-cc87-4896-9e41-91f45839f60a",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+            "from": {
+              "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+              "name": "Constrained",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+            },
+            "to": {
+              "id": "6e09052f-556d-49d8-8028-d7b619532b2b",
+              "name": "Available",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "f2f4e49b-41d8-4239-afc1-7763d4862a0c",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::«TransitionUsage»",
+              "from": {
+                "id": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+                "name": "Constrained",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained"
+              },
+              "to": {
+                "id": "55ace02f-6ec5-4c43-bc19-e1791b1e1f60",
+                "name": "Unavailable",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Unavailable"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "dc7c68d1-e7dc-41ec-b8ff-fcae8023368b",
+        "name": "FleetConfiguration",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 2,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 2,
+        "reachable": [
+          {
+            "id": "2f351396-477e-4dc0-999d-26741d7d909b",
+            "name": "MeshNominal",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration::MeshNominal"
+          },
+          {
+            "id": "7d85f6c7-512c-45f5-8933-98d9eb3a3ab9",
+            "name": "MeshDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration::MeshDegraded"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 2,
+        "fired": 2,
+        "dead": []
+      },
+      "census": {
+        "total": 3,
+        "rows": [
+          {
+            "id": "ec503f31-2dff-4a9a-8f7f-636fc8be1bf5",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "d18b5701-d533-4305-92a5-fd0c5a51aa00",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::FleetConfiguration::MeshNominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "680744fc-377f-485a-8f8e-269336c4bc4f",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::FleetConfiguration::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::FleetConfiguration::MeshDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 2,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 2,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "7e94f6a0-d5ee-4651-8563-01f5cc9a7f2c",
+        "name": "SurveillanceDroneMode",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 10,
+      "depth": 3,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 10,
+        "reachable": [
+          {
+            "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+            "name": "Grounded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+          },
+          {
+            "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+            "name": "Transiting",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+          },
+          {
+            "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+          },
+          {
+            "id": "03ebcd1d-06b4-465a-8b81-2b87acc27c4d",
+            "name": "Recharging",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recharging"
+          },
+          {
+            "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+            "name": "NavigationDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+          },
+          {
+            "id": "3cf59ce9-ef83-41ba-b22a-351641a11370",
+            "name": "SensingDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::SensingDegraded"
+          },
+          {
+            "id": "0f64bca8-ddd5-40b5-8d9b-155f38d57536",
+            "name": "Isolated",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated"
+          },
+          {
+            "id": "aa6ae0bb-e4d8-4367-9a2a-470743540325",
+            "name": "AirspaceBreach",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::AirspaceBreach"
+          },
+          {
+            "id": "6302d160-9880-441e-858a-bf619f94aa32",
+            "name": "Quarantined",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined"
+          },
+          {
+            "id": "55b573ca-300f-4ca7-9938-6ddd321b7b57",
+            "name": "Recalled",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 19,
+        "fired": 19,
+        "dead": []
+      },
+      "census": {
+        "total": 20,
+        "rows": [
+          {
+            "id": "c703d7d0-c5e8-481f-9b18-f7815e5eac62",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "80aeaa1f-1da3-4f84-a3bc-a858237333f6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "757a96f3-ad4a-4366-9a4c-42be98326ff7",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "568e584b-686a-4694-bd29-e8d1a6261854",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "1837e3f6-1c21-4e54-9baa-8b11317d9048",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recharging`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "353e42fa-9ae0-4bd6-aa01-c5c3d9aa79d2",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "401fb446-accf-4d43-b148-a81b9f330aed",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "da55fe1c-2470-438c-ad73-08df53349938",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "02783695-8eda-4a33-bdee-55ed6f39618c",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::SensingDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "f8f73816-0325-41e1-9329-b5c6cd2d88bc",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "7840505e-d4f7-4b81-bf1b-d74d2cf05708",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ea576fda-3763-4c40-8e75-96cae4c0b7f7",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "a25a3c99-4ea7-427f-919b-31c7655a3ff6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "750e1ea7-7fb7-4ef8-a108-daff2fb37e79",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::AirspaceBreach`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "be4e0ecb-3abc-400a-8599-1b45bd5fc525",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "05b20c77-fdf8-446e-9df1-afbe64aee56e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "41a3a6f0-63ce-4e9d-a40b-c566bdbf2541",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ba8f4b53-c62b-4109-91ee-f20145155066",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e60f7712-7904-46e0-8cba-f09f32656e0e",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "a8a174e8-d51f-4daf-9e96-39b5f3ce0b21",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 19,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 19,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+            "name": "Grounded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "80aeaa1f-1da3-4f84-a3bc-a858237333f6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+              },
+              "to": {
+                "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+              },
+              "label": ""
+            },
+            {
+              "id": "41a3a6f0-63ce-4e9d-a40b-c566bdbf2541",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+              },
+              "to": {
+                "id": "6302d160-9880-441e-858a-bf619f94aa32",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "80aeaa1f-1da3-4f84-a3bc-a858237333f6",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "from": {
+              "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+              "name": "Grounded",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+            },
+            "to": {
+              "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+              "name": "Transiting",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "41a3a6f0-63ce-4e9d-a40b-c566bdbf2541",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+                "name": "Grounded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded"
+              },
+              "to": {
+                "id": "6302d160-9880-441e-858a-bf619f94aa32",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+            "name": "Transiting",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "757a96f3-ad4a-4366-9a4c-42be98326ff7",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+              },
+              "to": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "e60f7712-7904-46e0-8cba-f09f32656e0e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+              },
+              "to": {
+                "id": "55b573ca-300f-4ca7-9938-6ddd321b7b57",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "757a96f3-ad4a-4366-9a4c-42be98326ff7",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "from": {
+              "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+              "name": "Transiting",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+            },
+            "to": {
+              "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "e60f7712-7904-46e0-8cba-f09f32656e0e",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+                "name": "Transiting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting"
+              },
+              "to": {
+                "id": "55b573ca-300f-4ca7-9938-6ddd321b7b57",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+            "name": "Watching",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "568e584b-686a-4694-bd29-e8d1a6261854",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "03ebcd1d-06b4-465a-8b81-2b87acc27c4d",
+                "name": "Recharging",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recharging"
+              },
+              "label": ""
+            },
+            {
+              "id": "353e42fa-9ae0-4bd6-aa01-c5c3d9aa79d2",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "da55fe1c-2470-438c-ad73-08df53349938",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "3cf59ce9-ef83-41ba-b22a-351641a11370",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "f8f73816-0325-41e1-9329-b5c6cd2d88bc",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "0f64bca8-ddd5-40b5-8d9b-155f38d57536",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "a25a3c99-4ea7-427f-919b-31c7655a3ff6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "aa6ae0bb-e4d8-4367-9a2a-470743540325",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "be4e0ecb-3abc-400a-8599-1b45bd5fc525",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "6302d160-9880-441e-858a-bf619f94aa32",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined"
+              },
+              "label": ""
+            },
+            {
+              "id": "ba8f4b53-c62b-4109-91ee-f20145155066",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "55b573ca-300f-4ca7-9938-6ddd321b7b57",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "568e584b-686a-4694-bd29-e8d1a6261854",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "from": {
+              "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+            },
+            "to": {
+              "id": "03ebcd1d-06b4-465a-8b81-2b87acc27c4d",
+              "name": "Recharging",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recharging"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "353e42fa-9ae0-4bd6-aa01-c5c3d9aa79d2",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "da55fe1c-2470-438c-ad73-08df53349938",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "3cf59ce9-ef83-41ba-b22a-351641a11370",
+                "name": "SensingDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::SensingDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "f8f73816-0325-41e1-9329-b5c6cd2d88bc",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "0f64bca8-ddd5-40b5-8d9b-155f38d57536",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated"
+              },
+              "label": ""
+            },
+            {
+              "id": "a25a3c99-4ea7-427f-919b-31c7655a3ff6",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "aa6ae0bb-e4d8-4367-9a2a-470743540325",
+                "name": "AirspaceBreach",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::AirspaceBreach"
+              },
+              "label": ""
+            },
+            {
+              "id": "be4e0ecb-3abc-400a-8599-1b45bd5fc525",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "6302d160-9880-441e-858a-bf619f94aa32",
+                "name": "Quarantined",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Quarantined"
+              },
+              "label": ""
+            },
+            {
+              "id": "ba8f4b53-c62b-4109-91ee-f20145155066",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "to": {
+                "id": "55b573ca-300f-4ca7-9938-6ddd321b7b57",
+                "name": "Recalled",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Recalled"
+              },
+              "label": ""
+            }
+          ]
+        },
+        {
+          "state": {
+            "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+            "name": "NavigationDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "401fb446-accf-4d43-b148-a81b9f330aed",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+              },
+              "to": {
+                "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+                "name": "Watching",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+              },
+              "label": ""
+            },
+            {
+              "id": "ea576fda-3763-4c40-8e75-96cae4c0b7f7",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+              },
+              "to": {
+                "id": "0f64bca8-ddd5-40b5-8d9b-155f38d57536",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "401fb446-accf-4d43-b148-a81b9f330aed",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+            "from": {
+              "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+              "name": "NavigationDegraded",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+            },
+            "to": {
+              "id": "40684670-20b9-4bf2-9b50-dd61c018deec",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "ea576fda-3763-4c40-8e75-96cae4c0b7f7",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::«TransitionUsage»",
+              "from": {
+                "id": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+                "name": "NavigationDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded"
+              },
+              "to": {
+                "id": "0f64bca8-ddd5-40b5-8d9b-155f38d57536",
+                "name": "Isolated",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Isolated"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "6a51fd00-2274-485e-96ec-9d8591c0559c",
+        "name": "SurveillanceDroneTaskState",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 4,
+      "depth": 2,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 4,
+        "reachable": [
+          {
+            "id": "ab732fd7-c651-454f-9a3d-e1907744b3a1",
+            "name": "Idle",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Idle"
+          },
+          {
+            "id": "16776cac-f021-4748-abc9-879289aa042b",
+            "name": "Sensing",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+          },
+          {
+            "id": "680fac79-1d7b-4752-a6b5-8e3116dc6b00",
+            "name": "Coordinating",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Coordinating"
+          },
+          {
+            "id": "61e94874-fe3e-47c4-b0e5-5bf8a6314a86",
+            "name": "Reporting",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Reporting"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 6,
+        "fired": 6,
+        "dead": []
+      },
+      "census": {
+        "total": 7,
+        "rows": [
+          {
+            "id": "7fd87c83-0254-4915-87ff-a7893868cfdf",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "adb26903-5a29-46b9-a578-77c38203ce7b",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Idle`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "b6154b21-7d3c-4eca-a754-304063994ec0",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "4dd94a02-8da8-44c5-8d93-1c523e83c2b0",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Coordinating`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "105a8dc0-74cf-4c45-808d-8691ccd6aa2d",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "4b41821e-b92c-40a0-8869-3f0276b9b217",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Reporting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ea2e065b-fbc2-4dda-b0fa-60acb12d1c87",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 6,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 6,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "16776cac-f021-4748-abc9-879289aa042b",
+            "name": "Sensing",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "b6154b21-7d3c-4eca-a754-304063994ec0",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+              "from": {
+                "id": "16776cac-f021-4748-abc9-879289aa042b",
+                "name": "Sensing",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+              },
+              "to": {
+                "id": "680fac79-1d7b-4752-a6b5-8e3116dc6b00",
+                "name": "Coordinating",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Coordinating"
+              },
+              "label": ""
+            },
+            {
+              "id": "105a8dc0-74cf-4c45-808d-8691ccd6aa2d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+              "from": {
+                "id": "16776cac-f021-4748-abc9-879289aa042b",
+                "name": "Sensing",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+              },
+              "to": {
+                "id": "61e94874-fe3e-47c4-b0e5-5bf8a6314a86",
+                "name": "Reporting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Reporting"
+              },
+              "label": ""
+            },
+            {
+              "id": "ea2e065b-fbc2-4dda-b0fa-60acb12d1c87",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+              "from": {
+                "id": "16776cac-f021-4748-abc9-879289aa042b",
+                "name": "Sensing",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+              },
+              "to": {
+                "id": "ab732fd7-c651-454f-9a3d-e1907744b3a1",
+                "name": "Idle",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Idle"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "b6154b21-7d3c-4eca-a754-304063994ec0",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+            "from": {
+              "id": "16776cac-f021-4748-abc9-879289aa042b",
+              "name": "Sensing",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+            },
+            "to": {
+              "id": "680fac79-1d7b-4752-a6b5-8e3116dc6b00",
+              "name": "Coordinating",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Coordinating"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "105a8dc0-74cf-4c45-808d-8691ccd6aa2d",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+              "from": {
+                "id": "16776cac-f021-4748-abc9-879289aa042b",
+                "name": "Sensing",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+              },
+              "to": {
+                "id": "61e94874-fe3e-47c4-b0e5-5bf8a6314a86",
+                "name": "Reporting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Reporting"
+              },
+              "label": ""
+            },
+            {
+              "id": "ea2e065b-fbc2-4dda-b0fa-60acb12d1c87",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::«TransitionUsage»",
+              "from": {
+                "id": "16776cac-f021-4748-abc9-879289aa042b",
+                "name": "Sensing",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing"
+              },
+              "to": {
+                "id": "ab732fd7-c651-454f-9a3d-e1907744b3a1",
+                "name": "Idle",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Idle"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "6d597d7e-0291-48b0-807a-2b18856099ba",
+        "name": "GroundControlStationMode",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 3,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 3,
+        "reachable": [
+          {
+            "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+            "name": "Active",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+          },
+          {
+            "id": "9e7be1f5-ffe3-46b9-8130-345d13ea2afb",
+            "name": "LinkDegraded",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::LinkDegraded"
+          },
+          {
+            "id": "09cafe45-f0f7-41eb-8739-726e3cf20379",
+            "name": "Offline",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Offline"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 4,
+        "fired": 4,
+        "dead": []
+      },
+      "census": {
+        "total": 5,
+        "rows": [
+          {
+            "id": "138d17e6-f149-472f-a7b2-185a6aba4b32",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "874b94de-bf18-4bb6-b98d-cee247542576",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "f4f58d0a-82c8-484c-a7b0-2bb7dec966a6",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::LinkDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "e18329e8-8961-4c97-ac4d-b03bb3c09f72",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "2fa271b6-2758-4e9c-adac-fea5c225b3af",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Offline`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 4,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 4,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+            "name": "Active",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "874b94de-bf18-4bb6-b98d-cee247542576",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+              "from": {
+                "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+                "name": "Active",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+              },
+              "to": {
+                "id": "9e7be1f5-ffe3-46b9-8130-345d13ea2afb",
+                "name": "LinkDegraded",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::LinkDegraded"
+              },
+              "label": ""
+            },
+            {
+              "id": "e18329e8-8961-4c97-ac4d-b03bb3c09f72",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+              "from": {
+                "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+                "name": "Active",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+              },
+              "to": {
+                "id": "09cafe45-f0f7-41eb-8739-726e3cf20379",
+                "name": "Offline",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Offline"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "874b94de-bf18-4bb6-b98d-cee247542576",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+            "from": {
+              "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+              "name": "Active",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+            },
+            "to": {
+              "id": "9e7be1f5-ffe3-46b9-8130-345d13ea2afb",
+              "name": "LinkDegraded",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::LinkDegraded"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "e18329e8-8961-4c97-ac4d-b03bb3c09f72",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::«TransitionUsage»",
+              "from": {
+                "id": "d696b4c0-fc36-4120-8ced-2502da933277",
+                "name": "Active",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active"
+              },
+              "to": {
+                "id": "09cafe45-f0f7-41eb-8739-726e3cf20379",
+                "name": "Offline",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Offline"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    },
+    {
+      "machine": {
+        "id": "2aa70a87-5c5e-4833-b716-1ae6d4791923",
+        "name": "GroundControlStationState",
+        "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState",
+        "eClass": "StateDefinition"
+      },
+      "bounds": {
+        "maxConfigs": 10000,
+        "maxDepth": 200,
+        "maxCompletion": 64,
+        "alphabet": []
+      },
+      "configs": 3,
+      "depth": 1,
+      "exhaustive": true,
+      "boundHit": "none",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "states": {
+        "total": 3,
+        "reachable": [
+          {
+            "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+            "name": "Idle",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+          },
+          {
+            "id": "6ec36224-422c-4f97-91d2-15d7e3c0c21e",
+            "name": "Triaging",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Triaging"
+          },
+          {
+            "id": "9f8e9044-3c1b-4f43-aae7-cce394a97028",
+            "name": "Vetting",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Vetting"
+          }
+        ],
+        "unreachable": []
+      },
+      "transitions": {
+        "total": 4,
+        "fired": 4,
+        "dead": []
+      },
+      "census": {
+        "total": 5,
+        "rows": [
+          {
+            "id": "24d8a4a8-3b65-4b3a-b090-e730c0aadd80",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "account": "opening",
+            "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
+          },
+          {
+            "id": "2cc0f987-4c1c-4f1f-99ab-1668a4e4f0ee",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "46ee816b-781d-4d4b-9b91-aab9cbf290a4",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Triaging`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "adf52f1a-0222-4e72-a967-51be3963f156",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle`, which a configuration's stack can hold, so every configuration standing there offers it"
+          },
+          {
+            "id": "ec379de2-48b8-447b-99fb-43f57582a368",
+            "eClass": "TransitionUsage",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "account": "walked",
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Vetting`, which a configuration's stack can hold, so every configuration standing there offers it"
+          }
+        ],
+        "counts": {
+          "walked": 4,
+          "opening": 1,
+          "refused": 0,
+          "off-stack": 0,
+          "not-a-step": 0,
+          "unaccounted": 0
+        },
+        "unaccounted": []
+      },
+      "exactness": {
+        "acyclic": false,
+        "openFrontier": false,
+        "edges": 4,
+        "timedTransitions": 0,
+        "timedLabels": 0,
+        "alphabet": 0,
+        "undeterminedGuards": 0,
+        "walkIsExact": true,
+        "failedClause": null
+      },
+      "nondeterminism": [
+        {
+          "state": {
+            "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+            "name": "Idle",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+          },
+          "event": "",
+          "enabled": [
+            {
+              "id": "2cc0f987-4c1c-4f1f-99ab-1668a4e4f0ee",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+              "from": {
+                "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+                "name": "Idle",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+              },
+              "to": {
+                "id": "6ec36224-422c-4f97-91d2-15d7e3c0c21e",
+                "name": "Triaging",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Triaging"
+              },
+              "label": ""
+            },
+            {
+              "id": "adf52f1a-0222-4e72-a967-51be3963f156",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+              "from": {
+                "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+                "name": "Idle",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+              },
+              "to": {
+                "id": "9f8e9044-3c1b-4f43-aae7-cce394a97028",
+                "name": "Vetting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Vetting"
+              },
+              "label": ""
+            }
+          ],
+          "taken": {
+            "id": "2cc0f987-4c1c-4f1f-99ab-1668a4e4f0ee",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+            "from": {
+              "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+              "name": "Idle",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+            },
+            "to": {
+              "id": "6ec36224-422c-4f97-91d2-15d7e3c0c21e",
+              "name": "Triaging",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Triaging"
+            },
+            "label": ""
+          },
+          "notTaken": [
+            {
+              "id": "adf52f1a-0222-4e72-a967-51be3963f156",
+              "name": "",
+              "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::«TransitionUsage»",
+              "from": {
+                "id": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+                "name": "Idle",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle"
+              },
+              "to": {
+                "id": "9f8e9044-3c1b-4f43-aae7-cce394a97028",
+                "name": "Vetting",
+                "qualifiedName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Vetting"
+              },
+              "label": ""
+            }
+          ]
+        }
+      ],
+      "deadlocks": [],
+      "deadlocksWithheld": [],
+      "traps": [],
+      "trapCensus": {
+        "sccs": 1,
+        "bottomSccs": 1,
+        "trapsAfterExemptions": 0,
+        "exemptedAsEnding": 0,
+        "exemptedAsDeadlock": 0,
+        "exemptedAsCore": 1,
+        "refusedByGate": null,
+        "sentence": "no component of this walk is inescapable beyond its endings — 0 ending, 0 deadlocked configuration(s) and 1 whole-graph component were exempted, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      "unsupported": [],
+      "undeterminedGuards": [],
+      "suppressed": false
+    }
+  ],
+  "profile": [
+    {
+      "field": "run-to-completion",
+      "reading": "a fired transition is followed by trigger-less (completion) transitions until none is enabled, bounded at 64 chase steps per driving step. The bound is a BUDGET, not a fixpoint: a chase that spends it stops mid-run and says so.",
+      "provenance": "src/semantics/execute.ts — chaseHierCompletion, RunStateOptions.maxCompletion"
+    },
+    {
+      "field": "priority",
+      "reading": "innermost active substate first — the enabled transition leaving the deepest state on the active stack wins; within one state, declaration order. The explorer keeps the rule and branches only on the tie-break it does not decide: every transition enabled at that innermost level, never one an inner state beats.",
+      "provenance": "src/semantics/mc/config.ts — enabledTransitions; src/semantics/mc/explore.ts — exploreMachine"
+    },
+    {
+      "field": "history",
+      "reading": "shallow, and by parent map: leaving a composite state records its last-active child, and re-entry resumes that child only where the composite is marked as a history state.",
+      "provenance": "src/semantics/mc/config.ts — exitTo, isHistoryComposite"
+    },
+    {
+      "field": "regions",
+      "reading": "the interpreter CONCATENATES: each region is driven through the whole step sequence in turn and the results are appended, so regions do not interleave. The explorer does not explore a parallel machine at all — `attrs.parallel` has no keyword in sysml.langium and is reachable only through the API — it reports verification/behaviour-unsupported-construct and is never exhaustive.",
+      "provenance": "src/semantics/execute.ts — runHierMachine; src/semantics/mc/explore.ts — unsupportedConstructs"
+    },
+    {
+      "field": "deferred events",
+      "reading": "none. There is no event pool: `triggerEquals` is an exact string match, and an event no enabled transition accepts is dropped at the step that offered it.",
+      "provenance": "src/semantics/mc/config.ts — triggerEquals"
+    },
+    {
+      "field": "time",
+      "reading": "discrete. `after(n)` is a dwell measured against an integer clock that only an explicit time step advances. The explorer advances no clock: it offers each `after(n)` label as a named event, which over-approximates time — a state reachable only after a dwell is treated as reachable, so the unreachable and dead lists stay lower bounds.",
+      "provenance": "src/semantics/mc/config.ts — afterDuration, advanceClock"
+    }
+  ],
+  "totals": {
+    "machines": 11,
+    "exhaustive": 11,
+    "configs": 53,
+    "unreachable": 0,
+    "dead": 0,
+    "nondeterministic": 18,
+    "deadlocks": 0,
+    "traps": 0
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Transiting` (declaration order) and never `Watching -> Grounded`.",
+      "elementId": "fb4e0d15-bb4e-40d9-adfe-6fb7fcb02f9e",
+      "elementName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#1",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Transiting -> Recharging` (declaration order) and never `Transiting -> Watching`, `Transiting -> Grounded`.",
+      "elementId": "fbd20bb4-b628-49ef-bf80-249a710180e7",
+      "elementName": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#2",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Available -> Committed` (declaration order) and never `Available -> Unavailable`.",
+      "elementId": "e8d6bed7-e63a-4ef6-9f0d-73a9a34ab395",
+      "elementName": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#3",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`: 8 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Degraded` (declaration order) and never `Watching -> NavigationDegraded`, `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> MeshDegraded`, `Watching -> AirspaceBreach`, `Watching -> Quarantined`, `Watching -> Recalled`.",
+      "elementId": "60036678-dd18-4f1c-bdff-a758e604528d",
+      "elementName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#4",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Degraded -> Watching` (declaration order) and never `Degraded -> Recalled`.",
+      "elementId": "58f6c9d9-3ef2-49c5-9feb-1e248dbfd502",
+      "elementName": "SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#5",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Nominal -> Constrained` (declaration order) and never `Nominal -> Unavailable`.",
+      "elementId": "59bb8ae9-9e21-4b8a-bcc2-eaa226377b1b",
+      "elementName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#6",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Constrained -> Nominal` (declaration order) and never `Constrained -> Unavailable`.",
+      "elementId": "9f3251b6-6176-493f-85df-fb8b2cec799a",
+      "elementName": "SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#7",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Watching`: 6 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> NavigationDegraded` (declaration order) and never `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> AirspaceBreach`, `Watching -> Recalled`, `Watching -> Quarantined`.",
+      "elementId": "869262e6-e2d1-4997-858d-4f255d117470",
+      "elementName": "SurveillanceDroneSwarm::LA::MemberMode::Watching",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#8",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::MemberMode::Isolated`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Watching` (declaration order) and never `Isolated -> Recalled`, `Isolated -> Grounded`.",
+      "elementId": "85741605-4d44-4f6b-b535-8002ca232bd7",
+      "elementName": "SurveillanceDroneSwarm::LA::MemberMode::Isolated",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#9",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::MemberOperationalState::Available`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Available -> Constrained` (declaration order) and never `Available -> Unavailable`.",
+      "elementId": "6e09052f-556d-49d8-8028-d7b619532b2b",
+      "elementName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Available",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#10",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Constrained -> Available` (declaration order) and never `Constrained -> Unavailable`.",
+      "elementId": "8956d501-2445-45b3-a18f-73fcc2cd4399",
+      "elementName": "SurveillanceDroneSwarm::LA::MemberOperationalState::Constrained",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#11",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Grounded -> Transiting` (declaration order) and never `Grounded -> Quarantined`.",
+      "elementId": "1c8df603-cf8f-4a5c-9690-2924a53c22cc",
+      "elementName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Grounded",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#12",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Transiting -> Watching` (declaration order) and never `Transiting -> Recalled`.",
+      "elementId": "21e57d0f-3565-4f27-bd6a-943f8843977e",
+      "elementName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Transiting",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#13",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching`: 7 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Recharging` (declaration order) and never `Watching -> NavigationDegraded`, `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> AirspaceBreach`, `Watching -> Quarantined`, `Watching -> Recalled`.",
+      "elementId": "40684670-20b9-4bf2-9b50-dd61c018deec",
+      "elementName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::Watching",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#14",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `NavigationDegraded -> Watching` (declaration order) and never `NavigationDegraded -> Isolated`.",
+      "elementId": "15e0f629-9e3a-4764-b535-92188c26b4e0",
+      "elementName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneMode::NavigationDegraded",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#15",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Sensing -> Coordinating` (declaration order) and never `Sensing -> Reporting`, `Sensing -> Idle`.",
+      "elementId": "16776cac-f021-4748-abc9-879289aa042b",
+      "elementName": "SurveillanceDroneSwarm::LA::SurveillanceDrone::SurveillanceDroneTaskState::Sensing",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#16",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Active -> LinkDegraded` (declaration order) and never `Active -> Offline`.",
+      "elementId": "d696b4c0-fc36-4120-8ced-2502da933277",
+      "elementName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationMode::Active",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    },
+    {
+      "id": "verification#17",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "`SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Idle -> Triaging` (declaration order) and never `Idle -> Vetting`.",
+      "elementId": "923d0c6a-4dac-4f7e-b4b9-4258e394d5cf",
+      "elementName": "SurveillanceDroneSwarm::LA::GroundControlStation::GroundControlStationState::Idle",
+      "code": "verification/nondeterministic-choice",
+      "hint": "Declaration order is not a semantics: give the transitions guards that cannot both hold, or different triggers. Until then one of them is unreachable in simulation while the model admits both."
+    }
+  ]
+}

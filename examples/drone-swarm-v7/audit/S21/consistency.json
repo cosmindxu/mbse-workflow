@@ -1,0 +1,327 @@
+{
+  "toolAbsent": false,
+  "withValues": false,
+  "minimize": false,
+  "maxCore": 8,
+  "released": [],
+  "groups": [
+    {
+      "subject": {
+        "name": "s",
+        "typeRef": "SurveillanceDrone",
+        "typeId": "d931a300-957b-4c4f-88dd-029719eed2dd",
+        "typeQualifiedName": "SurveillanceDroneSwarm::SA::SurveillanceDrone"
+      },
+      "requirements": [
+        {
+          "id": "30c47d4b-97d6-4acc-971a-d94164aadce1",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::RecallWins",
+          "shortId": "",
+          "declaredName": "RecallWins",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "c0092aeb-1566-4da9-adbc-ccbab8e0f0e9",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::ReturnsWhenIsolated",
+          "shortId": "",
+          "declaredName": "ReturnsWhenIsolated",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "abb3c91d-b273-420c-8c3d-5360e0c540a9",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch",
+          "shortId": "",
+          "declaredName": "GeofenceBreachEndsWatch",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "67e19cb9-3314-4346-a85d-b6a897b99573",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::QuarantinedStaysOut",
+          "shortId": "",
+          "declaredName": "QuarantinedStaysOut",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [],
+      "noFormalClause": 4,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 4 requirement(s), 0 relations refused"
+    },
+    {
+      "subject": {
+        "name": "s",
+        "typeRef": "SurveillanceDroneSwarmSystem",
+        "typeId": "aa6792ea-2f72-412d-8bdd-415ceb803fa4",
+        "typeQualifiedName": "SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmSystem"
+      },
+      "requirements": [
+        {
+          "id": "f80a9e22-c8f9-499f-b6c8-b768531e8423",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard",
+          "shortId": "",
+          "declaredName": "PositionDriftHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "c11942f9-ccbd-47dc-8eac-0dd990209588",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard",
+          "shortId": "",
+          "declaredName": "MeshJammingHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "58691ac4-c606-457a-8994-7fa0cae40884",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard",
+          "shortId": "",
+          "declaredName": "MisclassificationHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "3d429565-1945-4c8b-a561-76e58f5cd770",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard",
+          "shortId": "",
+          "declaredName": "SensingDegradedUnnoticedHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "ec01b665-0032-4c7c-b0ac-3bc3a7cfbeff",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard",
+          "shortId": "",
+          "declaredName": "StaleTrackHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "57970ced-f33d-40f8-9d6d-2755d3bde3a4",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard",
+          "shortId": "",
+          "declaredName": "SpoofedMemberHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "3090b278-08db-48e9-9a2a-ce2662973ffd",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard",
+          "shortId": "",
+          "declaredName": "MixedClassifierVersionsHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "43d7abb1-50fd-4156-850c-34df1d13da94",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard",
+          "shortId": "",
+          "declaredName": "OperatorOverloadHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [],
+      "noFormalClause": 8,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 8 requirement(s), 0 relations refused"
+    }
+  ],
+  "consistent": 0,
+  "inconsistent": 0,
+  "inconclusive": 2,
+  "forgiven": 0,
+  "allowInconclusive": false,
+  "requirements": 12,
+  "refused": 0,
+  "noFormalClause": 12,
+  "unengageable": 0,
+  "checks": 0,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:e07419539d25a150f1fe1bae6d2da2ec79dad7b6e1dff53f21dd20c2721a0cbb",
+    "source": "sha256:cbee8cfb1b5c6cf35db829a98ff57d69ee68161784cc1f32437a18d2f800d967",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "fa44751b8d88ad93c35c229a9995210c79ff3896"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::SA::SurveillanceDrone was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 4 requirement(s), 0 relations refused",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#1",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmSystem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 8 requirement(s), 0 relations refused",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#2",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"RecallWins\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "30c47d4b-97d6-4acc-971a-d94164aadce1",
+      "elementName": "SurveillanceDroneSwarm::SA::RecallWins",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#3",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"ReturnsWhenIsolated\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "c0092aeb-1566-4da9-adbc-ccbab8e0f0e9",
+      "elementName": "SurveillanceDroneSwarm::SA::ReturnsWhenIsolated",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#4",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GeofenceBreachEndsWatch\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "abb3c91d-b273-420c-8c3d-5360e0c540a9",
+      "elementName": "SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#5",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"QuarantinedStaysOut\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "67e19cb9-3314-4346-a85d-b6a897b99573",
+      "elementName": "SurveillanceDroneSwarm::SA::QuarantinedStaysOut",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#6",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"PositionDriftHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "f80a9e22-c8f9-499f-b6c8-b768531e8423",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#7",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MeshJammingHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "c11942f9-ccbd-47dc-8eac-0dd990209588",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#8",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MisclassificationHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "58691ac4-c606-457a-8994-7fa0cae40884",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#9",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"SensingDegradedUnnoticedHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "3d429565-1945-4c8b-a561-76e58f5cd770",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#10",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"StaleTrackHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "ec01b665-0032-4c7c-b0ac-3bc3a7cfbeff",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#11",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"SpoofedMemberHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "57970ced-f33d-40f8-9d6d-2755d3bde3a4",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#12",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MixedClassifierVersionsHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "3090b278-08db-48e9-9a2a-ce2662973ffd",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#13",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"OperatorOverloadHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "43d7abb1-50fd-4156-850c-34df1d13da94",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    }
+  ]
+}

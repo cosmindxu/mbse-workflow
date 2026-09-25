@@ -1,0 +1,343 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v9/fragments/4_SA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v9/fragments/4_SA.sysml (after)
+@@ -0,0 +1,339 @@
++    package SA {
++        #prompt part saGuidance {
++            doc /* SA: the system is one black-box part with ports. Every function is allocated to the system or to an actor, and traces to at least one operational activity. No design choices here. */
++        }
++
++        // the system, black box
++        part def SurveillanceDroneSwarmSystem {
++            doc /* TODO: the system's attributes and its ports on the environment. */
++        }
++        part system : SurveillanceDroneSwarmSystem;
++        trace system to SurveillanceDroneSwarm::OA::watchAsset;
++
++        // the population: 12 identical members (CV-16)
++        #Member part def SwarmMember {
++            out port meshOut : Common::MeshPort;
++            in port meshIn : ~Common::MeshPort;
++            doc /* TODO: one member of the system. At SA the system is still one black box: this definition is carried, not instantiated. */
++        }
++        #prose part fleetFact {
++            doc /* Population: 12 members of SwarmMember, carried by fleet, exchanging through Common::MeshInterface. Carried from the brief; instantiated from LA down. */
++        }
++
++        // actors: every operational entity the system is not
++        #Actor part def DutyController {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part dutyController : DutyController;
++        trace dutyController to SurveillanceDroneSwarm::OA::dutyController;
++        #Actor part def OperationsCentreAnalyst {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part operationsCentreAnalyst : OperationsCentreAnalyst;
++        trace operationsCentreAnalyst to SurveillanceDroneSwarm::OA::operationsCentreAnalyst;
++        #Actor part def AirspaceAuthority {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part airspaceAuthority : AirspaceAuthority;
++        trace airspaceAuthority to SurveillanceDroneSwarm::OA::airspaceAuthority;
++        #Actor part def GroundCrew {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part groundCrew : GroundCrew;
++        trace groundCrew to SurveillanceDroneSwarm::OA::groundCrew;
++        #Actor part def FixedCameraNetworkOperator {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part fixedCameraNetworkOperator : FixedCameraNetworkOperator;
++        trace fixedCameraNetworkOperator to SurveillanceDroneSwarm::OA::fixedCameraNetworkOperator;
++        #Actor part def GroundStationNode {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part groundStation : GroundStationNode;
++        trace groundStation to SurveillanceDroneSwarm::OA::groundStation;
++        #Actor part def MeshRadio {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part meshRadioBetweenDrones : MeshRadio;
++        trace meshRadioBetweenDrones to SurveillanceDroneSwarm::OA::meshRadioBetweenDrones;
++        #Actor part def GroundLinkRadio {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part groundLinkToOperationsCentre : GroundLinkRadio;
++        trace groundLinkToOperationsCentre to SurveillanceDroneSwarm::OA::groundLinkToOperationsCentre;
++        #Actor part def RechargePoint {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part batterySwapAtRechargePoint : RechargePoint;
++        trace batterySwapAtRechargePoint to SurveillanceDroneSwarm::OA::batterySwapAtRechargePoint;
++        #Actor part def RecoveryPoint {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part recoveryPoint : RecoveryPoint;
++        trace recoveryPoint to SurveillanceDroneSwarm::OA::recoveryPoint;
++        #Actor part def FixedCameraNetwork {
++            doc /* TODO: the ports this actor exchanges through. */
++        }
++        part fixedCameraNetwork : FixedCameraNetwork;
++        trace fixedCameraNetwork to SurveillanceDroneSwarm::OA::fixedCameraNetwork;
++
++        // capabilities, carried over with the system as subject
++        #Capability use case def WatchTheTaskedArea { subject s : SurveillanceDroneSwarmSystem; }
++        trace WatchTheTaskedArea to SurveillanceDroneSwarm::OA::WatchTheTaskedArea;
++        #Capability use case def ContinuousSectorWatch { subject s : SurveillanceDroneSwarmSystem; }
++        trace ContinuousSectorWatch to SurveillanceDroneSwarm::OA::ContinuousSectorWatch;
++        #Capability use case def MovingObjectDetectionAndClassification { subject s : SurveillanceDroneSwarmSystem; }
++        trace MovingObjectDetectionAndClassification to SurveillanceDroneSwarm::OA::MovingObjectDetectionAndClassification;
++        #Capability use case def ReportDeliveryAndReconciliation { subject s : SurveillanceDroneSwarmSystem; }
++        trace ReportDeliveryAndReconciliation to SurveillanceDroneSwarm::OA::ReportDeliveryAndReconciliation;
++        #Capability use case def SwarmSelfCoordination { subject s : SurveillanceDroneSwarmSystem; }
++        trace SwarmSelfCoordination to SurveillanceDroneSwarm::OA::SwarmSelfCoordination;
++        #Capability use case def OperatorSupervisionOfTheSwarm { subject s : SurveillanceDroneSwarmSystem; }
++        trace OperatorSupervisionOfTheSwarm to SurveillanceDroneSwarm::OA::OperatorSupervisionOfTheSwarm;
++        #Capability use case def AlertTriage { subject s : SurveillanceDroneSwarmSystem; }
++        trace AlertTriage to SurveillanceDroneSwarm::OA::AlertTriage;
++        #Capability use case def DecisionRecordKeeping { subject s : SurveillanceDroneSwarmSystem; }
++        trace DecisionRecordKeeping to SurveillanceDroneSwarm::OA::DecisionRecordKeeping;
++        #Capability use case def GracefulDegradationUnderLoss { subject s : SurveillanceDroneSwarmSystem; }
++        trace GracefulDegradationUnderLoss to SurveillanceDroneSwarm::OA::GracefulDegradationUnderLoss;
++        #Capability use case def AirspaceComplianceAndSafeRecovery { subject s : SurveillanceDroneSwarmSystem; }
++        trace AirspaceComplianceAndSafeRecovery to SurveillanceDroneSwarm::OA::AirspaceComplianceAndSafeRecovery;
++        #Capability use case def ClassifierVersionConsistency { subject s : SurveillanceDroneSwarmSystem; }
++        trace ClassifierVersionConsistency to SurveillanceDroneSwarm::OA::ClassifierVersionConsistency;
++
++        // functions: one per operational activity, to be split or merged by the author
++        action def TaskSurveillanceArea {
++            doc /* TODO: what the system does for `issueTasking`. */
++            out taskingOut;
++        }
++        action def CommandSupervisoryPriorities {
++            doc /* TODO: what the system does for `issuePriorities`. */
++            out priorityOut;
++        }
++        action def RecallAndLand {
++            doc /* TODO: what the system does for `issueRecall`. */
++            out recallOut;
++        }
++        action def PresentStatusPicture {
++            doc /* TODO: what the system does for `presentStatus`. */
++            in statusIn;
++        }
++        action def AcknowledgeDetectionReport {
++            doc /* TODO: what the system does for `acknowledgeReports`. */
++            in reportIn;
++            out receiptOut;
++        }
++        action def MergeSwarmTracks {
++            doc /* TODO: what the system does for `mergeTracks`. */
++            in swarmTrackIn;
++            in cameraTrackIn;
++        }
++        action def ProvideCameraTracks {
++            doc /* TODO: what the system does for `provideCameraTracks`. */
++            out cameraTrackOut;
++        }
++        action def SwapBattery {
++            doc /* TODO: what the system does for `swapBatteryAct`. */
++        }
++        action def RecoverReturnedDrone {
++            doc /* TODO: what the system does for `recoverDroneAct`. */
++        }
++        action def GrantAirspaceClearance {
++            doc /* TODO: what the system does for `grantClearanceAct`. */
++        }
++        action def HandOverSector {
++            doc /* TODO: what the system does for `handOverSector`. */
++            out handoverOut;
++            in handoverIn;
++        }
++        action def RotateRecharge {
++            doc /* TODO: what the system does for `rotateRecharge`. */
++            out rotationOut;
++            in rotationIn;
++        }
++        action def RedistributeCoverage {
++            doc /* TODO: what the system does for `redistributeCoverage`. */
++            out coverageOut;
++            in coverageIn;
++        }
++        action def DeconflictFlight {
++            doc /* TODO: what the system does for `deconflictFlight`. */
++            out intentOut;
++            in intentIn;
++        }
++        action def RelayReportsThroughNeighbour {
++            doc /* TODO: what the system does for `relayReportsThroughNeighbour`. */
++            out relayOut;
++            in relayIn;
++        }
++        action def CorrelateTracks {
++            doc /* TODO: what the system does for `correlateTracks`. */
++            out correlationOut;
++            in correlationIn;
++        }
++        action def HandOverTrack {
++            doc /* TODO: what the system does for `handOverTrack`. */
++            out trackHandoverOut;
++            in trackHandoverIn;
++        }
++        action def AdmitMember {
++            doc /* TODO: what the system does for `admitMember`. */
++            out admissionOut;
++            in admissionIn;
++        }
++        action def DetectAndClassifyObject {
++            doc /* TODO: what the system does for `detectAndClassifyObject`. */
++            out detectionOut;
++        }
++        action def DeliverDetectionReport {
++            doc /* TODO: what the system does for `deliverDetectionReport`. */
++            in detectionIn;
++            out reportOut;
++            in receiptIn;
++        }
++        action def ApplySupervisoryDirectives {
++            doc /* TODO: what the system does for `applySupervisoryDirectives`. */
++            in taskingIn;
++            in priorityIn;
++            in recallIn;
++        }
++        action def ReportMemberStatus {
++            doc /* TODO: what the system does for `reportMemberStatus`. */
++            out statusOut;
++        }
++        action def ReportTrackPicture {
++            doc /* TODO: what the system does for `reportTrackPicture`. */
++            out trackPictureOut;
++        }
++        action def ReturnToRecoveryPoint {
++            doc /* TODO: what the system does for `returnToRecoveryPoint`. */
++        }
++        #C2 action issueTasking : TaskSurveillanceArea;
++        allocate issueTasking to dutyController;
++        trace issueTasking to SurveillanceDroneSwarm::OA::issueTasking;
++        #C2 action issuePriorities : CommandSupervisoryPriorities;
++        allocate issuePriorities to dutyController;
++        trace issuePriorities to SurveillanceDroneSwarm::OA::issuePriorities;
++        #C2 action issueRecall : RecallAndLand;
++        allocate issueRecall to dutyController;
++        trace issueRecall to SurveillanceDroneSwarm::OA::issueRecall;
++        #C2 action presentStatus : PresentStatusPicture;
++        allocate presentStatus to groundStation;
++        trace presentStatus to SurveillanceDroneSwarm::OA::presentStatus;
++        #C2 action acknowledgeReports : AcknowledgeDetectionReport;
++        allocate acknowledgeReports to operationsCentreAnalyst;
++        trace acknowledgeReports to SurveillanceDroneSwarm::OA::acknowledgeReports;
++        action mergeTracks : MergeSwarmTracks;
++        allocate mergeTracks to operationsCentreAnalyst;
++        trace mergeTracks to SurveillanceDroneSwarm::OA::mergeTracks;
++        action provideCameraTracks : ProvideCameraTracks;
++        allocate provideCameraTracks to fixedCameraNetwork;
++        trace provideCameraTracks to SurveillanceDroneSwarm::OA::provideCameraTracks;
++        action swapBatteryAct : SwapBattery;
++        allocate swapBatteryAct to groundCrew;
++        trace swapBatteryAct to SurveillanceDroneSwarm::OA::swapBatteryAct;
++        action recoverDroneAct : RecoverReturnedDrone;
++        allocate recoverDroneAct to groundCrew;
++        trace recoverDroneAct to SurveillanceDroneSwarm::OA::recoverDroneAct;
++        action grantClearanceAct : GrantAirspaceClearance;
++        allocate grantClearanceAct to airspaceAuthority;
++        trace grantClearanceAct to SurveillanceDroneSwarm::OA::grantClearanceAct;
++        // one function for `alphaHandOverSector`, `bravoHandOverSector`: members performing one activity
++        #Coordination action handOverSector : HandOverSector;
++        allocate handOverSector to system;
++        trace handOverSector to SurveillanceDroneSwarm::OA::alphaHandOverSector;
++        trace handOverSector to SurveillanceDroneSwarm::OA::bravoHandOverSector;
++        // one function for `alphaRotateRecharge`, `bravoRotateRecharge`: members performing one activity
++        #Coordination action rotateRecharge : RotateRecharge;
++        allocate rotateRecharge to system;
++        trace rotateRecharge to SurveillanceDroneSwarm::OA::alphaRotateRecharge;
++        trace rotateRecharge to SurveillanceDroneSwarm::OA::bravoRotateRecharge;
++        // one function for `alphaRedistributeCoverage`, `bravoRedistributeCoverage`: members performing one activity
++        #Coordination action redistributeCoverage : RedistributeCoverage;
++        allocate redistributeCoverage to system;
++        trace redistributeCoverage to SurveillanceDroneSwarm::OA::alphaRedistributeCoverage;
++        trace redistributeCoverage to SurveillanceDroneSwarm::OA::bravoRedistributeCoverage;
++        // one function for `alphaDeconflictFlight`, `bravoDeconflictFlight`: members performing one activity
++        #Coordination action deconflictFlight : DeconflictFlight;
++        allocate deconflictFlight to system;
++        trace deconflictFlight to SurveillanceDroneSwarm::OA::alphaDeconflictFlight;
++        trace deconflictFlight to SurveillanceDroneSwarm::OA::bravoDeconflictFlight;
++        // one function for `alphaRelayReports`, `bravoRelayReports`: members performing one activity
++        #Coordination action relayReportsThroughNeighbour : RelayReportsThroughNeighbour;
++        allocate relayReportsThroughNeighbour to system;
++        trace relayReportsThroughNeighbour to SurveillanceDroneSwarm::OA::alphaRelayReports;
++        trace relayReportsThroughNeighbour to SurveillanceDroneSwarm::OA::bravoRelayReports;
++        // one function for `alphaCorrelateTracks`, `bravoCorrelateTracks`: members performing one activity
++        #Coordination action correlateTracks : CorrelateTracks;
++        allocate correlateTracks to system;
++        trace correlateTracks to SurveillanceDroneSwarm::OA::alphaCorrelateTracks;
++        trace correlateTracks to SurveillanceDroneSwarm::OA::bravoCorrelateTracks;
++        // one function for `alphaHandOverTrack`, `bravoHandOverTrack`: members performing one activity
++        #Coordination action handOverTrack : HandOverTrack;
++        allocate handOverTrack to system;
++        trace handOverTrack to SurveillanceDroneSwarm::OA::alphaHandOverTrack;
++        trace handOverTrack to SurveillanceDroneSwarm::OA::bravoHandOverTrack;
++        // one function for `alphaAdmitMember`, `bravoAdmitMember`: members performing one activity
++        #Coordination action admitMember : AdmitMember;
++        allocate admitMember to system;
++        trace admitMember to SurveillanceDroneSwarm::OA::alphaAdmitMember;
++        trace admitMember to SurveillanceDroneSwarm::OA::bravoAdmitMember;
++        // one function for `alphaDetect`, `bravoDetect`: members performing one activity
++        action detectAndClassifyObject : DetectAndClassifyObject;
++        allocate detectAndClassifyObject to system;
++        trace detectAndClassifyObject to SurveillanceDroneSwarm::OA::alphaDetect;
++        trace detectAndClassifyObject to SurveillanceDroneSwarm::OA::bravoDetect;
++        // one function for `alphaDeliver`, `bravoDeliver`: members performing one activity
++        action deliverDetectionReport : DeliverDetectionReport;
++        allocate deliverDetectionReport to system;
++        trace deliverDetectionReport to SurveillanceDroneSwarm::OA::alphaDeliver;
++        trace deliverDetectionReport to SurveillanceDroneSwarm::OA::bravoDeliver;
++        // one function for `alphaDirectives`, `bravoDirectives`: members performing one activity
++        action applySupervisoryDirectives : ApplySupervisoryDirectives;
++        allocate applySupervisoryDirectives to system;
++        trace applySupervisoryDirectives to SurveillanceDroneSwarm::OA::alphaDirectives;
++        trace applySupervisoryDirectives to SurveillanceDroneSwarm::OA::bravoDirectives;
++        // one function for `alphaStatus`, `bravoStatus`: members performing one activity
++        action reportMemberStatus : ReportMemberStatus;
++        allocate reportMemberStatus to system;
++        trace reportMemberStatus to SurveillanceDroneSwarm::OA::alphaStatus;
++        trace reportMemberStatus to SurveillanceDroneSwarm::OA::bravoStatus;
++        // one function for `alphaTrackPicture`, `bravoTrackPicture`: members performing one activity
++        action reportTrackPicture : ReportTrackPicture;
++        allocate reportTrackPicture to system;
++        trace reportTrackPicture to SurveillanceDroneSwarm::OA::alphaTrackPicture;
++        trace reportTrackPicture to SurveillanceDroneSwarm::OA::bravoTrackPicture;
++        // one function for `alphaReturn`, `bravoReturn`: members performing one activity
++        action returnToRecoveryPoint : ReturnToRecoveryPoint;
++        allocate returnToRecoveryPoint to system;
++        trace returnToRecoveryPoint to SurveillanceDroneSwarm::OA::alphaReturn;
++        trace returnToRecoveryPoint to SurveillanceDroneSwarm::OA::bravoReturn;
++
++        // interactions, carried over as functional exchanges
++        // between members at OA: alphaHandOverSector.handoverOut to bravoHandOverSector.handoverIn
++        flow handOverSectorAtoB of Common::SectorHandoverProposal from handOverSector.handoverOut to handOverSector.handoverIn;
++        // between members at OA: alphaRotateRecharge.rotationOut to bravoRotateRecharge.rotationIn
++        flow rotateRechargeAtoB of Common::RechargeRotationSlot from rotateRecharge.rotationOut to rotateRecharge.rotationIn;
++        // between members at OA: alphaRedistributeCoverage.coverageOut to bravoRedistributeCoverage.coverageIn
++        flow redistributeCoverageAtoB of Common::CoverageAssignment from redistributeCoverage.coverageOut to redistributeCoverage.coverageIn;
++        // between members at OA: alphaDeconflictFlight.intentOut to bravoDeconflictFlight.intentIn
++        flow deconflictFlightAtoB of Common::FlightIntent from deconflictFlight.intentOut to deconflictFlight.intentIn;
++        // between members at OA: alphaRelayReports.relayOut to bravoRelayReports.relayIn
++        flow relayReportsAtoB of Common::DetectionReport from relayReportsThroughNeighbour.relayOut to relayReportsThroughNeighbour.relayIn;
++        // between members at OA: alphaCorrelateTracks.correlationOut to bravoCorrelateTracks.correlationIn
++        flow correlateTracksAtoB of Common::Track from correlateTracks.correlationOut to correlateTracks.correlationIn;
++        // between members at OA: alphaHandOverTrack.trackHandoverOut to bravoHandOverTrack.trackHandoverIn
++        flow handOverTrackAtoB of Common::Track from handOverTrack.trackHandoverOut to handOverTrack.trackHandoverIn;
++        // between members at OA: alphaAdmitMember.admissionOut to bravoAdmitMember.admissionIn
++        flow admitMemberAtoB of Common::AdmissionExchange from admitMember.admissionOut to admitMember.admissionIn;
++        flow detectionAlpha of Common::DetectionReport from detectAndClassifyObject.detectionOut to deliverDetectionReport.detectionIn;
++        flow reportFromAlpha of Common::DetectionReport from deliverDetectionReport.reportOut to acknowledgeReports.reportIn;
++        flow receiptToAlpha of Common::ReportReceipt from acknowledgeReports.receiptOut to deliverDetectionReport.receiptIn;
++        flow statusFromAlpha of Common::MemberStatus from reportMemberStatus.statusOut to presentStatus.statusIn;
++        flow trackPictureFromAlpha of Common::Track from reportTrackPicture.trackPictureOut to mergeTracks.swarmTrackIn;
++        flow cameraTracksToMerge of Common::Track from provideCameraTracks.cameraTrackOut to mergeTracks.cameraTrackIn;
++        flow taskingToAlpha of Common::TaskingOrder from issueTasking.taskingOut to applySupervisoryDirectives.taskingIn;
++        flow prioritiesToAlpha of Common::PriorityDirective from issuePriorities.priorityOut to applySupervisoryDirectives.priorityIn;
++        flow recallToAlpha of Common::RecallDirective from issueRecall.recallOut to applySupervisoryDirectives.recallIn;
++
++    }

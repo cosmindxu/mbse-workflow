@@ -1,0 +1,120 @@
+{
+  "toolAbsent": false,
+  "measure": {
+    "id": "15c36a32-e418-42b2-a299-ee64da4c9a28",
+    "qualifiedName": "SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction",
+    "declaredName": "coverageUnderMeshJammingFraction",
+    "unit": null,
+    "siFactor": 1,
+    "siOffset": 0
+  },
+  "bounds": [
+    {
+      "sense": "min",
+      "value": 0.6648888888888889,
+      "siValue": 0.6648888888888889,
+      "term": "(/ 364109817204754776353831573245657.0 547625059298595101446575784722432.0)",
+      "witness": [
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::areaUnderWatchFraction",
+          "term": "(/ 11889503016258109.0 15199648742375424.0)",
+          "value": 0.7822222222222222
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::coverageLossAfterMemberLossFraction",
+          "term": "(/ 27.0 176.0)",
+          "value": 0.1534090909090909
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction",
+          "term": "(/ 364109817204754776353831573245657.0 547625059298595101446575784722432.0)",
+          "value": 0.6648888888888889
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::fleetMemberCount",
+          "term": "12.0",
+          "value": 12
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::handOverLossShareUnderJamming",
+          "term": "(/ 5404319552844595.0 36028797018963968.0)",
+          "value": 0.15
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::memberCoverageFraction",
+          "term": "(/ 1080863910568919.0 9007199254740992.0)",
+          "value": 0.12
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::memberCruiseMetresPerSecond",
+          "term": "18.0",
+          "value": 18
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::memberFlightMinutes",
+          "term": "40.0",
+          "value": 40
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::memberTurnaroundMinutes",
+          "term": "20.0",
+          "value": 20
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::sectorReachMetres",
+          "term": "4000.0",
+          "value": 4000
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::sectorTransitMinutes",
+          "term": "(/ 200.0 27.0)",
+          "value": 7.407407407407407
+        },
+        {
+          "symbol": "SurveillanceDroneSwarm::PA::watchingMembers",
+          "term": "(/ 176.0 27.0)",
+          "value": 6.518518518518518
+        }
+      ],
+      "checks": 1,
+      "outcome": "bound-without-optimality",
+      "code": "verification/optimality-not-established",
+      "detail": "min `SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction`: bound found at 0.6648888888888889 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 15 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused"
+    }
+  ],
+  "withRequirements": false,
+  "released": [],
+  "requirements": [],
+  "axioms": 15,
+  "refused": 0,
+  "nonlinear": true,
+  "fragment": "qf-lra",
+  "logic": "QF_NRA",
+  "vacuityCore": [],
+  "checks": 2,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:3626d11b2bb9de131da86b16841d22a0cad7ad70eed7473171dc1a459a0657a1",
+    "source": "sha256:841daf57850098c65701aa0921d39427881f72d9dd56fda8b8eedccabffffdbb",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "6d04bba846d1a8c97df2baff9ff5b01a6efdd7d7"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "min `SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction` was not established: min `SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction`: bound found at 0.6648888888888889 (coherent SI; the feature declares no unit), optimality not established (nonlinear) — z3’s νZ is complete for linear real arithmetic and this script is not linear, so this is a value it reached and not one it established as the tightest. over 15 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "elementId": "15c36a32-e418-42b2-a299-ee64da4c9a28",
+      "elementName": "SurveillanceDroneSwarm::PA::coverageUnderMeshJammingFraction",
+      "code": "verification/optimality-not-established",
+      "hint": "The value on the row is a bound z3 reached, not one it established as the tightest: νZ is complete for linear real arithmetic, and a product or a quotient of two features is not that. Pin the feature that makes the objective nonlinear, or read the row as the bound it is. It exits 2, and no flag lowers it — a non-optimal bound presented as the optimum is the one sentence this command may never write."
+    }
+  ]
+}

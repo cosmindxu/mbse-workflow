@@ -1,0 +1,22 @@
+node_modules/
+# scratch runs; a run worth keeping is moved to examples/
+runs/
+*.log
+!examples/**/*.log
+
+# Derived from the local study corpus (~/Work/mbse-approaches), which stays local:
+# the reference model split into layer fragments, and the CLI payloads recorded
+# from it. Regenerate with `npm run record-fixtures`.
+test/fixtures/levelcrossing/
+test/fixtures/checks/
+
+# LaTeX build by-products (docs/diagram)
+docs/**/*.aux
+docs/**/build.log
+
+# The social-media package (clip, stills, post copy) stays on this machine.
+docs/social/
+
+# Byte-code left by the probe scripts. The container runs as root, so these
+# come back owned by root and are not worth chasing.
+__pycache__/

@@ -1,0 +1,676 @@
+{
+  "total": 38,
+  "satisfied": 35,
+  "coverage": 0.9210526315789473,
+  "libraryExcluded": 24,
+  "implicitExcluded": 0,
+  "nonNormativeExcluded": 0,
+  "kind": null,
+  "rows": [
+    {
+      "id": "37d05fb6-33ed-4f26-bde8-3a99bf90a63c",
+      "number": "1",
+      "reqId": "",
+      "name": "CoverageGapDuringHandoverHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "If sector handover between two members is not make-before-break, the sector can go briefly unwatched while responsibility transfers between them.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "HandOverSector"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "ae6e17a7-bbce-4455-a799-fae2024ec757",
+      "number": "2",
+      "reqId": "",
+      "name": "PositionDriftHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "without satellite positioning, a member's position estimate drifts and its reports place objects in the wrong place",
+      "satisfied": true,
+      "satisfiedBy": [
+        "surveillanceDroneSwarm",
+        "fleet",
+        "navigate"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "b8989309-8c7c-4e1e-928a-8d60f3d627e7",
+      "number": "3",
+      "reqId": "",
+      "name": "MeshJammingHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "interference cuts the links between members, and coordination stalls",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relayThroughNeighbour",
+        "relayThroughNeighbour",
+        "fleetConfiguration",
+        "coordinator"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "131129af-3808-4ebd-a4ff-a999a76647c1",
+      "number": "4",
+      "reqId": "",
+      "name": "MisclassificationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a detection is reported as the wrong class, or a forced class where Unknown was the truth",
+      "satisfied": true,
+      "satisfiedBy": [
+        "detectAndClassify",
+        "detectAndClassify",
+        "fleet",
+        "classify"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "d72adcea-d48c-461f-aa63-43b9d95491e8",
+      "number": "5",
+      "reqId": "",
+      "name": "SensingDegradedUnnoticedHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a sensor degrades and nobody knows the reports from it are unreliable",
+      "satisfied": true,
+      "satisfiedBy": [
+        "presentStatusPicture",
+        "fleet",
+        "computeWatchdog"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "aaabc95e-dcdf-4f76-8028-81e050346c7d",
+      "number": "6",
+      "reqId": "",
+      "name": "StaleTrackHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a track is shown as current after nothing has seen the object for a while",
+      "satisfied": true,
+      "satisfiedBy": [
+        "correlateTracks",
+        "correlateTracks",
+        "fleet",
+        "coordinator"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "afe10d34-e2a7-4354-9b9d-b327374e4a0a",
+      "number": "7",
+      "reqId": "",
+      "name": "SpoofedMemberHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "something that is not one of the members joins the mesh and takes part in coordination",
+      "satisfied": true,
+      "satisfiedBy": [
+        "admitMember",
+        "admitMember",
+        "groundControlStation",
+        "coordinator"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "f15dcf92-c719-41b4-83f0-71fcec489246",
+      "number": "8",
+      "reqId": "",
+      "name": "MixedClassifierVersionsHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "members run different classifier versions and classify the same object differently",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierRelease",
+        "reportDetection",
+        "groundControlStation",
+        "classifierRegistry"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "6cd22833-e020-424e-8347-b3fa79b79087",
+      "number": "9",
+      "reqId": "",
+      "name": "OperatorOverloadHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "more alerts reach the operator than they can judge, and they accept what is in front of them",
+      "satisfied": true,
+      "satisfiedBy": [
+        "triageReports",
+        "triageReports",
+        "groundControlStation",
+        "triage"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "c424ac13-f0f6-4b3e-8811-f57d6f58f643",
+      "number": "10",
+      "reqId": "",
+      "name": "RecallWins",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "RecallWins: once a drone is recalled, it does not watch again until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "15f8bf9d-27d4-45b1-bb5a-3c77c74bebd0",
+      "number": "11",
+      "reqId": "",
+      "name": "ReturnsWhenIsolated",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed, an isolated drone included",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "f51d2e52-e5e6-43a8-8cba-a8c493048ba3",
+      "number": "12",
+      "reqId": "",
+      "name": "GeofenceBreachEndsWatch",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "1eeb67db-fd1f-4593-9229-638b67140def",
+      "number": "13",
+      "reqId": "",
+      "name": "QuarantinedStaysOut",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "fe9b98b9-a4f7-4ba4-872c-a8c82680bcb2",
+      "number": "14",
+      "reqId": "",
+      "name": "PeerCoordinationSinglePointHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a single point of failure this layer's intended split introduces: handOverSector, rotateRecharge and admitMember are each meant to be carried out by one member acting for its peers; if that member fails or drops out mid-exchange, the coordination step is left incomplete until another member takes over.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "redistributeCoverage",
+        "fleet",
+        "coordinator"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "3dc22ce4-0d3c-4b56-a94b-160ae176230b",
+      "number": "15",
+      "reqId": "",
+      "name": "GroundLinkC2SinglePathHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: the five #C2 functions are allocated only to mainComponent, the ground-facing boundary; a total GroundStationLink loss removes the supervisory command, recall and acknowledgement path until the link returns. Accepted because DisconnectedOperationAndReconciliation already keeps detectAndClassify and reportDetection running through the gap, and SafetyAuthority requires recall and geofence authority to stay independent of onboard software rather than delegated to the fleet.",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "5c9679c8-4fa7-4ce5-8084-1d1b93a46f4f",
+      "number": "16",
+      "reqId": "",
+      "name": "CoordinationDivergenceHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "with sector handover, recharge rotation and coverage redistribution decided independently by members rather than arbitrated by the ground, two members may reach conflicting local decisions at the same moment — e.g. both vacating the same sector for recharge — with no ground arbiter to break the tie",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet",
+        "coordinator"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "4b7fd24c-8b62-4d20-bae3-e6a6244e71ae",
+      "number": "17",
+      "reqId": "",
+      "name": "GroundAdmissionBottleneckHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: because admitMember stays solely at the ground control station, a lost ground link blocks admission or readmission of any member until the link returns. This is deliberately fail-closed — an un-vetted candidate is safer excluded than admitted — and existing members' watch is unaffected since the other seven #Coordination functions run on board regardless of ground reachability",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "a24e80c7-676a-4e9e-aa55-ead54030b585",
+      "number": "18",
+      "reqId": "",
+      "name": "GroundLinkRadioDropHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the onboard or ground GroundLinkRadioUnitNode can drop, cutting a member from the ground-held deciding coordination it depends on in this alternative",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relay"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "8005c5c6-2d34-456b-aeb2-dc40c1c02800",
+      "number": "19",
+      "reqId": "",
+      "name": "BatterySwapWearHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the battery contacts and swap mechanism at rechargePoint wear with repeated twenty-minute-cycle swaps and can fail to seat a battery correctly",
+      "satisfied": true,
+      "satisfiedBy": [
+        "batterySwapCrew"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "66f306b6-35dd-46aa-886d-cf3ab15b1047",
+      "number": "20",
+      "reqId": "",
+      "name": "OnboardComputeCrashHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the onboard sensing and classification software can crash mid-sortie, silently stopping detection",
+      "satisfied": true,
+      "satisfiedBy": [
+        "computeWatchdog"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "0f18d32b-1c3b-4e3b-81c0-39c48f5b7412",
+      "number": "21",
+      "reqId": "",
+      "name": "GroundCoordinatorSinglePointHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "concentrating the deciding Coordination and all Command-and-Control on groundStation.coordinator and groundStation.c2 makes their loss a fleet-wide coordination stall, a risk this ground-centred split creates that a drone-held one would not",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "3f2ae659-07fd-4a1e-a250-a52c5841183c",
+      "number": "22",
+      "reqId": "",
+      "name": "SurveillanceDroneAirframeItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the delivery contract for one drone airframe: bounded by the fleet size, endurance and cruise budgets the mission fixes",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleetCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "d37facac-b68f-47a9-b899-5ef0a97da55b",
+      "number": "23",
+      "reqId": "",
+      "name": "fleetAirframeContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the airframe contract carried by each delivered unit of the fleet",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleetCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "f7a497da-3b98-429a-91d2-3dd4393c3ee1",
+      "number": "24",
+      "reqId": "",
+      "name": "OnboardMissionSoftwareItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the build contract for the onboard software load: one baseline installed identically on every member, meeting the fleet's detection performance budget",
+      "satisfied": true,
+      "satisfiedBy": [
+        "onboardSoftwareCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "200504c6-506d-4181-b3c8-9b33eccd4863",
+      "number": "25",
+      "reqId": "",
+      "name": "onboardSoftwareContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the software contract carried by each installed load",
+      "satisfied": true,
+      "satisfiedBy": [
+        "onboardSoftwareCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "5922d4d8-f7eb-4d46-b0dd-3404bb93c477",
+      "number": "26",
+      "reqId": "",
+      "name": "ClassifierReleaseItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the release contract: exactly one classifier version is current across the fleet at any time, within the per-drone onboard compute cost budget",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierReleaseCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "db2c0173-dfce-4dc2-baf6-ce7061b208f9",
+      "number": "27",
+      "reqId": "",
+      "name": "classifierReleaseContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the release contract carried by the fielded classifier release",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierReleaseCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "f393db0f-f411-4960-a2f1-e4fcadf46c1e",
+      "number": "28",
+      "reqId": "",
+      "name": "RadioModuleItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the procurement contract for the radio module: carries mesh and ground-link traffic within the jammed-link share the brief assumes, with an approved equivalent substitutable for the primary part number",
+      "satisfied": true,
+      "satisfiedBy": [
+        "radioModuleCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "0f56cf4c-3f2f-465b-9468-d8a16385e56e",
+      "number": "29",
+      "reqId": "",
+      "name": "radioModuleContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the radio module contract carried by each delivered unit",
+      "satisfied": true,
+      "satisfiedBy": [
+        "radioModuleCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "0215c765-b9e1-49f2-b562-7f9bb8f7bb5e",
+      "number": "30",
+      "reqId": "",
+      "name": "GroundStationItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the delivery contract for the ground installation: hosts coordination, command and control, triage and the classifier registry within the fleet's report-delivery latency budget",
+      "satisfied": true,
+      "satisfiedBy": [
+        "groundStationCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "e7cbfcdd-ca73-42fb-8fce-29ac2a0b9719",
+      "number": "31",
+      "reqId": "",
+      "name": "groundStationContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the ground station contract carried by the delivered installation",
+      "satisfied": true,
+      "satisfiedBy": [
+        "groundStationCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "5b96d475-2825-4d7a-b252-4568f62a32e7",
+      "number": "32",
+      "reqId": "",
+      "name": "RechargePointItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the delivery contract for the recharge point: swaps a battery and returns a member to flight within the fleet's turnaround budget",
+      "satisfied": true,
+      "satisfiedBy": [
+        "rechargePointCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "1e3ba1e9-61e0-4ae9-8e20-e2bf37328225",
+      "number": "33",
+      "reqId": "",
+      "name": "rechargePointContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the recharge point contract carried by the delivered installation",
+      "satisfied": true,
+      "satisfiedBy": [
+        "rechargePointCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "411b7621-f7b4-45a4-8b68-e2ed3ecc411f",
+      "number": "34",
+      "reqId": "",
+      "name": "RecoveryPointItemContract",
+      "metaclass": "RequirementDefinition",
+      "kind": "requirement",
+      "text": "the delivery contract for the recovery point: reachable and usable by any of up to the fleet's twelve members when isolated, per ReturnsWhenIsolated",
+      "satisfied": true,
+      "satisfiedBy": [
+        "recoveryPointCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "9031710d-acd8-4105-85d7-9902cb48932d",
+      "number": "35",
+      "reqId": "",
+      "name": "recoveryPointContract",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the instance of the recovery point contract carried by the delivered installation",
+      "satisfied": true,
+      "satisfiedBy": [
+        "recoveryPointCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "54b55a55-1abf-4ebb-a1c2-2f0a202ab300",
+      "number": "36",
+      "reqId": "",
+      "name": "ClassifierReleaseVersionDriftHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the classifier release procured for the fleet can drift into more than one version across the twelve installed copies if configuration control lapses between builds, independent of the behavioural MixedClassifierVersionsHazard already stated at SA",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierReleaseCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "e9ff2b85-0dc4-4077-9875-cef184138f41",
+      "number": "37",
+      "reqId": "",
+      "name": "RadioModuleSupplierDiscontinuationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "the commercial supplier of the radio module can stop shipping the qualified part number, leaving no replacement for repair or fleet growth",
+      "satisfied": true,
+      "satisfiedBy": [
+        "radioModuleCi"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "21a9b36b-d9fc-42ec-a1ee-b8b2d72aa46d",
+      "number": "38",
+      "reqId": "",
+      "name": "RechargePointPartObsolescenceHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: the battery-swap fixture's mechanical connector is a wear part from a narrow supplier base and may become obsolete over the programme's life; accepted because spares are stocked at procurement and the ground crew's per-cycle wear check, which satisfies BatterySwapWearHazard at PA, would catch a failing connector before it strands a member",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    }
+  ]
+}

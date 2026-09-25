@@ -1,0 +1,243 @@
+{
+  "machines": [
+    {
+      "machine": "SurveillanceDroneSwarm::OA::SwarmMemberModes",
+      "property": "recovery to Nominal",
+      "exitCode": 2,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `positioningLostNotice`, `positioningBackNotice`, `sensingDegradedNotice`, `sensingRestoredNotice`, `contactLostNotice`, `contactBackNotice`, `admissionFailed`, `readmission` is a claim about that environment and not about one that withholds it"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::OA::SwarmMemberStates",
+      "property": "recovery to Landed",
+      "exitCode": 2,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `taskingReceived`, `recallReceivedEarly`, `recallReceived`, `swarmContactLost` is a claim about that environment and not about one that withholds it"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::OA::FleetModes",
+      "property": "recovery to MeshIntact",
+      "exitCode": 2,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jammingNotice`, `jammingClearedNotice` is a claim about that environment and not about one that withholds it"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::OA::FleetStates",
+      "property": "recovery to Grounded",
+      "exitCode": 2,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `fleetTasking`, `fleetRecallOrder` is a claim about that environment and not about one that withholds it"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet positioningLost, positioningRegained, sensorHealthLost, sensorHealthRestored, meshContactLost, meshContactRegained, admissionFailed, readmissionPassed, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 11 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates",
+      "property": "carried",
+      "exitCode": 2,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet assignment, rotationSlot, recallDirective, contactLost, contactLostEnRoute, clearanceUpdate, clearanceUpdateEnRoute, weatherNow, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::FleetConfiguration",
+      "property": "recovery to MeshIntact",
+      "exitCode": 2,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jamming`, `linksRestored` is a claim about that environment and not about one that withholds it"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::FleetConfiguration",
+      "property": "recovery to MeshIntact",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberModes",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 11 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberStates",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationModes",
+      "property": "recovery to LinkUp",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationStates",
+      "property": "recovery to Standby",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberModes",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet peerVerdict, readmitVerdict, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 12 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberStates",
+      "property": "carried",
+      "exitCode": 2,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 1,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet recallW, recallT, recallR, clearanceW, clearanceT, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationModes",
+      "property": "recovery to LinkUp",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationStates",
+      "property": "recovery to Standby",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::FleetConfiguration",
+      "property": "recovery to MeshIntact",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    }
+  ],
+  "skipped": 0
+}

@@ -1,0 +1,370 @@
+{
+  "total": 20,
+  "satisfied": 17,
+  "coverage": 0.85,
+  "libraryExcluded": 24,
+  "implicitExcluded": 0,
+  "nonNormativeExcluded": 0,
+  "kind": "requirement",
+  "rows": [
+    {
+      "id": "fd4851a4-88c4-4aca-a6ad-e9c049a17fb6",
+      "number": "1",
+      "reqId": "",
+      "name": "CoverageGapDuringHandoverHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "If sector handover between two members is not make-before-break, the sector can go briefly unwatched while responsibility transfers between them.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "HandOverSector"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "aa666424-0d99-4c53-ad7f-58f495039742",
+      "number": "2",
+      "reqId": "",
+      "name": "PositionDriftHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "without satellite positioning, a member's position estimate drifts and its reports place objects in the wrong place",
+      "satisfied": true,
+      "satisfiedBy": [
+        "surveillanceDroneSwarm",
+        "fleet",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "4b9f14ff-e3c3-4bba-9422-89ea688432da",
+      "number": "3",
+      "reqId": "",
+      "name": "MeshJammingHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "interference cuts the links between members, and coordination stalls",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relayThroughNeighbour",
+        "relayThroughNeighbour",
+        "fleetConfiguration",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "a8192a00-88b7-4f15-a9c9-6b96d19c02f7",
+      "number": "4",
+      "reqId": "",
+      "name": "MisclassificationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a detection is reported as the wrong class, or a forced class where Unknown was the truth",
+      "satisfied": true,
+      "satisfiedBy": [
+        "detectAndClassify",
+        "detectAndClassify",
+        "fleet",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "df4ef851-ae77-45ee-9081-819af1923543",
+      "number": "5",
+      "reqId": "",
+      "name": "SensingDegradedUnnoticedHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a sensor degrades and nobody knows the reports from it are unreliable",
+      "satisfied": true,
+      "satisfiedBy": [
+        "presentStatusPicture",
+        "fleet",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "9ed83eca-2e50-4a6d-80f1-f45fbaa27c20",
+      "number": "6",
+      "reqId": "",
+      "name": "StaleTrackHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a track is shown as current after nothing has seen the object for a while",
+      "satisfied": true,
+      "satisfiedBy": [
+        "correlateTracks",
+        "correlateTracks",
+        "fleet",
+        "memberA"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "62ea81a3-ca5e-4d23-8d40-612a7cf5eb9e",
+      "number": "7",
+      "reqId": "",
+      "name": "SpoofedMemberHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "something that is not one of the members joins the mesh and takes part in coordination",
+      "satisfied": true,
+      "satisfiedBy": [
+        "admitMember",
+        "admitMember",
+        "groundControlStation",
+        "memberA"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "60d45f63-0bda-4273-a18d-bc9a312739ab",
+      "number": "8",
+      "reqId": "",
+      "name": "MixedClassifierVersionsHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "members run different classifier versions and classify the same object differently",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierRelease",
+        "reportDetection",
+        "groundControlStation",
+        "memberA"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "ec79159f-54bf-4138-a60d-281e435cf580",
+      "number": "9",
+      "reqId": "",
+      "name": "OperatorOverloadHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "more alerts reach the operator than they can judge, and they accept what is in front of them",
+      "satisfied": true,
+      "satisfiedBy": [
+        "triageReports",
+        "triageReports",
+        "groundControlStation",
+        "groundStation"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "105215e2-4b01-46fc-bd91-1acbe42fb977",
+      "number": "10",
+      "reqId": "",
+      "name": "RecallWins",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "RecallWins: once a drone is recalled, it does not watch again until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "95180e45-f055-4bd2-8e71-d7bc48f26fb9",
+      "number": "11",
+      "reqId": "",
+      "name": "ReturnsWhenIsolated",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed, an isolated drone included",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "d10d9035-ae83-4124-8df1-d557608e7f5e",
+      "number": "12",
+      "reqId": "",
+      "name": "GeofenceBreachEndsWatch",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "125dd9e2-d97d-47d0-b29b-b227058f6f09",
+      "number": "13",
+      "reqId": "",
+      "name": "QuarantinedStaysOut",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "4ac091f1-78b9-4b3d-be84-a6a935314c52",
+      "number": "14",
+      "reqId": "",
+      "name": "PeerCoordinationSinglePointHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a single point of failure this layer's intended split introduces: handOverSector, rotateRecharge and admitMember are each meant to be carried out by one member acting for its peers; if that member fails or drops out mid-exchange, the coordination step is left incomplete until another member takes over.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "redistributeCoverage",
+        "fleet",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "a5cafa15-a0ec-4429-a70e-09d041fb88f0",
+      "number": "15",
+      "reqId": "",
+      "name": "GroundLinkC2SinglePathHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: the five #C2 functions are allocated only to mainComponent, the ground-facing boundary; a total GroundStationLink loss removes the supervisory command, recall and acknowledgement path until the link returns. Accepted because DisconnectedOperationAndReconciliation already keeps detectAndClassify and reportDetection running through the gap, and SafetyAuthority requires recall and geofence authority to stay independent of onboard software rather than delegated to the fleet.",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "3ed4035f-731c-4450-af1c-bd0497bd56b1",
+      "number": "16",
+      "reqId": "",
+      "name": "CoordinationDivergenceHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "with sector handover, recharge rotation and coverage redistribution decided independently by members rather than arbitrated by the ground, two members may reach conflicting local decisions at the same moment — e.g. both vacating the same sector for recharge — with no ground arbiter to break the tie",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet",
+        "memberA"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "8da68789-a3a7-44d6-8807-bc7db4e8b223",
+      "number": "17",
+      "reqId": "",
+      "name": "GroundAdmissionBottleneckHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: because admitMember stays solely at the ground control station, a lost ground link blocks admission or readmission of any member until the link returns. This is deliberately fail-closed — an un-vetted candidate is safer excluded than admitted — and existing members' watch is unaffected since the other seven #Coordination functions run on board regardless of ground reachability",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "055d0cb6-d56f-426e-8e79-c30a0e9a502b",
+      "number": "18",
+      "reqId": "",
+      "name": "LeaderNodeLossHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Concentrating coordination on one elected representative means losing that specific airframe stalls handOverSector, rotateRecharge, redistributeCoverage, correlateTracks, handOverTrack and admitMember until another member is elected.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "memberA"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "9cd468f0-52a7-4ac4-a429-a20515820123",
+      "number": "19",
+      "reqId": "",
+      "name": "MeshRadioHardwareFailureHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "The physical mesh radio unit can fail from a hardware fault or wear rather than from interference, silently removing a member's coordination bearer even when radio interference is not present.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "24e462e1-e599-4622-bcf3-7b023b566204",
+      "number": "20",
+      "reqId": "",
+      "name": "BatteryContactWearHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "Accepted: the battery-swap contacts at the recharge bay wear with repeated mating cycles. Mitigated by scheduled ground-crew visual inspection at every swap, outside the software boundary the rest of this architecture addresses.",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    }
+  ]
+}

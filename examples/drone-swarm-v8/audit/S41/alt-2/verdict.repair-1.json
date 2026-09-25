@@ -1,0 +1,969 @@
+{
+  "step": "S41",
+  "layer": "PA",
+  "alternative": 2,
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml",
+  "prefixHash": "325100dce0419aca",
+  "elements": 2794,
+  "durationMs": 450,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 1,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S41/alt-2/check.json",
+      "findings": 58
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 0,
+      "findings": 33
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 0,
+      "findings": 5
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "verify",
+      "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.alt-2.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchMeetsTarget",
+      "layer": "Common",
+      "line": 645,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "watchEnduranceMeetsTarget",
+      "layer": "Common",
+      "line": 655,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHoursWithoutPeople >= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportLatencyMeetsTarget",
+      "layer": "Common",
+      "line": 664,
+      "message": "Constraint could not be evaluated (\"reportDeliveryLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorMeetsTarget",
+      "layer": "Common",
+      "line": 673,
+      "message": "Constraint could not be evaluated (\"positionErrorAfterGnssLossMetres <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedCoverageMeetsTarget",
+      "layer": "Common",
+      "line": 683,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldMeetsTarget",
+      "layer": "Common",
+      "line": 691,
+      "message": "Constraint could not be evaluated (\"reportHoldDurationMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionMeetsTarget",
+      "layer": "Common",
+      "line": 699,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsMeetTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertRateMeetsTarget",
+      "layer": "Common",
+      "line": 717,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedPrecisionMeetsTarget",
+      "layer": "Common",
+      "line": 726,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageDropMeetsTarget",
+      "layer": "Common",
+      "line": 734,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "classifierCostMeetsTarget",
+      "layer": "Common",
+      "line": 743,
+      "message": "Constraint could not be evaluated (\"onboardClassifierCostUsdPerDrone <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeWithinBudget",
+      "layer": "Common",
+      "line": 752,
+      "message": "Constraint could not be evaluated (\"fleetSizeDrones <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "flightEnduranceWithinBudget",
+      "layer": "Common",
+      "line": 761,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes >= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "turnaroundWithinBudget",
+      "layer": "Common",
+      "line": 770,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedWithinBudget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond >= 18\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "sensorFootprintWithinBudget",
+      "layer": "Common",
+      "line": 789,
+      "message": "Constraint could not be evaluated (\"sensorFootprintSquareKilometres >= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaWithinBudget",
+      "layer": "Common",
+      "line": 797,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorCapacityWithinBudget",
+      "layer": "Common",
+      "line": 806,
+      "message": "Constraint could not be evaluated (\"operatorAlertCapacityPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorTimeWithinBudget",
+      "layer": "Common",
+      "line": 814,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "staleThresholdWithinBudget",
+      "layer": "Common",
+      "line": 823,
+      "message": "Constraint could not be evaluated (\"trackStaleThresholdSeconds <= 120\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "gnssOutageWithinBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"gnssOutageToleratedMinutes >= 10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedShareWithinBudget",
+      "layer": "Common",
+      "line": 841,
+      "message": "Constraint could not be evaluated (\"jammedLinkShareFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 540,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 541,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 542,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 543,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 544,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 545,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 546,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 547,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 548,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 549,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 550,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 551,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 552,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 553,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 556,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 559,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 562,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 565,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 568,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 571,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 574,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 577,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 580,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 583,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 586,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 589,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "GroundLinkC2SinglePathHazard",
+      "layer": "LA",
+      "line": 382,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::LA::Hazards::GroundLinkC2SinglePathHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "GroundAdmissionBottleneckHazard",
+      "layer": "LA",
+      "line": 388,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::LA::Hazards::GroundAdmissionBottleneckHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "LA",
+      "line": 716,
+      "message": "Constraint could not be evaluated (\"airborneShareValue == flightMinutesValue / (flightMinutesValue + turnaroundMinutesValue)\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "LA",
+      "line": 719,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == (fleetSizeValue * airborneShareValue * footprintValue) / areaOfInterestValue\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "groundControl",
+      "layer": "PA",
+      "line": 193,
+      "message": "Unresolved type reference \"SurveillanceDroneSwarm::LA::GroundStation\" on SurveillanceDroneSwarm::PA::GroundStationNode::groundControl.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 193,
+      "message": "Unresolved reference 'SurveillanceDroneSwarm::LA::GroundStation'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 323,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == (physicalBudgets.fleetCount * (physicalBudgets.flightDuration / (physicalBudgets.flightDuration + physicalBudgets.turnaroundDuration)) * physicalBudgets.sensorFootprintAreaSqm) / physicalBudgets.areaOfInterestSqm\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 327,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction == areaUnderWatchFraction * meshJammingResilienceFactor\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "BatteryContactWearHazard",
+      "layer": "PA",
+      "line": 347,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::PA::Hazards::BatteryContactWearHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "replicas.memberPair",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "no member definition in this layer. Declare `#Member part def SurveillanceDrone { out port meshOut : Common::MeshPeerPort; in port meshIn : ~Common::MeshPeerPort; }` — the replicable element every drone of the fleet is.",
+      "check": "elements"
+    },
+    {
+      "code": "replicas.memberPair",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "nothing carries the population. Add `part fleet : SurveillanceDrone [12];` — the brief sizes it at 12.",
+      "check": "elements"
+    },
+    {
+      "code": "replicas.memberPair",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "0 representative(s) of `SurveillanceDrone`. Add `part memberA : SurveillanceDrone;` and `part memberB : SurveillanceDrone;` — an exchange between two members is written between two named usages; `fleet[1]` does not parse.",
+      "check": "elements"
+    },
+    {
+      "code": "replicas.memberPair",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "no link between two members. Write a connection typed by the connection def of the medium that carries it `connect memberA.meshOut to memberB.meshIn;` — without it the swarm is 12 drones that never talk to each other.",
+      "check": "elements"
+    },
+    {
+      "code": "alt.c2Placement",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "alternative 2 is the distributed design, and 0 of 8 coordination function(s) are on the members alone. Move every usage of these to `memberA`, `memberB` or the fleet: `HandOverSector` (`handOverSector` on `droneA::member`); `RotateRecharge` (`rotateRecharge` on `droneA::member`); `RedistributeCoverage` (`redistributeCoverage` on `droneA::member`); `DeconflictFlight` (`deconflictFlight` on `fleet`); `RelayThroughNeighbour` (`relayThroughNeighbour` on `fleet`); `CorrelateTracks` (`correlateTracks` on `droneA::member`); `HandOverTrack` (`handOverTrack` on `droneA::member`); `AdmitMember` (`admitMember` on `droneA::member`).",
+      "check": "elements"
+    },
+    {
+      "code": "replicas.topology",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "alternative 2: 0 of 13 coordination and command-and-control function(s) on board, 13 on the ground; 0 link(s) between members; fleet absent.",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.scenario",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-08",
+      "message": "no exchange scenario between two members: an `occurrence def` with `ref part a : SurveillanceDrone; ref part b : SurveillanceDrone;` and the messages of a sector handover is what shows the peer protocol (A1-C-15).",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.configuration",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "no fleet-level configuration: a `#Configuration state def` (full coverage, degraded, ground link lost, regrouping) says what the swarm is in as a whole, which no single member's mode does (A1-C-31).",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::handOverSector",
+      "message": "`handOverSector` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::rotateRecharge",
+      "message": "`rotateRecharge` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::redistributeCoverage",
+      "message": "`redistributeCoverage` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::deconflictFlight",
+      "message": "`deconflictFlight` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::relayThroughNeighbour",
+      "message": "`relayThroughNeighbour` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::correlateTracks",
+      "message": "`correlateTracks` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::handOverTrack",
+      "message": "`handOverTrack` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.coordination",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::admitMember",
+      "message": "`admitMember` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.c2",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::taskSurveillanceMission",
+      "message": "`taskSurveillanceMission` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.c2",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::issueSupervisoryCommand",
+      "message": "`issueSupervisoryCommand` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.c2",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::recallToLand",
+      "message": "`recallToLand` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.c2",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::presentStatusPicture",
+      "message": "`presentStatusPicture` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "functions.c2",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::acknowledgeDetectionReport",
+      "message": "`acknowledgeDetectionReport` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `areaUnderWatchFraction` at the level of this layer. Write `#Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `watchEnduranceHoursWithoutPeople` at the level of this layer. Write `#Estimate attribute watchEnduranceHoursWithoutPeople :> Common::watchEnduranceHoursWithoutPeople = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `reportDeliveryLatencySeconds` at the level of this layer. Write `#Estimate attribute reportDeliveryLatencySeconds :> Common::reportDeliveryLatencySeconds = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `positionErrorAfterGnssLossMetres` at the level of this layer. Write `#Estimate attribute positionErrorAfterGnssLossMetres :> Common::positionErrorAfterGnssLossMetres = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `coverageUnderMeshJammingFraction` at the level of this layer. Write `#Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `reportHoldDurationMinutes` at the level of this layer. Write `#Estimate attribute reportHoldDurationMinutes :> Common::reportHoldDurationMinutes = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `missedDetectionFraction` at the level of this layer. Write `#Estimate attribute missedDetectionFraction :> Common::missedDetectionFraction = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `falseAlarmsPerHour` at the level of this layer. Write `#Estimate attribute falseAlarmsPerHour :> Common::falseAlarmsPerHour = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `alertsReachingOperatorPerHour` at the level of this layer. Write `#Estimate attribute alertsReachingOperatorPerHour :> Common::alertsReachingOperatorPerHour = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `acknowledgedReportsThatMatterFraction` at the level of this layer. Write `#Estimate attribute acknowledgedReportsThatMatterFraction :> Common::acknowledgedReportsThatMatterFraction = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `coverageDropAfterMemberLossFraction` at the level of this layer. Write `#Estimate attribute coverageDropAfterMemberLossFraction :> Common::coverageDropAfterMemberLossFraction = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "moe.estimated",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-17",
+      "message": "no estimate for the measure `onboardClassifierCostUsdPerDrone` at the level of this layer. Write `#Estimate attribute onboardClassifierCostUsdPerDrone :> Common::onboardClassifierCostUsdPerDrone = <worst-case value> { doc /* how this design gets there */ }`: the trade-off scores what each architecture states, and a measure with no estimate scores as undecided.",
+      "check": "elements"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `NavigationDegraded` of the member, and no state machine of `SurveillanceDrone` at this layer has `state NavigationDegraded;`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `SensingDegraded` of the member, and no state machine of `SurveillanceDrone` at this layer has `state SensingDegraded;`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `Isolated` of the member, and no state machine of `SurveillanceDrone` at this layer has `state Isolated;`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `Quarantined` of the member, and no state machine of `SurveillanceDrone` at this layer has `state Quarantined;`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    },
+    {
+      "code": "modes.fromBrief",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-19",
+      "message": "the brief names the mode `MeshDegraded` of the fleet, and no state machine of `fleet` (or a `#Configuration` machine) at this layer has `state MeshDegraded;`. Add the state under exactly that name, with a transition into it and one out.",
+      "check": "reach"
+    }
+  ]
+}

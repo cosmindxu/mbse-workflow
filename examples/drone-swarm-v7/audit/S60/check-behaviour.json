@@ -1,0 +1,285 @@
+{
+  "machines": [
+    {
+      "machine": "SurveillanceDroneSwarm::OA::WatchAssetMode",
+      "property": "recovery to Watching",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Watching` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::OA::WatchAssetStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmMode",
+      "property": "recovery to Covering",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Covering` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SurveillanceDroneMode",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 16 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::SA::SurveillanceDroneStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SwarmMode",
+      "property": "recovery to Covering",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Covering` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::FleetConfiguration",
+      "property": "recovery to Covering",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Covering` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SwarmStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SurveillanceDroneMode",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 16 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SurveillanceDroneStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SurveillanceDrone::MemberMode",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 16 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::SurveillanceDrone::MemberState",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::GroundStationMode",
+      "property": "recovery to Linked",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Linked` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::LA::GroundStationStatus",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberState",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 16 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberMode",
+      "property": "carried",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 11 product state(s)."
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::FleetConfiguration",
+      "property": "recovery to Nominal",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Nominal` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::GroundStation::GroundOperatingState",
+      "property": "recovery to Idle",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state Idle` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    },
+    {
+      "machine": "SurveillanceDroneSwarm::PA::GroundStation::GroundLinkMode",
+      "property": "recovery to LinkDown",
+      "exitCode": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "vacuous": 0,
+        "inconclusive": 0,
+        "covered": 0,
+        "notCovered": 0
+      },
+      "detail": "recoverable: `state LinkDown` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+    }
+  ],
+  "skipped": 0
+}

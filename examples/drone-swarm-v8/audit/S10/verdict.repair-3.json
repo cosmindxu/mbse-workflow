@@ -1,0 +1,440 @@
+{
+  "step": "S10",
+  "layer": "OA",
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml",
+  "prefixHash": "415ae9060466074c",
+  "elements": 1081,
+  "durationMs": 392,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S10/check.json",
+      "findings": 23
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 22,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S10/elements.json",
+      "findings": 13
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 24,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S10/trace-allocate.json",
+      "findings": 1
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 8,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S10/connectivity.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v8/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 12,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S10/reach.json",
+      "findings": 3
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchMeetsTarget",
+      "layer": "Common",
+      "line": 645,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "watchEnduranceMeetsTarget",
+      "layer": "Common",
+      "line": 655,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHoursWithoutPeople >= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportLatencyMeetsTarget",
+      "layer": "Common",
+      "line": 664,
+      "message": "Constraint could not be evaluated (\"reportDeliveryLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorMeetsTarget",
+      "layer": "Common",
+      "line": 673,
+      "message": "Constraint could not be evaluated (\"positionErrorAfterGnssLossMetres <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedCoverageMeetsTarget",
+      "layer": "Common",
+      "line": 683,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldMeetsTarget",
+      "layer": "Common",
+      "line": 691,
+      "message": "Constraint could not be evaluated (\"reportHoldDurationMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionMeetsTarget",
+      "layer": "Common",
+      "line": 699,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsMeetTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertRateMeetsTarget",
+      "layer": "Common",
+      "line": 717,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedPrecisionMeetsTarget",
+      "layer": "Common",
+      "line": 726,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageDropMeetsTarget",
+      "layer": "Common",
+      "line": 734,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "classifierCostMeetsTarget",
+      "layer": "Common",
+      "line": 743,
+      "message": "Constraint could not be evaluated (\"onboardClassifierCostUsdPerDrone <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeWithinBudget",
+      "layer": "Common",
+      "line": 752,
+      "message": "Constraint could not be evaluated (\"fleetSizeDrones <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "flightEnduranceWithinBudget",
+      "layer": "Common",
+      "line": 761,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes >= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "turnaroundWithinBudget",
+      "layer": "Common",
+      "line": 770,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedWithinBudget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond >= 18\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "sensorFootprintWithinBudget",
+      "layer": "Common",
+      "line": 789,
+      "message": "Constraint could not be evaluated (\"sensorFootprintSquareKilometres >= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaWithinBudget",
+      "layer": "Common",
+      "line": 797,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorCapacityWithinBudget",
+      "layer": "Common",
+      "line": 806,
+      "message": "Constraint could not be evaluated (\"operatorAlertCapacityPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorTimeWithinBudget",
+      "layer": "Common",
+      "line": 814,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "staleThresholdWithinBudget",
+      "layer": "Common",
+      "line": 823,
+      "message": "Constraint could not be evaluated (\"trackStaleThresholdSeconds <= 120\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "gnssOutageWithinBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"gnssOutageToleratedMinutes >= 10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedShareWithinBudget",
+      "layer": "Common",
+      "line": 841,
+      "message": "Constraint could not be evaluated (\"jammedLinkShareFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::HandOverSector",
+      "rule": "CV-16",
+      "message": "`HandOverSector` is declared and nothing is typed by it. Type the activity that performs it — `action alphaHandOverSector : HandOverSector;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::RotateRecharge",
+      "rule": "CV-16",
+      "message": "`RotateRecharge` is declared and nothing is typed by it. Type the activity that performs it — `action alphaRotateRecharge : RotateRecharge;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::RedistributeCoverage",
+      "rule": "CV-16",
+      "message": "`RedistributeCoverage` is declared and nothing is typed by it. Type the activity that performs it — `action alphaRedistributeCoverage : RedistributeCoverage;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::DeconflictFlight",
+      "rule": "CV-16",
+      "message": "`DeconflictFlight` is declared and nothing is typed by it. Type the activity that performs it — `action alphaDeconflictFlight : DeconflictFlight;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::RelayThroughNeighbour",
+      "rule": "CV-16",
+      "message": "`RelayThroughNeighbour` is declared and nothing is typed by it. Type the activity that performs it — `action alphaRelayThroughNeighbour : RelayThroughNeighbour;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::CorrelateTracks",
+      "rule": "CV-16",
+      "message": "`CorrelateTracks` is declared and nothing is typed by it. Type the activity that performs it — `action alphaCorrelateTracks : CorrelateTracks;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::HandOverTrack",
+      "rule": "CV-16",
+      "message": "`HandOverTrack` is declared and nothing is typed by it. Type the activity that performs it — `action alphaHandOverTrack : HandOverTrack;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::AdmitMember",
+      "rule": "CV-16",
+      "message": "`AdmitMember` is declared and nothing is typed by it. Type the activity that performs it — `action alphaAdmitMember : AdmitMember;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::TaskSurveillanceMission",
+      "rule": "CV-16",
+      "message": "`TaskSurveillanceMission` is declared and nothing is typed by it. Type the activity that performs it — `action alphaTaskSurveillanceMission : TaskSurveillanceMission;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::IssueSupervisoryCommand",
+      "rule": "CV-16",
+      "message": "`IssueSupervisoryCommand` is declared and nothing is typed by it. Type the activity that performs it — `action alphaIssueSupervisoryCommand : IssueSupervisoryCommand;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::RecallToLand",
+      "rule": "CV-16",
+      "message": "`RecallToLand` is declared and nothing is typed by it. Type the activity that performs it — `action alphaRecallToLand : RecallToLand;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::PresentStatusPicture",
+      "rule": "CV-16",
+      "message": "`PresentStatusPicture` is declared and nothing is typed by it. Type the activity that performs it — `action alphaPresentStatusPicture : PresentStatusPicture;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.namedFunctions",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::AcknowledgeDetectionReport",
+      "rule": "CV-16",
+      "message": "`AcknowledgeDetectionReport` is declared and nothing is typed by it. Type the activity that performs it — `action alphaAcknowledgeDetectionReport : AcknowledgeDetectionReport;` — or the definition names a function no one performs.",
+      "check": "elements"
+    },
+    {
+      "code": "oa.members",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::OA::watchAsset",
+      "message": "the brief declares a population of 12, and this layer has 0 `WatchAssetMember` with activities of its own. Model at least two representatives — `part watchAssetB : WatchAssetMember;` beside `watchAsset` — allocate each one the activities it performs, and write what they exchange with each other as flows between their activities (handing a sector over, relaying a report). One instance standing in for the fleet leaves nowhere for an interaction between members to exist.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Watching`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Transiting` (declaration order) and never `Watching -> Grounded`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetOperatingMode::Transiting`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Transiting -> Recharging` (declaration order) and never `Transiting -> Watching`, `Transiting -> Grounded`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::OA::WatchAssetAvailabilityState::Available`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Available -> Committed` (declaration order) and never `Available -> Unavailable`.",
+      "check": "reach"
+    }
+  ]
+}

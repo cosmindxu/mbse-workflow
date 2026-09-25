@@ -1,0 +1,929 @@
+{
+  "version": 1,
+  "root": "SurveillanceDroneSwarm",
+  "mode": "autonomous",
+  "knobs": {
+    "modes_states": true,
+    "interfaces": true,
+    "variability": true,
+    "safety": true,
+    "views": false,
+    "verification": true,
+    "requirements_intake": false,
+    "infrastructure_intake": false
+  },
+  "sysprose": {
+    "dir": "/home/xcos/sysprose",
+    "commit": "91cc4a5",
+    "expected": "91cc4a5",
+    "matches": true
+  },
+  "steps": {
+    "S00": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T13:40:51.539Z",
+      "blocking": 0,
+      "prefixHash": "92fc19f25e651cbc",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "5cb6ee758976377a"
+      },
+      "gate": {
+        "gate": "G-SEED",
+        "decision": "auto",
+        "at": "2026-09-17T13:43:00.133Z"
+      },
+      "finishedAt": "2026-09-17T13:43:00.134Z"
+    },
+    "S01": {
+      "status": "skipped",
+      "iterations": 0,
+      "note": "the requirements_intake lane is off"
+    },
+    "S02": {
+      "status": "skipped",
+      "iterations": 0,
+      "note": "the infrastructure_intake lane is off"
+    },
+    "S10": {
+      "status": "done",
+      "iterations": 1,
+      "startedAt": "2026-09-17T13:43:00.134Z",
+      "blocking": 0,
+      "prefixHash": "ef3fffb536767a56",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c"
+      },
+      "finishedAt": "2026-09-17T14:00:49.642Z"
+    },
+    "S11": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:00:49.643Z",
+      "blocking": 0,
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c"
+      },
+      "finishedAt": "2026-09-17T14:00:49.645Z"
+    },
+    "S20": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:00:49.645Z",
+      "blocking": 0,
+      "prefixHash": "ab638ead6ce186b6",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "68849925b958eb80"
+      },
+      "finishedAt": "2026-09-17T14:00:50.083Z"
+    },
+    "S21": {
+      "status": "done",
+      "iterations": 1,
+      "startedAt": "2026-09-17T14:00:50.084Z",
+      "blocking": 0,
+      "prefixHash": "cbee8cfb1b5c6cf3",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5"
+      },
+      "finishedAt": "2026-09-17T14:16:08.310Z"
+    },
+    "S22": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:16:08.310Z",
+      "blocking": 0,
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5"
+      },
+      "finishedAt": "2026-09-17T14:16:08.312Z"
+    },
+    "S30": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:16:51.183Z",
+      "blocking": 0,
+      "prefixHash": "5d08ea5ab3a7471f",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "15052ab532805d57"
+      },
+      "finishedAt": "2026-09-17T14:16:53.145Z"
+    },
+    "S31": {
+      "status": "done",
+      "iterations": 1,
+      "startedAt": "2026-09-17T14:16:53.146Z",
+      "blocking": 0,
+      "prefixHash": "49b1e5efde864ab8",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "66f8f6ec2447769c"
+      },
+      "finishedAt": "2026-09-17T14:31:48.082Z"
+    },
+    "S32": {
+      "status": "done",
+      "iterations": 2,
+      "startedAt": "2026-09-17T14:31:48.082Z",
+      "alternatives": [
+        {
+          "k": 1,
+          "status": "done",
+          "iterations": 2,
+          "chosen": false,
+          "score": 0.6652529761904762
+        },
+        {
+          "k": 2,
+          "status": "done",
+          "iterations": 1,
+          "chosen": true,
+          "score": 0.9007701383253977
+        }
+      ],
+      "blocking": 0,
+      "prefixHash": "4afc795ddf4f49ac",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "66f8f6ec2447769c"
+      },
+      "finishedAt": "2026-09-17T14:58:10.407Z"
+    },
+    "S33": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:58:10.408Z",
+      "blocking": 0,
+      "prefixHash": "8dee38e9f8a86ba9",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52"
+      },
+      "finishedAt": "2026-09-17T14:59:12.836Z"
+    },
+    "S34": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:59:12.836Z",
+      "blocking": 0,
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52"
+      },
+      "finishedAt": "2026-09-17T14:59:12.839Z"
+    },
+    "S40": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T14:59:12.839Z",
+      "blocking": 0,
+      "prefixHash": "5f508b905c0087ec",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "85e8f97b0c6a66b5",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "3aa61e7ccba08b61"
+      },
+      "finishedAt": "2026-09-17T14:59:13.471Z"
+    },
+    "S41": {
+      "status": "done",
+      "iterations": 2,
+      "startedAt": "2026-09-17T14:59:13.471Z",
+      "alternatives": [
+        {
+          "k": 1,
+          "status": "done",
+          "iterations": 1,
+          "chosen": false,
+          "score": 0.7474591099977898
+        },
+        {
+          "k": 2,
+          "status": "done",
+          "iterations": 2,
+          "chosen": true,
+          "score": 0.8768216902145474
+        }
+      ],
+      "blocking": 0,
+      "prefixHash": "df465f339f73e43e",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "3aa61e7ccba08b61"
+      },
+      "finishedAt": "2026-09-17T15:22:45.590Z"
+    },
+    "S42": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T15:22:45.590Z",
+      "blocking": 0,
+      "prefixHash": "0dcecd10bda6698c",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "6b694c90a519d889"
+      },
+      "finishedAt": "2026-09-17T15:23:56.007Z"
+    },
+    "S43": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T15:23:56.008Z",
+      "blocking": 0,
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "6b694c90a519d889"
+      },
+      "finishedAt": "2026-09-17T15:23:56.011Z"
+    },
+    "S50": {
+      "status": "done",
+      "iterations": 1,
+      "startedAt": "2026-09-17T15:23:56.011Z",
+      "blocking": 0,
+      "prefixHash": "d86615cd1821d757",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "6b694c90a519d889",
+        "EPBS": "6916669b60edbbc2"
+      },
+      "finishedAt": "2026-09-17T15:37:11.097Z"
+    },
+    "S60": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T16:10:03.666Z",
+      "blocking": 0,
+      "prefixHash": "d86615cd1821d757",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "6b694c90a519d889",
+        "EPBS": "6916669b60edbbc2"
+      },
+      "finishedAt": "2026-09-17T16:10:07.784Z"
+    },
+    "S70": {
+      "status": "done",
+      "iterations": 0,
+      "startedAt": "2026-09-17T16:10:07.784Z",
+      "blocking": 0,
+      "prefixHash": "d86615cd1821d757",
+      "fragmentHashes": {
+        "Kinds": "3d20e0d327f7d16b",
+        "Common": "675231f5f549f2a4",
+        "OA": "450161a0bb309d2c",
+        "SA": "251e99d4faa1b5c5",
+        "LA": "9a835f74c890be52",
+        "PA": "6b694c90a519d889",
+        "EPBS": "6916669b60edbbc2"
+      },
+      "gate": {
+        "gate": "G-FINAL",
+        "decision": "auto",
+        "at": "2026-09-17T16:10:20.770Z"
+      },
+      "finishedAt": "2026-09-17T16:10:20.770Z"
+    }
+  },
+  "llm": {
+    "calls": 21,
+    "costUsd": 40.431878499999996,
+    "durationMs": 9033415,
+    "killed": 0
+  },
+  "startedAt": "2026-09-17T13:40:51.538Z",
+  "updatedAt": "2026-09-17T16:10:20.770Z",
+  "legs": [
+    {
+      "startedAt": "2026-09-17T13:40:51.539Z",
+      "calls": 5,
+      "costUsd": 12.044038500000001,
+      "durationMs": 2112636,
+      "killed": 0
+    },
+    {
+      "startedAt": "2026-09-17T14:16:51.182Z",
+      "calls": 16,
+      "costUsd": 28.387839999999997,
+      "durationMs": 6920779,
+      "killed": 0
+    },
+    {
+      "startedAt": "2026-09-17T15:39:14.720Z",
+      "calls": 0,
+      "costUsd": 0,
+      "durationMs": 0,
+      "killed": 0
+    },
+    {
+      "startedAt": "2026-09-17T16:10:03.665Z",
+      "calls": 0,
+      "costUsd": 0,
+      "durationMs": 0,
+      "killed": 0
+    }
+  ],
+  "brief": {
+    "systemName": "SurveillanceDroneSwarm",
+    "systemEntity": "watchAsset",
+    "mission": "Take in the operations centre's tasking, supervisory command and recall, and the moving objects in a tasked area of interest, and send back triaged, merged detection reports, tracks, a status picture and a decision record for each report. Stay inside the airspace clearance and work through radio interference, loss of satellite positioning, bad weather and decoys, using a mesh radio, a ground link, recharge points, stored maps and the ground crew.",
+    "functionSentence": "SurveillanceDroneSwarm moves the tasked area of interest from unwatched to continuously watched and reported.",
+    "stakeholders": [
+      {
+        "name": "DutyController",
+        "role": "The single operator at the operations centre who tasks, supervises and recalls the swarm and acknowledges reports"
+      },
+      {
+        "name": "Analysts",
+        "role": "Operations centre staff who judge triaged alerts and decide which ones matter"
+      },
+      {
+        "name": "OperationsCentre",
+        "role": "Commissions surveillance missions and merges swarm reports with the fixed camera network's tracks"
+      },
+      {
+        "name": "AirspaceAuthority",
+        "role": "Says when and where the drones may fly"
+      },
+      {
+        "name": "GroundCrew",
+        "role": "Services and recharges the drones between sorties"
+      },
+      {
+        "name": "FixedCameraNetworkOwner",
+        "role": "Runs the existing camera network, whose tracks the swarm's tracks must merge with"
+      },
+      {
+        "name": "ProgrammeSponsor",
+        "role": "Pays for the fleet and holds the per-drone computing cost cap"
+      }
+    ],
+    "environment": [
+      {
+        "name": "MissionTasking",
+        "quadrant": "input",
+        "doc": "The area of interest, its sectors and the mission window, set by the operations centre"
+      },
+      {
+        "name": "SupervisoryAndRecallCommands",
+        "quadrant": "input",
+        "doc": "Priorities, a sector to look at more closely, the reporting threshold, and recall-and-land for the whole swarm or one drone"
+      },
+      {
+        "name": "MovingObjectsInArea",
+        "quadrant": "input",
+        "doc": "The real objects in the area that have to be detected and classified"
+      },
+      {
+        "name": "CameraNetworkTracks",
+        "quadrant": "input",
+        "doc": "Tracks from the fixed camera network that the swarm's tracks are merged with at the operations centre"
+      },
+      {
+        "name": "ReportAcknowledgements",
+        "quadrant": "input",
+        "doc": "The operations centre's confirmation of each detection report"
+      },
+      {
+        "name": "DetectionReportsAndTracks",
+        "quadrant": "output",
+        "doc": "Triaged, de-duplicated detection reports and tracks with position and time, sent to the operations centre"
+      },
+      {
+        "name": "StatusPicture",
+        "quadrant": "output",
+        "doc": "Where every drone is, what it is doing, how much coverage there is and what is degraded"
+      },
+      {
+        "name": "DecisionRecords",
+        "quadrant": "output",
+        "doc": "For each report: the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it"
+      },
+      {
+        "name": "AirspaceClearance",
+        "quadrant": "constraining",
+        "doc": "The airspace authority's limits on when and where the drones may fly"
+      },
+      {
+        "name": "RadioInterference",
+        "quadrant": "constraining",
+        "doc": "Interference that can degrade the mesh between drones and the link to the operations centre"
+      },
+      {
+        "name": "SatellitePositioningOutage",
+        "quadrant": "constraining",
+        "doc": "Satellite positioning can be unavailable for minutes at a time"
+      },
+      {
+        "name": "WeatherLightingAndDecoys",
+        "quadrant": "constraining",
+        "doc": "Wind above moderate forces a landing; lighting, weather and misleading paint or shapes degrade sensing"
+      },
+      {
+        "name": "OperatorWorkloadLimit",
+        "quadrant": "constraining",
+        "doc": "At most 20 alerts per hour, with at least 30 seconds for each"
+      },
+      {
+        "name": "ComputingCostCap",
+        "quadrant": "constraining",
+        "doc": "On-board classification computing costs no more than 300 USD per drone"
+      },
+      {
+        "name": "MeshRadio",
+        "quadrant": "resource",
+        "doc": "Drone-to-drone radio that does not depend on the ground link and carries the coordination traffic"
+      },
+      {
+        "name": "GroundLinkRadio",
+        "quadrant": "resource",
+        "doc": "Radio link between the swarm and the operations centre, which is not always available"
+      },
+      {
+        "name": "RechargePointAndGroundCrew",
+        "quadrant": "resource",
+        "doc": "Where the drones land, recharge (about 60 minutes) and are serviced"
+      },
+      {
+        "name": "StoredMaps",
+        "quadrant": "resource",
+        "doc": "Reference imagery a drone navigates against when satellite positioning is unavailable"
+      },
+      {
+        "name": "FleetOfTwelveDrones",
+        "quadrant": "resource",
+        "doc": "The 12 identical drones that can be fielded, each flying about 40 minutes"
+      }
+    ],
+    "capabilities": [
+      {
+        "name": "HoldContinuousWatch",
+        "doc": "Keep at least one drone watching every sector of the tasked area at all times, rotating drones through recharge"
+      },
+      {
+        "name": "DetectClassifyAndReport",
+        "doc": "Detect moving objects, classify them or say Unknown, and report them with position and time"
+      },
+      {
+        "name": "CoordinateSwarm",
+        "doc": "Let the drones settle among themselves, over the mesh, the handovers, rotation, redistribution, deconfliction, relay, track correlation and admission"
+      },
+      {
+        "name": "SuperviseSwarm",
+        "doc": "Let one operator task, supervise, recall and see the status of the whole swarm and acknowledge its reports"
+      },
+      {
+        "name": "OperateThroughLinkGap",
+        "doc": "Keep detecting while cut off from the operations centre, hold the reports and deliver them once the link is back, with none lost"
+      },
+      {
+        "name": "StayWithinClearedAirspace",
+        "doc": "Fly only inside the cleared airspace and weather limits, and land safely when that is not possible"
+      },
+      {
+        "name": "NavigateWithoutSatellitePositioning",
+        "doc": "Keep knowing where each drone is by matching camera views against stored maps"
+      },
+      {
+        "name": "TriageReports",
+        "doc": "Rank reports by how likely they are to matter and merge duplicates before they reach the operator"
+      },
+      {
+        "name": "KeepDecisionRecord",
+        "doc": "Record, for every report, its source frames, classifier version, reporting threshold and acknowledger"
+      },
+      {
+        "name": "ManageClassifierVersion",
+        "doc": "Keep one classifier version across the fleet and know which version each drone runs"
+      }
+    ],
+    "moes": [
+      {
+        "name": "areaUnderWatchShare",
+        "unit": "",
+        "sense": "max",
+        "target": 0.9,
+        "doc": "Share of the area under watch at any moment; the brief requires at least 0.9."
+      },
+      {
+        "name": "coverageLossOnMemberLoss",
+        "unit": "",
+        "sense": "min",
+        "target": 0.25,
+        "doc": "Share of coverage lost when one drone is lost, before the swarm re-spreads; the brief allows at most 0.25."
+      },
+      {
+        "name": "jammedMeshAreaUnderWatchShare",
+        "unit": "",
+        "sense": "max",
+        "target": 0.75,
+        "doc": "Share of the area under watch with half the links between drones jammed; the brief requires at least 0.75."
+      },
+      {
+        "name": "groundLinkLossAreaUnderWatchShare",
+        "unit": "",
+        "sense": "max",
+        "target": 0.9,
+        "doc": "Share of the area under watch while the ground link or the ground station is down. This is where coordination placement makes the biggest difference. The brief gives no number; the target is set here to the brief's continuous-watch figure of 0.9."
+      },
+      {
+        "name": "watchEnduranceHours",
+        "unit": "h",
+        "sense": "max",
+        "target": 24,
+        "doc": "How long the swarm holds the watch before it needs people. The brief gives no number; 24 h is a target set here."
+      },
+      {
+        "name": "reportLatencySeconds",
+        "unit": "s",
+        "sense": "min",
+        "target": 60,
+        "doc": "Age of a report when it reaches the operations centre with the link up; the brief allows at most 60 s."
+      },
+      {
+        "name": "positionErrorWithoutGnssMeters",
+        "unit": "m",
+        "sense": "min",
+        "target": 50,
+        "doc": "A drone's position error after 10 minutes without satellite positioning; the brief allows at most 50 m."
+      },
+      {
+        "name": "reportHoldMinutes",
+        "unit": "min",
+        "sense": "max",
+        "target": 30,
+        "doc": "How long a cut-off drone holds its reports; the brief requires at least 30 minutes."
+      },
+      {
+        "name": "reportsLostInLinkGap",
+        "unit": "",
+        "sense": "min",
+        "target": 0,
+        "doc": "Number of reports lost across a link gap; the brief says none."
+      },
+      {
+        "name": "missedDetectionShare",
+        "unit": "",
+        "sense": "min",
+        "target": 0.1,
+        "doc": "Share of real objects that go undetected; the brief allows at most 0.10."
+      },
+      {
+        "name": "falseAlarmsPerHour",
+        "unit": "1/h",
+        "sense": "min",
+        "target": 2,
+        "doc": "False alarms reaching the operator each hour; the brief allows at most 2."
+      },
+      {
+        "name": "operatorAlertsPerHour",
+        "unit": "1/h",
+        "sense": "min",
+        "target": 20,
+        "doc": "Alerts reaching the operator each hour after triage; the operator can judge at most 20."
+      },
+      {
+        "name": "acknowledgedReportsThatMatterShare",
+        "unit": "",
+        "sense": "max",
+        "target": 0.8,
+        "doc": "Share of acknowledged reports that turn out to matter; the brief requires at least 0.8."
+      },
+      {
+        "name": "onboardClassificationCostUsd",
+        "unit": "USD",
+        "sense": "min",
+        "target": 300,
+        "doc": "Cost of on-board classification computing per drone; the brief allows at most 300 USD."
+      },
+      {
+        "name": "fleetSize",
+        "unit": "",
+        "sense": "min",
+        "target": 12,
+        "doc": "The number of drones that can be fielded; fixed by the brief at 12.",
+        "kind": "budget"
+      },
+      {
+        "name": "operatorSecondsPerAlert",
+        "unit": "s",
+        "sense": "max",
+        "target": 30,
+        "doc": "Time the operator needs to judge each alert; fixed by the brief at least 30 s.",
+        "kind": "budget"
+      },
+      {
+        "name": "memberFlightEnduranceMinutes",
+        "unit": "min",
+        "sense": "max",
+        "target": 40,
+        "doc": "How long one drone flies; fixed by the brief at about 40 minutes.",
+        "kind": "budget"
+      },
+      {
+        "name": "memberRechargeMinutes",
+        "unit": "min",
+        "sense": "min",
+        "target": 60,
+        "doc": "How long one drone takes to recharge; fixed by the brief at about 60 minutes.",
+        "kind": "budget"
+      },
+      {
+        "name": "areaOfInterestKm2",
+        "unit": "km2",
+        "sense": "max",
+        "target": 25,
+        "doc": "Size of the area the design must cover; fixed by the brief at up to 25 km².",
+        "kind": "budget"
+      }
+    ],
+    "population": {
+      "memberDef": "SurveillanceDrone",
+      "fleetPart": "fleet",
+      "size": 12,
+      "meshPort": "MeshPort",
+      "meshInterface": "MeshLink",
+      "coordinationCapability": "CoordinateSwarm",
+      "bearer": "MeshRadio",
+      "doc": "Twelve identical surveillance drones. They have to settle handovers, recharge rotation, redistribution, deconfliction, relay, track correlation and admission among themselves over the mesh radio, so the watch survives when the ground link drops."
+    },
+    "coordinationFunctions": [
+      {
+        "name": "handOverSector",
+        "doc": "A drone leaving to recharge hands its sector to one arriving, without a gap."
+      },
+      {
+        "name": "rotateRecharge",
+        "doc": "Decide who goes to recharge next, so the airborne share never falls below what the sectors need."
+      },
+      {
+        "name": "redistributeCoverage",
+        "doc": "When a drone is lost, the remaining drones re-spread over the sectors so the loss of coverage stays bounded."
+      },
+      {
+        "name": "deconflictMembers",
+        "doc": "Keep drones apart in the air and at the recharge point."
+      },
+      {
+        "name": "relayLink",
+        "doc": "A drone out of range of the ground station passes its reports and status through a neighbour."
+      },
+      {
+        "name": "correlateTracks",
+        "doc": "When two drones see the same object, the swarm reports one track, not two."
+      },
+      {
+        "name": "handOverTrack",
+        "doc": "When an object moves into the next sector, the drone watching that sector takes over the track without losing it."
+      },
+      {
+        "name": "admitMember",
+        "doc": "A drone joins coordination only after the others have authenticated it; one that fails is quarantined until readmitted."
+      }
+    ],
+    "c2Functions": [
+      {
+        "name": "taskMission",
+        "doc": "Set the area, its sectors and the mission window."
+      },
+      {
+        "name": "commandSupervision",
+        "doc": "Set priorities, a sector to look at more closely, and the reporting threshold."
+      },
+      {
+        "name": "recallAndLand",
+        "doc": "Recall and land the whole swarm or one drone, at any time."
+      },
+      {
+        "name": "presentStatusPicture",
+        "doc": "Show where every drone is, what it is doing, how much coverage there is and what is degraded."
+      },
+      {
+        "name": "acknowledgeReport",
+        "doc": "The operations centre confirms each detection report, so nothing is lost in a link gap."
+      }
+    ],
+    "hazards": [
+      {
+        "name": "PositionDriftHazard",
+        "doc": "Without satellite positioning, a drone's position estimate drifts and its reports place objects in the wrong place."
+      },
+      {
+        "name": "MeshJammingHazard",
+        "doc": "Interference cuts the links between drones, and coordination stalls."
+      },
+      {
+        "name": "MisclassificationHazard",
+        "doc": "A detection is reported as the wrong class, or given a forced class where Unknown was the truth."
+      },
+      {
+        "name": "SensingDegradedUnnoticedHazard",
+        "doc": "A sensor degrades and nobody knows the reports from it are unreliable."
+      },
+      {
+        "name": "StaleTrackHazard",
+        "doc": "A track is shown as current after nothing has seen the object for a while."
+      },
+      {
+        "name": "SpoofedMemberHazard",
+        "doc": "Something that is not one of the drones joins the mesh and takes part in coordination."
+      },
+      {
+        "name": "MixedClassifierVersionsHazard",
+        "doc": "Drones run different classifier versions and classify the same object differently."
+      },
+      {
+        "name": "OperatorOverloadHazard",
+        "doc": "More alerts reach the operator than they can judge, and they accept what is in front of them."
+      }
+    ],
+    "rules": [
+      {
+        "name": "RecallWins",
+        "doc": "Once a drone is recalled, it does not watch again until it has landed.",
+        "kind": "winsUntil",
+        "of": "member"
+      },
+      {
+        "name": "ReturnsWhenIsolated",
+        "doc": "From any situation a drone can be in, it can always get back to landed; an isolated drone included.",
+        "kind": "canAlwaysReturn",
+        "of": "member"
+      },
+      {
+        "name": "GeofenceBreachEndsWatch",
+        "doc": "Once a drone is outside its cleared airspace, it does not watch until it has landed.",
+        "kind": "winsUntil",
+        "of": "member"
+      },
+      {
+        "name": "QuarantinedStaysOut",
+        "doc": "Once a drone is quarantined, it takes no part in coordination until it has been readmitted.",
+        "kind": "winsUntil",
+        "of": "member"
+      }
+    ],
+    "modes": [
+      {
+        "name": "NavigationDegraded",
+        "doc": "The drone has no satellite positioning and navigates by camera against stored maps.",
+        "of": "member"
+      },
+      {
+        "name": "SensingDegraded",
+        "doc": "The drone's sensors cannot be trusted as they are.",
+        "of": "member"
+      },
+      {
+        "name": "Isolated",
+        "doc": "The drone is cut off from the other drones.",
+        "of": "member"
+      },
+      {
+        "name": "Quarantined",
+        "doc": "The drone failed admission and takes no part in coordination until readmitted.",
+        "of": "member"
+      },
+      {
+        "name": "MeshDegraded",
+        "doc": "A share of the links between drones is jammed.",
+        "of": "fleet"
+      }
+    ],
+    "items": [
+      {
+        "name": "DetectionReport",
+        "fields": [
+          {
+            "name": "position",
+            "doc": "Where the detected object is"
+          },
+          {
+            "name": "time",
+            "doc": "When the object was detected"
+          },
+          {
+            "name": "objectClass",
+            "doc": "One of the known classes, or Unknown"
+          },
+          {
+            "name": "confidence",
+            "doc": "Classifier confidence in objectClass, from 0 to 1"
+          },
+          {
+            "name": "sensorId",
+            "doc": "The sensor that made the detection"
+          },
+          {
+            "name": "memberId",
+            "doc": "The drone that made the detection"
+          },
+          {
+            "name": "classifierVersion",
+            "doc": "The classifier version that produced the class"
+          },
+          {
+            "name": "ageSeconds",
+            "doc": "How old the report is"
+          }
+        ]
+      },
+      {
+        "name": "Track",
+        "fields": [
+          {
+            "name": "trackId",
+            "doc": "Identity of the tracked object"
+          },
+          {
+            "name": "lastSeenTime",
+            "doc": "When the object was last seen"
+          },
+          {
+            "name": "stale",
+            "doc": "Set once nothing has seen the object for 120 seconds"
+          }
+        ]
+      },
+      {
+        "name": "DecisionRecord",
+        "fields": [
+          {
+            "name": "frames",
+            "doc": "The frames the report came from"
+          },
+          {
+            "name": "classifierVersion",
+            "doc": "The classifier version that classified it"
+          },
+          {
+            "name": "reportingThreshold",
+            "doc": "The reporting threshold in force when the report was made"
+          },
+          {
+            "name": "acknowledgedBy",
+            "doc": "Who at the operations centre acknowledged the report"
+          }
+        ]
+      }
+    ],
+    "extraKinds": [
+      "Budget"
+    ],
+    "commonFragment": "package Common {\n    doc /* Shared definitions for every layer of SurveillanceDroneSwarm: what flows, the ports and interfaces it flows through, and the measures of effectiveness with their targets. No behaviour lives here. */\n\n    attribute def Position {\n        doc /* A geographic position estimate, in WGS84 with an error bound. */\n        attribute latitudeDeg : ScalarValues::Real { doc /* Latitude in degrees */ }\n        attribute longitudeDeg : ScalarValues::Real { doc /* Longitude in degrees */ }\n        attribute errorMeters : ScalarValues::Real { doc /* Estimated horizontal position error in metres */ }\n    }\n\n    attribute def ObjectClass {\n        doc /* A classification label: one of the known classes, or Unknown when confidence is below the reporting threshold. */\n        attribute label : ScalarValues::String { doc /* The class name, or \"Unknown\" */ }\n    }\n\n    item def DetectionReport {\n        doc /* A report of one detected moving object, sent from a drone toward the operations centre. */\n        attribute position : Position { doc /* Where the detected object is */ }\n        attribute time : ScalarValues::Real { doc /* When the object was detected, in seconds since epoch */ }\n        attribute objectClass : ObjectClass { doc /* One of the known classes, or Unknown */ }\n        attribute confidence : ScalarValues::Real { doc /* Classifier confidence in objectClass, from 0 to 1 */ }\n        attribute sensorId : ScalarValues::String { doc /* The sensor that made the detection */ }\n        attribute memberId : ScalarValues::String { doc /* The drone that made the detection */ }\n        attribute classifierVersion : ScalarValues::String { doc /* The classifier version that produced the class */ }\n        attribute ageSeconds : ScalarValues::Real { doc /* How old the report is, in seconds */ }\n    }\n\n    item def Track {\n        doc /* A tracked object built from correlated detections, to be merged with the fixed camera network's tracks at the operations centre. */\n        attribute trackId : ScalarValues::String { doc /* Identity of the tracked object */ }\n        attribute lastSeenTime : ScalarValues::Real { doc /* When the object was last seen, in seconds since epoch */ }\n        attribute stale : ScalarValues::Boolean { doc /* Set once nothing has seen the object for 120 seconds */ }\n    }\n\n    item def DecisionRecord {\n        doc /* The audit record kept for every report. */\n        attribute frames : ScalarValues::String { doc /* References to the frames the report came from */ }\n        attribute classifierVersion : ScalarValues::String { doc /* The classifier version that classified it */ }\n        attribute reportingThreshold : ScalarValues::Real { doc /* The reporting threshold in force when the report was made */ }\n        attribute acknowledgedBy : ScalarValues::String { doc /* Who at the operations centre acknowledged the report */ }\n    }\n\n    item def CoordinationUpdate {\n        doc /* Drone-to-drone coordination traffic on the mesh: handover, rotation, redistribution, deconfliction, relay, track correlation and admission messages. */\n        attribute senderId : ScalarValues::String { doc /* The drone sending the update */ }\n        attribute topic : ScalarValues::String { doc /* Which coordination matter the update is about */ }\n        attribute payloadClassifierVersion : ScalarValues::String { doc /* The sender's classifier version, so version mismatches can be seen */ }\n    }\n\n    item def MemberStatus {\n        doc /* One drone's status: where it is, what it is doing, its mode and its charge. */\n        attribute memberId : ScalarValues::String { doc /* The drone reporting */ }\n        attribute memberPosition : Position { doc /* Where the drone is */ }\n        attribute activity : ScalarValues::String { doc /* What the drone is doing, for example watching, transiting or recharging */ }\n        attribute degradedModes : ScalarValues::String { doc /* Which degraded modes the drone is in */ }\n        attribute chargeShare : ScalarValues::Real { doc /* Remaining battery, from 0 to 1 */ }\n        attribute classifierVersion : ScalarValues::String { doc /* The classifier version the drone runs */ }\n    }\n\n    item def StatusPicture {\n        doc /* The operator's picture of the whole swarm. */\n        attribute coverageShare : ScalarValues::Real { doc /* Share of the area currently under watch */ }\n        attribute airborneCount : ScalarValues::Integer { doc /* Number of drones airborne */ }\n        attribute degradedSummary : ScalarValues::String { doc /* What is degraded, across drones and the mesh */ }\n    }\n\n    item def MissionTasking {\n        doc /* The operations centre's tasking: the area, its sectors and the mission window. */\n        attribute areaId : ScalarValues::String { doc /* The area of interest */ }\n        attribute sectorCount : ScalarValues::Integer { doc /* How many sectors the area is divided into */ }\n        attribute windowStart : ScalarValues::Real { doc /* When the mission starts */ }\n        attribute windowEnd : ScalarValues::Real { doc /* When the mission ends */ }\n    }\n\n    item def SupervisoryCommand {\n        doc /* The operator's supervisory command: priorities, a sector to look at more closely, and the reporting threshold. */\n        attribute prioritySector : ScalarValues::String { doc /* A sector to look at more closely */ }\n        attribute priorities : ScalarValues::String { doc /* What the operator wants attended to first */ }\n        attribute reportingThreshold : ScalarValues::Real { doc /* The least confidence a classification needs before it becomes a report */ }\n    }\n\n    item def RecallCommand {\n        doc /* An order to recall and land the whole swarm or one drone. */\n        attribute targetMemberId : ScalarValues::String { doc /* The drone to recall, or \"all\" for the whole swarm */ }\n    }\n\n    item def ReportAcknowledgement {\n        doc /* The operations centre's confirmation that it received a detection report. */\n        attribute reportRef : ScalarValues::String { doc /* The report being acknowledged */ }\n        attribute acknowledger : ScalarValues::String { doc /* Who acknowledged it */ }\n    }\n\n    item def AirspaceClearance {\n        doc /* The airspace authority's clearance: where and when the drones may fly. */\n        attribute volumeRef : ScalarValues::String { doc /* The cleared airspace volume */ }\n        attribute validUntil : ScalarValues::Real { doc /* When the clearance expires */ }\n    }\n\n    port def MeshPort {\n        doc /* The port a drone uses to exchange coordination traffic with a peer over the mesh radio. */\n        out item update : CoordinationUpdate;\n    }\n\n    interface def MeshLink {\n        doc /* The mesh radio link between two drones, independent of the ground link. */\n        end sender : MeshPort;\n        end receiver : ~MeshPort;\n    }\n\n    port def GroundLinkPort {\n        doc /* The drone side of the radio link to the ground station: reports and status go out; commands and acknowledgements come in. */\n        out item report : DetectionReport;\n        out item status : MemberStatus;\n        in item command : SupervisoryCommand;\n        in item recall : RecallCommand;\n        in item acknowledgement : ReportAcknowledgement;\n    }\n\n    interface def GroundLink {\n        doc /* The radio link between a drone and the ground station; it is not always available. */\n        end drone : GroundLinkPort;\n        end station : ~GroundLinkPort;\n    }\n\n    port def OperationsPort {\n        doc /* The swarm side of the exchange with the operations centre. */\n        out item report : DetectionReport;\n        out item track : Track;\n        out item picture : StatusPicture;\n        out item record : DecisionRecord;\n        in item tasking : MissionTasking;\n        in item command : SupervisoryCommand;\n        in item recall : RecallCommand;\n        in item acknowledgement : ReportAcknowledgement;\n    }\n\n    interface def OperationsLink {\n        doc /* The link between the ground station and the operations centre. */\n        end swarmSide : OperationsPort;\n        end centreSide : ~OperationsPort;\n    }\n\n    port def CameraTrackPort {\n        doc /* Where the fixed camera network provides its tracks for merging at the operations centre. */\n        out item cameraTrack : Track;\n    }\n\n    interface def CameraTrackFeed {\n        doc /* The feed of camera network tracks into the operations centre's merge. */\n        end provider : CameraTrackPort;\n        end consumer : ~CameraTrackPort;\n    }\n\n    port def AirspacePort {\n        doc /* Where the airspace authority provides clearance. */\n        out item clearance : AirspaceClearance;\n    }\n\n    interface def AirspaceClearanceFeed {\n        doc /* The flow of airspace clearance from the authority to the swarm. */\n        end authority : AirspacePort;\n        end swarmSide : ~AirspacePort;\n    }\n\n    #MoE attribute areaUnderWatchShare : ScalarValues::Real {\n        doc /* Share of the area under watch at any moment; at least 0.9. */\n        require constraint { areaUnderWatchShare >= 0.9 }\n    }\n    #MoE attribute coverageLossOnMemberLoss : ScalarValues::Real {\n        doc /* Share of coverage lost when one drone is lost, before re-spreading; at most 0.25. */\n        require constraint { coverageLossOnMemberLoss <= 0.25 }\n    }\n    #MoE attribute jammedMeshAreaUnderWatchShare : ScalarValues::Real {\n        doc /* Share of the area under watch with half the mesh links jammed; at least 0.75. */\n        require constraint { jammedMeshAreaUnderWatchShare >= 0.75 }\n    }\n    #MoE attribute groundLinkLossAreaUnderWatchShare : ScalarValues::Real {\n        doc /* Share of the area under watch with the ground link or ground station down. The brief gives no number; the target is set here to its continuous-watch figure of 0.9. */\n        require constraint { groundLinkLossAreaUnderWatchShare >= 0.9 }\n    }\n    #MoE attribute watchEnduranceHours : ScalarValues::Real {\n        doc /* Hours the swarm holds the watch before it needs people. The brief gives no number; 24 h is a target set here. */\n        require constraint { watchEnduranceHours >= 24 }\n    }\n    #MoE attribute reportLatencySeconds : ScalarValues::Real {\n        doc /* Age of a report when it reaches the operations centre with the link up; at most 60 s. */\n        require constraint { reportLatencySeconds <= 60 }\n    }\n    #MoE attribute positionErrorWithoutGnssMeters : ScalarValues::Real {\n        doc /* Position error after 10 minutes without satellite positioning; at most 50 m. */\n        require constraint { positionErrorWithoutGnssMeters <= 50 }\n    }\n    #MoE attribute reportHoldMinutes : ScalarValues::Real {\n        doc /* How long a cut-off drone holds its reports; at least 30 minutes. */\n        require constraint { reportHoldMinutes >= 30 }\n    }\n    #MoE attribute reportsLostInLinkGap : ScalarValues::Integer {\n        doc /* Reports lost across a link gap; none. */\n        require constraint { reportsLostInLinkGap <= 0 }\n    }\n    #MoE attribute missedDetectionShare : ScalarValues::Real {\n        doc /* Share of real objects that go undetected; at most 0.10. */\n        require constraint { missedDetectionShare <= 0.1 }\n    }\n    #MoE attribute falseAlarmsPerHour : ScalarValues::Real {\n        doc /* False alarms reaching the operator per hour; at most 2. */\n        require constraint { falseAlarmsPerHour <= 2 }\n    }\n    #MoE attribute operatorAlertsPerHour : ScalarValues::Real {\n        doc /* Alerts reaching the operator per hour after triage; at most 20. */\n        require constraint { operatorAlertsPerHour <= 20 }\n    }\n    #MoE attribute acknowledgedReportsThatMatterShare : ScalarValues::Real {\n        doc /* Share of acknowledged reports that turn out to matter; at least 0.8. */\n        require constraint { acknowledgedReportsThatMatterShare >= 0.8 }\n    }\n    #MoE attribute onboardClassificationCostUsd : ScalarValues::Real {\n        doc /* On-board classification computing cost per drone; at most 300 USD. */\n        require constraint { onboardClassificationCostUsd <= 300 }\n    }\n\n    #Budget attribute fleetSize : ScalarValues::Integer {\n        doc /* Fixed by the brief: 12 drones can be fielded. Held as a requirement, not scored. */\n        require constraint { fleetSize <= 12 }\n    }\n    #Budget attribute operatorSecondsPerAlert : ScalarValues::Real {\n        doc /* Fixed by the brief: the operator needs at least 30 s per alert. Held as a requirement, not scored. */\n        require constraint { operatorSecondsPerAlert >= 30 }\n    }\n    #Budget attribute memberFlightEnduranceMinutes : ScalarValues::Real {\n        doc /* Fixed by the brief: a drone flies about 40 minutes. Held as a requirement, not scored. */\n        require constraint { memberFlightEnduranceMinutes <= 40 }\n    }\n    #Budget attribute memberRechargeMinutes : ScalarValues::Real {\n        doc /* Fixed by the brief: a drone takes about 60 minutes to recharge. Held as a requirement, not scored. */\n        require constraint { memberRechargeMinutes >= 60 }\n    }\n    #Budget attribute areaOfInterestKm2 : ScalarValues::Real {\n        doc /* Fixed by the brief: the area of interest is up to 25 km². Held as a requirement, not scored. */\n        require constraint { areaOfInterestKm2 <= 25 }\n    }\n}",
+    "rationale": "The swarm takes over the job that the duty controller's watch assets do today: holding a sector, handing it over, recharging and relaying. So the operational entity is one representative watchAsset, typed by the SurveillanceDrone member definition. The brief sizes the population at 12 drones, which coordinate over a mesh radio that does not depend on the ground link. The mesh port and interface in Common follow the peer shape the layers below wire through.\n\nCoordination between drones (8 functions) is kept apart from the operator's command and control (5 functions). That way both architectures the brief asks for (coordination at the ground station, or on the drones) can put the same functions in different places.\n\nHazards, rules, modes and the three items with listed fields (DetectionReport, Track, DecisionRecord) use the brief's names and nothing more.\n\nEvery number the brief asks the design to achieve is a scored #MoE with the brief's target. Two targets are set here because the brief gives none, and their docs say so: endurance at 24 h, and coverage with the ground link down at 0.9. Coverage with the link down is the measure where the two architectures differ most. Numbers the brief fixes are #Budget attributes and are not scored: fleet size, operator time per alert, flight and recharge times, and area size. This needs the extra kind Budget."
+  }
+}

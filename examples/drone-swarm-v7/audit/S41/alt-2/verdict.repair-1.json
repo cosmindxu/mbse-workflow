@@ -1,0 +1,630 @@
+{
+  "step": "S41",
+  "layer": "PA",
+  "alternative": 2,
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml",
+  "prefixHash": "241b946f8e8a1d4c",
+  "elements": 3038,
+  "durationMs": 4988,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/check.json",
+      "findings": 24
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 26,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/elements.json",
+      "findings": 4
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 10,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/connectivity.json",
+      "findings": 9
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 85,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 23,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/trace-allocate.json",
+      "findings": 19
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 5,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/orphans.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 20,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/reach.json",
+      "findings": 3
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 7,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/requirements-hazards.json",
+      "findings": 0
+    },
+    {
+      "name": "verify",
+      "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow/runs/v7/build/6_PA.alt-2.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 361,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S41/alt-2/verify.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 167,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 171,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 175,
+      "message": "Constraint could not be evaluated (\"jammedMeshAreaUnderWatchShare >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 179,
+      "message": "Constraint could not be evaluated (\"groundLinkLossAreaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 183,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHours >= 24\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 187,
+      "message": "Constraint could not be evaluated (\"reportLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 191,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutGnssMeters <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 195,
+      "message": "Constraint could not be evaluated (\"reportHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 199,
+      "message": "Constraint could not be evaluated (\"reportsLostInLinkGap <= 0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 203,
+      "message": "Constraint could not be evaluated (\"missedDetectionShare <= 0.1\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 207,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 211,
+      "message": "Constraint could not be evaluated (\"operatorAlertsPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 215,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterShare >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 219,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsd <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 224,
+      "message": "Constraint could not be evaluated (\"fleetSize <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 228,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 232,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes <= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 236,
+      "message": "Constraint could not be evaluated (\"memberRechargeMinutes >= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 240,
+      "message": "Constraint could not be evaluated (\"areaOfInterestKm2 <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPortA",
+      "layer": "PA",
+      "line": 505,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::GroundStation::groundLinkPortA\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPortB",
+      "layer": "PA",
+      "line": 506,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::GroundStation::groundLinkPortB\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPort",
+      "layer": "PA",
+      "line": 590,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::memberA::groundLinkPort\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPort",
+      "layer": "PA",
+      "line": 596,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::memberB::groundLinkPort\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 674,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss == 1.0 / fleetSizeValue\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "alt.c2Placement",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-16",
+      "message": "alternative 2 is the distributed design, and 0 of 8 coordination function(s) are on the members alone. Move every usage of these to `memberA`, `memberB` or the fleet: `HandOverSector` (`handOverSector` on nothing); `RotateRecharge` (`rotateRecharge` on nothing); `RedistributeCoverage` (`redistributeCoverage` on nothing); `DeconflictMembers` (`deconflictMembers` on nothing); `RelayLink` (`relayLink` on nothing); `CorrelateTracks` (`correlateTracks` on nothing); `HandOverTrack` (`handOverTrack` on nothing); `AdmitMember` (`admitMember` on nothing).",
+      "check": "elements"
+    },
+    {
+      "code": "replicas.topology",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "alternative 2: 0 of 13 coordination and command-and-control function(s) on board, 0 on the ground, 4 performed by actors; 2 link(s) between members; fleet [12].",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.scenario",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-08",
+      "message": "no exchange scenario between two members: an `occurrence def` with `ref part a : SurveillanceDrone; ref part b : SurveillanceDrone;` and the messages of a sector handover is what shows the peer protocol (A1-C-15).",
+      "check": "elements"
+    },
+    {
+      "code": "pa.bearer",
+      "severity": "error",
+      "blocking": true,
+      "rule": "CV-05",
+      "message": "no connection def at PA. Type the link between members by the medium that carries it — `connection def MeshRadioLink { end a : Common::<PeerPort>; end b : ~Common::<PeerPort>; }` and `connection peerLink : MeshRadioLink connect memberA.meshOut to memberB.meshIn;` — so the model can say which link is the intermittent radio.",
+      "check": "elements"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::meshOut",
+      "rule": "CV-05",
+      "message": "port `meshOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::meshIn",
+      "rule": "CV-05",
+      "message": "port `meshIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::taskingIn",
+      "rule": "CV-05",
+      "message": "port `taskingIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::commandIn",
+      "rule": "CV-05",
+      "message": "port `commandIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::recallIn",
+      "rule": "CV-05",
+      "message": "port `recallIn` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::reportsOut",
+      "rule": "CV-05",
+      "message": "port `reportsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::decisionsOut",
+      "rule": "CV-05",
+      "message": "port `decisionsOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::statusOut",
+      "rule": "CV-05",
+      "message": "port `statusOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "connectivity.layerPorts",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical::rechargeRequestOut",
+      "rule": "CV-05",
+      "message": "port `rechargeRequestOut` is not connected to anything.",
+      "check": "connectivity"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::holdSectorWatch",
+      "rule": "CV-04",
+      "message": "`holdSectorWatch` is a function nothing performs: an `allocate` names the `holdSectorWatch` of another layer by its path, which allocates that one. Write `allocate holdSectorWatch to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::detectAndClassifyObjects",
+      "rule": "CV-04",
+      "message": "`detectAndClassifyObjects` is a function nothing performs: an `allocate` names the `detectAndClassifyObjects` of another layer by its path, which allocates that one. Write `allocate detectAndClassifyObjects to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::navigateAgainstStoredMaps",
+      "rule": "CV-04",
+      "message": "`navigateAgainstStoredMaps` is a function nothing performs: an `allocate` names the `navigateAgainstStoredMaps` of another layer by its path, which allocates that one. Write `allocate navigateAgainstStoredMaps to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::reportDetections",
+      "rule": "CV-04",
+      "message": "`reportDetections` is a function nothing performs: an `allocate` names the `reportDetections` of another layer by its path, which allocates that one. Write `allocate reportDetections to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::recordDecision",
+      "rule": "CV-04",
+      "message": "`recordDecision` is a function nothing performs: an `allocate` names the `recordDecision` of another layer by its path, which allocates that one. Write `allocate recordDecision to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::presentStatusPicture",
+      "rule": "CV-04",
+      "message": "`presentStatusPicture` is a function nothing performs: an `allocate` names the `presentStatusPicture` of another layer by its path, which allocates that one. Write `allocate presentStatusPicture to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::taskMission",
+      "rule": "CV-04",
+      "message": "`taskMission` is a function nothing performs: an `allocate` names the `taskMission` of another layer by its path, which allocates that one. Write `allocate taskMission to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::commandSupervision",
+      "rule": "CV-04",
+      "message": "`commandSupervision` is a function nothing performs: an `allocate` names the `commandSupervision` of another layer by its path, which allocates that one. Write `allocate commandSupervision to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::recallAndLand",
+      "rule": "CV-04",
+      "message": "`recallAndLand` is a function nothing performs: an `allocate` names the `recallAndLand` of another layer by its path, which allocates that one. Write `allocate recallAndLand to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::acknowledgeReport",
+      "rule": "CV-04",
+      "message": "`acknowledgeReport` is a function nothing performs: an `allocate` names the `acknowledgeReport` of another layer by its path, which allocates that one. Write `allocate acknowledgeReport to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::handOverSector",
+      "rule": "CV-04",
+      "message": "`handOverSector` is a function nothing performs: an `allocate` names the `handOverSector` of another layer by its path, which allocates that one. Write `allocate handOverSector to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::rotateRecharge",
+      "rule": "CV-04",
+      "message": "`rotateRecharge` is a function nothing performs: an `allocate` names the `rotateRecharge` of another layer by its path, which allocates that one. Write `allocate rotateRecharge to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::redistributeCoverage",
+      "rule": "CV-04",
+      "message": "`redistributeCoverage` is a function nothing performs: an `allocate` names the `redistributeCoverage` of another layer by its path, which allocates that one. Write `allocate redistributeCoverage to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::deconflictMembers",
+      "rule": "CV-04",
+      "message": "`deconflictMembers` is a function nothing performs: an `allocate` names the `deconflictMembers` of another layer by its path, which allocates that one. Write `allocate deconflictMembers to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::relayLink",
+      "rule": "CV-04",
+      "message": "`relayLink` is a function nothing performs: an `allocate` names the `relayLink` of another layer by its path, which allocates that one. Write `allocate relayLink to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::correlateTracks",
+      "rule": "CV-04",
+      "message": "`correlateTracks` is a function nothing performs: an `allocate` names the `correlateTracks` of another layer by its path, which allocates that one. Write `allocate correlateTracks to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::handOverTrack",
+      "rule": "CV-04",
+      "message": "`handOverTrack` is a function nothing performs: an `allocate` names the `handOverTrack` of another layer by its path, which allocates that one. Write `allocate handOverTrack to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::admitMember",
+      "rule": "CV-04",
+      "message": "`admitMember` is a function nothing performs: an `allocate` names the `admitMember` of another layer by its path, which allocates that one. Write `allocate admitMember to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "allocate.functionsAllocated",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::PA::manageClassifierVersion",
+      "rule": "CV-04",
+      "message": "`manageClassifierVersion` is a function nothing performs: an `allocate` names the `manageClassifierVersion` of another layer by its path, which allocates that one. Write `allocate manageClassifierVersion to <part>;` with the bare name.",
+      "check": "trace-allocate"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberState::Watching",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberState::Watching`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Isolated` (declaration order) and never `Watching -> Recalled`, `Watching -> OutsideClearance`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberState::Isolated",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberState::Isolated`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Isolated -> Watching` (declaration order) and never `Isolated -> Landing`.",
+      "check": "reach"
+    },
+    {
+      "code": "verification/nondeterministic-choice",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberMode::Nominal",
+      "rule": "CV-07",
+      "message": "`SurveillanceDroneSwarm::PA::SurveillanceDrone::MemberMode::Nominal`: 3 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Nominal -> NavigationDegraded` (declaration order) and never `Nominal -> SensingDegraded`, `Nominal -> Quarantined`.",
+      "check": "reach"
+    }
+  ]
+}

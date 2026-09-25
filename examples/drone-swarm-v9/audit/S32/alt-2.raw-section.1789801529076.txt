@@ -1,0 +1,261 @@
+
+    package Hazards {
+        doc /* Hazards the member-centred split adds at LA: what moving coordination onto the members, and concentrating command and triage in single ground components, introduces. */
+
+        #Hazard requirement SplitCoordinationHazard {
+            subject m : SwarmMember;
+            doc /* When jamming partitions the mesh, sub-swarms coordinate separately: two of them take the same sector while another sector is left empty, or two members leave to recharge from the same sector. */
+        }
+        #Hazard requirement LostHandoffHazard {
+            subject m : SwarmMember;
+            doc /* A sector or a track handed from one member to a neighbour is dropped in the hand-off: the leaving member has gone and the receiving member never took it, so the sector goes unwatched or the track goes stale unnoticed. */
+        }
+        #Hazard requirement GroundStationSinglePointHazard {
+            subject g : GroundStation;
+            doc /* All command and control sits in the one ground station: if it or its link is lost, tasking, supervisory priorities, recall and the status picture are unavailable and the operator cannot see or stop the swarm. */
+        }
+        #Hazard requirement TriageUnitSinglePointHazard {
+            subject t : AlertTriageUnit;
+            doc /* All reports pass through the one triage unit: if it fails, detection reports and decision records stop reaching the operator, or reach them unranked and unmerged. */
+        }
+    }
+
+    #Member part def SwarmMember {
+        doc /* One of the twelve identical drones, member-centred: besides sensing, classifying and reporting, every member itself performs the whole of swarm coordination (sector handover, recharge rotation, coverage redistribution, deconfliction, link relay, track correlation, track handover, member admission) over the mesh, so the watch does not depend on the ground station or the ground link. */
+        out port meshOut : Common::MeshPort;
+        in port meshIn : ~Common::MeshPort;
+        out port reportsOut : Common::DetectionReport;
+        out port trackPictureOut : Common::Track;
+        out port statusOut : Common::MemberStatus;
+        in port taskingIn : Common::TaskingOrder;
+        in port priorityIn : Common::PriorityDirective;
+        in port recallIn : Common::RecallDirective;
+        in port receiptIn : Common::ReportReceipt;
+
+        #Mode state def SwarmMemberModes {
+            doc /* Operating condition of one member: nominal, without satellite positioning, sensors not trustworthy, cut off from the other members, or failed admission and readmitted. Carries the rule QuarantinedStaysOut. */
+            @SysproseVerification::PropertyPattern {
+                doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state Quarantined";
+                attribute r = "state Readmitted";
+                attribute p = "state Nominal";
+            }
+            initial start;
+            transition start -> Nominal;
+            state Nominal {
+                doc /* The member has positioning, trusted sensors, contact with the mesh and admission, and takes part in coordination. */
+            }
+            state NavigationDegraded {
+                doc /* The member has no satellite positioning and navigates by what its camera sees against stored maps. */
+            }
+            state SensingDegraded {
+                doc /* The member's sensors cannot be trusted as they are, and what it reports from them is marked accordingly. */
+            }
+            state Isolated {
+                doc /* The member is cut off from the other members and coordinates with none of them; it keeps watching its own sector on its own until it must recover. */
+            }
+            state Quarantined {
+                doc /* The member has failed admission (identity or classifier version) and takes no part in coordination until it has been readmitted. */
+            }
+            state Readmitted {
+                doc /* The member has passed the readmission check and is about to take part in coordination again. */
+            }
+            transition Nominal -> NavigationDegraded;
+            transition NavigationDegraded -> Nominal;
+            transition Nominal -> SensingDegraded;
+            transition SensingDegraded -> Nominal;
+            transition Nominal -> Isolated;
+            transition Isolated -> Nominal;
+            transition Nominal -> Quarantined;
+            transition Quarantined -> Readmitted;
+            transition Readmitted -> Nominal;
+        }
+
+        #State state def SwarmMemberStates {
+            doc /* Where one member is in its sortie: on the ground, flying out, watching, flying back, recalled, outside its cleared airspace, or returning to the recovery point on its own. Carries the rules RecallWins, GeofenceBreachEndsWatch and ReturnsWhenIsolated. */
+            @SysproseVerification::PropertyPattern {
+                doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state Recalled";
+                attribute r = "state Landed";
+                attribute p = "state Watching";
+            }
+            @SysproseVerification::PropertyPattern {
+                doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
+                attribute pattern = "absence";
+                attribute scope = "between";
+                attribute q = "state OutsideClearance";
+                attribute r = "state Landed";
+                attribute p = "state Watching";
+            }
+            @SysproseVerification::PropertyPattern {
+                doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed; an isolated drone included. */
+                attribute pattern = "recovery";
+                attribute scope = "globally";
+                attribute p = "state Landed";
+            }
+            initial start;
+            transition start -> Landed;
+            state Landed {
+                doc /* On the ground, battery being swapped or waiting for tasking. */
+            }
+            state Transiting {
+                doc /* Flying from the recharge point to its sector, or to the sector it has just taken over from a neighbour. */
+            }
+            state Watching {
+                doc /* Holding watch over its sector. */
+            }
+            state Returning {
+                doc /* Flying back to the recharge point to swap the battery once relieved, or to land when the wind is above moderate. */
+            }
+            state Recalled {
+                doc /* Recalled by order and on its way down; it does not watch until landed. */
+            }
+            state Recovering {
+                doc /* Cut off and returning to the recovery point on its own. */
+            }
+            state OutsideClearance {
+                doc /* Outside the cleared airspace or the clearance withdrawn: on its way down, and it does not watch until landed. */
+            }
+            transition Landed -> Transiting;
+            transition Transiting -> Watching;
+            transition Watching -> Returning;
+            transition Returning -> Landed;
+            transition Transiting -> Recalled;
+            transition Watching -> Recalled;
+            transition Recalled -> Landed;
+            transition Transiting -> Recovering;
+            transition Watching -> Recovering;
+            transition Recovering -> Landed;
+            transition Transiting -> OutsideClearance;
+            transition Watching -> OutsideClearance;
+            transition OutsideClearance -> Landed;
+        }
+    }
+    part def GroundStation {
+        doc /* The thin ground component of the member-centred split: it only carries command and control (tasking, supervisory priorities, recall, status picture, acknowledgement). It does not coordinate the swarm; if it is lost the members keep the watch. */
+        in port statusIn : Common::MemberStatus;
+        in port trackPictureIn : Common::Track;
+        in port alertsIn : Common::TriagedAlerts;
+        in port recordsIn : Common::DecisionRecords;
+        out port taskingOut : Common::TaskingOrder;
+        out port priorityOut : Common::PriorityDirective;
+        out port recallOut : Common::RecallDirective;
+        out port receiptOut : Common::ReportReceipt;
+        out port recordReceiptOut : Common::ReportReceipt;
+
+        #Mode state def GroundStationModes {
+            doc /* Whether the ground station can reach the swarm and the operations centre: with the link up it supervises, with the link down it can neither task nor recall and the members carry on alone. */
+            initial start;
+            transition start -> LinkUp;
+            state LinkUp {
+                doc /* The link to the operations centre is available: tasking, command, reports, status and acknowledgements pass. */
+            }
+            state LinkDown {
+                doc /* The link is unavailable: the station holds what it has and the swarm coordinates and holds reports on its own. */
+            }
+            transition LinkUp -> LinkDown;
+            transition LinkDown -> LinkUp;
+        }
+
+        #State state def GroundStationStates {
+            doc /* What the ground station is doing for the operator: waiting for tasking, supervising the swarm, or issuing a recall. */
+            initial start;
+            transition start -> Standby;
+            state Standby {
+                doc /* No mission window is tasked; nothing is being supervised. */
+            }
+            state Supervising {
+                doc /* Tasking and priorities are out, the status picture is presented and reports are acknowledged. */
+            }
+            state Recalling {
+                doc /* A recall order is being issued to the whole swarm or one drone. */
+            }
+            transition Standby -> Supervising;
+            transition Supervising -> Recalling;
+            transition Recalling -> Supervising;
+            transition Supervising -> Standby;
+        }
+    }
+    part def AlertTriageUnit {
+        doc /* Ranks the reports of all members so that what most likely matters reaches the operator first, merges duplicates, and keeps the decision record of every report. Kept apart from the ground station so that command and control stays thin. */
+        in port reportsIn : Common::DetectionReport;
+        in port receiptIn : Common::ReportReceipt;
+        out port alertsOut : Common::TriagedAlerts;
+        out port decisionRecordsOut : Common::DecisionRecords;
+    }
+    part fleet : SwarmMember [12] {
+        doc /* The twelve identical drones; every function a member performs, and all eight coordination functions, sit here. */
+    }
+    part memberA : SwarmMember {
+        doc /* First representative member, one end of the peer link. */
+    }
+    part memberB : SwarmMember {
+        doc /* Second representative member, the other end of the peer link. */
+    }
+    interface peerLink : Common::MeshInterface connect memberA.meshOut to memberB.meshIn;
+    part groundStation : GroundStation {
+        doc /* The ground station: command and control only. */
+    }
+    part triageUnit : AlertTriageUnit {
+        doc /* The alert triage and decision-record component between the members and the operator. */
+    }
+    connection reportsFeed connect fleet.reportsOut to triageUnit.reportsIn;
+    connection trackPictureFeed connect fleet.trackPictureOut to groundStation.trackPictureIn;
+    connection statusFeed connect fleet.statusOut to groundStation.statusIn;
+    connection taskingFeed connect groundStation.taskingOut to fleet.taskingIn;
+    connection priorityFeed connect groundStation.priorityOut to fleet.priorityIn;
+    connection recallFeed connect groundStation.recallOut to fleet.recallIn;
+    connection receiptFeed connect groundStation.receiptOut to fleet.receiptIn;
+    connection recordReceiptFeed connect groundStation.recordReceiptOut to triageUnit.receiptIn;
+    connection alertsFeed connect triageUnit.alertsOut to groundStation.alertsIn;
+    connection recordsFeed connect triageUnit.decisionRecordsOut to groundStation.recordsIn;
+    allocate handOverSector to fleet;
+    allocate rotateRecharge to fleet;
+    allocate redistributeCoverage to fleet;
+    allocate deconflictFlight to fleet;
+    allocate relayReportsThroughNeighbour to fleet;
+    allocate correlateTracks to fleet;
+    allocate handOverTrack to fleet;
+    allocate admitMember to fleet;
+    allocate detectAndClassifyObject to fleet;
+    allocate deliverDetectionReport to fleet;
+    allocate applySupervisoryDirectives to fleet;
+    allocate reportMemberStatus to fleet;
+    allocate reportTrackPicture to fleet;
+    allocate returnToRecoveryPoint to fleet;
+    allocate taskSurveillanceArea to groundStation;
+    allocate commandSupervisoryPriorities to groundStation;
+    allocate recallAndLand to groundStation;
+    allocate acknowledgeDetectionReport to groundStation;
+    allocate triageAlerts to triageUnit;
+    allocate keepDecisionRecords to triageUnit;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by triageUnit;
+    satisfy LA::Hazards::CoordinationConcentrationHazard by fleet;
+    satisfy LA::Hazards::SectorHandOffLostHazard by fleet;
+    satisfy LA::Hazards::RelayedReportDroppedHazard by fleet;
+    satisfy LA::Hazards::TrackHandOverGapHazard by fleet;
+    satisfy Hazards::SplitCoordinationHazard by fleet;
+    satisfy Hazards::LostHandoffHazard by fleet;
+    satisfy Hazards::GroundStationSinglePointHazard by fleet;
+    satisfy Hazards::TriageUnitSinglePointHazard by fleet;
+    satisfy SurveillanceDroneSwarm::SA::RecallWins by fleet;
+    satisfy SurveillanceDroneSwarm::SA::ReturnsWhenIsolated by fleet;
+    satisfy SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch by fleet;
+    satisfy SurveillanceDroneSwarm::SA::QuarantinedStaysOut by fleet;
+    attribute fleetMemberCount = 12;
+    attribute memberFlightMinutes = 40;
+    attribute memberTurnaroundMinutes = 20;
+    attribute sectorTransitMinutes = 6.6;
+    attribute memberCoverageFraction = 0.12;
+    assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }

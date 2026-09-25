@@ -1,0 +1,1088 @@
+{
+  "dir": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final",
+  "modelPath": "/home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml",
+  "witness": {
+    "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml --json",
+    "exitCode": 0,
+    "meaning": "clean",
+    "diagnostics": 43
+  },
+  "closure": [
+    {
+      "from": "OA",
+      "to": "SA",
+      "realised": 38,
+      "total": 38
+    },
+    {
+      "from": "SA",
+      "to": "LA",
+      "realised": 21,
+      "total": 26
+    },
+    {
+      "from": "LA",
+      "to": "PA",
+      "realised": 21,
+      "total": 21
+    },
+    {
+      "from": "PA",
+      "to": "EPBS",
+      "realised": 7,
+      "total": 7
+    }
+  ],
+  "coverage": {
+    "total": 49,
+    "satisfied": 49,
+    "coverage": 1
+  },
+  "todos": [
+    "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical",
+    "SurveillanceDroneSwarm::PA::HandOverSector",
+    "SurveillanceDroneSwarm::PA::RotateRecharge",
+    "SurveillanceDroneSwarm::PA::RedistributeCoverage",
+    "SurveillanceDroneSwarm::PA::DeconflictFlight",
+    "SurveillanceDroneSwarm::PA::RelayReportsThroughNeighbour",
+    "SurveillanceDroneSwarm::PA::CorrelateTracks",
+    "SurveillanceDroneSwarm::PA::HandOverTrack",
+    "SurveillanceDroneSwarm::PA::AdmitMember",
+    "SurveillanceDroneSwarm::PA::TaskSurveillanceArea",
+    "SurveillanceDroneSwarm::PA::CommandSupervisoryPriorities",
+    "SurveillanceDroneSwarm::PA::RecallAndLand",
+    "SurveillanceDroneSwarm::PA::PresentStatusPicture",
+    "SurveillanceDroneSwarm::PA::AcknowledgeDetectionReport",
+    "SurveillanceDroneSwarm::PA::DetectAndClassifyObject",
+    "SurveillanceDroneSwarm::PA::DeliverDetectionReport",
+    "SurveillanceDroneSwarm::PA::ApplySupervisoryDirectives",
+    "SurveillanceDroneSwarm::PA::ReportMemberStatus",
+    "SurveillanceDroneSwarm::PA::ReportTrackPicture",
+    "SurveillanceDroneSwarm::PA::ReturnToRecoveryPoint",
+    "SurveillanceDroneSwarm::PA::TriageAlerts",
+    "SurveillanceDroneSwarm::PA::KeepDecisionRecords"
+  ],
+  "acceptedHazards": [],
+  "reviewability": {
+    "docCoverage": [
+      {
+        "layer": "Common",
+        "elements": 94,
+        "documented": 94,
+        "coverage": 1
+      },
+      {
+        "layer": "OA",
+        "elements": 103,
+        "documented": 103,
+        "coverage": 1
+      },
+      {
+        "layer": "SA",
+        "elements": 113,
+        "documented": 98,
+        "coverage": 0.8672566371681416
+      },
+      {
+        "layer": "LA",
+        "elements": 65,
+        "documented": 54,
+        "coverage": 0.8307692307692308
+      },
+      {
+        "layer": "PA",
+        "elements": 110,
+        "documented": 110,
+        "coverage": 1
+      },
+      {
+        "layer": "EPBS",
+        "elements": 64,
+        "documented": 64,
+        "coverage": 1
+      }
+    ],
+    "unexplained": [
+      "SurveillanceDroneSwarm::SA::taskingLink",
+      "SurveillanceDroneSwarm::SA::supervisoryLink",
+      "SurveillanceDroneSwarm::SA::recallLink",
+      "SurveillanceDroneSwarm::SA::acknowledgementLink",
+      "SurveillanceDroneSwarm::SA::objectsLink",
+      "SurveillanceDroneSwarm::SA::clearanceLink",
+      "SurveillanceDroneSwarm::SA::servicedDroneLink",
+      "SurveillanceDroneSwarm::SA::reportsLink",
+      "SurveillanceDroneSwarm::SA::alertsLink",
+      "SurveillanceDroneSwarm::SA::trackPictureLink",
+      "SurveillanceDroneSwarm::SA::statusLink",
+      "SurveillanceDroneSwarm::SA::decisionRecordsLink",
+      "SurveillanceDroneSwarm::SA::rechargeArrivalLink",
+      "SurveillanceDroneSwarm::SA::recoveryArrivalLink",
+      "SurveillanceDroneSwarm::SA::cameraTracksLink",
+      "SurveillanceDroneSwarm::LA::reportsFeed",
+      "SurveillanceDroneSwarm::LA::trackPictureFeed",
+      "SurveillanceDroneSwarm::LA::statusFeed",
+      "SurveillanceDroneSwarm::LA::taskingFeed",
+      "SurveillanceDroneSwarm::LA::priorityFeed",
+      "SurveillanceDroneSwarm::LA::recallFeed",
+      "SurveillanceDroneSwarm::LA::receiptFeed",
+      "SurveillanceDroneSwarm::LA::recordReceiptFeed",
+      "SurveillanceDroneSwarm::LA::alertsFeed",
+      "SurveillanceDroneSwarm::LA::recordsFeed",
+      "SurveillanceDroneSwarm::LA::«ConstraintUsage»"
+    ],
+    "reviewSurface": [
+      {
+        "step": "S00",
+        "lines": 868
+      },
+      {
+        "step": "S10",
+        "lines": 482
+      },
+      {
+        "step": "S20",
+        "lines": 339
+      },
+      {
+        "step": "S21",
+        "lines": 614
+      },
+      {
+        "step": "S30",
+        "lines": 335
+      },
+      {
+        "step": "S31",
+        "lines": 696
+      },
+      {
+        "step": "S32",
+        "lines": 578
+      },
+      {
+        "step": "S33",
+        "lines": 440
+      },
+      {
+        "step": "S40",
+        "lines": 158
+      },
+      {
+        "step": "S41",
+        "lines": 592
+      },
+      {
+        "step": "S42",
+        "lines": 507
+      },
+      {
+        "step": "S50",
+        "lines": 998
+      }
+    ]
+  },
+  "fleet": [
+    {
+      "layer": "SA",
+      "memberDef": true,
+      "representatives": [],
+      "peerLinks": [],
+      "placement": [
+        {
+          "def": "TaskSurveillanceArea",
+          "tag": "C2",
+          "where": "`taskSurveillanceArea` → `dutyController`",
+          "place": "actor"
+        },
+        {
+          "def": "CommandSupervisoryPriorities",
+          "tag": "C2",
+          "where": "`commandSupervisoryPriorities` → `dutyController`",
+          "place": "actor"
+        },
+        {
+          "def": "RecallAndLand",
+          "tag": "C2",
+          "where": "`recallAndLand` → `dutyController`",
+          "place": "actor"
+        },
+        {
+          "def": "PresentStatusPicture",
+          "tag": "C2",
+          "where": "`presentStatusPicture` → `groundStation`",
+          "place": "actor"
+        },
+        {
+          "def": "AcknowledgeDetectionReport",
+          "tag": "C2",
+          "where": "`acknowledgeDetectionReport` → `operationsCentreAnalyst`",
+          "place": "actor"
+        },
+        {
+          "def": "HandOverSector",
+          "tag": "Coordination",
+          "where": "`handOverSector` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "RotateRecharge",
+          "tag": "Coordination",
+          "where": "`rotateRecharge` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "RedistributeCoverage",
+          "tag": "Coordination",
+          "where": "`redistributeCoverage` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "DeconflictFlight",
+          "tag": "Coordination",
+          "where": "`deconflictFlight` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "RelayReportsThroughNeighbour",
+          "tag": "Coordination",
+          "where": "`relayReportsThroughNeighbour` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "CorrelateTracks",
+          "tag": "Coordination",
+          "where": "`correlateTracks` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "HandOverTrack",
+          "tag": "Coordination",
+          "where": "`handOverTrack` → `system`",
+          "place": "ground"
+        },
+        {
+          "def": "AdmitMember",
+          "tag": "Coordination",
+          "where": "`admitMember` → `system`",
+          "place": "ground"
+        }
+      ]
+    },
+    {
+      "layer": "LA",
+      "memberDef": true,
+      "fleet": "12",
+      "representatives": [
+        "memberA",
+        "memberB"
+      ],
+      "peerLinks": [
+        {
+          "name": "peerLink",
+          "type": "MeshInterface"
+        }
+      ],
+      "placement": [
+        {
+          "def": "HandOverSector",
+          "tag": "Coordination",
+          "where": "`handOverSector` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RotateRecharge",
+          "tag": "Coordination",
+          "where": "`rotateRecharge` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RedistributeCoverage",
+          "tag": "Coordination",
+          "where": "`redistributeCoverage` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "DeconflictFlight",
+          "tag": "Coordination",
+          "where": "`deconflictFlight` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RelayReportsThroughNeighbour",
+          "tag": "Coordination",
+          "where": "`relayReportsThroughNeighbour` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "CorrelateTracks",
+          "tag": "Coordination",
+          "where": "`correlateTracks` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "HandOverTrack",
+          "tag": "Coordination",
+          "where": "`handOverTrack` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "AdmitMember",
+          "tag": "Coordination",
+          "where": "`admitMember` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "TaskSurveillanceArea",
+          "tag": "C2",
+          "where": "`taskSurveillanceArea` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "CommandSupervisoryPriorities",
+          "tag": "C2",
+          "where": "`commandSupervisoryPriorities` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "RecallAndLand",
+          "tag": "C2",
+          "where": "`recallAndLand` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "PresentStatusPicture",
+          "tag": "C2",
+          "where": "`presentStatusPicture` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "AcknowledgeDetectionReport",
+          "tag": "C2",
+          "where": "`acknowledgeDetectionReport` → `groundStation`",
+          "place": "ground"
+        }
+      ]
+    },
+    {
+      "layer": "PA",
+      "memberDef": true,
+      "fleet": "12",
+      "representatives": [
+        "memberA",
+        "memberB"
+      ],
+      "peerLinks": [
+        {
+          "name": "peerLink",
+          "type": "MeshInterface"
+        },
+        {
+          "name": "peerLinkReturn",
+          "type": "MeshInterface"
+        },
+        {
+          "name": "meshRadioLinkAB",
+          "type": "MeshRadioMedium"
+        },
+        {
+          "name": "meshRadioLinkBA",
+          "type": "MeshRadioMedium"
+        }
+      ],
+      "placement": [
+        {
+          "def": "HandOverSector",
+          "tag": "Coordination",
+          "where": "`handOverSector` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RotateRecharge",
+          "tag": "Coordination",
+          "where": "`rotateRecharge` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RedistributeCoverage",
+          "tag": "Coordination",
+          "where": "`redistributeCoverage` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "DeconflictFlight",
+          "tag": "Coordination",
+          "where": "`deconflictFlight` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "RelayReportsThroughNeighbour",
+          "tag": "Coordination",
+          "where": "`relayReportsThroughNeighbour` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "CorrelateTracks",
+          "tag": "Coordination",
+          "where": "`correlateTracks` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "HandOverTrack",
+          "tag": "Coordination",
+          "where": "`handOverTrack` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "AdmitMember",
+          "tag": "Coordination",
+          "where": "`admitMember` → `fleet`",
+          "place": "on board"
+        },
+        {
+          "def": "TaskSurveillanceArea",
+          "tag": "C2",
+          "where": "`taskSurveillanceArea` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "CommandSupervisoryPriorities",
+          "tag": "C2",
+          "where": "`commandSupervisoryPriorities` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "RecallAndLand",
+          "tag": "C2",
+          "where": "`recallAndLand` → `groundRecallTransmitter`",
+          "place": "ground"
+        },
+        {
+          "def": "PresentStatusPicture",
+          "tag": "C2",
+          "where": "`presentStatusPicture` → `groundStation`",
+          "place": "ground"
+        },
+        {
+          "def": "AcknowledgeDetectionReport",
+          "tag": "C2",
+          "where": "`acknowledgeDetectionReport` → `groundStation`",
+          "place": "ground"
+        }
+      ]
+    },
+    {
+      "layer": "EPBS",
+      "memberDef": false,
+      "fleet": "`DroneAirframe` [1]",
+      "representatives": [],
+      "peerLinks": [],
+      "placement": []
+    }
+  ],
+  "measures": [
+    {
+      "name": "areaUnderWatchFraction",
+      "target": "≥ 0.9",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "vacuous"
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.78",
+          "met": false
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "name": "coverageLossAfterMemberLossFraction",
+      "target": "≤ 0.25",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "0.16",
+          "met": true
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.154",
+          "met": true
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "name": "coverageUnderMeshJammingFraction",
+      "target": "≥ 0.75",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "0.58",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.68",
+          "met": false
+        }
+      ],
+      "placeholder": true
+    },
+    {
+      "name": "reportAgeAtOperationsCentreSeconds",
+      "target": "≤ 60 s",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "40 s",
+          "met": true
+        },
+        {
+          "layer": "PA",
+          "estimate": "40 s",
+          "met": true
+        }
+      ],
+      "metByAll": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "positionErrorWithoutSatelliteMetres",
+      "target": "≤ 50 m",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "80 m",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "80 m",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "reportHoldWhileCutOffMinutes",
+      "target": "≥ 30 min",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "40 min",
+          "met": true
+        },
+        {
+          "layer": "PA",
+          "estimate": "40 min",
+          "met": true
+        }
+      ],
+      "metByAll": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "missedDetectionFraction",
+      "target": "≤ 0.1",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "0.12",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.12",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "falseAlarmsPerHour",
+      "target": "≤ 2 1/h",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "3 1/h",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "3 1/h",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "alertsReachingOperatorPerHour",
+      "target": "≤ 20 1/h",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "24 1/h",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "20 1/h",
+          "met": true
+        }
+      ],
+      "placeholder": true
+    },
+    {
+      "name": "acknowledgedReportsThatMatterFraction",
+      "target": "≥ 0.8",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "0.7",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.75",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "onboardClassificationCostUsdPerMember",
+      "target": "≤ 300 USD",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "350 USD",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "350 USD",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": true
+    },
+    {
+      "name": "unattendedWatchDurationHours",
+      "target": "≥ 12 h",
+      "layers": [
+        {
+          "layer": "LA",
+          "estimate": "0.7 h",
+          "met": false
+        },
+        {
+          "layer": "PA",
+          "estimate": "0.66 h",
+          "met": false
+        }
+      ],
+      "unreachable": "4/4",
+      "placeholder": false
+    }
+  ],
+  "behaviour": {
+    "machines": [
+      {
+        "machine": "SurveillanceDroneSwarm::OA::SwarmMemberModes",
+        "property": "recovery to Nominal",
+        "exitCode": 2,
+        "counts": {
+          "passed": 0,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `positioningLostNotice`, `positioningBackNotice`, `sensingDegradedNotice`, `sensingRestoredNotice`, `contactLostNotice`, `contactBackNotice`, `admissionFailed`, `readmission` is a claim about that environment and not about one that withholds it"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::OA::SwarmMemberStates",
+        "property": "recovery to Landed",
+        "exitCode": 2,
+        "counts": {
+          "passed": 0,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `taskingReceived`, `recallReceivedEarly`, `recallReceived`, `swarmContactLost` is a claim about that environment and not about one that withholds it"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::OA::FleetModes",
+        "property": "recovery to MeshIntact",
+        "exitCode": 2,
+        "counts": {
+          "passed": 0,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jammingNotice`, `jammingClearedNotice` is a claim about that environment and not about one that withholds it"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::OA::FleetStates",
+        "property": "recovery to Grounded",
+        "exitCode": 2,
+        "counts": {
+          "passed": 0,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `fleetTasking`, `fleetRecallOrder` is a claim about that environment and not about one that withholds it"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes",
+        "property": "carried",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet positioningLost, positioningRegained, sensorHealthLost, sensorHealthRestored, meshContactLost, meshContactRegained, admissionFailed, readmissionPassed, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 11 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates",
+        "property": "carried",
+        "exitCode": 2,
+        "counts": {
+          "passed": 2,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet assignment, rotationSlot, recallDirective, contactLost, contactLostEnRoute, clearanceUpdate, clearanceUpdateEnRoute, weatherNow, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::SA::FleetConfiguration",
+        "property": "recovery to MeshIntact",
+        "exitCode": 2,
+        "counts": {
+          "passed": 0,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jamming`, `linksRestored` is a claim about that environment and not about one that withholds it"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::LA::FleetConfiguration",
+        "property": "recovery to MeshIntact",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberModes",
+        "property": "carried",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 11 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberStates",
+        "property": "carried",
+        "exitCode": 0,
+        "counts": {
+          "passed": 3,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationModes",
+        "property": "recovery to LinkUp",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationStates",
+        "property": "recovery to Standby",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberModes",
+        "property": "carried",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet peerVerdict, readmitVerdict, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 12 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberStates",
+        "property": "carried",
+        "exitCode": 2,
+        "counts": {
+          "passed": 2,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 1,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet recallW, recallT, recallR, clearanceW, clearanceT, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationModes",
+        "property": "recovery to LinkUp",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationStates",
+        "property": "recovery to Standby",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+      },
+      {
+        "machine": "SurveillanceDroneSwarm::PA::FleetConfiguration",
+        "property": "recovery to MeshIntact",
+        "exitCode": 0,
+        "counts": {
+          "passed": 1,
+          "failed": 0,
+          "vacuous": 0,
+          "inconclusive": 0,
+          "covered": 0,
+          "notCovered": 0
+        },
+        "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}"
+      }
+    ],
+    "skipped": 0
+  },
+  "faultTree": {
+    "exitCode": 2,
+    "withCutSets": 0,
+    "singlePointsOfFailure": 0,
+    "contracts": 49,
+    "applicable": false
+  },
+  "contribution": [
+    {
+      "layer": "Kinds",
+      "fragmentLines": 15,
+      "recheck": [
+        "S00"
+      ],
+      "invalidated": [
+        "S10",
+        "S11",
+        "S20",
+        "S21",
+        "S22",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 20,
+      "rerunUsd": 9.4410975
+    },
+    {
+      "layer": "Common",
+      "fragmentLines": 894,
+      "recheck": [
+        "S00"
+      ],
+      "invalidated": [
+        "S10",
+        "S11",
+        "S20",
+        "S21",
+        "S22",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 20,
+      "rerunUsd": 9.4410975
+    },
+    {
+      "layer": "OA",
+      "fragmentLines": 483,
+      "recheck": [
+        "S10"
+      ],
+      "invalidated": [
+        "S20",
+        "S21",
+        "S22",
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 19,
+      "rerunUsd": 8.900140500000001
+    },
+    {
+      "layer": "SA",
+      "fragmentLines": 708,
+      "recheck": [
+        "S21"
+      ],
+      "invalidated": [
+        "S30",
+        "S31",
+        "S32",
+        "S33",
+        "S34",
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 18,
+      "rerunUsd": 8.227103900000001
+    },
+    {
+      "layer": "LA",
+      "fragmentLines": 586,
+      "recheck": [
+        "S33"
+      ],
+      "invalidated": [
+        "S40",
+        "S41",
+        "S42",
+        "S43",
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 11,
+      "rerunUsd": 4.5776689
+    },
+    {
+      "layer": "PA",
+      "fragmentLines": 610,
+      "recheck": [
+        "S42"
+      ],
+      "invalidated": [
+        "S50",
+        "S60"
+      ],
+      "rerunCalls": 7,
+      "rerunUsd": 1.9636196
+    },
+    {
+      "layer": "EPBS",
+      "fragmentLines": 499,
+      "recheck": [
+        "S50"
+      ],
+      "invalidated": [],
+      "rerunCalls": 0,
+      "rerunUsd": 0
+    }
+  ]
+}

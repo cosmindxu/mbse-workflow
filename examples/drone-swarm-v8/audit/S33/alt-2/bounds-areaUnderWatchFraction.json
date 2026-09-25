@@ -1,0 +1,70 @@
+{
+  "toolAbsent": false,
+  "measure": {
+    "id": "8fb6e1bf-b7ce-464d-873e-58cd3395d759",
+    "qualifiedName": "SurveillanceDroneSwarm::LA::areaUnderWatchFraction",
+    "declaredName": "areaUnderWatchFraction",
+    "unit": null,
+    "siFactor": 1,
+    "siOffset": 0
+  },
+  "bounds": [
+    {
+      "sense": "min",
+      "outcome": "vacuous",
+      "code": "verification/inconsistent-axioms",
+      "detail": "the assertions this bound would stand on cannot hold together (core axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#4, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage», axiom:SurveillanceDroneSwarm::LA::areaOfInterestValue, axiom:SurveillanceDroneSwarm::LA::fleetSizeValue, axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction, axiom:SurveillanceDroneSwarm::LA::footprintValue, axiom:SurveillanceDroneSwarm::LA::turnaroundMinutesValue, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#2, axiom:SurveillanceDroneSwarm::LA::flightMinutesValue), so every bound over them is entailed by a contradiction and none is claimed. over 10 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "value": null,
+      "siValue": null,
+      "term": "",
+      "witness": [],
+      "checks": 0
+    }
+  ],
+  "withRequirements": false,
+  "released": [],
+  "requirements": [],
+  "axioms": 10,
+  "refused": 0,
+  "nonlinear": true,
+  "fragment": "qf-lra",
+  "logic": "QF_NRA",
+  "vacuityCore": [
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#4",
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»",
+    "axiom:SurveillanceDroneSwarm::LA::areaOfInterestValue",
+    "axiom:SurveillanceDroneSwarm::LA::fleetSizeValue",
+    "axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction",
+    "axiom:SurveillanceDroneSwarm::LA::footprintValue",
+    "axiom:SurveillanceDroneSwarm::LA::turnaroundMinutesValue",
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3",
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#2",
+    "axiom:SurveillanceDroneSwarm::LA::flightMinutesValue"
+  ],
+  "checks": 1,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:6e2a41ae08cd032052415deefb85f94b74593db9005a82b64b050fdcb42c9d61",
+    "source": "sha256:720f884191e4c4d3c13d8a6604342307027eb6b577b7465218e71cb2ba39d7e0",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "d5a8bdc335bcb3b852d446efc4eb7b0acd719c08"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "min `SurveillanceDroneSwarm::LA::areaUnderWatchFraction` was not established: the assertions this bound would stand on cannot hold together (core axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#4, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage», axiom:SurveillanceDroneSwarm::LA::areaOfInterestValue, axiom:SurveillanceDroneSwarm::LA::fleetSizeValue, axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction, axiom:SurveillanceDroneSwarm::LA::footprintValue, axiom:SurveillanceDroneSwarm::LA::turnaroundMinutesValue, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#2, axiom:SurveillanceDroneSwarm::LA::flightMinutesValue), so every bound over them is entailed by a contradiction and none is claimed. over 10 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "elementId": "8fb6e1bf-b7ce-464d-873e-58cd3395d759",
+      "elementName": "SurveillanceDroneSwarm::LA::areaUnderWatchFraction",
+      "code": "verification/inconsistent-axioms",
+      "hint": "Nothing is claimed about this bound. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file>` for the axioms this measure would have been bounded over."
+    }
+  ]
+}

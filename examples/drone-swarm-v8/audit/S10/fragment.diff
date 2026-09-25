@@ -1,0 +1,122 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v8/fragments/3_OA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v8/fragments/3_OA.sysml (after)
+@@ -384,41 +384,44 @@
+     		doc /* assetBravo's own receipt of a detection-report acknowledgement. */
+     	}
+ 
+     	/* ===================== Human and institutional actors ===================== */
++    	/* Every actor's own activity is a usage declared beside its part, at this package's top level, and allocated to it below -- never nested inside the #Actor part def, which would make a three-segment flow end that resolves to nothing once this layer is carried down. */
+ 
+     	#Actor part def SwarmSupervisor {
+     		doc /* The single operator who tasks, commands, recalls and watches the whole watch asset rather than flying each member. */
+-    		action taskSurveillanceMission : TaskSurveillanceMission {
+-    			doc /* The supervisor's own issuing of mission tasking. */
+-    		}
+-    		action issueSupervisoryCommand : IssueSupervisoryCommand {
+-    			doc /* The supervisor's own issuing of a supervisory command. */
+-    		}
+-    		action recallToLand : RecallToLand {
+-    			doc /* The supervisor's own issuing of a recall order. */
+-    		}
+-    		action presentStatusPicture : PresentStatusPicture {
+-    			doc /* The supervisor's own receipt of the status picture. */
+-    		}
+     	}
+     	part swarmSupervisor : SwarmSupervisor {
+     		doc /* The supervisor on duty for this operation. */
+     	}
+ 
++    	action supervisorTaskSurveillanceMission : TaskSurveillanceMission {
++    		doc /* The supervisor's own issuing of mission tasking. */
++    	}
++    	action supervisorIssueSupervisoryCommand : IssueSupervisoryCommand {
++    		doc /* The supervisor's own issuing of a supervisory command. */
++    	}
++    	action supervisorRecallToLand : RecallToLand {
++    		doc /* The supervisor's own issuing of a recall order. */
++    	}
++    	action supervisorPresentStatusPicture : PresentStatusPicture {
++    		doc /* The supervisor's own receipt of the status picture. */
++    	}
++
+     	#Actor part def OperationsCentreAnalyst {
+     		doc /* Watches the feeds and reports, judges what matters, and acknowledges each detection report; the one whose attention triage has to protect. */
+-    		action reportDetection : ReportDetection {
+-    			doc /* The analyst's own receipt of a detection report. */
+-    		}
+-    		action acknowledgeDetectionReport : AcknowledgeDetectionReport {
+-    			doc /* The analyst's own issuing of a detection-report acknowledgement. */
+-    		}
+     	}
+     	part opsCentreAnalyst : OperationsCentreAnalyst {
+     		doc /* The analyst on duty at the operations centre. */
+     	}
+ 
++    	action analystReportDetection : ReportDetection {
++    		doc /* The analyst's own receipt of a detection report. */
++    	}
++    	action analystAcknowledgeDetectionReport : AcknowledgeDetectionReport {
++    		doc /* The analyst's own issuing of a detection-report acknowledgement. */
++    	}
++
+     	#Actor part def DutyController {
+     		doc /* Today assigns sectors, hands sectors over, re-spreads assets, keeps them apart and relays reports by hand; the role the watch asset's own coordination activities (HandOverSector, RotateRecharge, RedistributeCoverage, DeconflictFlight) take over. */
+     	}
+     	part dutyController : DutyController {
+@@ -548,30 +551,31 @@
+     		doc /* The admission decision returned to the requesting member. */
+     	}
+ 
+     	/* ===================== Exchanges with human actors ===================== */
++    	/* Every end here is a two-segment usage.port, never a part.action.port, so the flow survives being carried into the next layer. */
+ 
+-    	flow missionTaskingFlow of Common::MissionTasking from swarmSupervisor.taskSurveillanceMission.cmdOut to alphaTaskSurveillanceMission.cmdIn {
++    	flow missionTaskingFlow of Common::MissionTasking from supervisorTaskSurveillanceMission.cmdOut to alphaTaskSurveillanceMission.cmdIn {
+     		doc /* The tasked area, its sectors and the mission window, issued by the supervisor. */
+     	}
+ 
+-    	flow supervisoryCommandFlow of Common::SupervisoryCommand from swarmSupervisor.issueSupervisoryCommand.cmdOut to alphaIssueSupervisoryCommand.cmdIn {
++    	flow supervisoryCommandFlow of Common::SupervisoryCommand from supervisorIssueSupervisoryCommand.cmdOut to alphaIssueSupervisoryCommand.cmdIn {
+     		doc /* Priorities, a sector to look at more closely, and the reporting threshold, set by the supervisor. */
+     	}
+ 
+-    	flow recallFlow of Common::RecallOrder from swarmSupervisor.recallToLand.cmdOut to alphaRecallToLand.cmdIn {
++    	flow recallFlow of Common::RecallOrder from supervisorRecallToLand.cmdOut to alphaRecallToLand.cmdIn {
+     		doc /* An order to recall and land the whole watch asset or one member. */
+     	}
+ 
+-    	flow statusPictureFlow of Common::StatusPicture from alphaPresentStatusPicture.cmdOut to swarmSupervisor.presentStatusPicture.cmdIn {
++    	flow statusPictureFlow of Common::StatusPicture from alphaPresentStatusPicture.cmdOut to supervisorPresentStatusPicture.cmdIn {
+     		doc /* Where every member is, what it is doing, how much coverage there is and what is degraded. */
+     	}
+ 
+-    	flow detectionReportFlow of Common::DetectionReport from alphaReportDetection.reportOut to opsCentreAnalyst.reportDetection.reportIn {
++    	flow detectionReportFlow of Common::DetectionReport from alphaReportDetection.reportOut to analystReportDetection.reportIn {
+     		doc /* A detection report carried from the member that made it to the analyst at the operations centre. */
+     	}
+ 
+-    	flow ackFlow of Common::ReportAcknowledgement from opsCentreAnalyst.acknowledgeDetectionReport.ackOut to alphaAcknowledgeDetectionReport.ackIn {
++    	flow ackFlow of Common::ReportAcknowledgement from analystAcknowledgeDetectionReport.ackOut to alphaAcknowledgeDetectionReport.ackIn {
+     		doc /* The analyst's acknowledgement of a detection report, returned so nothing is lost across a link gap. */
+     	}
+ 
+     	/* ===================== Allocation of operational activities to entities ===================== */
+@@ -635,8 +639,17 @@
+     	allocate bravoRecallToLand to assetBravo;
+     	allocate bravoPresentStatusPicture to assetBravo;
+     	allocate bravoAcknowledgeDetectionReport to assetBravo;
+ 
++    	/* Usage-level: each actor's own performance, allocated to the actor that performs it -- declared beside the actor's part above, never nested inside it. */
++
++    	allocate supervisorTaskSurveillanceMission to swarmSupervisor;
++    	allocate supervisorIssueSupervisoryCommand to swarmSupervisor;
++    	allocate supervisorRecallToLand to swarmSupervisor;
++    	allocate supervisorPresentStatusPicture to swarmSupervisor;
++    	allocate analystReportDetection to opsCentreAnalyst;
++    	allocate analystAcknowledgeDetectionReport to opsCentreAnalyst;
++
+     	/* ===================== Hazards this layer adds ===================== */
+ 
+     	package Hazards {
+     		doc /* Operational-analysis hazards, stated before any system design exists. */

@@ -1,0 +1,1312 @@
+{
+  "toolAbsent": false,
+  "withValues": false,
+  "minimize": false,
+  "maxCore": 8,
+  "released": [
+    "SurveillanceDroneSwarm::LA::GroundControlStation::useGroundRelayFallback",
+    "SurveillanceDroneSwarm::LA::acknowledgedReportsThatMatterFraction",
+    "SurveillanceDroneSwarm::LA::alertsReachingOperatorPerHour",
+    "SurveillanceDroneSwarm::LA::areaOfInterestValue",
+    "SurveillanceDroneSwarm::LA::areaUnderWatchFraction",
+    "SurveillanceDroneSwarm::LA::coverageDropAfterMemberLossFraction",
+    "SurveillanceDroneSwarm::LA::coverageUnderMeshJammingFraction",
+    "SurveillanceDroneSwarm::LA::falseAlarmsPerHour",
+    "SurveillanceDroneSwarm::LA::fleetSizeValue",
+    "SurveillanceDroneSwarm::LA::flightMinutesValue",
+    "SurveillanceDroneSwarm::LA::footprintValue",
+    "SurveillanceDroneSwarm::LA::missedDetectionFraction",
+    "SurveillanceDroneSwarm::LA::onboardClassifierCostUsdPerDrone",
+    "SurveillanceDroneSwarm::LA::positionErrorAfterGnssLossMetres",
+    "SurveillanceDroneSwarm::LA::reportDeliveryLatencySeconds",
+    "SurveillanceDroneSwarm::LA::reportHoldDurationMinutes",
+    "SurveillanceDroneSwarm::LA::turnaroundMinutesValue",
+    "SurveillanceDroneSwarm::LA::watchEnduranceHoursWithoutPeople",
+    "SurveillanceDroneSwarm::PA::acknowledgedReportsThatMatterFraction",
+    "SurveillanceDroneSwarm::PA::alertsReachingOperatorPerHour",
+    "SurveillanceDroneSwarm::PA::areaOfInterestSquareKilometres",
+    "SurveillanceDroneSwarm::PA::cruiseSpeedMetresPerSecond",
+    "SurveillanceDroneSwarm::PA::falseAlarmsPerHour",
+    "SurveillanceDroneSwarm::PA::fleetSizeDrones",
+    "SurveillanceDroneSwarm::PA::groundTurnaroundMinutes",
+    "SurveillanceDroneSwarm::PA::jammedLinkShareFraction",
+    "SurveillanceDroneSwarm::PA::memberFlightEnduranceMinutes",
+    "SurveillanceDroneSwarm::PA::meshCoordinationDependencyFraction",
+    "SurveillanceDroneSwarm::PA::missedDetectionFraction",
+    "SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone",
+    "SurveillanceDroneSwarm::PA::positionErrorAfterGnssLossMetres",
+    "SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds",
+    "SurveillanceDroneSwarm::PA::reportHoldDurationMinutes",
+    "SurveillanceDroneSwarm::PA::sensorFootprintSquareKilometres",
+    "SurveillanceDroneSwarm::PA::watchEnduranceHoursWithoutPeople"
+  ],
+  "groups": [
+    {
+      "subject": {
+        "name": "asset",
+        "typeRef": "WatchAssetMember",
+        "typeId": "a11ebb1c-bee5-45c1-a836-c3c467a4d4a5",
+        "typeQualifiedName": "SurveillanceDroneSwarm::OA::WatchAssetMember"
+      },
+      "requirements": [
+        {
+          "id": "6dd08a0f-f902-4751-a0a2-c91c546ad5ab",
+          "qualifiedName": "SurveillanceDroneSwarm::OA::Hazards::CoverageGapDuringHandoverHazard",
+          "shortId": "",
+          "declaredName": "CoverageGapDuringHandoverHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [],
+      "noFormalClause": 1,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 1 requirement(s), 0 relations refused"
+    },
+    {
+      "subject": {
+        "name": "sys",
+        "typeRef": "SurveillanceDroneSwarmSystem",
+        "typeId": "052f6b15-c84b-4b42-b916-7f2d72bec880",
+        "typeQualifiedName": "SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmSystem"
+      },
+      "requirements": [
+        {
+          "id": "cd0f943e-39ca-49bc-a4a0-b2350200bde3",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard",
+          "shortId": "",
+          "declaredName": "PositionDriftHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "30ccd021-9d5c-49d0-a35e-eae9aeab3ed4",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard",
+          "shortId": "",
+          "declaredName": "MeshJammingHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "69081faa-0a8a-4d80-8ec6-e4520f78ad65",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard",
+          "shortId": "",
+          "declaredName": "MisclassificationHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "fa62b93c-bdd3-421d-98df-0f5061abef6e",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard",
+          "shortId": "",
+          "declaredName": "SensingDegradedUnnoticedHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "42996adb-3102-42c1-81a0-a542ca3bacb3",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard",
+          "shortId": "",
+          "declaredName": "StaleTrackHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "78ea0241-1654-4533-9829-9b2132ff562e",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard",
+          "shortId": "",
+          "declaredName": "SpoofedMemberHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "0c6dbd22-83b4-4b39-b711-fabefe2c37c3",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard",
+          "shortId": "",
+          "declaredName": "MixedClassifierVersionsHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "a7271f25-094c-4f09-bd3d-3e712e6ce155",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard",
+          "shortId": "",
+          "declaredName": "OperatorOverloadHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "b8c46285-135f-4eb0-8951-06c8a140de2a",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::RecallWins",
+          "shortId": "",
+          "declaredName": "RecallWins",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "8494ed7f-badf-4ed2-8dfe-d33135e0f648",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::ReturnsWhenIsolated",
+          "shortId": "",
+          "declaredName": "ReturnsWhenIsolated",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "1273fd4a-020e-4aaa-beee-f2f29c2ea353",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch",
+          "shortId": "",
+          "declaredName": "GeofenceBreachEndsWatch",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "134fdb21-ad91-41c2-9775-c9501f58a823",
+          "qualifiedName": "SurveillanceDroneSwarm::SA::QuarantinedStaysOut",
+          "shortId": "",
+          "declaredName": "QuarantinedStaysOut",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [],
+      "noFormalClause": 12,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 12 requirement(s), 0 relations refused"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "SurveillanceDroneAirframeItem",
+        "typeId": "9955cff6-8e3d-4bdd-8510-e2526cefca12",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItem"
+      },
+      "requirements": [
+        {
+          "id": "84294179-1655-4eda-8393-47b27b1e0c69",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract",
+          "shortId": "",
+          "declaredName": "SurveillanceDroneAirframeItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "f64268ba-d859-4445-bc4d-02acd1b4837a",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::fleetAirframeContract",
+          "shortId": "",
+          "declaredName": "fleetAirframeContract",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "3454c6c4-067f-478f-bf87-75622a0e85ee",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::fleetSizeDrones > 0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::fleetSizeDrones > 0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract"
+        },
+        {
+          "id": "8c7e8626-95ee-4f18-acfb-87cc15ee8224",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract"
+        }
+      ],
+      "noFormalClause": 1,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "OnboardMissionSoftwareItem",
+        "typeId": "db02ee32-2cc0-47fb-82b1-75e841ab1016",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItem"
+      },
+      "requirements": [
+        {
+          "id": "dc59d241-1ca3-4908-b8bb-18c4e9fc17e2",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract",
+          "shortId": "",
+          "declaredName": "OnboardMissionSoftwareItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "cbe9fdea-0fdc-4273-a29c-21f4f266323b",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::onboardSoftwareContract",
+          "shortId": "",
+          "declaredName": "onboardSoftwareContract",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "57262f40-ec64-4840-a4ef-cc9fe48bb9c8",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::missedDetectionFraction >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::missedDetectionFraction >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract"
+        },
+        {
+          "id": "2a4d7935-a055-4799-b554-4b7423e4966e",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::missedDetectionFraction <= 0.1",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::missedDetectionFraction <= 0.1` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract"
+        }
+      ],
+      "noFormalClause": 1,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "ClassifierReleaseItem",
+        "typeId": "6b67e67b-869f-46dd-97d9-dbbd20f580ae",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItem"
+      },
+      "requirements": [
+        {
+          "id": "541323d7-574b-4a5f-a9ff-5c3a7d1bb835",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract",
+          "shortId": "",
+          "declaredName": "ClassifierReleaseItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "46c76c03-f9e9-4293-a593-dd2c853a50fe",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::classifierReleaseContract",
+          "shortId": "",
+          "declaredName": "classifierReleaseContract",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "f78cefad-34bc-4412-a4e3-c93e9587dd65",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::Hazards::ClassifierReleaseVersionDriftHazard",
+          "shortId": "",
+          "declaredName": "ClassifierReleaseVersionDriftHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "1feb27d8-9418-4d6c-b424-f88a48982787",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract"
+        },
+        {
+          "id": "4854479e-42cc-47be-8ccb-6f5166b5d37d",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone <= 300.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone <= 300.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract"
+        }
+      ],
+      "noFormalClause": 2,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "RadioModuleItem",
+        "typeId": "ecad4555-d631-4b54-a0f3-337c036509d9",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::RadioModuleItem"
+      },
+      "requirements": [
+        {
+          "id": "aa277eef-594a-4a7f-b8b5-3f59f4b92cde",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract",
+          "shortId": "",
+          "declaredName": "RadioModuleItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "eb87f90d-5f30-4cda-a889-1aaaeaabdebc",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::radioModuleContract",
+          "shortId": "",
+          "declaredName": "radioModuleContract",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "5d427079-fb50-41e9-85e8-ca4a835c0ce1",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::Hazards::RadioModuleSupplierDiscontinuationHazard",
+          "shortId": "",
+          "declaredName": "RadioModuleSupplierDiscontinuationHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "8802d401-f7db-4909-a7c1-562e00d86364",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::jammedLinkShareFraction >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::jammedLinkShareFraction >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract"
+        },
+        {
+          "id": "865de51e-7123-499a-8b52-fcddcb3a074b",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::jammedLinkShareFraction <= 1.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::jammedLinkShareFraction <= 1.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract"
+        }
+      ],
+      "noFormalClause": 2,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "GroundStationItem",
+        "typeId": "2606ab2e-b69c-4ca3-a4e8-48ab63a47f54",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::GroundStationItem"
+      },
+      "requirements": [
+        {
+          "id": "18fc5871-0abe-4e82-bc5e-eb1362f90397",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract",
+          "shortId": "",
+          "declaredName": "GroundStationItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "2c8c4d75-8a93-40e4-8799-9782fbc1ecf8",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::groundStationContract",
+          "shortId": "",
+          "declaredName": "groundStationContract",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "bb37a0f9-e35a-40ef-addc-57cef1562f20",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract"
+        },
+        {
+          "id": "a8d46cac-6eec-4f2d-8748-b6d98b050326",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds <= 60.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds <= 60.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract"
+        }
+      ],
+      "noFormalClause": 1,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "RechargePointItem",
+        "typeId": "2764350b-8f60-4fd7-8ac2-99051c58ed02",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::RechargePointItem"
+      },
+      "requirements": [
+        {
+          "id": "71d44a8d-925c-40ae-af31-d2467d511376",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract",
+          "shortId": "",
+          "declaredName": "RechargePointItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "4488ff68-b27e-4ae3-928f-b584a1805bd3",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::rechargePointContract",
+          "shortId": "",
+          "declaredName": "rechargePointContract",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "8f9da692-c8c8-4240-9664-eaeabd096551",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::Hazards::RechargePointPartObsolescenceHazard",
+          "shortId": "",
+          "declaredName": "RechargePointPartObsolescenceHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "f0b0d9b1-75cb-4d76-8f73-71c8a025eaa2",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::groundTurnaroundMinutes >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::groundTurnaroundMinutes >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract"
+        },
+        {
+          "id": "631de741-e5cc-4a05-8402-3b4b43498d56",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::groundTurnaroundMinutes <= 20.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::groundTurnaroundMinutes <= 20.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract"
+        }
+      ],
+      "noFormalClause": 2,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": {
+        "name": "ci",
+        "typeRef": "RecoveryPointItem",
+        "typeId": "7af78890-4f88-487a-b757-c3224f2893e7",
+        "typeQualifiedName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItem"
+      },
+      "requirements": [
+        {
+          "id": "3c9a0a58-31db-4e91-a637-664eafa04410",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract",
+          "shortId": "",
+          "declaredName": "RecoveryPointItemContract",
+          "asserted": 0,
+          "refused": 2
+        },
+        {
+          "id": "a5a26265-d3de-44c3-b3d3-7783ebee2ea4",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::recoveryPointContract",
+          "shortId": "",
+          "declaredName": "recoveryPointContract",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [
+        {
+          "id": "bd1091b9-a4c5-4ba1-975a-a626c8aee758",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::fleetSizeDrones >= 0.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::fleetSizeDrones >= 0.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract"
+        },
+        {
+          "id": "2e93ff1a-097f-4cff-9180-38566562c62d",
+          "qualifiedName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»",
+          "expression": "SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12.0",
+          "reason": "unparseable",
+          "detail": "the body `SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12.0` is not an expression this tool can read",
+          "requirement": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract"
+        }
+      ],
+      "noFormalClause": 1,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»: unparseable)"
+    },
+    {
+      "subject": null,
+      "requirements": [
+        {
+          "id": "aefe362b-f262-4c0d-8766-1ada9d6cfdc3",
+          "qualifiedName": "SurveillanceDroneSwarm::LA::Hazards::PeerCoordinationSinglePointHazard",
+          "shortId": "",
+          "declaredName": "PeerCoordinationSinglePointHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "f1318de0-f1e0-4339-b26e-2a9ee7d30c53",
+          "qualifiedName": "SurveillanceDroneSwarm::LA::Hazards::GroundLinkC2SinglePathHazard",
+          "shortId": "",
+          "declaredName": "GroundLinkC2SinglePathHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "33cf53e7-a6ef-43d3-b308-065802c589b4",
+          "qualifiedName": "SurveillanceDroneSwarm::LA::Hazards::CoordinationDivergenceHazard",
+          "shortId": "",
+          "declaredName": "CoordinationDivergenceHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "370a7d5f-f9b4-48b7-8385-78e58b1b5087",
+          "qualifiedName": "SurveillanceDroneSwarm::LA::Hazards::GroundAdmissionBottleneckHazard",
+          "shortId": "",
+          "declaredName": "GroundAdmissionBottleneckHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "ad74e619-7ada-4f7b-a45a-840a47f8cd96",
+          "qualifiedName": "SurveillanceDroneSwarm::PA::Hazards::GroundLinkRadioDropHazard",
+          "shortId": "",
+          "declaredName": "GroundLinkRadioDropHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "d0b242ab-7c93-4a0b-8707-e06a788a80d7",
+          "qualifiedName": "SurveillanceDroneSwarm::PA::Hazards::BatterySwapWearHazard",
+          "shortId": "",
+          "declaredName": "BatterySwapWearHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "fbbb3121-588a-454d-a8db-d6b7c0cce26e",
+          "qualifiedName": "SurveillanceDroneSwarm::PA::Hazards::OnboardComputeCrashHazard",
+          "shortId": "",
+          "declaredName": "OnboardComputeCrashHazard",
+          "asserted": 0,
+          "refused": 0
+        },
+        {
+          "id": "31005bc2-c51b-45c7-b13b-85f9524d0b93",
+          "qualifiedName": "SurveillanceDroneSwarm::PA::Hazards::GroundCoordinatorSinglePointHazard",
+          "shortId": "",
+          "declaredName": "GroundCoordinatorSinglePointHazard",
+          "asserted": 0,
+          "refused": 0
+        }
+      ],
+      "core": [],
+      "minimized": false,
+      "coreLabel": "a conflicting subset",
+      "unengageable": [],
+      "witness": [],
+      "witnessConfirmed": false,
+      "refused": [],
+      "noFormalClause": 8,
+      "fragment": "qf-lra",
+      "logic": "",
+      "checks": 0,
+      "outcome": "inconclusive",
+      "code": "verification/unsupported-construct",
+      "detail": "no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 8 requirement(s), 0 relations refused"
+    }
+  ],
+  "consistent": 0,
+  "inconsistent": 0,
+  "inconclusive": 10,
+  "forgiven": 0,
+  "allowInconclusive": false,
+  "requirements": 38,
+  "refused": 14,
+  "noFormalClause": 31,
+  "unengageable": 0,
+  "checks": 1,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:e6e240b1d3e9367d211b8f3619ec6fbbf3c1c4f73a23241daeb18752eb0188c6",
+    "source": "sha256:ac6e059f2515827c056ccdd1fd2ce341118c608a9a1e64974b5c46fbcde6feb1",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "d5a8bdc335bcb3b852d446efc4eb7b0acd719c08"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::OA::WatchAssetMember was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 1 requirement(s), 0 relations refused",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#1",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::SA::SurveillanceDroneSwarmSystem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 12 requirement(s), 0 relations refused",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#2",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#3",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#4",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::ClassifierReleaseItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#5",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::RadioModuleItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#6",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::GroundStationItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#7",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::RechargePointItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 3 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#8",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on SurveillanceDroneSwarm::EPBS::RecoveryPointItem was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 2 requirement(s), 2 relation(s) refused by a gate and not asserted (SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»: unparseable; SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»: unparseable)",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#9",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "the requirement set on no declared subject was not decided: no requirement on this subject states a relation this lane encodes, so there is nothing to check: an empty requirement set is satisfiable and says nothing about the model. 8 requirement(s), 0 relations refused",
+      "code": "verification/unsupported-construct",
+      "hint": "Nothing is claimed about this requirement set. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file> --missing` for what this lane would not decide."
+    },
+    {
+      "id": "verification#10",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"CoverageGapDuringHandoverHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "6dd08a0f-f902-4751-a0a2-c91c546ad5ab",
+      "elementName": "SurveillanceDroneSwarm::OA::Hazards::CoverageGapDuringHandoverHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#11",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"PositionDriftHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "cd0f943e-39ca-49bc-a4a0-b2350200bde3",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#12",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MeshJammingHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "30ccd021-9d5c-49d0-a35e-eae9aeab3ed4",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#13",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MisclassificationHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "69081faa-0a8a-4d80-8ec6-e4520f78ad65",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#14",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"SensingDegradedUnnoticedHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "fa62b93c-bdd3-421d-98df-0f5061abef6e",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#15",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"StaleTrackHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "42996adb-3102-42c1-81a0-a542ca3bacb3",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#16",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"SpoofedMemberHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "78ea0241-1654-4533-9829-9b2132ff562e",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#17",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"MixedClassifierVersionsHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "0c6dbd22-83b4-4b39-b711-fabefe2c37c3",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#18",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"OperatorOverloadHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "a7271f25-094c-4f09-bd3d-3e712e6ce155",
+      "elementName": "SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#19",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"RecallWins\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "b8c46285-135f-4eb0-8951-06c8a140de2a",
+      "elementName": "SurveillanceDroneSwarm::SA::RecallWins",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#20",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"ReturnsWhenIsolated\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "8494ed7f-badf-4ed2-8dfe-d33135e0f648",
+      "elementName": "SurveillanceDroneSwarm::SA::ReturnsWhenIsolated",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#21",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GeofenceBreachEndsWatch\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "1273fd4a-020e-4aaa-beee-f2f29c2ea353",
+      "elementName": "SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#22",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"QuarantinedStaysOut\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "134fdb21-ad91-41c2-9775-c9501f58a823",
+      "elementName": "SurveillanceDroneSwarm::SA::QuarantinedStaysOut",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#23",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"fleetAirframeContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "f64268ba-d859-4445-bc4d-02acd1b4837a",
+      "elementName": "SurveillanceDroneSwarm::EPBS::fleetAirframeContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#24",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"onboardSoftwareContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "cbe9fdea-0fdc-4273-a29c-21f4f266323b",
+      "elementName": "SurveillanceDroneSwarm::EPBS::onboardSoftwareContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#25",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"classifierReleaseContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "46c76c03-f9e9-4293-a593-dd2c853a50fe",
+      "elementName": "SurveillanceDroneSwarm::EPBS::classifierReleaseContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#26",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"ClassifierReleaseVersionDriftHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "f78cefad-34bc-4412-a4e3-c93e9587dd65",
+      "elementName": "SurveillanceDroneSwarm::EPBS::Hazards::ClassifierReleaseVersionDriftHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#27",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"radioModuleContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "eb87f90d-5f30-4cda-a889-1aaaeaabdebc",
+      "elementName": "SurveillanceDroneSwarm::EPBS::radioModuleContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#28",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"RadioModuleSupplierDiscontinuationHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "5d427079-fb50-41e9-85e8-ca4a835c0ce1",
+      "elementName": "SurveillanceDroneSwarm::EPBS::Hazards::RadioModuleSupplierDiscontinuationHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#29",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"groundStationContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "2c8c4d75-8a93-40e4-8799-9782fbc1ecf8",
+      "elementName": "SurveillanceDroneSwarm::EPBS::groundStationContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#30",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"rechargePointContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "4488ff68-b27e-4ae3-928f-b584a1805bd3",
+      "elementName": "SurveillanceDroneSwarm::EPBS::rechargePointContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#31",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"RechargePointPartObsolescenceHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "8f9da692-c8c8-4240-9664-eaeabd096551",
+      "elementName": "SurveillanceDroneSwarm::EPBS::Hazards::RechargePointPartObsolescenceHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#32",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"recoveryPointContract\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "a5a26265-d3de-44c3-b3d3-7783ebee2ea4",
+      "elementName": "SurveillanceDroneSwarm::EPBS::recoveryPointContract",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#33",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"PeerCoordinationSinglePointHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "aefe362b-f262-4c0d-8766-1ada9d6cfdc3",
+      "elementName": "SurveillanceDroneSwarm::LA::Hazards::PeerCoordinationSinglePointHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#34",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GroundLinkC2SinglePathHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "f1318de0-f1e0-4339-b26e-2a9ee7d30c53",
+      "elementName": "SurveillanceDroneSwarm::LA::Hazards::GroundLinkC2SinglePathHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#35",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"CoordinationDivergenceHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "33cf53e7-a6ef-43d3-b308-065802c589b4",
+      "elementName": "SurveillanceDroneSwarm::LA::Hazards::CoordinationDivergenceHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#36",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GroundAdmissionBottleneckHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "370a7d5f-f9b4-48b7-8385-78e58b1b5087",
+      "elementName": "SurveillanceDroneSwarm::LA::Hazards::GroundAdmissionBottleneckHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#37",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GroundLinkRadioDropHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "ad74e619-7ada-4f7b-a45a-840a47f8cd96",
+      "elementName": "SurveillanceDroneSwarm::PA::Hazards::GroundLinkRadioDropHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#38",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"BatterySwapWearHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "d0b242ab-7c93-4a0b-8707-e06a788a80d7",
+      "elementName": "SurveillanceDroneSwarm::PA::Hazards::BatterySwapWearHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#39",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"OnboardComputeCrashHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "fbbb3121-588a-454d-a8db-d6b7c0cce26e",
+      "elementName": "SurveillanceDroneSwarm::PA::Hazards::OnboardComputeCrashHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#40",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "\"GroundCoordinatorSinglePointHazard\" carries prose and no relation, so it was not part of the question.",
+      "elementId": "31005bc2-c51b-45c7-b13b-85f9524d0b93",
+      "elementName": "SurveillanceDroneSwarm::PA::Hazards::GroundCoordinatorSinglePointHazard",
+      "code": "verification/unsupported-construct",
+      "hint": "No gate refused it — the file simply does not say, formally, what it requires. Add a `require constraint { … }` clause, or read the count beside the verdict as how many of the requirements on this subject the answer is not about."
+    },
+    {
+      "id": "verification#41",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::fleetSizeDrones > 0` was not asserted: the body `SurveillanceDroneSwarm::PA::fleetSizeDrones > 0` is not an expression this tool can read.",
+      "elementId": "3454c6c4-067f-478f-bf87-75622a0e85ee",
+      "elementName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#42",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12` was not asserted: the body `SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12` is not an expression this tool can read.",
+      "elementId": "8c7e8626-95ee-4f18-acfb-87cc15ee8224",
+      "elementName": "SurveillanceDroneSwarm::EPBS::SurveillanceDroneAirframeItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#43",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::missedDetectionFraction >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::missedDetectionFraction >= 0.0` is not an expression this tool can read.",
+      "elementId": "57262f40-ec64-4840-a4ef-cc9fe48bb9c8",
+      "elementName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#44",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::missedDetectionFraction <= 0.1` was not asserted: the body `SurveillanceDroneSwarm::PA::missedDetectionFraction <= 0.1` is not an expression this tool can read.",
+      "elementId": "2a4d7935-a055-4799-b554-4b7423e4966e",
+      "elementName": "SurveillanceDroneSwarm::EPBS::OnboardMissionSoftwareItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#45",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone >= 0.0` is not an expression this tool can read.",
+      "elementId": "1feb27d8-9418-4d6c-b424-f88a48982787",
+      "elementName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#46",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone <= 300.0` was not asserted: the body `SurveillanceDroneSwarm::PA::onboardClassifierCostUsdPerDrone <= 300.0` is not an expression this tool can read.",
+      "elementId": "4854479e-42cc-47be-8ccb-6f5166b5d37d",
+      "elementName": "SurveillanceDroneSwarm::EPBS::ClassifierReleaseItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#47",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::jammedLinkShareFraction >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::jammedLinkShareFraction >= 0.0` is not an expression this tool can read.",
+      "elementId": "8802d401-f7db-4909-a7c1-562e00d86364",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#48",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::jammedLinkShareFraction <= 1.0` was not asserted: the body `SurveillanceDroneSwarm::PA::jammedLinkShareFraction <= 1.0` is not an expression this tool can read.",
+      "elementId": "865de51e-7123-499a-8b52-fcddcb3a074b",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RadioModuleItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#49",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds >= 0.0` is not an expression this tool can read.",
+      "elementId": "bb37a0f9-e35a-40ef-addc-57cef1562f20",
+      "elementName": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#50",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds <= 60.0` was not asserted: the body `SurveillanceDroneSwarm::PA::reportDeliveryLatencySeconds <= 60.0` is not an expression this tool can read.",
+      "elementId": "a8d46cac-6eec-4f2d-8748-b6d98b050326",
+      "elementName": "SurveillanceDroneSwarm::EPBS::GroundStationItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#51",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::groundTurnaroundMinutes >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::groundTurnaroundMinutes >= 0.0` is not an expression this tool can read.",
+      "elementId": "f0b0d9b1-75cb-4d76-8f73-71c8a025eaa2",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#52",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::groundTurnaroundMinutes <= 20.0` was not asserted: the body `SurveillanceDroneSwarm::PA::groundTurnaroundMinutes <= 20.0` is not an expression this tool can read.",
+      "elementId": "631de741-e5cc-4a05-8402-3b4b43498d56",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RechargePointItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#53",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::fleetSizeDrones >= 0.0` was not asserted: the body `SurveillanceDroneSwarm::PA::fleetSizeDrones >= 0.0` is not an expression this tool can read.",
+      "elementId": "bd1091b9-a4c5-4ba1-975a-a626c8aee758",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    },
+    {
+      "id": "verification#54",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "`SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12.0` was not asserted: the body `SurveillanceDroneSwarm::PA::fleetSizeDrones <= 12.0` is not an expression this tool can read.",
+      "elementId": "2e93ff1a-097f-4cff-9180-38566562c62d",
+      "elementName": "SurveillanceDroneSwarm::EPBS::RecoveryPointItemContract::«ConstraintUsage»",
+      "code": "verification/unsupported-expression",
+      "hint": "The relation is listed with its reason rather than dropped, and the count travels with every verdict: an inconsistency found without it is still an inconsistency, but a requirement set called consistent without it may be excluded by the very relation that was refused (`unparseable`)."
+    }
+  ]
+}

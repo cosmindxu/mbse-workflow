@@ -1,0 +1,68 @@
+{
+  "toolAbsent": false,
+  "measure": {
+    "id": "88d072aa-e076-4733-b7de-2f06e84ecaf7",
+    "qualifiedName": "SurveillanceDroneSwarm::LA::coverageLossAfterMemberLossFraction",
+    "declaredName": "coverageLossAfterMemberLossFraction",
+    "unit": null,
+    "siFactor": 1,
+    "siOffset": 0
+  },
+  "bounds": [
+    {
+      "sense": "max",
+      "outcome": "vacuous",
+      "code": "verification/inconsistent-axioms",
+      "detail": "the assertions this bound would stand on cannot hold together (core axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3, axiom:SurveillanceDroneSwarm::LA::coverageUnderMeshJammingFraction, axiom:SurveillanceDroneSwarm::LA::jammedLinkFraction, axiom:SurveillanceDroneSwarm::LA::sortieMinutes, axiom:SurveillanceDroneSwarm::LA::turnaroundMinutes, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#5, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#6, axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction), so every bound over them is entailed by a contradiction and none is claimed. over 19 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "value": null,
+      "siValue": null,
+      "term": "",
+      "witness": [],
+      "checks": 0
+    }
+  ],
+  "withRequirements": false,
+  "released": [],
+  "requirements": [],
+  "axioms": 19,
+  "refused": 0,
+  "nonlinear": true,
+  "fragment": "qf-lra",
+  "logic": "QF_NRA",
+  "vacuityCore": [
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3",
+    "axiom:SurveillanceDroneSwarm::LA::coverageUnderMeshJammingFraction",
+    "axiom:SurveillanceDroneSwarm::LA::jammedLinkFraction",
+    "axiom:SurveillanceDroneSwarm::LA::sortieMinutes",
+    "axiom:SurveillanceDroneSwarm::LA::turnaroundMinutes",
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#5",
+    "axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#6",
+    "axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction"
+  ],
+  "checks": 1,
+  "exitCode": 2,
+  "timeoutMs": 5000,
+  "modelVersion": {
+    "graph": "sha256:c1c70b548493b77c350d96f2fcdcbde67af3b214bad4753a95eddb969983dbe7",
+    "source": "sha256:f684e7fa1ddc6891bac7b333f8b58333284e7bac63438c8cdc2dc8f3f95d5996",
+    "library": 38761,
+    "sysprose": {
+      "name": "sysprose",
+      "version": "0.1.0",
+      "git": "6d04bba846d1a8c97df2baff9ff5b01a6efdd7d7"
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "info",
+      "message": "max `SurveillanceDroneSwarm::LA::coverageLossAfterMemberLossFraction` was not established: the assertions this bound would stand on cannot hold together (core axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#3, axiom:SurveillanceDroneSwarm::LA::coverageUnderMeshJammingFraction, axiom:SurveillanceDroneSwarm::LA::jammedLinkFraction, axiom:SurveillanceDroneSwarm::LA::sortieMinutes, axiom:SurveillanceDroneSwarm::LA::turnaroundMinutes, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#5, axiom:SurveillanceDroneSwarm::LA::«ConstraintUsage»#6, axiom:SurveillanceDroneSwarm::LA::areaUnderWatchFraction), so every bound over them is entailed by a contradiction and none is claimed. over 19 assertion(s) — the model’s axioms — feature values, `bind` equalities and `assert constraint` bodies; `require` and `assume` clauses excluded, because a requirement is what is being checked, not a fact; no feature value was released; 0 relations refused",
+      "elementId": "88d072aa-e076-4733-b7de-2f06e84ecaf7",
+      "elementName": "SurveillanceDroneSwarm::LA::coverageLossAfterMemberLossFraction",
+      "code": "verification/inconsistent-axioms",
+      "hint": "Nothing is claimed about this bound. Read `docs/DIAGNOSTIC-CODES.md` for what this code means, and `npm run sysprose -- obligations <file>` for the axioms this measure would have been bounded over."
+    }
+  ]
+}

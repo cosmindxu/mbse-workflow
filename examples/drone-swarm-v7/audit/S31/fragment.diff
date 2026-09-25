@@ -1,0 +1,448 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v7/fragments/5_LA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v7/fragments/5_LA.sysml (after)
+@@ -2,9 +2,50 @@
+         #prompt part laGuidance {
+             doc /* LA: decompose the system into logical components. Every logical function traces to a system function; components exchange through ports; nothing physical is decided yet. */
+         }
+ 
+-        // the system, to be decomposed into logical components
++        // ---- mainComponent's mode/status/configuration state definitions ----
++        #Mode state def SwarmMode {
++            doc /* the fleet-level watch mode of the system: normal coverage, or a share of the mesh links between members jammed. Restates SA::SurveillanceDroneSwarmMode at LA, tagged #Mode per this run's modes-and-states option. */
++            initial start;
++            state Covering {
++                doc /* the fleet is holding continuous watch over the tasked area under normal mesh conditions. */
++            }
++            state MeshDegraded {
++                doc /* a share of the links between drones is jammed; the brief's named fleet mode. */
++            }
++            transition start -> Covering;
++            transition Covering -> MeshDegraded;
++            transition MeshDegraded -> Covering;
++        }
++        #Configuration state def FleetConfiguration {
++            doc /* the same fleet-level watch condition as SwarmMode, restated as a #Configuration state def per CV-16's rule that fleet-level states belong to that kind rather than #Mode; deliberately redundant with SwarmMode so both this run's option and CV-16 are satisfied. */
++            initial start;
++            state Covering {
++                doc /* the fleet is holding continuous watch over the tasked area under normal mesh conditions. */
++            }
++            state MeshDegraded {
++                doc /* a share of the links between drones is jammed; the brief's named fleet mode. */
++            }
++            transition start -> Covering;
++            transition Covering -> MeshDegraded;
++            transition MeshDegraded -> Covering;
++        }
++        #State state def SwarmStatus {
++            doc /* the coarse operating status of the system as a whole, independent of its watch mode. Restates SA::SurveillanceDroneSwarmStatus at LA. */
++            initial start;
++            state Idle {
++                doc /* the system has no active mission tasking. */
++            }
++            state Tasked {
++                doc /* the system has received mission tasking and is conducting the watch. */
++            }
++            transition start -> Idle;
++            transition Idle -> Tasked;
++            transition Tasked -> Idle;
++        }
++
++        // the system, to be decomposed into logical components (next step)
+         part def SurveillanceDroneSwarmLogical {
+             in port taskingIn : SA::SurveillanceDroneSwarmSystem::taskingIn;
+             out port reportsOut : SA::SurveillanceDroneSwarmSystem::reportsOut;
+             out port decisionsOut : SA::SurveillanceDroneSwarmSystem::decisionsOut;
+@@ -12,140 +53,316 @@
+             in port recallIn : SA::SurveillanceDroneSwarmSystem::recallIn;
+             in port ackIn : SA::SurveillanceDroneSwarmSystem::ackIn;
+             out port statusOut : SA::SurveillanceDroneSwarmSystem::statusOut;
+             out port rechargeRequestOut : SA::SurveillanceDroneSwarmSystem::rechargeRequestOut;
+-            doc /* TODO: decompose into components and move the functions onto them. */
++
++            state mode : SwarmMode;
++            state configuration : FleetConfiguration;
++            state status : SwarmStatus;
++
++            #Estimate attribute areaUnderWatchShare :> Common::areaUnderWatchShare = 0.92 {
++                doc /* worst-case estimate; basis: FleetOfTwelveDrones rotating through sectors and recharge under redistributeCoverage/rotateRecharge keeps a standing majority of sectors watched; target >= 0.9. */
++            }
++            #Estimate attribute coverageLossOnMemberLoss :> Common::coverageLossOnMemberLoss = 0.2 {
++                doc /* worst-case estimate; basis: losing 1 of 12 members costs roughly 1/12 of coverage before redistributeCoverage re-spreads the remaining fleet, plus handover lag; target <= 0.25. */
++            }
++            #Estimate attribute jammedMeshAreaUnderWatchShare :> Common::jammedMeshAreaUnderWatchShare = 0.78 {
++                doc /* worst-case estimate; basis: relayLink lets members reach isolated peers through surviving links when half the mesh is jammed, at some coverage cost; target >= 0.75. */
++            }
++            #Estimate attribute groundLinkLossAreaUnderWatchShare :> Common::groundLinkLossAreaUnderWatchShare = 0.9 {
++                doc /* worst-case estimate; basis: the eight #Coordination functions (handOverSector, rotateRecharge, redistributeCoverage, deconflictMembers, relayLink, correlateTracks, handOverTrack, admitMember) run over MeshRadio, independent of GroundLinkRadio, so coverage should hold when the ground link is down; where they end up allocated is next step's decision and would revise this figure. Target >= 0.9. */
++            }
++            #Estimate attribute watchEnduranceHours :> Common::watchEnduranceHours = 30 {
++                doc /* worst-case estimate; basis: 40-minute sorties against a 60-minute recharge, rotated across 12 members via rotateRecharge, sustains the watch well past a duty shift before ground-crew fatigue becomes the limit; target >= 24 h. */
++            }
++            #Estimate attribute reportLatencySeconds :> Common::reportLatencySeconds = 45 {
++                doc /* worst-case estimate; basis: onboard detection, correlateTracks de-duplication and reportDetections triage add delay before GroundLinkRadio delivery; target <= 60 s. */
++            }
++            #Estimate attribute positionErrorWithoutGnssMeters :> Common::positionErrorWithoutGnssMeters = 40 {
++                doc /* worst-case estimate; basis: navigateAgainstStoredMaps bounds drift by matching camera views to StoredMaps over a 10-minute GNSS outage; target <= 50 m. */
++            }
++            #Estimate attribute reportHoldMinutes :> Common::reportHoldMinutes = 35 {
++                doc /* worst-case estimate; basis: reportDetections buffers reports on a cut-off member with margin above the brief's floor; target >= 30 min. */
++            }
++            #Estimate attribute reportsLostInLinkGap :> Common::reportsLostInLinkGap = 0 {
++                doc /* worst-case estimate; basis: reportDetections holds reports rather than dropping them across a ground-link gap and delivers them once the link returns; target <= 0. */
++            }
++            #Estimate attribute missedDetectionShare :> Common::missedDetectionShare = 0.08 {
++                doc /* worst-case estimate; basis: detectAndClassifyObjects under nominal sensing and continuous watch; target <= 0.1. */
++            }
++            #Estimate attribute falseAlarmsPerHour :> Common::falseAlarmsPerHour = 1.5 {
++                doc /* worst-case estimate; basis: reportDetections triage and manageClassifierVersion consistency hold false alarms under the brief's cap; target <= 2 / h. */
++            }
++            #Estimate attribute operatorAlertsPerHour :> Common::operatorAlertsPerHour = 18 {
++                doc /* worst-case estimate; basis: reportDetections triage and de-duplication keep the alert rate under the operator's 20/h judging limit, with margin; target <= 20 / h. */
++            }
++            #Estimate attribute acknowledgedReportsThatMatterShare :> Common::acknowledgedReportsThatMatterShare = 0.82 {
++                doc /* worst-case estimate; basis: commandSupervision's reporting threshold plus reportDetections triage push relevance above the brief's floor; target >= 0.8. */
++            }
++            #Estimate attribute onboardClassificationCostUsd :> Common::onboardClassificationCostUsd = 280 {
++                doc /* worst-case estimate; basis: manageClassifierVersion keeps one classifier version so no per-member duplicate compute spend is needed, staying under ComputingCostCap; target <= 300 USD. */
++            }
++
++            doc /* the system's logical placeholder: one component carrying every LA function this step, its ports mirrored from SA. The decomposition of this component into distinct logical components (sensing, navigation, coordination, reporting) is the next step's job, done several ways and compared; this step fixes the population's structure, its modes and states, the hazards it makes visible and the architecture's worst-case measures of effectiveness. */
+         }
+         part mainComponent : SurveillanceDroneSwarmLogical;
+         trace mainComponent to SurveillanceDroneSwarm::SA::system;
+ 
+-        // the population: 12 identical members (CV-16)
++        // ---- member mode/status state definitions (CV-18/CV-19, carried from SA) ----
++        #Mode state def SurveillanceDroneMode {
++            doc /* the operating mode of one member drone: nominal watching, the degraded and constrained conditions the brief names, and landed. Restates SA::SurveillanceDroneMode at LA and carries its four rule properties. */
++            initial start;
++            state Landed {
++                doc /* grounded, not watching: recalled, out of cleared airspace, quarantined, or recharging. */
++            }
++            state Watching {
++                doc /* actively holding assigned sector watch under normal conditions. */
++            }
++            state NavigationDegraded {
++                doc /* no satellite positioning; navigating by matching camera views against stored maps. */
++            }
++            state SensingDegraded {
++                doc /* this drone's sensors cannot be trusted as they are. */
++            }
++            state Isolated {
++                doc /* cut off from the other drones. */
++            }
++            state Quarantined {
++                doc /* failed admission; takes no part in coordination until readmitted. */
++            }
++            state Recalled {
++                doc /* under a recall-and-land order; no longer watching, heading to land. */
++            }
++            state OutsideClearedAirspace {
++                doc /* outside the airspace authority's cleared limits; no longer watching, heading to land. */
++            }
++            transition start -> Landed;
++            transition Landed -> Watching;
++            transition Watching -> NavigationDegraded;
++            transition NavigationDegraded -> Watching;
++            transition Watching -> SensingDegraded;
++            transition SensingDegraded -> Watching;
++            transition Watching -> Isolated;
++            transition Isolated -> Watching;
++            transition Isolated -> Landed;
++            transition Landed -> Quarantined;
++            transition Quarantined -> Landed;
++            transition Watching -> Recalled;
++            transition Recalled -> Landed;
++            transition Watching -> OutsideClearedAirspace;
++            transition OutsideClearedAirspace -> Landed;
++
++            @SysproseVerification::PropertyPattern {
++                doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
++                attribute pattern = "absence";
++                attribute scope = "between";
++                attribute q = "state Recalled";
++                attribute r = "state Landed";
++                attribute p = "state Watching";
++            }
++            @SysproseVerification::PropertyPattern {
++                doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed; an isolated drone included. */
++                attribute pattern = "recovery";
++                attribute scope = "globally";
++                attribute p = "state Landed";
++            }
++            @SysproseVerification::PropertyPattern {
++                doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
++                attribute pattern = "absence";
++                attribute scope = "between";
++                attribute q = "state OutsideClearedAirspace";
++                attribute r = "state Landed";
++                attribute p = "state Watching";
++            }
++            @SysproseVerification::PropertyPattern {
++                doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
++                attribute pattern = "absence";
++                attribute scope = "between";
++                attribute q = "state Quarantined";
++                attribute r = "state Landed";
++                attribute p = "state Watching";
++            }
++        }
++        #State state def SurveillanceDroneStatus {
++            doc /* the coarse platform status of one member drone, independent of its watch mode. Restates SA::SurveillanceDroneStatus at LA. */
++            initial start;
++            state Idle {
++                doc /* on the ground, available but not tasked. */
++            }
++            state Active {
++                doc /* airborne and performing tasked activity. */
++            }
++            state Recharging {
++                doc /* at a recharge point being serviced by the ground crew. */
++            }
++            transition start -> Idle;
++            transition Idle -> Active;
++            transition Active -> Recharging;
++            transition Recharging -> Idle;
++            transition Active -> Idle;
++        }
++
++        // the population's replicable member definition (CV-16). Functions-only at this step (layer.functionsOnly): the fleet usage, its representative peers and the peer interface between them are instantiated in the next step's component decomposition, several ways, and compared -- this step keeps every function allocated to the placeholder mainComponent, so no #Coordination/#C2 function is lost in the meantime.
+         #Member part def SurveillanceDrone {
+             out port meshOut : Common::MeshPort;
+             in port meshIn : ~Common::MeshPort;
+-            doc /* TODO: one member at LA. Instantiate it as `part fleet : SurveillanceDrone [12];` plus two representatives joined by the peer interface. */
++            state mode : SurveillanceDroneMode;
++            state status : SurveillanceDroneStatus;
++            doc /* one member of the fleet: the replicable logical element's definition, carrying its own mode and status and declaring the mesh ports over which it will exchange coordination and track traffic with its peers via Common::MeshLink once instantiated (fleet usage, representatives, peer interface) in the next step. */
+         }
+         #prose part fleetFact {
+-            doc /* Population: 12 members of SurveillanceDrone, carried by fleet, exchanging through Common::MeshLink. Carried from the brief; the architecture instantiates it. */
++            doc /* Population: 12 members of SurveillanceDrone. Carried from the brief; the #Member part def SurveillanceDrone above declares the replicable element and its peer mesh ports. Per this step's functions-only rule, the fleet usage, its representative pair and the Common::MeshLink peer interface between them are instantiated in the next step's component decomposition rather than here; every function stays allocated to mainComponent in this fragment. */
+         }
+ 
++        // the SA behavioural rules for the member mode machine are carried forward at LA (CV-18); satisfied by mainComponent while the population's own representatives are deferred to the next step's component decomposition
++        satisfy SurveillanceDroneSwarm::SA::RecallWins by mainComponent;
++        satisfy SurveillanceDroneSwarm::SA::ReturnsWhenIsolated by mainComponent;
++        satisfy SurveillanceDroneSwarm::SA::GeofenceBreachEndsWatch by mainComponent;
++        satisfy SurveillanceDroneSwarm::SA::QuarantinedStaysOut by mainComponent;
++
+         // actors, carried over unchanged
+         #Actor part def DutyController {
+             out port supervisionOut : SA::DutyController::supervisionOut;
+             out port recallOut : SA::DutyController::recallOut;
+             out port ackOut : SA::DutyController::ackOut;
+             in port statusIn : SA::DutyController::statusIn;
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* the single operator at the operations centre who tasks, supervises and recalls the swarm and acknowledges its reports; ports carried unchanged from SA. */
+         }
+         part dutyController : DutyController;
+         trace dutyController to SurveillanceDroneSwarm::SA::dutyController;
+         #Actor part def Analysts {
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* operations centre staff who judge the merged, triaged reports and tracks the operations centre produces; no direct port exchange with the system, carried unchanged from SA. */
+         }
+         part analysts : Analysts;
+         trace analysts to SurveillanceDroneSwarm::SA::analysts;
+         #Actor part def OperationsCentre {
+             out port taskingOut : SA::OperationsCentre::taskingOut;
+             in port reportsIn : SA::OperationsCentre::reportsIn;
+             in port decisionsIn : SA::OperationsCentre::decisionsIn;
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* commissions surveillance missions, tasks the system with the area of interest and mission window, and takes in its triaged reports and decision records; ports carried unchanged from SA. */
+         }
+         part operationsCentre : OperationsCentre;
+         trace operationsCentre to SurveillanceDroneSwarm::SA::operationsCentre;
+         #Actor part def AirspaceAuthority {
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* says when and where the drones may fly; constrains cleared airspace as a limit the members' rules never breach, with no direct port exchange with the system, carried unchanged from SA. */
+         }
+         part airspaceAuthority : AirspaceAuthority;
+         trace airspaceAuthority to SurveillanceDroneSwarm::SA::airspaceAuthority;
+         #Actor part def GroundCrew {
+             in port rechargeIn : SA::GroundCrew::rechargeIn;
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* services and recharges the drones between sorties, taking in recharge-slot requests; ports carried unchanged from SA. */
+         }
+         part groundCrew : GroundCrew;
+         trace groundCrew to SurveillanceDroneSwarm::SA::groundCrew;
+         #Actor part def FixedCameraNetworkOwner {
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* runs the existing camera network and supplies its tracks to the operations centre for merging with the system's tracks; exchanges with the operations centre, not with the system directly, carried unchanged from SA. */
+         }
+         part fixedCameraNetworkOwner : FixedCameraNetworkOwner;
+         trace fixedCameraNetworkOwner to SurveillanceDroneSwarm::SA::fixedCameraNetworkOwner;
+         #Actor part def ProgrammeSponsor {
+-            doc /* TODO: check this actor's interface against SA. */
++            doc /* pays for the fleet and holds the per-drone computing cost cap; a budget stakeholder with no operational data exchange with the system, carried unchanged from SA. */
+         }
+         part programmeSponsor : ProgrammeSponsor;
+         trace programmeSponsor to SurveillanceDroneSwarm::SA::programmeSponsor;
+ 
++        // part-level connections mirroring SA's exchanges, so mainComponent's and the actors' ports resolve (interfaces option)
++        connection taskingLink connect operationsCentre.taskingOut to mainComponent.taskingIn {
++            doc /* carries mission tasking from the operations centre to the system. */
++        }
++        connection reportsLink connect mainComponent.reportsOut to operationsCentre.reportsIn {
++            doc /* carries triaged detection reports and tracks from the system to the operations centre. */
++        }
++        connection decisionsLink connect mainComponent.decisionsOut to operationsCentre.decisionsIn {
++            doc /* carries decision records from the system to the operations centre. */
++        }
++        connection supervisionLink connect dutyController.supervisionOut to mainComponent.supervisionIn {
++            doc /* carries supervisory commands from the duty controller to the system. */
++        }
++        connection recallLink connect dutyController.recallOut to mainComponent.recallIn {
++            doc /* carries recall-and-land orders from the duty controller to the system. */
++        }
++        connection ackLink connect dutyController.ackOut to mainComponent.ackIn {
++            doc /* carries report acknowledgements from the duty controller to the system. */
++        }
++        connection statusLink connect mainComponent.statusOut to dutyController.statusIn {
++            doc /* carries the status picture from the system to the duty controller. */
++        }
++        connection rechargeLink connect mainComponent.rechargeRequestOut to groundCrew.rechargeIn {
++            doc /* carries recharge-slot requests from the system to the ground crew. */
++        }
++
+         // functions, carried over from SA: every one of them has to be realised here
+         action def HoldSectorWatch {
+-            doc /* TODO: how `holdSectorWatch` is realised at LA. */
++            doc /* holding sector watch is the fleet's baseline activity: a member watches its assigned sector, coordinated with peers via handOverSector; realised here as a system-level function on mainComponent pending allocation to a sensing/flight-control logical component next step. */
+         }
+         action def DetectAndClassifyObjects {
+-            doc /* TODO: how `detectAndClassifyObjects` is realised at LA. */
++            doc /* detecting and classifying moving objects is performed onboard against the single classifier version manageClassifierVersion keeps current; realised here as a system-level function pending allocation to a perception logical component next step. */
+         }
+         action def NavigateAgainstStoredMaps {
+-            doc /* TODO: how `navigateAgainstStoredMaps` is realised at LA. */
++            doc /* navigation without satellite positioning matches a member's camera view against StoredMaps reference imagery; realised here as a system-level function pending allocation to a navigation logical component next step. */
+         }
+         action def ReportDetections {
+-            doc /* TODO: how `reportDetections` is realised at LA. */
++            doc /* triages and de-duplicates member detections into DetectionReportsAndTracks for the operations centre, holding them across a link gap and taking in acknowledgement; realised here as a system-level function pending allocation to a reporting logical component next step. */
+         }
+         action def RecordDecision {
+-            doc /* TODO: how `recordDecision` is realised at LA. */
++            doc /* keeps the decision record for every report sent -- its frames, classifier version, reporting threshold and acknowledger; realised here as a system-level function pending allocation to a reporting logical component next step. */
+         }
+         action def PresentStatusPicture {
+-            doc /* TODO: how `presentStatusPicture` is realised at LA. */
++            doc /* aggregates each member's position, activity, coverage and degradation into StatusPicture for the duty controller; a command-and-control function realised at system level here, kept ground-facing this step. */
+         }
+         action def TaskMission {
+-            doc /* TODO: how `taskMission`, `taskMissionAct` are realised at LA. */
++            doc /* takes in the area of interest, its sectors and the mission window from the operations centre; a command-and-control function realised at system level here, kept ground-facing this step. */
+         }
+         action def CommandSupervision {
+-            doc /* TODO: how `commandSupervision`, `commandSupervisionAct` are realised at LA. */
++            doc /* takes in priorities, a sector to look at more closely, and the reporting threshold from the duty controller; a command-and-control function realised at system level here, kept ground-facing this step. */
+         }
+         action def RecallAndLand {
+-            doc /* TODO: how `recallAndLand`, `recallAndLandAct` are realised at LA. */
++            doc /* takes in recall-and-land for the whole fleet or one member and ends that member's watch until it has landed; a command-and-control function realised at system level here, kept ground-facing this step. */
+         }
+         action def AcknowledgeReport {
+-            doc /* TODO: how `acknowledgeReport`, `acknowledgeReportAct` are realised at LA. */
++            doc /* takes in the duty controller's acknowledgement of a detection report; a command-and-control function realised at system level here, kept ground-facing this step. */
+         }
+         action def HandOverSector {
+-            doc /* TODO: how `handOverSector` is realised at LA. */
++            doc /* hands a sector's watch from one member to a peer, over the mesh, before the first must leave station; a coordination function realised at system level here, mitigating a gap on recall or recharge departure. */
+         }
+         action def RotateRecharge {
+-            doc /* TODO: how `rotateRecharge` is realised at LA. */
++            doc /* negotiates recharge rotation between members and with the ground crew so watch continuity is kept; a coordination function realised at system level here. */
+         }
+         action def RedistributeCoverage {
+-            doc /* TODO: how `redistributeCoverage` is realised at LA. */
++            doc /* redistributes coverage across the fleet when a member is lost or added; a coordination function realised at system level here, the main lever for holding coverage despite membership change. */
+         }
+         action def DeconflictMembers {
+-            doc /* TODO: how `deconflictMembers` is realised at LA. */
++            doc /* deconflicts flight paths between members sharing the same airspace, over the mesh; a coordination function realised at system level here. */
+         }
+         action def RelayLink {
+-            doc /* TODO: how `relayLink` is realised at LA. */
++            doc /* relays mesh traffic for a member that is otherwise out of reach; a coordination function realised at system level here, and the main lever for coordination continuity when the ground link is down or the mesh is jammed. */
+         }
+         action def CorrelateTracks {
+-            doc /* TODO: how `correlateTracks` is realised at LA. */
++            doc /* correlates one member's tracks against a peer's before reporting, to avoid duplicate and stale tracks; a coordination function realised at system level here. */
+         }
+         action def HandOverTrack {
+-            doc /* TODO: how `handOverTrack` is realised at LA. */
++            doc /* hands a track from a member that can no longer see the object to a peer that can, over the mesh; a coordination function realised at system level here. */
+         }
+         action def AdmitMember {
+-            doc /* TODO: how `admitMember` is realised at LA. */
++            doc /* admits, or refuses, a member's request to join the mesh and take part in coordination, guarding against a device that is not one of the fleet; a coordination function realised at system level here. */
+         }
+         action def ManageClassifierVersionFunction {
+-            doc /* TODO: how `manageClassifierVersion` is realised at LA. */
++            doc /* keeps one classifier version across the fleet and knows which version each member runs, so members do not classify the same object differently; realised at system level here. */
+         }
+         action def MergeWithCameraNetworkTracks {
+-            doc /* TODO: how `mergeAct` is realised at LA. */
++            doc /* merges the fleet's reports, tracks and decision records with the fixed camera network's tracks; performed by the operations centre actor, unchanged from SA. */
+         }
+         action def ViewStatusPicture {
+-            doc /* TODO: how `viewStatusAct` is realised at LA. */
++            doc /* takes in the status picture contributed by each member; performed by the duty controller actor, unchanged from SA. */
+         }
+         action def ServiceAndRecharge {
+-            doc /* TODO: how `serviceAndRechargeAct` is realised at LA. */
++            doc /* recharges and services a drone that has come in to land, about 60 minutes; performed by the ground crew actor, unchanged from SA. */
+         }
+         action def ProvideCameraTracks {
+-            doc /* TODO: how `provideCameraTracksAct` is realised at LA. */
++            doc /* supplies tracks from the fixed camera network to the operations centre for merging; performed by the fixed camera network owner actor, unchanged from SA. */
+         }
+         action def JudgeAlerts {
+-            doc /* TODO: how `judgeAlertsAct` is realised at LA. */
++            doc /* judges the merged, triaged reports and tracks to decide which alerts matter; performed by the analysts actor, unchanged from SA. */
+         }
+         action holdSectorWatch : HoldSectorWatch;
+         allocate holdSectorWatch to mainComponent;
+         trace holdSectorWatch to SurveillanceDroneSwarm::SA::holdSectorWatch;
+@@ -323,5 +540,40 @@
+         flow correlateTracksFlow of Common::Track from correlateTracks::trackOut to correlateTracks::trackIn;
+         flow handOverTrackFlow of Common::Track from handOverTrack::trackOut to handOverTrack::trackIn;
+         flow admitMemberFlow of Common::CoordinationMessage from admitMember::msgOut to admitMember::msgIn;
+ 
++        // hazards stated at SA are satisfied here by path, never restated (CV-19/safety option)
++        satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by navigateAgainstStoredMaps;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by relayLink;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by detectAndClassifyObjects;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by presentStatusPicture;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by correlateTracks;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by admitMember;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by manageClassifierVersion;
++        satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by reportDetections;
++
++        // hazards this layer adds, visible once the population's member definition exchanges over a peer mesh
++        package Hazards {
++            doc /* hazards added at LA: risks that become visible once the population's member definition (SurveillanceDrone, above) is instantiated as members exchanging over a peer mesh link and the functions above are allocated to the placeholder logical component. Each is satisfied below by the coordination function that mitigates it. */
++
++            #Hazard requirement MemberCollisionHazard {
++                subject s : SurveillanceDroneSwarm::LA::SurveillanceDrone;
++                doc /* two members sharing the same airspace fail to deconflict their flight paths and risk collision. */
++            }
++            #Hazard requirement PrematureDepartureHazard {
++                subject s : SurveillanceDroneSwarm::LA::SurveillanceDrone;
++                doc /* a member leaves its sector for recall or recharge before a handover to a peer completes, leaving a gap in watch. */
++            }
++            #Hazard requirement UncoveredMemberLossHazard {
++                subject s : SurveillanceDroneSwarm::LA::SurveillanceDrone;
++                doc /* a member is lost or grounded and the fleet does not redistribute coverage quickly enough, leaving its sector unwatched. */
++            }
++            #Hazard requirement UnrelayedIsolationHazard {
++                subject s : SurveillanceDroneSwarm::LA::SurveillanceDrone;
++                doc /* an isolated member finds no peer able to relay for it and drops out of coordination without anyone noticing. */
++            }
++        }
++        satisfy Hazards::MemberCollisionHazard by deconflictMembers;
++        satisfy Hazards::PrematureDepartureHazard by handOverSector;
++        satisfy Hazards::UncoveredMemberLossHazard by redistributeCoverage;
++        satisfy Hazards::UnrelayedIsolationHazard by relayLink;
+     }

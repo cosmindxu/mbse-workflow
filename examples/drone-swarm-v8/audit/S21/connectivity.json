@@ -1,0 +1,2792 @@
+{
+  "portCount": 64,
+  "connectionCount": 148,
+  "connectedPortCount": 60,
+  "unconnectedPorts": [
+    {
+      "id": "826f1fbc-268b-4c60-95a1-c608a1c7b093",
+      "eClass": "PortUsage",
+      "declaredName": "meshOut",
+      "qualifiedName": "SurveillanceDroneSwarm::SA::SurveillanceDrone::meshOut"
+    },
+    {
+      "id": "f8284d64-a823-4904-aee9-5c203edebe50",
+      "eClass": "PortUsage",
+      "declaredName": "meshIn",
+      "qualifiedName": "SurveillanceDroneSwarm::SA::SurveillanceDrone::meshIn"
+    },
+    {
+      "id": "58007ff2-51ea-42f8-a4ad-8ac9a0df42b4",
+      "eClass": "PortUsage",
+      "declaredName": "triagedAlertOut",
+      "qualifiedName": "SurveillanceDroneSwarm::SA::triageReports::triagedAlertOut"
+    },
+    {
+      "id": "bbf846f7-0eb8-4c0d-ab09-01ef68e780c1",
+      "eClass": "PortUsage",
+      "declaredName": "decisionRecordOut",
+      "qualifiedName": "SurveillanceDroneSwarm::SA::triageReports::decisionRecordOut"
+    }
+  ],
+  "unconnectedPortUsages": [],
+  "unreconciledPorts": [],
+  "sharedOccurrences": 0,
+  "connections": [
+    {
+      "connection": {
+        "id": "7f42faff-3046-4713-a63b-9053ee5ffb0c",
+        "eClass": "Flow",
+        "declaredName": "sectorHandoverFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::sectorHandoverFlow"
+      },
+      "source": [
+        "impl-dd2d0e61"
+      ],
+      "target": [
+        "impl-4153c334"
+      ],
+      "sourcePorts": [
+        "53263146-01de-47ba-86fc-c485a299072d"
+      ],
+      "targetPorts": [
+        "f362b897-7859-42fd-996c-61e99d1981c4"
+      ]
+    },
+    {
+      "connection": {
+        "id": "2052db46-4c31-40c7-923b-d0a312b07857",
+        "eClass": "Flow",
+        "declaredName": "rechargeRotationFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::rechargeRotationFlow"
+      },
+      "source": [
+        "impl-03ffe3d0"
+      ],
+      "target": [
+        "impl-e427a483"
+      ],
+      "sourcePorts": [
+        "9657e0e0-c387-495a-b1be-6f00bf3d92d6"
+      ],
+      "targetPorts": [
+        "536ce255-ae22-4ed1-bd92-75bee1891ce2"
+      ]
+    },
+    {
+      "connection": {
+        "id": "6aef0acf-ae62-4b51-9d08-8eea325a4be7",
+        "eClass": "Flow",
+        "declaredName": "coverageRedistributionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::coverageRedistributionFlow"
+      },
+      "source": [
+        "impl-b3a34f22"
+      ],
+      "target": [
+        "impl-3e7f7521"
+      ],
+      "sourcePorts": [
+        "3d39520d-fe02-4f36-88ae-f7bd6d1dcef5"
+      ],
+      "targetPorts": [
+        "97bb065c-8874-49f9-8307-047769622238"
+      ]
+    },
+    {
+      "connection": {
+        "id": "d91d7823-9da7-46c6-aa33-28e0dc0550a3",
+        "eClass": "Flow",
+        "declaredName": "deconflictionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::deconflictionFlow"
+      },
+      "source": [
+        "impl-76ab6423"
+      ],
+      "target": [
+        "impl-12c5c4ea"
+      ],
+      "sourcePorts": [
+        "577b9b8b-0b15-469b-9730-6e682b289085"
+      ],
+      "targetPorts": [
+        "54fc3f0a-c07a-479a-9112-2a549a151e4d"
+      ]
+    },
+    {
+      "connection": {
+        "id": "dbc9ea82-6454-46c8-8523-5028d8f2fa0f",
+        "eClass": "Flow",
+        "declaredName": "relayFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::relayFlow"
+      },
+      "source": [
+        "impl-1319dc3d"
+      ],
+      "target": [
+        "impl-a66af0b8"
+      ],
+      "sourcePorts": [
+        "afd9f2c1-a12a-48e1-b35d-7e6e4c2fa604"
+      ],
+      "targetPorts": [
+        "12276445-16e7-44a8-bde4-f25a8f19e355"
+      ]
+    },
+    {
+      "connection": {
+        "id": "82f49d95-6933-400c-b147-744ee69e221c",
+        "eClass": "Flow",
+        "declaredName": "trackCorrelationFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::trackCorrelationFlow"
+      },
+      "source": [
+        "impl-1bd0fd4d"
+      ],
+      "target": [
+        "impl-717cf468"
+      ],
+      "sourcePorts": [
+        "b53a560e-0c11-4fe3-92f8-4ff717a426d5"
+      ],
+      "targetPorts": [
+        "479f3261-6d39-4d28-867e-8d8998cd0746"
+      ]
+    },
+    {
+      "connection": {
+        "id": "42bc8c86-64d5-449b-a7fe-2e23a3c37d86",
+        "eClass": "Flow",
+        "declaredName": "trackHandoverFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::trackHandoverFlow"
+      },
+      "source": [
+        "impl-8427476c"
+      ],
+      "target": [
+        "impl-5bdc3887"
+      ],
+      "sourcePorts": [
+        "ac6d82b1-568d-4f4b-b843-b14546e34b03"
+      ],
+      "targetPorts": [
+        "ac363033-b413-43c7-b151-39f97c2d1ed2"
+      ]
+    },
+    {
+      "connection": {
+        "id": "5d83c3e8-ee70-402f-a90b-ee7a8d8ca091",
+        "eClass": "Flow",
+        "declaredName": "admissionRequestFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::admissionRequestFlow"
+      },
+      "source": [
+        "impl-e1b2971c"
+      ],
+      "target": [
+        "impl-7a257a97"
+      ],
+      "sourcePorts": [
+        "95711b05-1d7f-4045-bc44-842217a8d0e8"
+      ],
+      "targetPorts": [
+        "21791254-5ab9-4a27-a730-53636306fb1d"
+      ]
+    },
+    {
+      "connection": {
+        "id": "2578f90f-31dd-42c1-9cf2-c1cec8ab80e5",
+        "eClass": "Flow",
+        "declaredName": "admissionDecisionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::admissionDecisionFlow"
+      },
+      "source": [
+        "impl-6aae2acc"
+      ],
+      "target": [
+        "impl-bf352d67"
+      ],
+      "sourcePorts": [
+        "c9dd92e4-6a9f-4b1f-bcc8-3ac9b59dce2d"
+      ],
+      "targetPorts": [
+        "59775bce-c277-42ea-82f1-ad64c5a0699a"
+      ]
+    },
+    {
+      "connection": {
+        "id": "6a66f88d-c079-4833-9663-e5041012e257",
+        "eClass": "Flow",
+        "declaredName": "missionTaskingFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::missionTaskingFlow"
+      },
+      "source": [
+        "impl-e2022ea6"
+      ],
+      "target": [
+        "impl-fb689cf3"
+      ],
+      "sourcePorts": [
+        "8d1c1aaf-5806-45e3-963b-cad904d8ac9f"
+      ],
+      "targetPorts": [
+        "9f511f27-dd82-4f83-ac11-3b63b998428a"
+      ]
+    },
+    {
+      "connection": {
+        "id": "4f6dce67-ed31-42ae-8fe6-c8bb87457824",
+        "eClass": "Flow",
+        "declaredName": "supervisoryCommandFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::supervisoryCommandFlow"
+      },
+      "source": [
+        "impl-7a9f45bf"
+      ],
+      "target": [
+        "impl-5e0f623c"
+      ],
+      "sourcePorts": [
+        "33ce6529-9293-47e8-8351-2464569a414b"
+      ],
+      "targetPorts": [
+        "c99a9f33-c0c3-4d5b-b6dc-db3aef112909"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e668b538-1217-4028-ad5c-37c6fc05fcf8",
+        "eClass": "Flow",
+        "declaredName": "recallFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::recallFlow"
+      },
+      "source": [
+        "impl-41bc37eb"
+      ],
+      "target": [
+        "impl-263f3a48"
+      ],
+      "sourcePorts": [
+        "44c7d4bd-f79b-40b1-981b-5177202cc22a"
+      ],
+      "targetPorts": [
+        "c140ec61-d890-427a-b912-a3482ae56efd"
+      ]
+    },
+    {
+      "connection": {
+        "id": "be7400bd-719c-44f5-a1d8-5de0945442b0",
+        "eClass": "Flow",
+        "declaredName": "statusPictureFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::statusPictureFlow"
+      },
+      "source": [
+        "impl-82002ed9"
+      ],
+      "target": [
+        "impl-15eec3fa"
+      ],
+      "sourcePorts": [
+        "01fb325c-2164-4ae3-9776-aab7138fab80"
+      ],
+      "targetPorts": [
+        "f66d7c9d-ef9e-4a41-bf81-4aff76e47524"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9862b135-7d0e-4687-a778-dd8ee94285bf",
+        "eClass": "Flow",
+        "declaredName": "detectionReportFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::detectionReportFlow"
+      },
+      "source": [
+        "impl-181b9bb5"
+      ],
+      "target": [
+        "impl-3a8840d2"
+      ],
+      "sourcePorts": [
+        "0c051b1e-dd11-4868-9b3f-497f68be53eb"
+      ],
+      "targetPorts": [
+        "939a8a84-578e-46d7-8b4c-dd1642a57199"
+      ]
+    },
+    {
+      "connection": {
+        "id": "bceae9ed-bc54-464c-bf08-5baffd8b05e8",
+        "eClass": "Flow",
+        "declaredName": "ackFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::ackFlow"
+      },
+      "source": [
+        "impl-3b66d8d0"
+      ],
+      "target": [
+        "impl-f2821fb5"
+      ],
+      "sourcePorts": [
+        "56624c22-2d17-42ac-b5d1-163aecc549b2"
+      ],
+      "targetPorts": [
+        "a75ea5ff-8b26-4e61-8dcc-31740808709c"
+      ]
+    },
+    {
+      "connection": {
+        "id": "513f64b4-2543-44ed-95ba-2a51c06dc294",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "5117f173-4d76-40cf-97d5-2f0b4f62b52e"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "5117f173-4d76-40cf-97d5-2f0b4f62b52e"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f56a2ab9-6b78-44c4-819a-6b3115e6d551",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "1339021e-ecec-401a-857e-d8e7379036a6"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "1339021e-ecec-401a-857e-d8e7379036a6"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "be632264-9784-4fff-a5ad-00f39baa4b63",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "496eeb17-b7d8-42d7-a5f6-dc74528cc2b5"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "496eeb17-b7d8-42d7-a5f6-dc74528cc2b5"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "95ce8c98-161e-4b79-b247-a148a03b1297",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "e91ff566-5f90-462d-ad91-95c08e2d5ba7"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "e91ff566-5f90-462d-ad91-95c08e2d5ba7"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "b829dcb8-2307-43e9-b763-d546447cf9d7",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "48bf84be-6d13-421f-b035-fb45394dd352"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "48bf84be-6d13-421f-b035-fb45394dd352"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e02b5e62-c715-4af6-807e-539d265e797b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "1a1e5b71-0276-462b-9338-96e5d38832fb"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "1a1e5b71-0276-462b-9338-96e5d38832fb"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9e1c6dfa-3b80-42f8-8295-4272e00384fa",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "0804e210-16c3-48b5-8f66-741cc399d635"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "0804e210-16c3-48b5-8f66-741cc399d635"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "79d048c1-b7e3-40b3-9ecf-3d6a54a0a152",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "aee08543-26af-4092-ae9f-143a6f84801f"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "aee08543-26af-4092-ae9f-143a6f84801f"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "da8178d3-e00c-4fb5-955a-bdca54dd7db9",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "633cb66a-ede6-4404-8cd2-ef0eb3490716"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "633cb66a-ede6-4404-8cd2-ef0eb3490716"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1a189cc6-9a1f-4649-9923-9cbff7969438",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "58cdec32-85e4-4a25-b57f-301956781d8c"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "58cdec32-85e4-4a25-b57f-301956781d8c"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "c4c21d16-8eab-4732-8895-3bbc22d5a407",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "e9fe341b-9a5b-4b9b-bbf2-b0178923f531"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "e9fe341b-9a5b-4b9b-bbf2-b0178923f531"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "58ee4481-9dd2-42be-a4ac-44ce5d1879d2",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "e9fe341b-9a5b-4b9b-bbf2-b0178923f531"
+      ],
+      "target": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ],
+      "sourcePorts": [
+        "e9fe341b-9a5b-4b9b-bbf2-b0178923f531"
+      ],
+      "targetPorts": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ]
+    },
+    {
+      "connection": {
+        "id": "0fac05f8-1469-4f25-9961-f99e4a0556a6",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "fb080696-b625-49e7-bc71-927ed7501baa"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "fb080696-b625-49e7-bc71-927ed7501baa"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "cd140d94-1d5e-4d67-a9b8-1481209aedb6",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "fb080696-b625-49e7-bc71-927ed7501baa"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "fb080696-b625-49e7-bc71-927ed7501baa"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "2d937a65-9feb-4a67-a24a-954755db07a5",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "eb647522-6600-4e19-9653-c67491b982c7"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "eb647522-6600-4e19-9653-c67491b982c7"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "4a36e40f-2d8e-4554-920f-e0833c7f7855",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "eb647522-6600-4e19-9653-c67491b982c7"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "eb647522-6600-4e19-9653-c67491b982c7"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "b8a945ba-d2a8-44c1-ac30-951cac574e01",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "1c5551ad-7f31-477c-8ddc-3b12668a36c7"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "1c5551ad-7f31-477c-8ddc-3b12668a36c7"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "bf4d6f39-c9a4-4990-a691-a5b70bb381d3",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "1c5551ad-7f31-477c-8ddc-3b12668a36c7"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "1c5551ad-7f31-477c-8ddc-3b12668a36c7"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f1b518af-4f32-484b-ab57-7d44005d1c9c",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "5771f70e-1133-4e98-9542-e4a588e5dcdb"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "5771f70e-1133-4e98-9542-e4a588e5dcdb"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "8af5fc2b-85aa-4ba2-9a1f-fc8208d5604f",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "5771f70e-1133-4e98-9542-e4a588e5dcdb"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "5771f70e-1133-4e98-9542-e4a588e5dcdb"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "8cdd544d-cdfa-4609-9341-d291d60a5c69",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "a84dae2d-e0c3-4a3a-9ab4-d77e1b5e3a38"
+      ],
+      "target": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ],
+      "sourcePorts": [
+        "a84dae2d-e0c3-4a3a-9ab4-d77e1b5e3a38"
+      ],
+      "targetPorts": [
+        "251f7b6f-bc34-4855-97d6-e628ac6947de"
+      ]
+    },
+    {
+      "connection": {
+        "id": "ce214a95-5bad-4202-b77f-536e5083f61d",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "a84dae2d-e0c3-4a3a-9ab4-d77e1b5e3a38"
+      ],
+      "target": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ],
+      "sourcePorts": [
+        "a84dae2d-e0c3-4a3a-9ab4-d77e1b5e3a38"
+      ],
+      "targetPorts": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ]
+    },
+    {
+      "connection": {
+        "id": "04915493-6fbd-49de-95bc-f6097cfc6259",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "d4f42883-b577-428a-9d2a-a521dd40ef38"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "d4f42883-b577-428a-9d2a-a521dd40ef38"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9db71e3e-3f89-45a0-99d3-8e999bbdefe3",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "62f0a5b0-ec3a-4a9a-9930-d6c0177bd09b"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "62f0a5b0-ec3a-4a9a-9930-d6c0177bd09b"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "5b9125a1-a538-47a6-a4ee-e51a3be8dd35",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "cf10c9e0-117c-416a-8bb8-dcdd4c4ef117"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "cf10c9e0-117c-416a-8bb8-dcdd4c4ef117"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "c42e3f17-cbb6-44cb-9ffc-5d8d266b6809",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "3a0a5daf-3f50-4cf3-a9f1-65462ce4ee45"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "3a0a5daf-3f50-4cf3-a9f1-65462ce4ee45"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "44fc2de6-9ddc-4bcf-9902-c6695f323db3",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "2b017571-e1af-443b-b6e2-07007bac848c"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "2b017571-e1af-443b-b6e2-07007bac848c"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "3b763fbc-4ee7-4476-9ff9-811d81902a0b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "24db48bc-e749-4a60-a432-e433a5efdfcd"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "24db48bc-e749-4a60-a432-e433a5efdfcd"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9bac9384-6543-4ae5-a667-6e63fc88fbe2",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "37755f94-4cb2-41d8-adc1-8ed09612aa2e"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "37755f94-4cb2-41d8-adc1-8ed09612aa2e"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "11e53221-1b54-4df4-b647-2eb020462cdd",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "8dee166f-97df-408c-b9dc-0ff62f31790a"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "8dee166f-97df-408c-b9dc-0ff62f31790a"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "cde58e16-b842-474e-b808-8effb3494a05",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "e545b465-0ccf-4ba6-b7dc-5fcba7465271"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "e545b465-0ccf-4ba6-b7dc-5fcba7465271"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "3f6e6ca3-3296-4fe0-87b9-d308e8aa1beb",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "470e8db1-96bf-443d-9c5c-2ab8f5ce9f04"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "470e8db1-96bf-443d-9c5c-2ab8f5ce9f04"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "92ef10e9-cf23-40df-a36f-6ebbb2029e85",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "2aaf949b-e41e-4967-915a-557cf5854891"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "2aaf949b-e41e-4967-915a-557cf5854891"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "56e7925c-aa24-4c14-9b66-6ab7d818da0c",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "210fa249-a5ef-4bcf-8885-b71fe06af13e"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "210fa249-a5ef-4bcf-8885-b71fe06af13e"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f79698c3-16fc-4cb0-bfdd-64e38fbab609",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "b2df32fd-ca19-417e-b940-8915825776bc"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "b2df32fd-ca19-417e-b940-8915825776bc"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f121daee-e8dc-4724-ae20-e5d83361fd9e",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "77ad5a3c-b3fa-4b3b-9454-d498086ca814"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "77ad5a3c-b3fa-4b3b-9454-d498086ca814"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "55c987e0-d661-48e2-95c4-805674fefe0b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "dcf2c507-3d83-46ad-bc7a-10e96bac207a"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "dcf2c507-3d83-46ad-bc7a-10e96bac207a"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "201f4aa9-1ea8-4821-8de1-b6c3691089e9",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "25bc1f26-bb05-4a50-a32d-79fa021f2d5c"
+      ],
+      "target": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ],
+      "sourcePorts": [
+        "25bc1f26-bb05-4a50-a32d-79fa021f2d5c"
+      ],
+      "targetPorts": [
+        "1270aea3-f5ed-4861-9b85-fbd7efd1e938"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f4db1935-0032-4af3-b5a6-461980306d29",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "ebe88a79-9403-4ee3-ab3f-e619adc4f8cf"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "ebe88a79-9403-4ee3-ab3f-e619adc4f8cf"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f48458ec-f985-4031-8c00-e9fbe561454e",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "3ac0dbbc-18a3-4ac3-b892-8872717da65d"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "3ac0dbbc-18a3-4ac3-b892-8872717da65d"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "5cd87035-f27f-456f-a012-5d989476cc5f",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "15c1edbb-5c50-4c2f-8561-a5a8ecfeaff4"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "15c1edbb-5c50-4c2f-8561-a5a8ecfeaff4"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "ee71122e-e796-49d5-9648-758cabe2c029",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "7c19be59-56a6-4e69-af8c-fda1dfd773a3"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "7c19be59-56a6-4e69-af8c-fda1dfd773a3"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a550470e-f92c-42b3-afa6-da236debc5cc",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "1ec2a922-37e6-458f-9d78-e8db4f3a0959"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "1ec2a922-37e6-458f-9d78-e8db4f3a0959"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1a3065f4-e8ca-4184-94bb-a6853af6359f",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "c4c31161-5e00-437d-8425-0bab73e1e534"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "c4c31161-5e00-437d-8425-0bab73e1e534"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "23d903aa-8554-4615-a431-1f5c0a5a2072",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "0c8b6890-b966-41a6-ad8f-f02802620e68"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "0c8b6890-b966-41a6-ad8f-f02802620e68"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "8317f93f-a291-4ffa-80b8-e2e04b915bfc",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "912e66b2-6796-4a06-9f9d-9ab00ca68edb"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "912e66b2-6796-4a06-9f9d-9ab00ca68edb"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "bf3821a4-8023-4e46-ae96-a321378bae35",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "83594c30-f91b-4699-963e-d9301984f83f"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "83594c30-f91b-4699-963e-d9301984f83f"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "8074f705-8bec-45b8-ba2f-2ff64a453385",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "852c519d-9523-4e1d-8c2a-b1eab6479a1f"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "852c519d-9523-4e1d-8c2a-b1eab6479a1f"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "35ee8983-c3be-48cc-8838-b8f56226c51a",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "ad26df6c-e7a7-4e1c-a2f1-9fc0a81eda8c"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "ad26df6c-e7a7-4e1c-a2f1-9fc0a81eda8c"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "8264adb9-ce5d-4dc7-aaff-18641a5556ee",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "43593da9-7e0c-48c2-8496-7468dd981733"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "43593da9-7e0c-48c2-8496-7468dd981733"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "439f3a59-b8db-443e-bcda-664d5bfd9478",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "28db883c-70c2-4380-a8c8-57e0280c10ff"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "28db883c-70c2-4380-a8c8-57e0280c10ff"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "db9d6d1f-5642-4a57-b6c0-648387e473b9",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "d1cd692a-01bc-4894-87fd-98e6b9dc1580"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "d1cd692a-01bc-4894-87fd-98e6b9dc1580"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "02b6d1ef-50da-4e45-a4b6-765a5e1f9268",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "22fe3d89-3ebc-4623-b90c-59c94c018b16"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "22fe3d89-3ebc-4623-b90c-59c94c018b16"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "ce5670f8-c062-4110-9f91-22867953367b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "771f8d1d-79db-42ed-9f7e-6e8abb3e2635"
+      ],
+      "target": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ],
+      "sourcePorts": [
+        "771f8d1d-79db-42ed-9f7e-6e8abb3e2635"
+      ],
+      "targetPorts": [
+        "d2f8d296-8fe2-4e49-9cac-49dedad896fb"
+      ]
+    },
+    {
+      "connection": {
+        "id": "5d9462af-131b-4a05-832f-1da49bb92193",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "531623a6-e86f-47e6-89eb-ab0be5b22436"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "531623a6-e86f-47e6-89eb-ab0be5b22436"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "329b7813-dc58-40fe-bcd6-bfd416ba42b9",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "deb52bcc-dcff-4e6f-adad-531768e07cea"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "deb52bcc-dcff-4e6f-adad-531768e07cea"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "3c4df5a9-ca49-419b-9930-4ce2ccae4900",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "73cf2589-614d-425a-98b2-af3e8ddca8ca"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "73cf2589-614d-425a-98b2-af3e8ddca8ca"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "95033743-d356-4322-b371-7a469e126269",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "af4230db-5560-421a-82a6-4d39b6080c02"
+      ],
+      "target": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ],
+      "sourcePorts": [
+        "af4230db-5560-421a-82a6-4d39b6080c02"
+      ],
+      "targetPorts": [
+        "84df518d-8d29-4764-a435-ea609153f331"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1337faca-1eb1-497a-b59c-0a85685076c8",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "0ba293d1-c380-425a-aa11-f1021398d7d5"
+      ],
+      "target": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ],
+      "sourcePorts": [
+        "0ba293d1-c380-425a-aa11-f1021398d7d5"
+      ],
+      "targetPorts": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a1660327-f5cd-4028-908f-4d12235df05f",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::OA::«Allocation»"
+      },
+      "source": [
+        "91c82ef7-96d3-4cb9-a128-6b9f43860a5d"
+      ],
+      "target": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ],
+      "sourcePorts": [
+        "91c82ef7-96d3-4cb9-a128-6b9f43860a5d"
+      ],
+      "targetPorts": [
+        "5de0d0b3-8c09-4d51-9ef3-9ee490aeb338"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a14d4db2-d7b2-45f7-9640-fd20a6e9e1c1",
+        "eClass": "ConnectionUsage",
+        "declaredName": "missionTaskingLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::missionTaskingLink"
+      },
+      "source": [
+        "impl-3fe5a7bd"
+      ],
+      "target": [
+        "impl-7c40ba37"
+      ],
+      "sourcePorts": [
+        "26a626fb-1c42-496e-9af1-f5c297f8f9d7"
+      ],
+      "targetPorts": [
+        "5fc2211e-7a3b-403c-935f-10cf87864a44"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a2a3ea0e-2d0a-4aea-9fdc-877106bbaf85",
+        "eClass": "ConnectionUsage",
+        "declaredName": "supervisoryCommandLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::supervisoryCommandLink"
+      },
+      "source": [
+        "impl-91665462"
+      ],
+      "target": [
+        "impl-f4927ee2"
+      ],
+      "sourcePorts": [
+        "21b72eca-3a6f-4370-9a1d-8c04aef82e29"
+      ],
+      "targetPorts": [
+        "8493853a-54e3-4bdc-8b38-5f19beba2d04"
+      ]
+    },
+    {
+      "connection": {
+        "id": "b43f373d-1ab2-4882-b311-3fc28be8d8e0",
+        "eClass": "ConnectionUsage",
+        "declaredName": "recallOrderLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::recallOrderLink"
+      },
+      "source": [
+        "impl-cffba2d5"
+      ],
+      "target": [
+        "impl-92b5a9a9"
+      ],
+      "sourcePorts": [
+        "8b8e2958-40fa-45d9-bb0d-7215566c010f"
+      ],
+      "targetPorts": [
+        "7217e64c-ff71-4148-a36a-ae3e7ca6a283"
+      ]
+    },
+    {
+      "connection": {
+        "id": "c0aac342-d9cf-4be1-b48b-7fcfb81401cf",
+        "eClass": "ConnectionUsage",
+        "declaredName": "statusPictureLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::statusPictureLink"
+      },
+      "source": [
+        "impl-2d4084cf"
+      ],
+      "target": [
+        "impl-3f02691f"
+      ],
+      "sourcePorts": [
+        "3bd01e6c-bc60-4317-9114-04ecb5362a49"
+      ],
+      "targetPorts": [
+        "96444ac0-881e-4609-84b9-2c43c37fdc40"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9e297750-3357-4ab1-ad2e-8408e540c8da",
+        "eClass": "ConnectionUsage",
+        "declaredName": "reportAckLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::reportAckLink"
+      },
+      "source": [
+        "impl-ac852cb0"
+      ],
+      "target": [
+        "impl-4849ddcd"
+      ],
+      "sourcePorts": [
+        "a97c337a-8962-4e8a-827a-cb37784f43e5"
+      ],
+      "targetPorts": [
+        "d6e5d136-0649-4747-a92c-5bbf8e5400a1"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f9712361-be29-480d-bcaf-d87af15603cd",
+        "eClass": "ConnectionUsage",
+        "declaredName": "detectionReportsLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::detectionReportsLink"
+      },
+      "source": [
+        "impl-1e9a4a5f"
+      ],
+      "target": [
+        "impl-45b50bf6"
+      ],
+      "sourcePorts": [
+        "d292ba37-82c1-400e-8ecf-54f7756aff55"
+      ],
+      "targetPorts": [
+        "900dbc84-0957-46c3-b664-9bb79c15500c"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f8bfc698-f51c-4576-ae80-c74ae02d46e2",
+        "eClass": "ConnectionUsage",
+        "declaredName": "correlatedTracksLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::correlatedTracksLink"
+      },
+      "source": [
+        "impl-d650a45c"
+      ],
+      "target": [
+        "impl-9304723f"
+      ],
+      "sourcePorts": [
+        "5487bd8a-1dc4-484a-8e31-d2d3f3e5a9f7"
+      ],
+      "targetPorts": [
+        "5ffb0df7-a68f-434a-a443-a299ebe76586"
+      ]
+    },
+    {
+      "connection": {
+        "id": "ff90fc41-9127-4b0f-abbf-627f688952fb",
+        "eClass": "ConnectionUsage",
+        "declaredName": "triagedAlertLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::triagedAlertLink"
+      },
+      "source": [
+        "impl-ed85074b"
+      ],
+      "target": [
+        "impl-c809e87a"
+      ],
+      "sourcePorts": [
+        "0ae4a724-f0df-4f5c-b403-98538b74f33d"
+      ],
+      "targetPorts": [
+        "5c1c7e2a-c23a-4d43-b4a1-77fb193804fd"
+      ]
+    },
+    {
+      "connection": {
+        "id": "de87e947-1de4-4e0b-8399-c1639917b889",
+        "eClass": "ConnectionUsage",
+        "declaredName": "decisionRecordLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::decisionRecordLink"
+      },
+      "source": [
+        "impl-2da13b98"
+      ],
+      "target": [
+        "impl-dad1ca33"
+      ],
+      "sourcePorts": [
+        "cdcc0734-65f0-401b-ac52-b160c5120ffa"
+      ],
+      "targetPorts": [
+        "e4d0abe8-703a-4030-a9e1-d69e876502d1"
+      ]
+    },
+    {
+      "connection": {
+        "id": "ce6a1e1c-bb8b-43fc-b6b5-53205f3441a5",
+        "eClass": "ConnectionUsage",
+        "declaredName": "airspaceClearanceLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::airspaceClearanceLink"
+      },
+      "source": [
+        "impl-c4642452"
+      ],
+      "target": [
+        "impl-66328f73"
+      ],
+      "sourcePorts": [
+        "bb7baa30-6442-4fc9-8e5c-c79624b9cea2"
+      ],
+      "targetPorts": [
+        "2be26c43-a719-4c4b-9cda-33e0077fedd5"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a7b600fb-3c8f-4325-b133-045dc5e55185",
+        "eClass": "ConnectionUsage",
+        "declaredName": "movingObjectsLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::movingObjectsLink"
+      },
+      "source": [
+        "impl-b4efdc0e"
+      ],
+      "target": [
+        "impl-a6d5f55e"
+      ],
+      "sourcePorts": [
+        "75bbfa1d-0108-4488-9050-f59492c6171f"
+      ],
+      "targetPorts": [
+        "4aab7b72-c14c-472f-a5a3-89e5dfbd44b5"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e1f47399-d407-45d2-8540-1dfa34548588",
+        "eClass": "ConnectionUsage",
+        "declaredName": "sceneConditionsLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::sceneConditionsLink"
+      },
+      "source": [
+        "impl-59f2c64c"
+      ],
+      "target": [
+        "impl-b2a5d2ac"
+      ],
+      "sourcePorts": [
+        "be6cc26e-7169-4bfe-a009-3f8bc7fe1119"
+      ],
+      "targetPorts": [
+        "ebd96451-bcdf-41a0-920c-302c49480bae"
+      ]
+    },
+    {
+      "connection": {
+        "id": "9ce8e9ed-32b3-41bd-b02b-fc7b4e0428cf",
+        "eClass": "ConnectionUsage",
+        "declaredName": "radioInterferenceLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::radioInterferenceLink"
+      },
+      "source": [
+        "impl-3cdfe27d"
+      ],
+      "target": [
+        "impl-f00682e7"
+      ],
+      "sourcePorts": [
+        "1a7a739c-0971-4e54-bc4e-d99097a6291d"
+      ],
+      "targetPorts": [
+        "eccdcdcd-ccf6-4ff7-b23f-f5408f78c194"
+      ]
+    },
+    {
+      "connection": {
+        "id": "87792470-33f8-4580-8c7a-918be523494a",
+        "eClass": "ConnectionUsage",
+        "declaredName": "satOutageLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::satOutageLink"
+      },
+      "source": [
+        "impl-55fb825d"
+      ],
+      "target": [
+        "impl-8425c95d"
+      ],
+      "sourcePorts": [
+        "df48e4ad-c6e9-4818-839b-a223725b9401"
+      ],
+      "targetPorts": [
+        "dc0fad96-8129-49dc-9446-001ccc14e377"
+      ]
+    },
+    {
+      "connection": {
+        "id": "04c52d92-0921-47a0-a16c-f5b785dc42af",
+        "eClass": "ConnectionUsage",
+        "declaredName": "weatherLimitLink",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::weatherLimitLink"
+      },
+      "source": [
+        "impl-e8e4d1ef"
+      ],
+      "target": [
+        "impl-4348a0bf"
+      ],
+      "sourcePorts": [
+        "5dc6f6db-4ec4-4bbf-8026-168131a814fe"
+      ],
+      "targetPorts": [
+        "b14c5e88-b722-4bed-86a5-fa19fc6993ed"
+      ]
+    },
+    {
+      "connection": {
+        "id": "d1bb0896-bc01-4fee-99c1-be4f7655b7f5",
+        "eClass": "Flow",
+        "declaredName": "sectorHandoverFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::handOverSector::sectorHandoverFlow"
+      },
+      "source": [
+        "impl-979816e5"
+      ],
+      "target": [
+        "impl-84b228a0"
+      ],
+      "sourcePorts": [
+        "53263146-01de-47ba-86fc-c485a299072d"
+      ],
+      "targetPorts": [
+        "f362b897-7859-42fd-996c-61e99d1981c4"
+      ]
+    },
+    {
+      "connection": {
+        "id": "fb564656-79b4-4d75-bae3-a791389bcf1a",
+        "eClass": "Flow",
+        "declaredName": "rechargeRotationFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::rotateRecharge::rechargeRotationFlow"
+      },
+      "source": [
+        "impl-6231ed1c"
+      ],
+      "target": [
+        "impl-fb388017"
+      ],
+      "sourcePorts": [
+        "9657e0e0-c387-495a-b1be-6f00bf3d92d6"
+      ],
+      "targetPorts": [
+        "536ce255-ae22-4ed1-bd92-75bee1891ce2"
+      ]
+    },
+    {
+      "connection": {
+        "id": "602e5c8d-ff58-4ea8-a0a8-053d72a85e33",
+        "eClass": "Flow",
+        "declaredName": "coverageRedistributionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::redistributeCoverage::coverageRedistributionFlow"
+      },
+      "source": [
+        "impl-e28a384e"
+      ],
+      "target": [
+        "impl-3d282ac5"
+      ],
+      "sourcePorts": [
+        "3d39520d-fe02-4f36-88ae-f7bd6d1dcef5"
+      ],
+      "targetPorts": [
+        "97bb065c-8874-49f9-8307-047769622238"
+      ]
+    },
+    {
+      "connection": {
+        "id": "c41384d0-4b85-458f-8d61-d15396e435a7",
+        "eClass": "Flow",
+        "declaredName": "deconflictionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::deconflictFlight::deconflictionFlow"
+      },
+      "source": [
+        "impl-be01dbcf"
+      ],
+      "target": [
+        "impl-5bab972e"
+      ],
+      "sourcePorts": [
+        "577b9b8b-0b15-469b-9730-6e682b289085"
+      ],
+      "targetPorts": [
+        "54fc3f0a-c07a-479a-9112-2a549a151e4d"
+      ]
+    },
+    {
+      "connection": {
+        "id": "bda3bcb2-c68e-47a2-8957-31e3b6765fc7",
+        "eClass": "Flow",
+        "declaredName": "relayFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::relayThroughNeighbour::relayFlow"
+      },
+      "source": [
+        "impl-99d62311"
+      ],
+      "target": [
+        "impl-e262bec4"
+      ],
+      "sourcePorts": [
+        "afd9f2c1-a12a-48e1-b35d-7e6e4c2fa604"
+      ],
+      "targetPorts": [
+        "12276445-16e7-44a8-bde4-f25a8f19e355"
+      ]
+    },
+    {
+      "connection": {
+        "id": "d7513869-ae23-486e-9c1e-b71fd4f639bb",
+        "eClass": "Flow",
+        "declaredName": "trackCorrelationFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::correlateTracks::trackCorrelationFlow"
+      },
+      "source": [
+        "impl-ec3755e9"
+      ],
+      "target": [
+        "impl-585e011c"
+      ],
+      "sourcePorts": [
+        "b53a560e-0c11-4fe3-92f8-4ff717a426d5"
+      ],
+      "targetPorts": [
+        "479f3261-6d39-4d28-867e-8d8998cd0746"
+      ]
+    },
+    {
+      "connection": {
+        "id": "5d997ef4-40b7-4120-b506-31e267464134",
+        "eClass": "Flow",
+        "declaredName": "trackHandoverFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::handOverTrack::trackHandoverFlow"
+      },
+      "source": [
+        "impl-907e51b8"
+      ],
+      "target": [
+        "impl-e954cf6b"
+      ],
+      "sourcePorts": [
+        "ac6d82b1-568d-4f4b-b843-b14546e34b03"
+      ],
+      "targetPorts": [
+        "ac363033-b413-43c7-b151-39f97c2d1ed2"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1f8a8963-7ad6-43e2-9760-80a8bef23dca",
+        "eClass": "Flow",
+        "declaredName": "admissionRequestFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::admitMember::admissionRequestFlow"
+      },
+      "source": [
+        "impl-569c9fa0"
+      ],
+      "target": [
+        "impl-5bc114b3"
+      ],
+      "sourcePorts": [
+        "95711b05-1d7f-4045-bc44-842217a8d0e8"
+      ],
+      "targetPorts": [
+        "21791254-5ab9-4a27-a730-53636306fb1d"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f9ad7548-7742-4f5a-b5fb-13c3dcd16ddb",
+        "eClass": "Flow",
+        "declaredName": "admissionDecisionFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::admitMember::admissionDecisionFlow"
+      },
+      "source": [
+        "impl-0541b878"
+      ],
+      "target": [
+        "impl-dfef062b"
+      ],
+      "sourcePorts": [
+        "c9dd92e4-6a9f-4b1f-bcc8-3ac9b59dce2d"
+      ],
+      "targetPorts": [
+        "59775bce-c277-42ea-82f1-ad64c5a0699a"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a4af0ce8-6afc-4544-a106-ffbcd442ff08",
+        "eClass": "Flow",
+        "declaredName": "missionTaskingFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::taskSurveillanceMission::missionTaskingFlow"
+      },
+      "source": [
+        "impl-136282bc"
+      ],
+      "target": [
+        "impl-78e00537"
+      ],
+      "sourcePorts": [
+        "8d1c1aaf-5806-45e3-963b-cad904d8ac9f"
+      ],
+      "targetPorts": [
+        "9f511f27-dd82-4f83-ac11-3b63b998428a"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e2e74daf-3b1e-43e4-b541-892ef1a681e6",
+        "eClass": "Flow",
+        "declaredName": "supervisoryCommandFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::issueSupervisoryCommand::supervisoryCommandFlow"
+      },
+      "source": [
+        "impl-d2bf0855"
+      ],
+      "target": [
+        "impl-1da6b630"
+      ],
+      "sourcePorts": [
+        "33ce6529-9293-47e8-8351-2464569a414b"
+      ],
+      "targetPorts": [
+        "c99a9f33-c0c3-4d5b-b6dc-db3aef112909"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f347b1c6-4120-4445-b75d-a586573def49",
+        "eClass": "Flow",
+        "declaredName": "recallFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::recallToLand::recallFlow"
+      },
+      "source": [
+        "impl-c6492e29"
+      ],
+      "target": [
+        "impl-259cef5c"
+      ],
+      "sourcePorts": [
+        "44c7d4bd-f79b-40b1-981b-5177202cc22a"
+      ],
+      "targetPorts": [
+        "c140ec61-d890-427a-b912-a3482ae56efd"
+      ]
+    },
+    {
+      "connection": {
+        "id": "01bb9fec-ec4d-4d26-88fe-08cfe286fad2",
+        "eClass": "Flow",
+        "declaredName": "statusPictureFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::presentStatusPicture::statusPictureFlow"
+      },
+      "source": [
+        "impl-8a8673d5"
+      ],
+      "target": [
+        "impl-5df2ccb0"
+      ],
+      "sourcePorts": [
+        "01fb325c-2164-4ae3-9776-aab7138fab80"
+      ],
+      "targetPorts": [
+        "f66d7c9d-ef9e-4a41-bf81-4aff76e47524"
+      ]
+    },
+    {
+      "connection": {
+        "id": "33b2e3d5-5566-4203-a0a9-c833f285803a",
+        "eClass": "Flow",
+        "declaredName": "acknowledgementFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::acknowledgeDetectionReport::acknowledgementFlow"
+      },
+      "source": [
+        "impl-4fdb05ba"
+      ],
+      "target": [
+        "impl-6d88c319"
+      ],
+      "sourcePorts": [
+        "56624c22-2d17-42ac-b5d1-163aecc549b2"
+      ],
+      "targetPorts": [
+        "a75ea5ff-8b26-4e61-8dcc-31740808709c"
+      ]
+    },
+    {
+      "connection": {
+        "id": "f9ae704f-093d-43ad-a1b7-fa53b9ad52be",
+        "eClass": "Flow",
+        "declaredName": "detectionReportFlow",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::reportDetection::detectionReportFlow"
+      },
+      "source": [
+        "impl-0669a459"
+      ],
+      "target": [
+        "impl-6de90bec"
+      ],
+      "sourcePorts": [
+        "0c051b1e-dd11-4868-9b3f-497f68be53eb"
+      ],
+      "targetPorts": [
+        "939a8a84-578e-46d7-8b4c-dd1642a57199"
+      ]
+    },
+    {
+      "connection": {
+        "id": "4e6749cd-0d02-461c-a9a0-8301ea0e2cba",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e9ed407a-2961-4cb4-b35f-f9cdb3ac3b62",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "27dd746b-c45c-489f-9386-33f0c3026357",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "fbd48395-3063-42df-9241-a14ac3241cb7",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1b19b2bc-e33c-4bc1-8b83-0eaca5d4e9d6",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "e26f2592-bec8-4e93-99e3-81b8b3f3a6bc",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "a6adca6e-40f2-40d3-852d-72dc9252db54",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "bc943977-a21e-4117-a679-0f6c6688f031",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "b924fa53-1f74-416b-b5b1-e9b502359eaf",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1da6a30f-27e4-422a-9c40-e156d8aadf5e",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "3284c52d-cca9-41ac-adaf-26abfb7017da",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "1b411ca1-cb3f-4ebb-b900-3569eb803dfb",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "3f636584-f731-4f14-9b8b-add1c2d29fbf",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "570205b6-77ac-45fe-a17e-aeafe45520fd",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "38c62247-f3f0-4a26-aedf-51d1f25ff761"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "38c62247-f3f0-4a26-aedf-51d1f25ff761"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "7b5f3ad6-0255-4d79-ad80-b182855b60ca",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "f4841c1d-29c4-4dc2-a0c6-3f57b9b83619"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "f4841c1d-29c4-4dc2-a0c6-3f57b9b83619"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "317565fd-0f81-4ea9-b4ac-33732b552834",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "41530686-80a1-4e44-93b8-30947f033487"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "41530686-80a1-4e44-93b8-30947f033487"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "25deaa42-d65e-48f9-a133-b17a20b40bae",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "f41dda89-a51b-4676-8c8e-21284d784ef7"
+      ],
+      "target": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ],
+      "sourcePorts": [
+        "f41dda89-a51b-4676-8c8e-21284d784ef7"
+      ],
+      "targetPorts": [
+        "61dd2794-2543-436d-863a-bc0c8546b6be"
+      ]
+    },
+    {
+      "connection": {
+        "id": "99b8ae19-b704-4abb-87f3-cd7a505974cf",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "d7031d85-bcf0-4fea-94a1-c6772a97fa66",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "7a9ad874-9473-4067-b57c-02f8a256ebf4",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "9a29f444-4aed-4b66-8ba9-30f09b5a2d2c",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "7a8e3c0e-18d4-4d73-b88d-71c969409097",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "68062b7b-af10-4e72-ac5b-93832bd54a0c",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "4bc6295d-3262-49a7-ac71-5661834346d2",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "2517dd48-4bae-4d3b-8b18-ca81bc1ff1e1",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "d0e27c1d-7ea0-4443-ad74-866e4f7fb42d",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "1ffcab28-6ded-48f7-852a-17c58d06a31d",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "87f481aa-df88-4f9f-af75-df28f44236f3",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "419cb39f-d0ff-4eeb-b775-101217145d62",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "0ed6f26a-5239-4e01-a1cf-11c5231cbf2b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "dbee88e8-e906-477b-b399-db94a63da4ca",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "ec345e15-196b-4fb8-8da6-c6ce7e894b5f"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "75ee1f79-695f-45ba-b3bd-fb2287e4cefa",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "efcf376e-9ade-46d4-8515-c291c265e72b"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "f5d7dd0b-7016-4fea-bbfc-2fb40413c8f1",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "66683d8a-bf57-495c-8433-dd887d7f2b16"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "2314e918-04fd-4023-858d-cc763525d0d7",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "aabfa99f-98df-4816-aba5-fc6160d4fbbf"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "406e304e-6e4b-47bc-a319-d4873bec9d90",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "334b8d56-1428-4679-abc3-25f957cf1876"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "2447a153-a103-419c-9cfe-832aee99563b",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "4699a7e4-1c2c-4f95-bb7b-6c17cbc54dd0"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "cc69e96a-2ae4-46b4-9891-c9a82917e0e4",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "19a92be1-6044-4bf8-9e91-424f910a23f8"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "64da504c-ed24-4bcf-a1af-c1c9a204fcbc",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "46837269-3bff-47b6-a8ba-737811e19d36"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "38721c80-538c-429e-ade5-c1d600a7f2a1",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "fc0eec62-6772-413f-a41f-1d7d056147f1"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "ec4bf69f-575f-4528-a679-046c68514f65",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "49a0a5b5-edb6-4e90-973d-d406ebe02291"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "70ba0fba-f528-41ba-b387-303f652f04fa",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "0a74a9b7-4726-4822-9bc9-7c7e7340b87b"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "59dd5b9b-e420-4287-814e-5f8110896a40",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "023be82d-035d-4b37-9da9-97a216adc7ea"
+      ],
+      "targetPorts": []
+    },
+    {
+      "connection": {
+        "id": "58b00af6-1fd4-4efb-a76c-237401da9c79",
+        "eClass": "Allocation",
+        "qualifiedName": "SurveillanceDroneSwarm::SA::«Allocation»"
+      },
+      "source": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "target": [],
+      "sourcePorts": [
+        "fab8ab57-500b-4729-b8c0-68afc43bc665"
+      ],
+      "targetPorts": []
+    }
+  ],
+  "libraryExcluded": 8,
+  "implicitExcluded": 90,
+  "implicitResolved": 90
+}

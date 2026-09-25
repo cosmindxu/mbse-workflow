@@ -1,0 +1,453 @@
+{
+  "step": "S32",
+  "layer": "LA",
+  "alternative": 1,
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml",
+  "prefixHash": "d97ca9d76c8927ee",
+  "elements": 2716,
+  "durationMs": 3819,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/check.json",
+      "findings": 31
+    },
+    {
+      "name": "requirements-hazards",
+      "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --kind requirement --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 7,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/requirements-hazards.json",
+      "findings": 4
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 19,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/elements.json",
+      "findings": 3
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 47,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/trace-trace.json",
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 15,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/trace-allocate.json",
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 10,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/connectivity.json",
+      "findings": 0
+    },
+    {
+      "name": "orphans",
+      "command": "npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 6,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/orphans.json",
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v9/build/5_LA.alt-1.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 10,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S32/alt-1/reach.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "Common",
+      "line": 58,
+      "message": "Unresolved reference 'ScalarValues::Real'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchTarget",
+      "layer": "Common",
+      "line": 692,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageLossAfterMemberLossTarget",
+      "layer": "Common",
+      "line": 700,
+      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageUnderMeshJammingTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportAgeAtOperationsCentreTarget",
+      "layer": "Common",
+      "line": 716,
+      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorWithoutSatelliteTarget",
+      "layer": "Common",
+      "line": 724,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldWhileCutOffTarget",
+      "layer": "Common",
+      "line": 732,
+      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionTarget",
+      "layer": "Common",
+      "line": 740,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsPerHourTarget",
+      "layer": "Common",
+      "line": 748,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertsReachingOperatorTarget",
+      "layer": "Common",
+      "line": 756,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedReportsThatMatterTarget",
+      "layer": "Common",
+      "line": 764,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "onboardClassificationCostTarget",
+      "layer": "Common",
+      "line": 772,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "unattendedWatchDurationTarget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeBudget",
+      "layer": "Common",
+      "line": 792,
+      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "memberEnduranceBudget",
+      "layer": "Common",
+      "line": 800,
+      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "groundTurnaroundBudget",
+      "layer": "Common",
+      "line": 808,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedBudget",
+      "layer": "Common",
+      "line": 816,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "instantaneousFootprintBudget",
+      "layer": "Common",
+      "line": 824,
+      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaOfInterestBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorSecondsPerAlertBudget",
+      "layer": "Common",
+      "line": 840,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "trackStaleAfterBudget",
+      "layer": "Common",
+      "line": 848,
+      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "satellitePositioningOutageBudget",
+      "layer": "Common",
+      "line": 856,
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "meshLinksJammedBudget",
+      "layer": "Common",
+      "line": 864,
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 306,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 308,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 310,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'dutyController'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 312,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'groundStation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 314,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'operationsCentreAnalyst'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 560,
+      "message": "Constraint violated: areaUnderWatchFraction == watchingMembers * footprintSquareKm / taskedAreaSquareKm",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 561,
+      "message": "Constraint violated: coverageLossAfterMemberLossFraction == 1.0 / watchingMembers",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "LA",
+      "line": 562,
+      "message": "Constraint violated: coverageUnderMeshJammingFraction == watchingMembers * footprintSquareKm / taskedAreaSquareKm * (1.0 - jammedLinkFraction * turnaroundMinutes / (sortieMinutes + turnaroundMinutes))",
+      "check": "check"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::CoordinationConcentrationHazard",
+      "rule": "CV-09",
+      "message": "hazard `CoordinationConcentrationHazard` is mitigated by no component of this architecture (only by `redistributeCoverage`, which every alternative shares). Add `satisfy LA::Hazards::CoordinationConcentrationHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::SectorHandOffLostHazard",
+      "rule": "CV-09",
+      "message": "hazard `SectorHandOffLostHazard` is mitigated by no component of this architecture (only by `rotateRecharge`, which every alternative shares). Add `satisfy LA::Hazards::SectorHandOffLostHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::RelayedReportDroppedHazard",
+      "rule": "CV-09",
+      "message": "hazard `RelayedReportDroppedHazard` is mitigated by no component of this architecture (only by `deliverDetectionReport`, which every alternative shares). Add `satisfy LA::Hazards::RelayedReportDroppedHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "requirements.hazardsByComponent",
+      "severity": "error",
+      "blocking": true,
+      "element": "SurveillanceDroneSwarm::LA::Hazards::TrackHandOverGapHazard",
+      "rule": "CV-09",
+      "message": "hazard `TrackHandOverGapHazard` is mitigated by no component of this architecture (only by `correlateTracks`, which every alternative shares). Add `satisfy LA::Hazards::TrackHandOverGapHazard by <one of your parts>;` (that path: the same name at another layer is another hazard) naming the component that carries the mitigation — or tag the hazard `#Accepted` with the reason in its doc.",
+      "check": "requirements-hazards"
+    },
+    {
+      "code": "replicas.topology",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-16",
+      "message": "alternative 1: 2 of 13 coordination and command-and-control function(s) on board, 11 on the ground; 2 link(s) between members; fleet [12].",
+      "check": "elements"
+    },
+    {
+      "code": "fleet.scenario",
+      "severity": "info",
+      "blocking": false,
+      "rule": "CV-08",
+      "message": "no exchange scenario between two members: an `occurrence def` with `ref part a : SwarmMember; ref part b : SwarmMember;` and the messages of a sector handover is what shows the peer protocol (A1-C-15).",
+      "check": "elements"
+    },
+    {
+      "code": "rules.hold",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberStates",
+      "rule": "CV-18",
+      "message": "the rule `ReturnsWhenIsolated` could not be decided on `LA::SwarmMember::SwarmMemberStates` (inconclusive): inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes ",
+      "check": "elements"
+    }
+  ]
+}

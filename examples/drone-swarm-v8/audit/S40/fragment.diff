@@ -1,0 +1,191 @@
+===================================================================
+--- /home/xcos/Work/mbse-workflow/runs/v8/fragments/6_PA.sysml (before)
++++ /home/xcos/Work/mbse-workflow/runs/v8/fragments/6_PA.sysml (after)
+@@ -0,0 +1,187 @@
++    package PA {
++        #prompt part paGuidance {
++            doc /* PA: the components that will be built. Behaviour parts are hosted in node parts by nesting, physical links are typed, item definitions carry units, and resource budgets are require constraints. */
++        }
++
++        // the system, to be decomposed into physical components
++        part def SurveillanceDroneSwarmPhysical {
++            in port taskingIn : LA::SurveillanceDrone::taskingIn;
++            in port commandIn : LA::SurveillanceDrone::commandIn;
++            in port recallIn : LA::SurveillanceDrone::recallIn;
++            out port detectionReportOut : LA::SurveillanceDrone::detectionReportOut;
++            out port trackOut : LA::SurveillanceDrone::trackOut;
++            doc /* TODO: decompose into components and move the functions onto them. */
++        }
++        part mainAssembly : SurveillanceDroneSwarmPhysical;
++        trace mainAssembly to SurveillanceDroneSwarm::LA::fleet;
++
++        // the population: 12 identical members (CV-16)
++        #Member part def SurveillanceDrone {
++            out port meshOut : Common::MeshPeerPort;
++            in port meshIn : ~Common::MeshPeerPort;
++            doc /* TODO: one member at PA. Instantiate it as `part fleet : SurveillanceDrone [12];` plus two representatives joined by the peer interface. */
++        }
++        #prose part fleetFact {
++            doc /* Population: 12 members of SurveillanceDrone, carried by fleet, exchanging through Common::MeshLink. Carried from the brief; the architecture instantiates it. */
++        }
++
++        // actors, carried over unchanged
++        #Actor part def SwarmSupervisor {
++            doc /* TODO: check this actor's interface against LA. */
++        }
++        part swarmSupervisor : SwarmSupervisor;
++        trace swarmSupervisor to SurveillanceDroneSwarm::LA::swarmSupervisor;
++        #Actor part def OperationsCentreAnalyst {
++            doc /* TODO: check this actor's interface against LA. */
++        }
++        part opsCentreAnalyst : OperationsCentreAnalyst;
++        trace opsCentreAnalyst to SurveillanceDroneSwarm::LA::opsCentreAnalyst;
++        #Actor part def AirspaceAuthority {
++            doc /* TODO: check this actor's interface against LA. */
++        }
++        part airspaceAuthority : AirspaceAuthority;
++        trace airspaceAuthority to SurveillanceDroneSwarm::LA::airspaceAuthority;
++        #Actor part def OperatingEnvironment {
++            doc /* TODO: check this actor's interface against LA. */
++        }
++        part operatingEnvironment : OperatingEnvironment;
++        trace operatingEnvironment to SurveillanceDroneSwarm::LA::operatingEnvironment;
++
++        // functions, carried over from LA: every one of them has to be realised here
++        action def HandOverSector {
++            doc /* TODO: how `handOverSector` is realised at PA. */
++            out reqOut : Common::SectorAssignment;
++            in reqIn : Common::SectorAssignment;
++        }
++        action def RotateRecharge {
++            doc /* TODO: how `rotateRecharge` is realised at PA. */
++            out reqOut : Common::RechargeRotationPlan;
++            in reqIn : Common::RechargeRotationPlan;
++        }
++        action def RedistributeCoverage {
++            doc /* TODO: how `redistributeCoverage` is realised at PA. */
++            out reqOut : Common::CoverageRedistributionPlan;
++            in reqIn : Common::CoverageRedistributionPlan;
++        }
++        action def DeconflictFlight {
++            doc /* TODO: how `deconflictFlight` is realised at PA. */
++            out reqOut : Common::DeconflictionAdvisory;
++            in reqIn : Common::DeconflictionAdvisory;
++        }
++        action def RelayThroughNeighbour {
++            doc /* TODO: how `relayThroughNeighbour` is realised at PA. */
++            out reqOut : Common::RelayedMessage;
++            in reqIn : Common::RelayedMessage;
++        }
++        action def CorrelateTracks {
++            doc /* TODO: how `correlateTracks` is realised at PA. */
++            out reqOut : Common::Track;
++            in reqIn : Common::Track;
++        }
++        action def HandOverTrack {
++            doc /* TODO: how `handOverTrack` is realised at PA. */
++            out reqOut : Common::Track;
++            in reqIn : Common::Track;
++        }
++        action def AdmitMember {
++            doc /* TODO: how `admitMember` is realised at PA. */
++            out admitReqOut : Common::MembershipRequest;
++            in admitReqIn : Common::MembershipRequest;
++            out admitDecOut : Common::MembershipDecision;
++            in admitDecIn : Common::MembershipDecision;
++        }
++        action def TaskSurveillanceMission {
++            doc /* TODO: how `taskSurveillanceMission` is realised at PA. */
++            out cmdOut : Common::MissionTasking;
++            in cmdIn : Common::MissionTasking;
++        }
++        action def IssueSupervisoryCommand {
++            doc /* TODO: how `issueSupervisoryCommand` is realised at PA. */
++            out cmdOut : Common::SupervisoryCommand;
++            in cmdIn : Common::SupervisoryCommand;
++        }
++        action def RecallToLand {
++            doc /* TODO: how `recallToLand` is realised at PA. */
++            out cmdOut : Common::RecallOrder;
++            in cmdIn : Common::RecallOrder;
++        }
++        action def PresentStatusPicture {
++            doc /* TODO: how `presentStatusPicture` is realised at PA. */
++            out cmdOut : Common::StatusPicture;
++            in cmdIn : Common::StatusPicture;
++        }
++        action def AcknowledgeDetectionReport {
++            doc /* TODO: how `acknowledgeDetectionReport` is realised at PA. */
++            out ackOut : Common::ReportAcknowledgement;
++            in ackIn : Common::ReportAcknowledgement;
++        }
++        action def WatchSector {
++            doc /* TODO: how `watchSector` is realised at PA. */
++        }
++        action def DetectAndClassify {
++            doc /* TODO: how `detectAndClassify` is realised at PA. */
++        }
++        action def ReportDetection {
++            doc /* TODO: how `reportDetection` is realised at PA. */
++            out reportOut : Common::DetectionReport;
++            in reportIn : Common::DetectionReport;
++        }
++        action def TriageReportsDefinition {
++            doc /* TODO: how `triageReports` is realised at PA. */
++        }
++        #Coordination action handOverSector : HandOverSector;
++        allocate handOverSector to mainAssembly;
++        trace handOverSector to SurveillanceDroneSwarm::LA::handOverSector;
++        #Coordination action rotateRecharge : RotateRecharge;
++        allocate rotateRecharge to mainAssembly;
++        trace rotateRecharge to SurveillanceDroneSwarm::LA::rotateRecharge;
++        #Coordination action redistributeCoverage : RedistributeCoverage;
++        allocate redistributeCoverage to mainAssembly;
++        trace redistributeCoverage to SurveillanceDroneSwarm::LA::redistributeCoverage;
++        #Coordination action deconflictFlight : DeconflictFlight;
++        allocate deconflictFlight to mainAssembly;
++        trace deconflictFlight to SurveillanceDroneSwarm::LA::deconflictFlight;
++        #Coordination action relayThroughNeighbour : RelayThroughNeighbour;
++        allocate relayThroughNeighbour to mainAssembly;
++        trace relayThroughNeighbour to SurveillanceDroneSwarm::LA::relayThroughNeighbour;
++        #Coordination action correlateTracks : CorrelateTracks;
++        allocate correlateTracks to mainAssembly;
++        trace correlateTracks to SurveillanceDroneSwarm::LA::correlateTracks;
++        #Coordination action handOverTrack : HandOverTrack;
++        allocate handOverTrack to mainAssembly;
++        trace handOverTrack to SurveillanceDroneSwarm::LA::handOverTrack;
++        #Coordination action admitMember : AdmitMember;
++        allocate admitMember to mainAssembly;
++        trace admitMember to SurveillanceDroneSwarm::LA::admitMember;
++        #C2 action taskSurveillanceMission : TaskSurveillanceMission;
++        allocate taskSurveillanceMission to mainAssembly;
++        trace taskSurveillanceMission to SurveillanceDroneSwarm::LA::taskSurveillanceMission;
++        #C2 action issueSupervisoryCommand : IssueSupervisoryCommand;
++        allocate issueSupervisoryCommand to mainAssembly;
++        trace issueSupervisoryCommand to SurveillanceDroneSwarm::LA::issueSupervisoryCommand;
++        #C2 action recallToLand : RecallToLand;
++        allocate recallToLand to mainAssembly;
++        trace recallToLand to SurveillanceDroneSwarm::LA::recallToLand;
++        #C2 action presentStatusPicture : PresentStatusPicture;
++        allocate presentStatusPicture to mainAssembly;
++        trace presentStatusPicture to SurveillanceDroneSwarm::LA::presentStatusPicture;
++        #C2 action acknowledgeDetectionReport : AcknowledgeDetectionReport;
++        allocate acknowledgeDetectionReport to mainAssembly;
++        trace acknowledgeDetectionReport to SurveillanceDroneSwarm::LA::acknowledgeDetectionReport;
++        action watchSector : WatchSector;
++        allocate watchSector to mainAssembly;
++        trace watchSector to SurveillanceDroneSwarm::LA::watchSector;
++        action detectAndClassify : DetectAndClassify;
++        allocate detectAndClassify to mainAssembly;
++        trace detectAndClassify to SurveillanceDroneSwarm::LA::detectAndClassify;
++        action reportDetection : ReportDetection;
++        allocate reportDetection to mainAssembly;
++        trace reportDetection to SurveillanceDroneSwarm::LA::reportDetection;
++        action triageReports : TriageReportsDefinition {
++            out triagedAlertOut : Common::TriagedAlert;
++            out decisionRecordOut : Common::DecisionRecord;
++        }
++        allocate triageReports to mainAssembly;
++        trace triageReports to SurveillanceDroneSwarm::LA::triageReports;
++
++    }

@@ -1,0 +1,643 @@
+{
+  "step": "S10",
+  "layer": "OA",
+  "blocking": true,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml",
+  "prefixHash": "774675b51dc76a9d",
+  "elements": 756,
+  "durationMs": 319,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": false,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v7/audit/S10/check.json",
+      "findings": 63
+    },
+    {
+      "name": "elements",
+      "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "trace-allocate",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml --relation allocate --from ActionUsage --to PartUsage --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "connectivity",
+      "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    },
+    {
+      "name": "reach",
+      "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v7/build/3_OA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 167,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 171,
+      "message": "Constraint could not be evaluated (\"coverageLossOnMemberLoss <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 175,
+      "message": "Constraint could not be evaluated (\"jammedMeshAreaUnderWatchShare >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 179,
+      "message": "Constraint could not be evaluated (\"groundLinkLossAreaUnderWatchShare >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 183,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHours >= 24\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 187,
+      "message": "Constraint could not be evaluated (\"reportLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 191,
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutGnssMeters <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 195,
+      "message": "Constraint could not be evaluated (\"reportHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 199,
+      "message": "Constraint could not be evaluated (\"reportsLostInLinkGap <= 0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 203,
+      "message": "Constraint could not be evaluated (\"missedDetectionShare <= 0.1\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 207,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 211,
+      "message": "Constraint could not be evaluated (\"operatorAlertsPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 215,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterShare >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 219,
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsd <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 224,
+      "message": "Constraint could not be evaluated (\"fleetSize <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 228,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 232,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes <= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 236,
+      "message": "Constraint could not be evaluated (\"memberRechargeMinutes >= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "Common",
+      "line": 240,
+      "message": "Constraint could not be evaluated (\"areaOfInterestKm2 <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "reportsOut",
+      "layer": "OA",
+      "line": 112,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::reportA::reportsOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 112,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "ackIn",
+      "layer": "OA",
+      "line": 113,
+      "message": "Unresolved type reference \"Common::ReportAcknowledgements\" on SurveillanceDroneSwarm::OA::reportA::ackIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 113,
+      "message": "Unresolved reference 'Common::ReportAcknowledgements'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "decisionsOut",
+      "layer": "OA",
+      "line": 117,
+      "message": "Unresolved type reference \"Common::DecisionRecords\" on SurveillanceDroneSwarm::OA::decisionA::decisionsOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 117,
+      "message": "Unresolved reference 'Common::DecisionRecords'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "supervisionIn",
+      "layer": "OA",
+      "line": 129,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::supervisionRecvA::supervisionIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 129,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "recallIn",
+      "layer": "OA",
+      "line": 133,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::recallRecvA::recallIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 133,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "reportsOut",
+      "layer": "OA",
+      "line": 179,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::reportB::reportsOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 179,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "decisionsOut",
+      "layer": "OA",
+      "line": 183,
+      "message": "Unresolved type reference \"Common::DecisionRecords\" on SurveillanceDroneSwarm::OA::decisionB::decisionsOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 183,
+      "message": "Unresolved reference 'Common::DecisionRecords'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "supervisionIn",
+      "layer": "OA",
+      "line": 195,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::supervisionRecvB::supervisionIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 195,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "recallIn",
+      "layer": "OA",
+      "line": 199,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::recallRecvB::recallIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 199,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "swarmReportsInA",
+      "layer": "OA",
+      "line": 243,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::mergeAct::swarmReportsInA.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 243,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "swarmReportsInB",
+      "layer": "OA",
+      "line": 244,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::mergeAct::swarmReportsInB.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 244,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "decisionRecordsInA",
+      "layer": "OA",
+      "line": 245,
+      "message": "Unresolved type reference \"Common::DecisionRecords\" on SurveillanceDroneSwarm::OA::mergeAct::decisionRecordsInA.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 245,
+      "message": "Unresolved reference 'Common::DecisionRecords'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "decisionRecordsInB",
+      "layer": "OA",
+      "line": 246,
+      "message": "Unresolved type reference \"Common::DecisionRecords\" on SurveillanceDroneSwarm::OA::mergeAct::decisionRecordsInB.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 246,
+      "message": "Unresolved reference 'Common::DecisionRecords'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "cameraTracksIn",
+      "layer": "OA",
+      "line": 247,
+      "message": "Unresolved type reference \"Common::CameraNetworkTracks\" on SurveillanceDroneSwarm::OA::mergeAct::cameraTracksIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 247,
+      "message": "Unresolved reference 'Common::CameraNetworkTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "mergedOut",
+      "layer": "OA",
+      "line": 248,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::mergeAct::mergedOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 248,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "supervisionOutA",
+      "layer": "OA",
+      "line": 252,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::commandSupervisionAct::supervisionOutA.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 252,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "supervisionOutB",
+      "layer": "OA",
+      "line": 253,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::commandSupervisionAct::supervisionOutB.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 253,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "recallOutA",
+      "layer": "OA",
+      "line": 257,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::recallAndLandAct::recallOutA.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 257,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "recallOutB",
+      "layer": "OA",
+      "line": 258,
+      "message": "Unresolved type reference \"Common::SupervisoryAndRecallCommands\" on SurveillanceDroneSwarm::OA::recallAndLandAct::recallOutB.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 258,
+      "message": "Unresolved reference 'Common::SupervisoryAndRecallCommands'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "ackOut",
+      "layer": "OA",
+      "line": 262,
+      "message": "Unresolved type reference \"Common::ReportAcknowledgements\" on SurveillanceDroneSwarm::OA::acknowledgeReportAct::ackOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 262,
+      "message": "Unresolved reference 'Common::ReportAcknowledgements'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "cameraTracksOut",
+      "layer": "OA",
+      "line": 275,
+      "message": "Unresolved type reference \"Common::CameraNetworkTracks\" on SurveillanceDroneSwarm::OA::provideCameraTracksAct::cameraTracksOut.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 275,
+      "message": "Unresolved reference 'Common::CameraNetworkTracks'",
+      "check": "check"
+    },
+    {
+      "code": "validation/unresolved-type-ref",
+      "severity": "error",
+      "blocking": true,
+      "element": "mergedIn",
+      "layer": "OA",
+      "line": 279,
+      "message": "Unresolved type reference \"Common::DetectionReportsAndTracks\" on SurveillanceDroneSwarm::OA::judgeAlertsAct::mergedIn.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-specialization",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "OA",
+      "line": 279,
+      "message": "Unresolved reference 'Common::DetectionReportsAndTracks'",
+      "check": "check"
+    }
+  ]
+}

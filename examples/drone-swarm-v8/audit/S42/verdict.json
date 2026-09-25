@@ -1,0 +1,855 @@
+{
+  "step": "S42",
+  "layer": "PA",
+  "blocking": false,
+  "prefix": "/home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.sysml",
+  "prefixHash": "144d52538da9f3ca",
+  "elements": 2967,
+  "durationMs": 1092,
+  "checks": [
+    {
+      "name": "check",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.sysml --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 0,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S42/check.json",
+      "findings": 71
+    },
+    {
+      "name": "trace-trace",
+      "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.sysml --relation trace --json",
+      "blocking": true,
+      "ok": true,
+      "durationMs": 102,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S42/trace-trace.json",
+      "findings": 12
+    },
+    {
+      "name": "verify",
+      "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow/runs/v8/build/6_PA.sysml --json",
+      "blocking": false,
+      "ok": true,
+      "durationMs": 376,
+      "payload": "/home/xcos/Work/mbse-workflow/runs/v8/audit/S42/verify.json",
+      "findings": 0
+    }
+  ],
+  "items": [
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaUnderWatchMeetsTarget",
+      "layer": "Common",
+      "line": 645,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "watchEnduranceMeetsTarget",
+      "layer": "Common",
+      "line": 655,
+      "message": "Constraint could not be evaluated (\"watchEnduranceHoursWithoutPeople >= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportLatencyMeetsTarget",
+      "layer": "Common",
+      "line": 664,
+      "message": "Constraint could not be evaluated (\"reportDeliveryLatencySeconds <= 60\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "positionErrorMeetsTarget",
+      "layer": "Common",
+      "line": 673,
+      "message": "Constraint could not be evaluated (\"positionErrorAfterGnssLossMetres <= 50\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedCoverageMeetsTarget",
+      "layer": "Common",
+      "line": 683,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldMeetsTarget",
+      "layer": "Common",
+      "line": 691,
+      "message": "Constraint could not be evaluated (\"reportHoldDurationMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "missedDetectionMeetsTarget",
+      "layer": "Common",
+      "line": 699,
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "falseAlarmsMeetTarget",
+      "layer": "Common",
+      "line": 708,
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "alertRateMeetsTarget",
+      "layer": "Common",
+      "line": 717,
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "acknowledgedPrecisionMeetsTarget",
+      "layer": "Common",
+      "line": 726,
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "coverageDropMeetsTarget",
+      "layer": "Common",
+      "line": 734,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "classifierCostMeetsTarget",
+      "layer": "Common",
+      "line": 743,
+      "message": "Constraint could not be evaluated (\"onboardClassifierCostUsdPerDrone <= 300\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "fleetSizeWithinBudget",
+      "layer": "Common",
+      "line": 752,
+      "message": "Constraint could not be evaluated (\"fleetSizeDrones <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "flightEnduranceWithinBudget",
+      "layer": "Common",
+      "line": 761,
+      "message": "Constraint could not be evaluated (\"memberFlightEnduranceMinutes >= 40\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "turnaroundWithinBudget",
+      "layer": "Common",
+      "line": 770,
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "cruiseSpeedWithinBudget",
+      "layer": "Common",
+      "line": 780,
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond >= 18\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "sensorFootprintWithinBudget",
+      "layer": "Common",
+      "line": 789,
+      "message": "Constraint could not be evaluated (\"sensorFootprintSquareKilometres >= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "areaWithinBudget",
+      "layer": "Common",
+      "line": 797,
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorCapacityWithinBudget",
+      "layer": "Common",
+      "line": 806,
+      "message": "Constraint could not be evaluated (\"operatorAlertCapacityPerHour <= 20\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "operatorTimeWithinBudget",
+      "layer": "Common",
+      "line": 814,
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "staleThresholdWithinBudget",
+      "layer": "Common",
+      "line": 823,
+      "message": "Constraint could not be evaluated (\"trackStaleThresholdSeconds <= 120\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "gnssOutageWithinBudget",
+      "layer": "Common",
+      "line": 832,
+      "message": "Constraint could not be evaluated (\"gnssOutageToleratedMinutes >= 10\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "jammedShareWithinBudget",
+      "layer": "Common",
+      "line": 841,
+      "message": "Constraint could not be evaluated (\"jammedLinkShareFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 540,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 541,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 542,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 543,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 544,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 545,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 546,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 547,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 548,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 549,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 550,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 551,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 552,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'watchAsset'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 553,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 556,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 559,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 562,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 565,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 568,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 571,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 574,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 577,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 580,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 583,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 586,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "SA",
+      "line": 589,
+      "rule": "CV-04",
+      "message": "Unresolved allocation target 'system'",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "GroundLinkC2SinglePathHazard",
+      "layer": "LA",
+      "line": 382,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::LA::Hazards::GroundLinkC2SinglePathHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "validation/requirement-subject",
+      "severity": "warning",
+      "blocking": false,
+      "element": "GroundAdmissionBottleneckHazard",
+      "layer": "LA",
+      "line": 388,
+      "rule": "CV-09",
+      "message": "Requirement \"SurveillanceDroneSwarm::LA::Hazards::GroundAdmissionBottleneckHazard\" has no subject.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "LA",
+      "line": 716,
+      "message": "Constraint could not be evaluated (\"airborneShareValue == flightMinutesValue / (flightMinutesValue + turnaroundMinutesValue)\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "LA",
+      "line": 719,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == (fleetSizeValue * airborneShareValue * footprintValue) / areaOfInterestValue\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPort",
+      "layer": "PA",
+      "line": 181,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::SurveillanceDrone::groundLinkPort\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "validation/port-direction",
+      "severity": "warning",
+      "blocking": false,
+      "element": "groundLinkPort",
+      "layer": "PA",
+      "line": 301,
+      "rule": "CV-05",
+      "message": "Port \"SurveillanceDroneSwarm::PA::GroundStationNode::groundLinkPort\" has no direction (expected in/out/inout).",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 408,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::DetectionClassificationAndReporting'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 409,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::ReportTriageAndDecisionRecord'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 410,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::DisconnectedOperationAndReconciliation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 411,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::GracefulDegradation'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 412,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::AirspaceComplianceAndSafeRecovery'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 413,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::SupervisedCommandAndControl'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-allocation-end",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 414,
+      "rule": "CV-04",
+      "message": "Unresolved allocation source 'SurveillanceDroneSwarm::LA::ContinuousAreaWatch'",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 452,
+      "message": "Constraint could not be evaluated (\"airborneShareFraction == memberFlightEnduranceMinutes / (memberFlightEnduranceMinutes + groundTurnaroundMinutes)\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 459,
+      "message": "Constraint could not be evaluated (\"numAirborneDrones == fleetSizeDrones * airborneShareFraction\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 465,
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == numAirborneDrones * sensorFootprintSquareKilometres / areaOfInterestSquareKilometres\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 477,
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1.0 - jammedLinkShareFraction * meshCoordinationDependencyFraction)\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "layer": "PA",
+      "line": 483,
+      "message": "Constraint could not be evaluated (\"coverageDropAfterMemberLossFraction == 1.0 / numAirborneDrones\"): Could not evaluate: a referenced value is unknown.",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 553,
+      "rule": "CV-09",
+      "message": "Unresolved requirement 'SurveillanceDroneSwarm::SA::Rules::RecallWins'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 554,
+      "rule": "CV-09",
+      "message": "Unresolved requirement 'SurveillanceDroneSwarm::SA::Rules::ReturnsWhenIsolated'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 555,
+      "rule": "CV-09",
+      "message": "Unresolved requirement 'SurveillanceDroneSwarm::SA::Rules::GeofenceBreachEndsWatch'",
+      "check": "check"
+    },
+    {
+      "code": "ref/unresolved-requirement",
+      "severity": "warning",
+      "blocking": false,
+      "layer": "PA",
+      "line": 556,
+      "rule": "CV-09",
+      "message": "Unresolved requirement 'SurveillanceDroneSwarm::SA::Rules::QuarantinedStaysOut'",
+      "check": "check"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::alphaWatchSector",
+      "rule": "CV-03",
+      "message": "OA → SA: `alphaWatchSector` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::alphaDetectAndClassify",
+      "rule": "CV-03",
+      "message": "OA → SA: `alphaDetectAndClassify` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::alphaReportDetection",
+      "rule": "CV-03",
+      "message": "OA → SA: `alphaReportDetection` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::bravoWatchSector",
+      "rule": "CV-03",
+      "message": "OA → SA: `bravoWatchSector` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::bravoDetectAndClassify",
+      "rule": "CV-03",
+      "message": "OA → SA: `bravoDetectAndClassify` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::bravoReportDetection",
+      "rule": "CV-03",
+      "message": "OA → SA: `bravoReportDetection` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::supervisorTaskSurveillanceMission",
+      "rule": "CV-03",
+      "message": "OA → SA: `supervisorTaskSurveillanceMission` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::supervisorIssueSupervisoryCommand",
+      "rule": "CV-03",
+      "message": "OA → SA: `supervisorIssueSupervisoryCommand` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::supervisorRecallToLand",
+      "rule": "CV-03",
+      "message": "OA → SA: `supervisorRecallToLand` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::supervisorPresentStatusPicture",
+      "rule": "CV-03",
+      "message": "OA → SA: `supervisorPresentStatusPicture` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::analystReportDetection",
+      "rule": "CV-03",
+      "message": "OA → SA: `analystReportDetection` is not realised.",
+      "check": "trace-trace"
+    },
+    {
+      "code": "trace.closure",
+      "severity": "info",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::OA::analystAcknowledgeDetectionReport",
+      "rule": "CV-03",
+      "message": "OA → SA: `analystAcknowledgeDetectionReport` is not realised.",
+      "check": "trace-trace"
+    }
+  ]
+}

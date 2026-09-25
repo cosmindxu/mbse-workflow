@@ -1,0 +1,749 @@
+    package PA {
+        #prompt part paGuidance {
+            doc /* PA: the components that will be built. Behaviour parts are hosted in node parts by nesting, physical links are typed, item definitions carry units, and resource budgets are require constraints. */
+        }
+
+        // the system, to be decomposed into physical components
+        part def SurveillanceDroneSwarmPhysical {
+            out port reportsOut : LA::SwarmMember::reportsOut;
+            out port trackPictureOut : LA::SwarmMember::trackPictureOut;
+            out port statusOut : LA::SwarmMember::statusOut;
+            in port taskingIn : LA::SwarmMember::taskingIn;
+            in port priorityIn : LA::SwarmMember::priorityIn;
+            in port recallIn : LA::SwarmMember::recallIn;
+            in port receiptIn : LA::SwarmMember::receiptIn;
+            doc /* TODO: decompose into components and move the functions onto them. */
+        }
+
+        // the population: 12 identical members (CV-16)
+        #prose part fleetFact {
+            doc /* Population: 12 members of SwarmMember, carried by fleet, exchanging through Common::MeshInterface. Carried from the brief; the architecture instantiates it. */
+        }
+
+        // functions, carried over from LA: every one of them has to be realised here
+        action def HandOverSector {
+            doc /* TODO: how `handOverSector` is realised at PA. */
+        }
+        action def RotateRecharge {
+            doc /* TODO: how `rotateRecharge` is realised at PA. */
+        }
+        action def RedistributeCoverage {
+            doc /* TODO: how `redistributeCoverage` is realised at PA. */
+        }
+        action def DeconflictFlight {
+            doc /* TODO: how `deconflictFlight` is realised at PA. */
+        }
+        action def RelayReportsThroughNeighbour {
+            doc /* TODO: how `relayReportsThroughNeighbour` is realised at PA. */
+        }
+        action def CorrelateTracks {
+            doc /* TODO: how `correlateTracks` is realised at PA. */
+        }
+        action def HandOverTrack {
+            doc /* TODO: how `handOverTrack` is realised at PA. */
+        }
+        action def AdmitMember {
+            doc /* TODO: how `admitMember` is realised at PA. */
+        }
+        action def TaskSurveillanceArea {
+            doc /* TODO: how `taskSurveillanceArea` is realised at PA. */
+        }
+        action def CommandSupervisoryPriorities {
+            doc /* TODO: how `commandSupervisoryPriorities` is realised at PA. */
+        }
+        action def RecallAndLand {
+            doc /* TODO: how `recallAndLand` is realised at PA. */
+        }
+        action def PresentStatusPicture {
+            doc /* TODO: how `presentStatusPicture` is realised at PA. */
+        }
+        action def AcknowledgeDetectionReport {
+            doc /* TODO: how `acknowledgeDetectionReport` is realised at PA. */
+        }
+        action def DetectAndClassifyObject {
+            doc /* TODO: how `detectAndClassifyObject` is realised at PA. */
+        }
+        action def DeliverDetectionReport {
+            doc /* TODO: how `deliverDetectionReport` is realised at PA. */
+        }
+        action def ApplySupervisoryDirectives {
+            doc /* TODO: how `applySupervisoryDirectives` is realised at PA. */
+        }
+        action def ReportMemberStatus {
+            doc /* TODO: how `reportMemberStatus` is realised at PA. */
+        }
+        action def ReportTrackPicture {
+            doc /* TODO: how `reportTrackPicture` is realised at PA. */
+        }
+        action def ReturnToRecoveryPoint {
+            doc /* TODO: how `returnToRecoveryPoint` is realised at PA. */
+        }
+        action def TriageAlerts {
+            doc /* TODO: how `triageAlerts` is realised at PA. */
+        }
+        action def KeepDecisionRecords {
+            doc /* TODO: how `keepDecisionRecords` is realised at PA. */
+        }
+        #Coordination action handOverSector : HandOverSector;
+        trace handOverSector to SurveillanceDroneSwarm::LA::handOverSector;
+        #Coordination action rotateRecharge : RotateRecharge;
+        trace rotateRecharge to SurveillanceDroneSwarm::LA::rotateRecharge;
+        #Coordination action redistributeCoverage : RedistributeCoverage;
+        trace redistributeCoverage to SurveillanceDroneSwarm::LA::redistributeCoverage;
+        #Coordination action deconflictFlight : DeconflictFlight;
+        trace deconflictFlight to SurveillanceDroneSwarm::LA::deconflictFlight;
+        #Coordination action relayReportsThroughNeighbour : RelayReportsThroughNeighbour;
+        trace relayReportsThroughNeighbour to SurveillanceDroneSwarm::LA::relayReportsThroughNeighbour;
+        #Coordination action correlateTracks : CorrelateTracks;
+        trace correlateTracks to SurveillanceDroneSwarm::LA::correlateTracks;
+        #Coordination action handOverTrack : HandOverTrack;
+        trace handOverTrack to SurveillanceDroneSwarm::LA::handOverTrack;
+        #Coordination action admitMember : AdmitMember;
+        trace admitMember to SurveillanceDroneSwarm::LA::admitMember;
+        #C2 action taskSurveillanceArea : TaskSurveillanceArea;
+        trace taskSurveillanceArea to SurveillanceDroneSwarm::LA::taskSurveillanceArea;
+        #C2 action commandSupervisoryPriorities : CommandSupervisoryPriorities;
+        trace commandSupervisoryPriorities to SurveillanceDroneSwarm::LA::commandSupervisoryPriorities;
+        #C2 action recallAndLand : RecallAndLand;
+        trace recallAndLand to SurveillanceDroneSwarm::LA::recallAndLand;
+        #C2 action presentStatusPicture : PresentStatusPicture;
+        trace presentStatusPicture to SurveillanceDroneSwarm::LA::presentStatusPicture;
+        #C2 action acknowledgeDetectionReport : AcknowledgeDetectionReport;
+        trace acknowledgeDetectionReport to SurveillanceDroneSwarm::LA::acknowledgeDetectionReport;
+        action detectAndClassifyObject : DetectAndClassifyObject;
+        trace detectAndClassifyObject to SurveillanceDroneSwarm::LA::detectAndClassifyObject;
+        action deliverDetectionReport : DeliverDetectionReport;
+        trace deliverDetectionReport to SurveillanceDroneSwarm::LA::deliverDetectionReport;
+        action applySupervisoryDirectives : ApplySupervisoryDirectives;
+        trace applySupervisoryDirectives to SurveillanceDroneSwarm::LA::applySupervisoryDirectives;
+        action reportMemberStatus : ReportMemberStatus;
+        trace reportMemberStatus to SurveillanceDroneSwarm::LA::reportMemberStatus;
+        action reportTrackPicture : ReportTrackPicture;
+        trace reportTrackPicture to SurveillanceDroneSwarm::LA::reportTrackPicture;
+        action returnToRecoveryPoint : ReturnToRecoveryPoint;
+        trace returnToRecoveryPoint to SurveillanceDroneSwarm::LA::returnToRecoveryPoint;
+        action triageAlerts : TriageAlerts;
+        trace triageAlerts to SurveillanceDroneSwarm::LA::triageAlerts;
+        action keepDecisionRecords : KeepDecisionRecords;
+        trace keepDecisionRecords to SurveillanceDroneSwarm::LA::keepDecisionRecords;
+
+        // ── architecture, alternative 1 ──
+        part mainAssembly : SurveillanceDroneSwarmPhysical {
+            doc /* The system as built: drones in the air, one ground segment that decides. It is the root the constituent parts of this package belong to. */
+        }
+        /* ---------- ports and links ---------- */
+
+        port def RfPort {
+            doc /* Antenna-side end of a radio node. Unlike the item ports of a member it is where a radio link physically attaches. */
+        }
+        connection def MeshRadioMedium {
+            doc /* The radio medium between two drones: a mesh radio hop that does not depend on the link to the operations centre and can be jammed. */
+        }
+        connection def GroundLinkMedium {
+            doc /* The intermittent radio link between the drones and the ground segment. In this alternative it carries every assignment, order, report and status between fleet and ground. */
+        }
+        connection def GroundWiredLink {
+            doc /* A wired link between two nodes of the ground segment; always up while the ground segment has power. */
+        }
+        /* ---------- behaviour parts (hosted by nesting inside nodes) ---------- */
+
+        part def DetectorClassifier {
+            doc /* Detects moving objects in the member's sector and classifies them; says Unknown when confidence is short of the reporting threshold. Kept apart from the flight safety monitor. */
+        }
+        part def HeldReportStore {
+            doc /* Holds every detection report in non-volatile memory until an acknowledgement clears it, across link gaps and battery swaps. */
+        }
+        part def NeighbourRelayAgent {
+            doc /* Sends a report through a neighbour that can reach the ground link and keeps it until the neighbour confirms hand-over. */
+        }
+        part def TrackHandoverAgent {
+            doc /* Hands a track to the neighbour that watches the sector the object moves into, and holds it until that neighbour takes it up. */
+        }
+        part def MemberHealthReporter {
+            doc /* Reports position, activity and degradations, sensing degradation included, and marks reports made under degraded sensing. */
+        }
+        part def DirectiveHandler {
+            doc /* Takes up the sector assignment, the priorities and reporting threshold and the recall order that reach the drone, and hands them to the flight controller. */
+        }
+        part def VisionAidedNavigator {
+            doc /* Navigates by camera against stored maps when satellite positioning is out, and bounds the drift. */
+        }
+        part def FlightSafetyMonitor {
+            doc /* Enforces clearance, wind limit and recall, and returns the drone to the recovery point by itself when contact is lost. Separate from detection and classification, so a fault there cannot keep the drone watching. */
+        }
+        part def BatteryEnduranceMonitor {
+            doc /* Tracks the remaining flight time of the swappable pack and calls the drone back early when the pack has aged below the planned 40 minutes. */
+        }
+        part def GroundSwarmCoordinator {
+            doc /* The deciding coordinator. Settles sector hand-over, recharge rotation, coverage redistribution, deconfliction and member admission for all twelve drones from one place, and confirms each hand-over before the leaving drone is released. */
+        }
+        part def GroundTrackFusion {
+            doc /* Correlates the tracks reported by different drones into one track per object, marks a track stale after 120 seconds unseen and reports the swarm track picture. */
+        }
+        part def StationC2Console {
+            doc /* The operator-facing command and control: tasking, supervisory priorities and reporting threshold, the status picture and acknowledgement of detection reports. */
+        }
+        part def DirectRecallIssuer {
+            doc /* Sends a recall order straight to the drones over the ground link, not through the coordinator, so a recall still works when the coordinator is down. */
+        }
+        part def AlertRanker {
+            doc /* Ranks reports so that what most likely matters reaches the operator first, merges duplicates and keeps the alert rate inside what one operator can judge. */
+        }
+        part def DecisionLogger {
+            doc /* Keeps for every report the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */
+        }
+        part def LinkGatewayManager {
+            doc /* Manages the radio link to the drones: queues, retries and reports link state to the station and the coordinator. */
+        }
+        /* ---------- node definitions ---------- */
+
+        #Node part def MissionComputerNode {
+            doc /* Computing node of a drone that hosts detection, classification, report holding, relay, track hand-over and directive handling. */
+        }
+        #Node part def FlightControllerNode {
+            doc /* Flight-control node of a drone that hosts navigation and the flight safety monitor. */
+        }
+        #Node part def SensorPayloadNode {
+            doc /* The camera payload of a drone. It hosts no software of its own; the mission computer reads it. */
+        }
+        #Node part def MeshRadioNode {
+            doc /* The radio that carries the mesh between drones. */
+            port rf : RfPort;
+        }
+        #Node part def GroundRadioNode {
+            doc /* The radio on a drone that carries the link to the ground segment. */
+        }
+        #Node part def BatteryPackNode {
+            doc /* The swappable battery pack of a drone; a part that wears. */
+        }
+        #Node part def GroundCoordinationNode {
+            doc /* Server in the ground segment that runs the deciding coordination of the whole swarm. */
+            in port taskingIn : SurveillanceDroneSwarm::LA::SwarmMember::taskingIn;
+            in port coordIn : ~Common::MeshPort;
+            out port coordOut : Common::MeshPort;
+            in port trackObsIn : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+            out port trackPictureOut : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+
+            #Mode state def GroundCoordinatorModes {
+                doc /* Whether the coordinator can reach the drones. When it cannot, each drone acts on its last assignment and coverage decays as endurance runs out. */
+                initial start;
+                state FleetReachable {
+                    doc /* The ground link to the drones is up and assignments reach them. */
+                }
+                state FleetUnreachable {
+                    doc /* The ground link to the drones is down; the coordinator holds its decisions and the drones act on their last assignment. */
+                }
+                transition start -> FleetReachable;
+                transition FleetReachable -> FleetUnreachable;
+                transition FleetUnreachable -> FleetReachable;
+            }
+            #State state def GroundCoordinatorStates {
+                doc /* What the coordinator is doing: waiting, issuing assignments, or re-spreading coverage after a loss. */
+                initial start;
+                state Idle {
+                    doc /* No assignment change is pending. */
+                }
+                state Assigning {
+                    doc /* Issuing sector assignments, rotation and hand-over confirmations. */
+                }
+                state Rebalancing {
+                    doc /* Re-spreading coverage after a drone was lost or left. */
+                }
+                transition start -> Idle;
+                transition Idle -> Assigning;
+                transition Assigning -> Idle;
+                transition Assigning -> Rebalancing;
+                transition Rebalancing -> Assigning;
+            }
+        }
+        #Node part def GroundStationNode {
+            doc /* The ground station the operator works at: command and control and the operator's pictures. It does not decide coordination. */
+            out port taskingOut : SurveillanceDroneSwarm::LA::SwarmMember::taskingIn;
+            out port priorityOut : SurveillanceDroneSwarm::LA::SwarmMember::priorityIn;
+            out port recallOut : SurveillanceDroneSwarm::LA::SwarmMember::recallIn;
+            out port receiptOut : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+            out port recordReceiptOut : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+            in port statusIn : SurveillanceDroneSwarm::LA::SwarmMember::statusOut;
+            in port trackPictureIn : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+            in port alertsIn : SurveillanceDroneSwarm::LA::AlertTriageUnit::alertsOut;
+            in port recordsIn : SurveillanceDroneSwarm::LA::AlertTriageUnit::decisionRecordsOut;
+
+            #Mode state def GroundStationModes {
+                doc /* Whether the station can reach the operations centre and the swarm. */
+                initial start;
+                state LinkUp {
+                    doc /* The ground link is available: tasking, command, reports, status and acknowledgements pass. */
+                }
+                state LinkDown {
+                    doc /* The ground link is unavailable: the station holds what it has and the drones fall back on their last assignment. */
+                }
+                transition start -> LinkUp;
+                transition LinkUp -> LinkDown;
+                transition LinkDown -> LinkUp;
+            }
+            #State state def GroundStationStates {
+                doc /* What the station is doing for the operator. */
+                initial start;
+                state Standby {
+                    doc /* No mission window is tasked. */
+                }
+                state Supervising {
+                    doc /* Tasking and priorities are out, the status picture is shown and reports are acknowledged. */
+                }
+                state Recalling {
+                    doc /* A recall order is being issued to the whole swarm or one drone. */
+                }
+                transition start -> Standby;
+                transition Standby -> Supervising;
+                transition Supervising -> Recalling;
+                transition Recalling -> Supervising;
+                transition Supervising -> Standby;
+                transition Recalling -> Standby;
+            }
+        }
+        #Node part def GroundTriageNode {
+            doc /* Node that ranks and merges reports for the operator. Kept apart from the decision record store, so that losing the ranker does not lose the provenance record. */
+            in port reportsIn : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
+            out port alertsOut : SurveillanceDroneSwarm::LA::AlertTriageUnit::alertsOut;
+        }
+        #Node part def GroundRecordNode {
+            doc /* Node that keeps the decision records. It takes reports straight from the drones, not through the triage node. */
+            in port reportsIn : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
+            in port receiptIn : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+            out port recordsOut : SurveillanceDroneSwarm::LA::AlertTriageUnit::decisionRecordsOut;
+        }
+        #Node part def GroundLinkTransceiverNode {
+            doc /* Ground-side radio that carries the link to the drones. */
+        }
+        /* ---------- the population ---------- */
+
+        #Member part def SwarmMember {
+            doc /* One of the twelve identical drones, thin in this alternative: it senses, classifies, holds and relays reports and hands tracks to neighbours, but the deciding coordination (sector hand-over, rotation, redistribution, deconfliction, admission, track correlation) is done for it by the ground coordinator. */
+            out port meshOut : Common::MeshPort;
+            in port meshIn : ~Common::MeshPort;
+            out port coordOut : Common::MeshPort;
+            in port coordIn : ~Common::MeshPort;
+            out port reportsOut : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
+            out port trackPictureOut : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+            out port statusOut : SurveillanceDroneSwarm::LA::SwarmMember::statusOut;
+            in port priorityIn : SurveillanceDroneSwarm::LA::SwarmMember::priorityIn;
+            in port recallIn : SurveillanceDroneSwarm::LA::SwarmMember::recallIn;
+            in port receiptIn : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+
+            #Node part missionComputer : MissionComputerNode {
+                doc /* Hosts everything the drone does with what it sees and hears. */
+                part detector : DetectorClassifier {
+                    doc /* Detection and classification behaviour on the mission computer. */
+                }
+                part heldReports : HeldReportStore {
+                    doc /* Non-volatile report holding behaviour. */
+                }
+                part relayAgent : NeighbourRelayAgent {
+                    doc /* Neighbour relay behaviour. */
+                }
+                part trackHandover : TrackHandoverAgent {
+                    doc /* Track hand-over behaviour towards neighbours. */
+                }
+                part healthReporter : MemberHealthReporter {
+                    doc /* Status and degradation reporting behaviour. */
+                }
+                part directiveHandler : DirectiveHandler {
+                    doc /* Uptake of assignment, priority and recall behaviour. */
+                }
+            }
+            #Node part flightController : FlightControllerNode {
+                doc /* Hosts navigation and the safety monitor. */
+                part navigator : VisionAidedNavigator {
+                    doc /* Navigation behaviour without satellite positioning. */
+                }
+                part safetyMonitor : FlightSafetyMonitor {
+                    doc /* Clearance, wind, recall and recovery behaviour, separate from detection. */
+                }
+            }
+            #Node part sensorPayload : SensorPayloadNode {
+                doc /* The camera payload. */
+            }
+            #Node part meshRadio : MeshRadioNode {
+                doc /* The mesh radio of this drone; carries the peer links. */
+            }
+            #Node part groundRadio : GroundRadioNode {
+                doc /* The radio of this drone towards the ground segment. */
+            }
+            #Node part batteryPack : BatteryPackNode {
+                doc /* The swappable pack; wears with cycles. */
+                part enduranceMonitor : BatteryEnduranceMonitor {
+                    doc /* Remaining-endurance monitoring behaviour. */
+                }
+            }
+
+            #Mode state def SwarmMemberModes {
+                doc /* Operating condition of one member: nominal, without satellite positioning, sensors not trustworthy, cut off from the others, or failed admission and readmitted. Carries the rule QuarantinedStaysOut. */
+                @SysproseVerification::PropertyPattern {
+                    doc /* QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted. */
+                    attribute pattern = "absence";
+                    attribute scope = "between";
+                    attribute q = "state Quarantined";
+                    attribute r = "state Readmitted";
+                    attribute p = "state Nominal";
+                }
+                initial start;
+                state Nominal {
+                    doc /* Positioning, trusted sensors, contact and admission; takes part in coordination. */
+                }
+                state NavigationDegraded {
+                    doc /* No satellite positioning; the drone navigates by what its camera sees against stored maps. */
+                }
+                state SensingDegraded {
+                    doc /* The sensors cannot be trusted as they are; what the drone reports from them is marked accordingly. */
+                }
+                state Isolated {
+                    doc /* Cut off from the other drones and from the coordinator; it coordinates with none and keeps to its last assignment. */
+                }
+                state Quarantined {
+                    doc /* Failed admission (identity or classifier version); takes no part in coordination until readmitted. */
+                }
+                state Readmitted {
+                    doc /* Passed the readmission check and about to take part in coordination again. */
+                }
+                transition start -> Nominal;
+                transition Nominal -> NavigationDegraded;
+                transition NavigationDegraded -> Nominal;
+                transition Nominal -> SensingDegraded;
+                transition SensingDegraded -> Nominal;
+                transition Nominal -> Isolated;
+                transition Isolated -> Nominal;
+                transition Nominal -> Quarantined;
+                transition Quarantined -> Readmitted;
+                transition Readmitted -> Nominal;
+            }
+            #State state def SwarmMemberStates {
+                doc /* Where one member is in its sortie. Carries the rules RecallWins, GeofenceBreachEndsWatch and ReturnsWhenIsolated. */
+                @SysproseVerification::PropertyPattern {
+                    doc /* RecallWins: once a drone is recalled, it does not watch again until it has landed. */
+                    attribute pattern = "absence";
+                    attribute scope = "between";
+                    attribute q = "state Recalled";
+                    attribute r = "state Landed";
+                    attribute p = "state Watching";
+                }
+                @SysproseVerification::PropertyPattern {
+                    doc /* GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed. */
+                    attribute pattern = "absence";
+                    attribute scope = "between";
+                    attribute q = "state OutsideClearance";
+                    attribute r = "state Landed";
+                    attribute p = "state Watching";
+                }
+                @SysproseVerification::PropertyPattern {
+                    doc /* ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed; an isolated drone included. */
+                    attribute pattern = "recovery";
+                    attribute scope = "globally";
+                    attribute p = "state Landed";
+                }
+                initial start;
+                state Landed {
+                    doc /* On the ground, battery being swapped or waiting for an assignment. */
+                }
+                state Transiting {
+                    doc /* Flying from the recharge point to the assigned sector. */
+                }
+                state Watching {
+                    doc /* Holding watch over the assigned sector. */
+                }
+                state Returning {
+                    doc /* Flying back to the recharge point once relieved, or to land when the wind is above moderate. */
+                }
+                state Recalled {
+                    doc /* Recalled by order and on its way down; it does not watch until landed. */
+                }
+                state Recovering {
+                    doc /* Cut off and returning to the recovery point on its own. */
+                }
+                state OutsideClearance {
+                    doc /* Outside the cleared airspace or the clearance withdrawn: on its way down, not watching until landed. */
+                }
+                transition start -> Landed;
+                transition Landed -> Transiting;
+                transition Transiting -> Watching;
+                transition Watching -> Returning;
+                transition Returning -> Landed;
+                transition Transiting -> Recovering;
+                transition Watching -> Recovering;
+                transition Returning -> Recovering;
+                transition Recovering -> Landed;
+                transition Transiting -> Recalled;
+                transition Watching -> Recalled;
+                transition Returning -> Recalled;
+                transition Recalled -> Landed;
+                transition Transiting -> OutsideClearance;
+                transition Watching -> OutsideClearance;
+                transition Returning -> OutsideClearance;
+                transition OutsideClearance -> Landed;
+            }
+        }
+        part fleet : SwarmMember [12] {
+            doc /* The twelve identical drones. Every function a member performs itself is allocated here: detection, report delivery, relay, track hand-over, directive uptake, status and return to the recovery point. */
+        }
+        part memberA : SwarmMember {
+            doc /* First representative member, one end of the peer link. */
+        }
+        part memberB : SwarmMember {
+            doc /* Second representative member, the other end of the peer link. */
+        }
+        interface peerLink : Common::MeshInterface connect memberA.meshOut to memberB.meshIn {
+            doc /* The exchange between two members over the mesh: relay of reports, track hand-over and heartbeat. */
+        }
+        connection meshHop : MeshRadioMedium connect memberA.meshRadio.rf to memberB.meshRadio.rf {
+            doc /* The physical radio hop that carries the peer link between the two representative members. */
+        }
+        #Configuration state def FleetConfiguration {
+            doc /* Condition of the mesh between drones, taken over the whole population. */
+            initial start;
+            state MeshIntact {
+                doc /* The links between drones are all usable. */
+            }
+            state MeshDegraded {
+                doc /* A share of the links between drones is jammed; the drones relay and hand over tracks over what is left while the ground coordinator keeps deciding over the ground link. */
+            }
+            transition start -> MeshIntact;
+            transition MeshIntact -> MeshDegraded;
+            transition MeshDegraded -> MeshIntact;
+        }
+        /* ---------- the ground segment ---------- */
+
+        #Node part groundCoordinator : GroundCoordinationNode {
+            doc /* The deciding coordinator on the ground: the one place where sector hand-over, rotation, redistribution, deconfliction, admission and track correlation are settled. */
+            part swarmCoordinator : GroundSwarmCoordinator {
+                doc /* Assignment, rotation, redistribution, deconfliction and admission behaviour. */
+            }
+            part trackFusion : GroundTrackFusion {
+                doc /* Track correlation, stale marking and the swarm track picture. */
+            }
+        }
+        #Node part groundStation : GroundStationNode {
+            doc /* The operator's station: command and control only. */
+            part c2Console : StationC2Console {
+                doc /* Tasking, priorities, status picture and acknowledgement behaviour. */
+            }
+            part recallIssuer : DirectRecallIssuer {
+                doc /* Recall path that bypasses the coordinator. */
+            }
+        }
+        #Node part groundTriage : GroundTriageNode {
+            doc /* The report ranking node. */
+            part alertRanker : AlertRanker {
+                doc /* Ranking and duplicate merging behaviour. */
+            }
+        }
+        #Node part groundRecordStore : GroundRecordNode {
+            doc /* The decision record node, separate from the ranker. */
+            part decisionLogger : DecisionLogger {
+                doc /* Decision record keeping behaviour. */
+            }
+        }
+        #Node part groundLinkTransceiver : GroundLinkTransceiverNode {
+            doc /* The ground-side radio that carries every fleet to ground link below. */
+            part linkGateway : LinkGatewayManager {
+                doc /* Link queueing and state reporting behaviour. */
+            }
+        }
+        /* fleet to ground, over the radio link */
+        connection reportsToTriage : GroundLinkMedium connect fleet.reportsOut to groundTriage.reportsIn {
+            doc /* Detection reports from the drones to the ranker. */
+        }
+        connection reportsToRecords : GroundLinkMedium connect fleet.reportsOut to groundRecordStore.reportsIn {
+            doc /* The same reports straight to the record store, so provenance survives a failed ranker. */
+        }
+        connection trackObservations : GroundLinkMedium connect fleet.trackPictureOut to groundCoordinator.trackObsIn {
+            doc /* Tracks seen by each drone, to be correlated on the ground. */
+        }
+        connection memberStatusFeed : GroundLinkMedium connect fleet.statusOut to groundStation.statusIn {
+            doc /* Status and degradations of each drone for the status picture. */
+        }
+        connection coordinationUplink : GroundLinkMedium connect fleet.coordOut to groundCoordinator.coordIn {
+            doc /* Drone state, position and intent sent to the coordinator. */
+        }
+        connection assignmentDownlink : GroundLinkMedium connect groundCoordinator.coordOut to fleet.coordIn {
+            doc /* Sector assignments, rotation orders, hand-over confirmations and admission verdicts from the coordinator. */
+        }
+        connection priorityDownlink : GroundLinkMedium connect groundStation.priorityOut to fleet.priorityIn {
+            doc /* Priorities, sector of interest and the reporting threshold to the drones. */
+        }
+        connection recallDownlink : GroundLinkMedium connect groundStation.recallOut to fleet.recallIn {
+            doc /* Recall orders straight to the drones, not through the coordinator. */
+        }
+        connection receiptDownlink : GroundLinkMedium connect groundStation.receiptOut to fleet.receiptIn {
+            doc /* Acknowledgements that let a drone clear a held report. */
+        }
+        /* inside the ground segment, wired */
+        connection taskingToCoordinator : GroundWiredLink connect groundStation.taskingOut to groundCoordinator.taskingIn {
+            doc /* The area, sectors and mission window to the coordinator, which turns them into assignments. */
+        }
+        connection trackPictureToStation : GroundWiredLink connect groundCoordinator.trackPictureOut to groundStation.trackPictureIn {
+            doc /* The one-track-per-object picture to the station. */
+        }
+        connection alertsToStation : GroundWiredLink connect groundTriage.alertsOut to groundStation.alertsIn {
+            doc /* Ranked alerts to the operator. */
+        }
+        connection recordsToStation : GroundWiredLink connect groundRecordStore.recordsOut to groundStation.recordsIn {
+            doc /* Decision records to the station. */
+        }
+        connection receiptToRecords : GroundWiredLink connect groundStation.recordReceiptOut to groundRecordStore.receiptIn {
+            doc /* Who acknowledged which report, for the decision record. */
+        }
+        /* ---------- allocation of every function ---------- */
+
+        allocate handOverSector to groundCoordinator;
+        allocate rotateRecharge to groundCoordinator;
+        allocate redistributeCoverage to groundCoordinator;
+        allocate deconflictFlight to groundCoordinator;
+        allocate correlateTracks to groundCoordinator;
+        allocate admitMember to groundCoordinator;
+        allocate reportTrackPicture to groundCoordinator;
+        allocate relayReportsThroughNeighbour to fleet;
+        allocate handOverTrack to fleet;
+        allocate detectAndClassifyObject to fleet;
+        allocate deliverDetectionReport to fleet;
+        allocate applySupervisoryDirectives to fleet;
+        allocate reportMemberStatus to fleet;
+        allocate returnToRecoveryPoint to fleet;
+        allocate taskSurveillanceArea to groundStation;
+        allocate commandSupervisoryPriorities to groundStation;
+        allocate recallAndLand to groundStation;
+        allocate presentStatusPicture to groundStation;
+        allocate acknowledgeDetectionReport to groundStation;
+        allocate triageAlerts to groundTriage;
+        allocate keepDecisionRecords to groundRecordStore;
+        /* ---------- numbers this architecture rests on ---------- */
+
+        attribute fleetMemberCount = 12 {
+            doc /* Twelve drones, fixed by the brief. */
+        }
+        attribute memberFlightMinutes = 40.0 {
+            doc /* Endurance of one sortie in minutes, fixed by the brief. */
+        }
+        attribute memberTurnaroundMinutes = 20.0 {
+            doc /* Battery-swap turnaround on the ground in minutes, fixed by the brief. */
+        }
+        attribute sectorReachMetres = 4000.0 {
+            doc /* Longest distance in metres from the recharge point to a sector; the basis carried from the layer above. */
+        }
+        attribute memberCruiseMetresPerSecond = 18.0 {
+            doc /* Cruise speed in metres per second, fixed by the brief. */
+        }
+        attribute sectorTransitMinutes = 2.0 * sectorReachMetres / memberCruiseMetresPerSecond / 60.0 {
+            doc /* Minutes spent flying out to a sector and back from the same sortie: 8000 m at 18 m/s is about 7.4 min. */
+        }
+        attribute memberCoverageFraction = 0.12 {
+            doc /* Share of the tasked area one watching drone keeps under watch: 3.0 km2 of 25 km2. It is larger than the drone's 1/12 share of the population; the coverage measures are derived from it, not stated above the airborne share. */
+        }
+        attribute watchingMembers = fleetMemberCount * (memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes) {
+            doc /* Drones watching at any moment: twelve times the watching minutes (40 less transit) over the 60 minute cycle, about 6.52. */
+        }
+        attribute handOverLossShareUnderJamming = 0.15 {
+            doc /* Assumed share of watching coverage lost when half the links are jammed and interference also degrades the ground link. Ground-decided hand-over does not run over the mesh, so this is below the member-centred case. An assumption, not a brief number. */
+        }
+        attribute trackStaleThresholdSeconds = 120.0 {
+            doc /* A track is marked stale after this many seconds unseen, fixed by the brief. */
+        }
+        requirement sortieTimeBudget {
+            doc /* Transit out and back is spent from the same 40 minute sortie and leaves at least 30 minutes of watching. */
+            require constraint { memberFlightMinutes - sectorTransitMinutes >= 30.0 }
+        }
+        requirement fleetSizeBudget {
+            doc /* The fleet is at most the twelve drones the brief fixes. */
+            require constraint { fleetMemberCount <= 12 }
+        }
+        requirement fleetFootprintBudget {
+            doc /* All twelve drones together can keep at least the whole 25 km2 area under watch, so the rotation is the only reason coverage falls short. */
+            require constraint { fleetMemberCount * 3.0 >= 25.0 }
+        }
+        requirement trackStalenessBudget {
+            doc /* The ground track fusion marks a track stale within the 120 seconds the brief fixes. */
+            require constraint { trackStaleThresholdSeconds <= 120.0 }
+        }
+        /* ---------- worst-case estimates (CV-17) ---------- */
+
+        #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction {
+            doc /* Derived: watchingMembers times memberCoverageFraction. Twelve drones, 40 min sortie of which about 7.4 min is transit, 20 min swap: about 6.52 drones watch at a time, each holding 3.0 km2 of 25 km2, so about 0.78. Ground-decided rotation fills each sector before its holder leaves, which does not add drones; target 0.9 is not met by this arithmetic. */
+        }
+        assert constraint { areaUnderWatchFraction == watchingMembers * memberCoverageFraction }
+        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction {
+            doc /* Derived: one watching drone holds 1 / watchingMembers of the coverage under watch, about 0.15, before any re-spread. The loss precedes the ground coordinator's redistribution, so it is the same as for a member-centred split. */
+        }
+        assert constraint { coverageLossAfterMemberLossFraction == 1.0 / watchingMembers }
+        #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction {
+            doc /* Derived: the watching baseline less handOverLossShareUnderJamming, about 0.78 times 0.85 = 0.66. Hand-over is decided by the ground coordinator over the ground link, so jammed mesh links cost only relay and track hand-over; the share lost is an assumption because the same interference may also degrade the ground link. Placeholder target 0.75 is not met. */
+        }
+        assert constraint { coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1.0 - handOverLossShareUnderJamming) }
+        #Estimate attribute reportAgeAtOperationsCentreSeconds :> Common::reportAgeAtOperationsCentreSeconds = 40 {
+            doc /* Worst case 40 s with the link up: about 5 s to classify, up to three relay hops of about 2 s through neighbours, about 5 s on the ground link and about 20 s of ranking queue, 36 s, plus about 4 s for the wired hops on the ground. Unit is seconds. */
+        }
+        #Estimate attribute positionErrorWithoutSatelliteMetres :> Common::positionErrorWithoutSatelliteMetres = 80 {
+            doc /* Worst case 80 m after ten minutes without satellite positioning: about 10.8 km flown at 18 m/s; camera matching against stored maps bounds the drift, loosely over featureless ground. Navigation stays on the drone in this alternative. Placeholder target 50 m is not met. Unit is metres. */
+        }
+        #Estimate attribute reportHoldWhileCutOffMinutes :> Common::reportHoldWhileCutOffMinutes = 40 {
+            doc /* Worst case 40 min: bounded by one sortie, after which the drone lands and its held reports survive the battery swap in non-volatile memory on board. Unit is minutes. */
+        }
+        #Estimate attribute missedDetectionFraction :> Common::missedDetectionFraction = 0.12 {
+            doc /* Worst case 0.12: lighting, weather and deliberately misleading paint or shapes reduce what the sensors can tell apart; detection is on the drone and no different from the other split. Placeholder target 0.10 is not met. */
+        }
+        #Estimate attribute falseAlarmsPerHour :> Common::falseAlarmsPerHour = 3 {
+            doc /* Worst case 3 per hour reaching the operator at the threshold that gives the missed-detection figure above. Unit is 1/h. */
+        }
+        #Estimate attribute alertsReachingOperatorPerHour :> Common::alertsReachingOperatorPerHour = 21 {
+            doc /* Worst case 21 per hour after ranking. The ground coordinator gives every object one track before the ranker merges duplicates, so about 12 percent fewer duplicates survive than the 24 per hour of a member-centred split; busy sectors with all twelve drones still exceed 20. The operator could judge up to 120 per hour at 30 s each. Unit is 1/h. */
+        }
+        #Estimate attribute acknowledgedReportsThatMatterFraction :> Common::acknowledgedReportsThatMatterFraction = 0.75 {
+            doc /* Worst case 0.75: the ranker sees all reports and the fused track history in one place, which helps over ranking by confidence alone, but has no operator feedback on what mattered. */
+        }
+        #Estimate attribute onboardClassificationCostUsdPerMember :> Common::onboardClassificationCostUsdPerMember = 320 {
+            doc /* Worst case 320 USD per member: classification still runs on the drone because the ground link is intermittent, but the coordination stack is on the ground, so the on-board computer is smaller than in the member-centred split. Placeholder target 300 USD is not met. Unit is USD. */
+        }
+        #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours = 0.7 {
+            doc /* Worst case 0.7 h: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The 12 h figure is a target set here, not the customer's. Unit is hours. */
+        }
+        /* ---------- hazards this layer adds ---------- */
+
+        package Hazards {
+            doc /* Hazards the ground-centred technology introduces, each stated once here. */
+            #Hazard requirement CoordinatorHostFailureHazard {
+                subject c : GroundCoordinationNode;
+                doc /* About the ground coordination server: if it or its software crashes or its link fails, hand-over, rotation, redistribution, deconfliction and admission all stop at once and the drones act on their last assignment while coverage decays as endurance runs out. */
+            }
+            #Hazard requirement AssignmentLatencyHazard {
+                subject l : GroundLinkTransceiverNode;
+                doc /* About the ground link transceiver: every decided assignment takes a round trip over an intermittent radio link, so a hand-over confirmation can arrive late and a leaving drone would open a gap. */
+            }
+            #Hazard requirement HeldReportStorageLossHazard {
+                subject m : SwarmMember;
+                doc /* About the on-board report store: held reports are lost if memory is corrupted or power is cut at a battery swap, and the drone then believes nothing is missing. */
+            }
+            #Hazard requirement BatteryWearHazard {
+                subject b : BatteryPackNode;
+                doc /* About the swappable battery pack: a worn pack gives less than the planned 40 minutes and a drone may not get back from its sector. */
+            }
+        }
+        /* ---------- what mitigates which hazard ---------- */
+
+        satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::SensingDegradedUnnoticedHazard by fleet;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::StaleTrackHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::SpoofedMemberHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::MixedClassifierVersionsHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::SA::Hazards::OperatorOverloadHazard by groundTriage;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::CoordinationConcentrationHazard by fleet;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::SectorHandOffLostHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::RelayedReportDroppedHazard by fleet;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::TrackHandOverGapHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::SplitCoordinationHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::LostHandoffHazard by groundCoordinator;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::GroundStationSinglePointHazard by fleet;
+        satisfy SurveillanceDroneSwarm::LA::Hazards::TriageUnitSinglePointHazard by groundRecordStore;
+        satisfy Hazards::CoordinatorHostFailureHazard by fleet;
+        satisfy Hazards::AssignmentLatencyHazard by groundCoordinator;
+        satisfy Hazards::HeldReportStorageLossHazard by fleet;
+        satisfy Hazards::BatteryWearHazard by fleet;
+    }

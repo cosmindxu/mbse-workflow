@@ -1,0 +1,311 @@
+{
+  "total": 17,
+  "satisfied": 15,
+  "coverage": 0.8823529411764706,
+  "libraryExcluded": 24,
+  "implicitExcluded": 0,
+  "nonNormativeExcluded": 0,
+  "kind": "requirement",
+  "rows": [
+    {
+      "id": "1662f03c-0a13-427f-a5b5-e0cccbe7d33e",
+      "number": "1",
+      "reqId": "",
+      "name": "CoverageGapDuringHandoverHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "If sector handover between two members is not make-before-break, the sector can go briefly unwatched while responsibility transfers between them.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "HandOverSector"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "63d7f4fa-7669-4a8c-a815-993bf59a9ed5",
+      "number": "2",
+      "reqId": "",
+      "name": "PositionDriftHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "without satellite positioning, a member's position estimate drifts and its reports place objects in the wrong place",
+      "satisfied": true,
+      "satisfiedBy": [
+        "surveillanceDroneSwarm",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "8796a30a-9bb7-4a13-a1e3-57a2bd646a53",
+      "number": "3",
+      "reqId": "",
+      "name": "MeshJammingHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "interference cuts the links between members, and coordination stalls",
+      "satisfied": true,
+      "satisfiedBy": [
+        "relayThroughNeighbour",
+        "relayThroughNeighbour",
+        "fleetConfiguration"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "b87d52f5-5e7c-440b-ad83-8b282ee45389",
+      "number": "4",
+      "reqId": "",
+      "name": "MisclassificationHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a detection is reported as the wrong class, or a forced class where Unknown was the truth",
+      "satisfied": true,
+      "satisfiedBy": [
+        "detectAndClassify",
+        "detectAndClassify",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "76714194-89b7-4a63-af80-1899140e92c5",
+      "number": "5",
+      "reqId": "",
+      "name": "SensingDegradedUnnoticedHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a sensor degrades and nobody knows the reports from it are unreliable",
+      "satisfied": true,
+      "satisfiedBy": [
+        "presentStatusPicture",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "4a61f1ca-35e0-4d2e-9dcc-573df15ba25a",
+      "number": "6",
+      "reqId": "",
+      "name": "StaleTrackHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a track is shown as current after nothing has seen the object for a while",
+      "satisfied": true,
+      "satisfiedBy": [
+        "correlateTracks",
+        "correlateTracks",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "e380d5dd-1fec-4102-89d0-c73df53fc571",
+      "number": "7",
+      "reqId": "",
+      "name": "SpoofedMemberHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "something that is not one of the members joins the mesh and takes part in coordination",
+      "satisfied": true,
+      "satisfiedBy": [
+        "admitMember",
+        "admitMember",
+        "groundControlStation"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "7402d1b0-fc89-44dd-b149-aa7a861c1591",
+      "number": "8",
+      "reqId": "",
+      "name": "MixedClassifierVersionsHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "members run different classifier versions and classify the same object differently",
+      "satisfied": true,
+      "satisfiedBy": [
+        "classifierRelease",
+        "reportDetection",
+        "groundControlStation"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "08b33b15-5eac-4ba0-979c-a7c30812be24",
+      "number": "9",
+      "reqId": "",
+      "name": "OperatorOverloadHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "more alerts reach the operator than they can judge, and they accept what is in front of them",
+      "satisfied": true,
+      "satisfiedBy": [
+        "triageReports",
+        "triageReports",
+        "groundControlStation"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "aabbe0ca-e3d9-489b-abf9-c2b94a82d78e",
+      "number": "10",
+      "reqId": "",
+      "name": "RecallWins",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "RecallWins: once a drone is recalled, it does not watch again until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "8a401e0a-98b1-4be6-b9bd-ddcbb5e9efea",
+      "number": "11",
+      "reqId": "",
+      "name": "ReturnsWhenIsolated",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "ReturnsWhenIsolated: from any situation a drone can be in, it can always get back to landed, an isolated drone included",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "29a32316-02d4-4a1c-8f9a-768284c044b9",
+      "number": "12",
+      "reqId": "",
+      "name": "GeofenceBreachEndsWatch",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "GeofenceBreachEndsWatch: once a drone is outside its cleared airspace, it does not watch until it has landed",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "f5f575db-5c6d-478a-b87a-0e346e03afe9",
+      "number": "13",
+      "reqId": "",
+      "name": "QuarantinedStaysOut",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "QuarantinedStaysOut: once a drone is quarantined, it takes no part in coordination until it has been readmitted",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "ad887717-3b00-44a7-b3fc-fc22657fb0c7",
+      "number": "14",
+      "reqId": "",
+      "name": "PeerCoordinationSinglePointHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "a single point of failure this layer's intended split introduces: handOverSector, rotateRecharge and admitMember are each meant to be carried out by one member acting for its peers; if that member fails or drops out mid-exchange, the coordination step is left incomplete until another member takes over.",
+      "satisfied": true,
+      "satisfiedBy": [
+        "redistributeCoverage",
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "944ca35f-bece-43b1-965c-5867fcd8ddc3",
+      "number": "15",
+      "reqId": "",
+      "name": "GroundLinkC2SinglePathHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: the five #C2 functions are allocated only to mainComponent, the ground-facing boundary; a total GroundStationLink loss removes the supervisory command, recall and acknowledgement path until the link returns. Accepted because DisconnectedOperationAndReconciliation already keeps detectAndClassify and reportDetection running through the gap, and SafetyAuthority requires recall and geofence authority to stay independent of onboard software rather than delegated to the fleet.",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "d7668771-b3ee-4422-82cb-d5f3fb9f4df2",
+      "number": "16",
+      "reqId": "",
+      "name": "CoordinationDivergenceHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "with sector handover, recharge rotation and coverage redistribution decided independently by members rather than arbitrated by the ground, two members may reach conflicting local decisions at the same moment — e.g. both vacating the same sector for recharge — with no ground arbiter to break the tie",
+      "satisfied": true,
+      "satisfiedBy": [
+        "fleet"
+      ],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    },
+    {
+      "id": "ecc27d86-cf6b-4a50-b1f0-c22b9f9d4321",
+      "number": "17",
+      "reqId": "",
+      "name": "GroundAdmissionBottleneckHazard",
+      "metaclass": "RequirementUsage",
+      "kind": "requirement",
+      "text": "accepted: because admitMember stays solely at the ground control station, a lost ground link blocks admission or readmission of any member until the link returns. This is deliberately fail-closed — an un-vetted candidate is safer excluded than admitted — and existing members' watch is unaffected since the other seven #Coordination functions run on board regardless of ground reachability",
+      "satisfied": false,
+      "satisfiedBy": [],
+      "verifiedBy": [],
+      "refinedBy": [],
+      "tracedTo": [],
+      "derivedFrom": []
+    }
+  ]
+}

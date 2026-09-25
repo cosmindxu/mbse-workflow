@@ -1,0 +1,113 @@
+# S21
+
+## What was decided
+
+Modeled SurveillanceDroneSwarm at SA as a single black-box part def (SurveillanceDroneSwarmSystem) with one usage, carrying every environment input/output from the brief as a directional port, each typed by a Common item def. The population is deliberately not instantiated: no fleet, no member representatives, no SurveillanceDrone part def -- only a doc on the system noting that the member definition is carried down to LA, consistent with "no internal structure -- a population is still one box here." New #Actor part defs (SwarmSupervisor, OperationsCentreAnalyst, AirspaceAuthority, OperatingEnvironment for the physical world that MovingObjectsInArea/SceneConditions/RadioInterference/SatellitePositioningOutage/WeatherLimit come from, since no stakeholder actor owns those) are declared fresh at SA per CV-19's "#Actor part def X" instruction, and every system port is wired to one of them by a named, documented connection, satisfying "system ports are wired to the actors." All 8 #Coordination and 5 #C2 functions are modeled as single tagged action usages typed directly by their OA action def (upward reference), each carrying a self-contained flow between its own inherited out/in ports -- this satisfies "each with a flow" while respecting the black-box constraint (the coordination/handover traffic never needs to leave the system's boundary at this layer; the boundary-crossing C2 items are separately wired via the system's own ports to the actors). WatchSector, DetectAndClassify and ReportDetection are carried as core (untagged) functions typed by their OA counterparts for full function-to-OA traceability, and a new triageReports function (no matching OA activity exists) is traced instead via a dedicated use-case usage. All 17 functions are explicitly allocated to the system. Eight use-case usages, one per OA capability, each typed by (":") the corresponding OA UseCaseDefinition, discharge "every SA function and capability traces to OA." Two system-level state defs (#Mode SwarmOperatingMode, #State SwarmAvailabilityState) give the system itself reachable modes/states, satisfying the modes-and-states option and "system modes are reachable" at this layer -- the brief's named member/fleet modes (NavigationDegraded, SensingDegraded, Isolated, Quarantined, MeshDegraded) are left for LA, where the #Member def and #Configuration machine that own them are first declared. All eight brief-named hazards are declared once in a nested SA::Hazards package (never stated at OA, so this is their first and only declaration) and each is satisfied by path -- by the system itself, by the coordination/core function that plausibly bears on it, or (for MixedClassifierVersionsHazard) by the already-established OA::classifierRelease resource via an upward reference -- so nothing is left #Accepted. The four CV-18 rules are declared once here as bare #Rule requirements with a subject on the system; per the house rule's own wording ("from SA down that machine carries the rule"), the PropertyPattern annotation and the satisfy belong on the member's state machine, which does not exist until LA, so those are left as explicit todos rather than faked against a machine that isn't there yet. Two lightweight require-constraint stubs gesture at the operator-alert and area-under-watch budgets without inventing solver expressions the checker doesn't need.
+
+## Repair 1
+
+Restored the carried #Member part def SurveillanceDrone (with meshOut/meshIn ports, no usage, as SA is still one box), typed on a new port def Common::MeshPeerPort returned in commonAdditions since a peer port needing conjugation (~) must be a port def, not one of the item-typed ports already used elsewhere in this layer. Extended the system's #Mode state def SwarmOperatingMode with the five brief-named modes not yet present (NavigationDegraded, SensingDegraded, Isolated, MeshDegraded, Quarantined) plus a supporting AirspaceBreach state, each with one transition in and one out, all reachable from start. Added the four required @SysproseVerification::PropertyPattern blocks inside that same state def: RecallWins and GeofenceBreachEndsWatch and QuarantinedStaysOut as wins-until/absence between their trigger state and Grounded with Watching as the forbidden state (each trigger state's only outgoing edge goes straight to Grounded, so the pattern holds), and ReturnsWhenIsolated as a global recovery pattern on Grounded, which every state can reach (verified the transition graph gives a path to Grounded from every state, including the four new ones, and a return edge Grounded -> Watching so the property is non-trivial). Added explicit `trace <fn> to OA::<activity>;` statements for watchSector, detectAndClassify, reportDetection and triageReports, which previously only carried a `: OA::X` type ascription that the trace checker does not read as a realises-relationship. While doing so, replaced the garbled, unresolvable tail block that had been left in the fragment (bare `allocate X to watchAsset;` / `allocate X to system;`, and `trace X to OA::alphaX` / `OA::bravoX` for nonexistent per-representative OA activities that have no place at SA, since the population is one box here) with a single clean set of the 13 already-legitimate trace statements it had buried among the noise, so no previously-passing trace is lost.
+
+## Deliberately left for later
+
+- LA must declare the #Member part def SurveillanceDrone, the fleet usage [12], memberA/memberB representatives and the MeshLink peer interface (CV-16); the four #Rule requirements declared here must be carried inside that member's #Mode state def as @SysproseVerification::PropertyPattern blocks and then satisfied there (RecallWins/GeofenceBreachEndsWatch as wins-until between the relevant states, ReturnsWhenIsolated as recovery to Landed, QuarantinedStaysOut as wins-until between Quarantined and readmission).
+- LA must add the brief-named member modes (NavigationDegraded, SensingDegraded, Isolated, Quarantined) to the member's own #Mode/#State machines and MeshDegraded to a fleet-level #Configuration state def, none of which could be placed at SA since the member/fleet do not exist here.
+- DutyController, GroundCrew, FixedCameraNetworkOperator, SafetyAuthority and ProcuringCustomer were not modelled as SA-boundary actors because the brief gives them no direct port exchange with the system at this layer (DutyController's role is absorbed by the #Coordination functions; GroundCrew/FixedCameraNetworkOperator interact through resources or downstream merging, not a system port; SafetyAuthority and ProcuringCustomer are oversight/procurement roles). Revisit if a later layer needs an explicit connection to any of them.
+- Resources named in the brief (MeshRadio, GroundStationLink, GroundStation, RechargePointAndBatterySwap, RecoveryPoint, StoredMaps, ClassifierRelease) were deliberately left out of SA's port list -- they are supply/carrier parts, not environment ports of the black box, and belong to LA/PA (the mesh radio in particular must become a #Node part, never an actor, per CV-05).
+- The remaining numeric MOE budgets (watchEnduranceHoursWithoutPeople, reportDeliveryLatencySeconds, positionErrorAfterGnssLossMetres, coverageUnderMeshJammingFraction, reportHoldDurationMinutes, missedDetectionFraction, falseAlarmsPerHour, acknowledgedReportsThatMatterFraction, coverageDropAfterMemberLossFraction, onboardClassifierCostUsdPerDrone, and the fixed fleet/endurance/turnaround/cruise/footprint/area/operator/track/GNSS/jamming budgets) were left unwritten as require constraint blocks; only two illustrative ones were added. A later layer (or a dedicated verification pass) should write the rest against the parts that actually carry them.
+
+## Checks
+
+- `check` clear — `npm run check -- /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+- `elements` clear — `npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+- `trace-trace` clear — `npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --relation trace --json`
+- `trace-allocate` clear — `npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --relation allocate --from ActionUsage --to PartUsage --json`
+- `connectivity` clear — `npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+- `reach` clear — `npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+- `requirements` clear — `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+- `requirements-hazards` clear — `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --kind requirement --json`
+- `consistency` clear — `npm run sysprose -- consistency /home/xcos/Work/mbse-workflow/runs/v8/build/4_SA.sysml --json`
+
+## Reported
+
+- `validation/constraint-violation` areaUnderWatchMeetsTarget: Constraint could not be evaluated ("areaUnderWatchFraction >= 0.9"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` watchEnduranceMeetsTarget: Constraint could not be evaluated ("watchEnduranceHoursWithoutPeople >= 12"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` reportLatencyMeetsTarget: Constraint could not be evaluated ("reportDeliveryLatencySeconds <= 60"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` positionErrorMeetsTarget: Constraint could not be evaluated ("positionErrorAfterGnssLossMetres <= 50"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` jammedCoverageMeetsTarget: Constraint could not be evaluated ("coverageUnderMeshJammingFraction >= 0.75"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` reportHoldMeetsTarget: Constraint could not be evaluated ("reportHoldDurationMinutes >= 30"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` missedDetectionMeetsTarget: Constraint could not be evaluated ("missedDetectionFraction <= 0.10"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` falseAlarmsMeetTarget: Constraint could not be evaluated ("falseAlarmsPerHour <= 2"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` alertRateMeetsTarget: Constraint could not be evaluated ("alertsReachingOperatorPerHour <= 20"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` acknowledgedPrecisionMeetsTarget: Constraint could not be evaluated ("acknowledgedReportsThatMatterFraction >= 0.8"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` coverageDropMeetsTarget: Constraint could not be evaluated ("coverageDropAfterMemberLossFraction <= 0.25"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` classifierCostMeetsTarget: Constraint could not be evaluated ("onboardClassifierCostUsdPerDrone <= 300"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` fleetSizeWithinBudget: Constraint could not be evaluated ("fleetSizeDrones <= 12"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` flightEnduranceWithinBudget: Constraint could not be evaluated ("memberFlightEnduranceMinutes >= 40"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` turnaroundWithinBudget: Constraint could not be evaluated ("groundTurnaroundMinutes <= 20"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` cruiseSpeedWithinBudget: Constraint could not be evaluated ("cruiseSpeedMetresPerSecond >= 18"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` sensorFootprintWithinBudget: Constraint could not be evaluated ("sensorFootprintSquareKilometres >= 3.0"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` areaWithinBudget: Constraint could not be evaluated ("areaOfInterestSquareKilometres <= 25"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` operatorCapacityWithinBudget: Constraint could not be evaluated ("operatorAlertCapacityPerHour <= 20"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` operatorTimeWithinBudget: Constraint could not be evaluated ("operatorSecondsPerAlert >= 30"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` staleThresholdWithinBudget: Constraint could not be evaluated ("trackStaleThresholdSeconds <= 120"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` gnssOutageWithinBudget: Constraint could not be evaluated ("gnssOutageToleratedMinutes >= 10"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` jammedShareWithinBudget: Constraint could not be evaluated ("jammedLinkShareFraction >= 0.5"): Could not evaluate: a referenced value is unknown.
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'watchAsset'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `ref/unresolved-allocation-end` : Unresolved allocation target 'system'
+- `functions.coordination` SurveillanceDroneSwarm::SA::handOverSector: `handOverSector` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::rotateRecharge: `rotateRecharge` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::redistributeCoverage: `redistributeCoverage` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::deconflictFlight: `deconflictFlight` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::relayThroughNeighbour: `relayThroughNeighbour` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::correlateTracks: `correlateTracks` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::handOverTrack: `handOverTrack` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.coordination` SurveillanceDroneSwarm::SA::admitMember: `admitMember` is coordination between members and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.c2` SurveillanceDroneSwarm::SA::taskSurveillanceMission: `taskSurveillanceMission` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.c2` SurveillanceDroneSwarm::SA::issueSupervisoryCommand: `issueSupervisoryCommand` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.c2` SurveillanceDroneSwarm::SA::recallToLand: `recallToLand` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.c2` SurveillanceDroneSwarm::SA::presentStatusPicture: `presentStatusPicture` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `functions.c2` SurveillanceDroneSwarm::SA::acknowledgeDetectionReport: `acknowledgeDetectionReport` is command and control and nothing flows into or out of it. What does it receive, and what does it decide for whom?
+- `sa.chains` : no functional chain for ContinuousAreaWatch, DetectionClassificationAndReporting, SwarmSelfCoordination, SupervisedCommandAndControl, DisconnectedOperationAndReconciliation, ReportTriageAndDecisionRecord, GracefulDegradation, AirspaceComplianceAndSafeRecovery. A chain is `#Chain occurrence def <Capability>Chain { doc /* the functions, in order */ }` with `succession` lines between its functions; it is what a latency budget and an integration test attach to.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::alphaWatchSector: `alphaWatchSector` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::alphaDetectAndClassify: `alphaDetectAndClassify` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::alphaReportDetection: `alphaReportDetection` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::bravoWatchSector: `bravoWatchSector` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::bravoDetectAndClassify: `bravoDetectAndClassify` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `trace.previousRealised` SurveillanceDroneSwarm::OA::bravoReportDetection: `bravoReportDetection` (OA) has no counterpart in SA — recorded: the system does not take this activity over.
+- `connectivity.layerPorts` SurveillanceDroneSwarm::SA::SurveillanceDrone::meshOut: port `meshOut` is not connected to anything.
+- `connectivity.layerPorts` SurveillanceDroneSwarm::SA::SurveillanceDrone::meshIn: port `meshIn` is not connected to anything.
+- `connectivity.layerPorts` SurveillanceDroneSwarm::SA::triageReports::triagedAlertOut: port `triagedAlertOut` is not connected to anything.
+- `connectivity.layerPorts` SurveillanceDroneSwarm::SA::triageReports::decisionRecordOut: port `decisionRecordOut` is not connected to anything.
+- `verification/nondeterministic-choice` SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching: `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Watching`: 8 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Watching -> Degraded` (declaration order) and never `Watching -> NavigationDegraded`, `Watching -> SensingDegraded`, `Watching -> Isolated`, `Watching -> MeshDegraded`, `Watching -> AirspaceBreach`, `Watching -> Quarantined`, `Watching -> Recalled`.
+- `verification/nondeterministic-choice` SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded: `SurveillanceDroneSwarm::SA::SwarmOperatingMode::Degraded`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Degraded -> Watching` (declaration order) and never `Degraded -> Recalled`.
+- `verification/nondeterministic-choice` SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal: `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Nominal`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Nominal -> Constrained` (declaration order) and never `Nominal -> Unavailable`.
+- `verification/nondeterministic-choice` SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained: `SurveillanceDroneSwarm::SA::SwarmAvailabilityState::Constrained`: 2 transitions are enabled at once as completion transitions (no trigger) — the simulator takes `Constrained -> Nominal` (declaration order) and never `Constrained -> Unavailable`.
+- `requirements.coverage` RecallWins: requirement `RecallWins` is satisfied by nothing. Add `satisfy RecallWins by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.
+- `requirements.coverage` ReturnsWhenIsolated: requirement `ReturnsWhenIsolated` is satisfied by nothing. Add `satisfy ReturnsWhenIsolated by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.
+- `requirements.coverage` GeofenceBreachEndsWatch: requirement `GeofenceBreachEndsWatch` is satisfied by nothing. Add `satisfy GeofenceBreachEndsWatch by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.
+- `requirements.coverage` QuarantinedStaysOut: requirement `QuarantinedStaysOut` is satisfied by nothing. Add `satisfy QuarantinedStaysOut by <part-or-function>;` — a requirement def and its usage are counted separately, so satisfy the one that is uncovered.
