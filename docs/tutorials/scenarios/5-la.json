@@ -1,0 +1,278 @@
+{
+  "name": "5-la",
+  "kicker": "Drone-swarm model · tutorial 5 of 7",
+  "title": "LA — Logical architecture",
+  "subtitle": "The black box opened into logical components: the drones, the ground station and the triage unit, with every logical function allocated to one of them. Nothing physical is chosen yet.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "delete": "SurveillanceDroneSwarm::LA::memberB"
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE LA LAYER",
+      "text": "In the Explorer, ⊞ on LA scopes every diagram to the logical-architecture package. The chip above the canvas says what is shown.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::LA"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::LA"
+        },
+        {
+          "hover": "node:SurveillanceDroneSwarm::LA::fleet"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "All of LA, left to right: 21 logical functions, each realising an SA function and allocated to a component, the state machines and the hazards. Nothing physical yet.",
+      "do": [
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "label": "READ ONE ELEMENT",
+      "text": "Select a box: Properties shows what it is. fleet is the twelve identical drones, typed by SwarmMember. It gets 14 functions, the 8 coordination ones among them.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::LA::fleet"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "ADD A PART BACK",
+      "text": "Before recording we deleted memberB, the second representative drone. Now we add it back. A new part goes under the selection, so first select LA in the Explorer.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::LA"
+        },
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "PLACE A PART",
+      "text": "Pick Part in the palette, then click empty canvas. The new part is created in LA and selected.",
+      "do": [
+        {
+          "click": "palette:PartUsage:node"
+        },
+        {
+          "click": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "NAME IT",
+      "text": "Type its name in Properties. With no type yet, memberB sits apart, among the boxes nothing connects to.",
+      "do": [
+        {
+          "type": "memberB",
+          "into": "testid:prop-name"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::memberB",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "TYPE IT",
+      "text": "In Properties, Type: SwarmMember, then Enter. The typing is bound, as the text's memberB : SwarmMember: its typed-by line is drawn and memberB moves beside memberA.",
+      "do": [
+        {
+          "type": "SwarmMember",
+          "into": "testid:prop-type"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::memberB",
+            "to": 0.55
+          }
+        },
+        {
+          "hover": "pane:empty"
+        }
+      ]
+    },
+    {
+      "label": "DOCUMENT IT",
+      "text": "Its documentation goes in Properties, word for word as in the model: the second representative member, the other end of the peer link.",
+      "do": [
+        {
+          "type": "Second representative member, the other end of the peer link.",
+          "into": "testid:prop-doc"
+        },
+        {
+          "hover": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "memberB is back beside memberA, typed by SwarmMember. Not re-entered: its peerLink interface to memberA, whose end was a meshIn row in this box, and its trace to PA.",
+      "do": [
+        {
+          "wait": 300
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "What LA contains, one branch at a time. +N on SwarmMember opens what each member carries: its nine ports and its two state machines.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "click": "tree-toggle:SurveillanceDroneSwarm::LA::SwarmMember"
+        },
+        {
+          "hover": "node:SurveillanceDroneSwarm::LA::SwarmMember::meshOut"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::LA::SwarmMember"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::SwarmMember",
+            "to": 0.5,
+            "offset": [
+              -100,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "Components with ports on their edges. The ten lines are connections: fleet sends reports to triageUnit, status and tracks to groundStation; tasking and recall come back.",
+      "do": [
+        {
+          "view": "interconnection"
+        }
+      ]
+    },
+    {
+      "label": "ACTION VIEW",
+      "text": "The 21 logical functions, each allocated to a component: a set, not a sequence. Unlike SA, LA models no flows between them; what passes between components is on the connections.",
+      "do": [
+        {
+          "view": "action"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::handOverSector",
+            "to": 0.65
+          }
+        },
+        {
+          "hover": "pane:empty"
+        }
+      ]
+    },
+    {
+      "label": "STATE VIEW",
+      "text": "Five state machines: a member's sortie and its condition, the ground station's duty and its link, and the mesh across the fleet. No transition has a trigger yet.",
+      "do": [
+        {
+          "view": "state"
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "The eight hazards this layer adds, all satisfied by fleet and four also by a function. The constraint at the top right is drawn here too.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    },
+    {
+      "label": "PARAMETRIC VIEW",
+      "text": "One box: LA's coverage arithmetic as a constraint, its equation written in the box. Problems lists it as violated: LA's own numbers do not satisfy it.",
+      "do": [
+        {
+          "view": "parametric"
+        },
+        {
+          "click": "css:.react-flow__node"
+        },
+        {
+          "click": "testid:tab-problems"
+        },
+        {
+          "settle": true
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 6 of 7",
+    "title": "PA — Physical architecture",
+    "text": "The components that will be built: behaviour hosted in node parts, typed physical links, units on what flows and resource budgets as constraints. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}

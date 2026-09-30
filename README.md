@@ -12,6 +12,8 @@ every step on a **Sysprose** check.
 Every diagram and table of the v9 model, drawn by Sysprose from the one text
 file. You can change it there; changes come back through GitHub —
 [CONTRIBUTING.md](CONTRIBUTING.md#proposing-a-change-to-the-model) says how.
+**[Video tutorials →](https://cosmindxu.github.io/mbse-workflow/tutorials/)** one
+per layer, silent and captioned: every diagram, and how to add an element.
 
 The numbers in the picture come out of `examples/drone-swarm-v7` and its brief;
 the sector grid draws the ceiling that brief's duty cycle sets, not a frame of

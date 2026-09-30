@@ -9,6 +9,9 @@ tree, the tables, 3D — is drawn from that one text file; the Explorer on the
 left lists the layers as packages, top to bottom: `Kinds`, `Common`, `OA`, `SA`,
 `LA`, `PA`, `EPBS`.
 
+The [video tutorials](https://cosmindxu.github.io/mbse-workflow/tutorials/)
+walk through every diagram, one layer at a time.
+
 You can change anything in the browser. The changes live in that browser tab:
 reloading the page fetches the published model again. **Save** keeps a copy in
 the browser; **Export → SysML** downloads the file you changed.

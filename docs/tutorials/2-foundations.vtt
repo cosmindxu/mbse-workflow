@@ -1,0 +1,76 @@
+WEBVTT
+
+1
+00:00:04.000 --> 00:00:15.643
+SHOW ONLY THE KINDS PACKAGE
+⊞ on Kinds shows only it in the diagrams. Kinds declares the #Tag keywords the model uses: layer, role, mode and lifecycle tags.
+
+2
+00:00:15.643 --> 00:00:28.028
+GENERAL VIEW
+One metadata definition per tag: the five layers, then Mission, Actor, Mode, Hazard, MoE, Budget and more. The other packages write them as #MoE, #Hazard…
+
+3
+00:00:28.028 --> 00:00:38.427
+TREE VIEW
+Tree shows what Kinds contains: its 33 tags and nothing else. General and Tree are the only views that show anything for Kinds.
+
+4
+00:00:38.427 --> 00:00:50.090
+SHOW ONLY COMMON
+⊞ on Common. It holds what every layer shares: the items that flow, the ports and interfaces they cross, and the measures of effectiveness.
+
+5
+00:00:50.090 --> 00:01:02.226
+TREE VIEW
+Its 116 members hang off one package. Zoomed in: each measure of effectiveness, an «attribute», is followed by the «constraint» holding it to its target.
+
+6
+00:01:02.226 --> 00:01:14.949
+GENERAL VIEW
+Definitions as boxes, attributes listed inside. Selected, CoordinationMessage is the hub: eight message kinds specialise it, so one mesh port carries them all.
+
+7
+00:01:14.949 --> 00:01:26.348
+PUT AN ATTRIBUTE BACK
+Before recording we deleted sequenceNumber from CoordinationMessage, which now lists only senderId and sentAt. Now we add it back.
+
+8
+00:01:26.348 --> 00:01:37.342
+PLACE AN ATTRIBUTE
+Pick Attribute in the palette, then click the definition box: a new attribute is created inside it and selected, ready to name.
+
+9
+00:01:37.342 --> 00:01:50.043
+NAME IT AND TYPE IT
+In Properties: the name sequenceNumber, then the type ScalarValues::Integer, from the standard library; Enter binds it. The box lists it as name : type.
+
+10
+00:01:50.043 --> 00:02:02.810
+DOCUMENT IT
+The documentation goes in the same panel, word for word as before: where the message sits in the sender's stream.
+
+11
+00:02:02.810 --> 00:02:14.866
+THE RESULT
+CoordinationMessage lists senderId, sentAt and sequenceNumber again, and the diagram is as it was. Edits stay in this browser until you Save or Export.
+
+12
+00:02:14.866 --> 00:02:27.724
+INTERCONNECTION VIEW
+Interconnection is for parts and their connections, and Common has neither. It shows the 25 items declared inside its ports and definitions, unconnected.
+
+13
+00:02:27.724 --> 00:02:38.200
+REQUIREMENT VIEW
+Common's 22 require constraints: 12 hold a measure of effectiveness to its target, 10 hold a budget that the brief fixes.
+
+14
+00:02:38.200 --> 00:02:52.009
+READ ONE CONSTRAINT
+Select one and zoom in to read it: areaUnderWatchTarget, areaUnderWatchFraction ≥ 0.9, at least 0.9 of the area under watch at any moment. Each box shows its condition.
+
+15
+00:02:52.009 --> 00:03:05.618
+PARAMETRIC VIEW
+Parametric is where values are bound to constraints, with the Bind tool. Common binds none, so it shows the same 22 constraints, each with its condition, standing alone.

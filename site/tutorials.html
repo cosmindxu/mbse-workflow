@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Model tutorials</title>
+    <meta name="description" content="Silent, subtitled video tutorials: how to read and edit every diagram of the drone-swarm model in Sysprose, one video per layer." />
+    <style>
+      :root { --bg: #ffffff; --text: #1f2733; --muted: #6b7686; --accent: #2563eb; --border: #d8dce3; --card: #f5f6f8; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #14181f; --text: #e6e9ef; --muted: #9aa4b2; --accent: #7aa7ff; --border: #2b323d; --card: #1a1f27; }
+      }
+      body { margin: 0; background: var(--bg); color: var(--text);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      main { max-width: 60rem; margin: 0 auto; padding: 32px 16px 56px; }
+      h1 { font-size: 1.7rem; line-height: 1.25; margin: 0 0 8px; }
+      .lede { color: var(--muted); margin: 0 0 28px; }
+      a { color: var(--accent); }
+      .tut { margin: 0 0 36px; padding: 0 0 28px; border-bottom: 1px solid var(--border); }
+      .tut h2 { font-size: 1.2rem; margin: 0 0 4px; }
+      .tut p { margin: 0 0 12px; color: var(--muted); }
+      .num { display: inline-block; min-width: 1.6em; color: var(--accent); }
+      .dur { white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .dur::before { content: '· '; }
+      video { display: block; width: 100%; height: auto; border-radius: 6px; background: #0f172a; }
+      small { display: block; margin-top: 8px; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Reading and editing the drone-swarm model</h1>
+      <p class="lede">
+        One silent video per layer of the model, captioned step by step: how to open each
+        diagram, what it shows at that layer, and — in each — one element deleted before
+        recording and added back on camera. The model opens in Sysprose, a browser modeller for
+        a SysML v2–style notation: <a href="../app/?model=model/SurveillanceDroneSwarm.sysml">open the model</a>
+        and follow along. Edits stay in your browser; how a change reaches the repository is in
+        <a href="https://github.com/cosmindxu/mbse-workflow/blob/main/CONTRIBUTING.md#proposing-a-change-to-the-model">CONTRIBUTING.md</a>.
+      </p>
+
+      <article class="tut" id="t1">
+        <h2><span class="num">1</span> Start here: the whole model</h2>
+        <p>How to read the model site: what the link opened, where the layers are, how to show one layer at a time, and which question each whole-model view answers. <span class="dur">4:01</span></p>
+        <video controls preload="none" poster="1-start-here-poster.jpg" playsinline>
+          <source src="1-start-here.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="1-start-here.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t2">
+        <h2><span class="num">2</span> Foundations: Kinds and Common</h2>
+        <p>Before the layers: the #Tag keywords every layer uses, and the definitions every layer shares — the items that flow, the ports and interfaces they cross, and the measures of effectiveness. <span class="dur">3:22</span></p>
+        <video controls preload="none" poster="2-foundations-poster.jpg" playsinline>
+          <source src="2-foundations.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="2-foundations.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t3">
+        <h2><span class="num">3</span> OA — Operational analysis</h2>
+        <p>How the tasked area is watched and reported today, with no system named: the entities, what each does, what they exchange, and the operational modes and states. <span class="dur">3:58</span></p>
+        <video controls preload="none" poster="3-oa-poster.jpg" playsinline>
+          <source src="3-oa.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="3-oa.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t4">
+        <h2><span class="num">4</span> SA — System analysis</h2>
+        <p>The system as one black box: the functions it performs, the actors it serves, the modes it can be in and the requirements it meets. No design choices yet. <span class="dur">3:17</span></p>
+        <video controls preload="none" poster="4-sa-poster.jpg" playsinline>
+          <source src="4-sa.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="4-sa.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t5">
+        <h2><span class="num">5</span> LA — Logical architecture</h2>
+        <p>The black box opened into logical components: the drones, the ground station and the triage unit, with every logical function allocated to one of them. Nothing physical is chosen yet. <span class="dur">3:17</span></p>
+        <video controls preload="none" poster="5-la-poster.jpg" playsinline>
+          <source src="5-la.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="5-la.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t6">
+        <h2><span class="num">6</span> PA — Physical architecture</h2>
+        <p>The components that will be built: behaviour parts hosted in node parts, physical links that are typed, and the budgets the design must hold. <span class="dur">3:29</span></p>
+        <video controls preload="none" poster="6-pa-poster.jpg" playsinline>
+          <source src="6-pa.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="6-pa.vtt" />
+        </video>
+      </article>
+      <article class="tut" id="t7">
+        <h2><span class="num">7</span> EPBS — End-product breakdown</h2>
+        <p>One configuration item per thing procured, built or delivered, each with its contract as a requirement definition and a verification case that checks it. <span class="dur">3:05</span></p>
+        <video controls preload="none" poster="7-epbs-poster.jpg" playsinline>
+          <source src="7-epbs.mp4" type="video/mp4" />
+          <track kind="subtitles" srclang="en" label="English" src="7-epbs.vtt" />
+        </video>
+      </article>
+      <small>
+        The videos are recorded from the app by <code>scripts/record-tutorial.mjs</code> in
+        Sysprose, from the scenarios in <code>docs/tutorials/scenarios/</code>; the captions are
+        also available as subtitles (CC). Sysprose is a candidate, not a certified or
+        conformance-tested implementation. SysML is a trademark of the Object Management Group.
+      </small>
+    </main>
+  </body>
+</html>

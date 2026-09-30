@@ -1,0 +1,272 @@
+{
+  "name": "4-sa",
+  "kicker": "Drone-swarm model · tutorial 4 of 7",
+  "title": "SA — System analysis",
+  "subtitle": "The system as one black box: the functions it performs, the actors it serves, the modes it can be in and the requirements it meets. No design choices yet.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "delete": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Readmitted"
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE SA LAYER",
+      "text": "In the Explorer, ⊞ on SA scopes every diagram to the system-analysis package. The chip above the canvas says what is shown.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::SA"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::SA"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "Definitions and usages as boxes, read left to right. At SA the system is one part, system, with functions allocated to it and requirements it satisfies.",
+      "do": [
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "label": "READ ONE ELEMENT",
+      "text": "Select a box: Properties shows what it is. Selection zooms to it. system is the twelve-drone swarm as one black box.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::system"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "What SA contains, one branch at a time. +N on a box opens what it owns — here SwarmMember, with its two state machines.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "click": "tree-toggle:SurveillanceDroneSwarm::SA::SwarmMember"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::SA::SwarmMember",
+            "to": 0.7
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "The system and its actors, with ports on their edges. Each line is a connection: tasking, supervision, recall, reports.",
+      "do": [
+        {
+          "view": "interconnection"
+        }
+      ]
+    },
+    {
+      "label": "ACTION VIEW",
+      "text": "The 26 functions of the system and its actors: a set allocated to owners, not a sequence. The 13 lines are flows, labelled with what they carry: a detection report goes to acknowledgement, a receipt comes back.",
+      "do": [
+        {
+          "view": "action"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::SA::deliverDetectionReport",
+            "to": 0.85,
+            "offset": [
+              160,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "STATE VIEW",
+      "text": "Each drone has two state machines: where it is in its sortie, and its operating condition. The fleet has mesh modes. Arrows are transitions: trigger / effect.",
+      "do": [
+        {
+          "view": "state"
+        }
+      ]
+    },
+    {
+      "label": "ADD A STATE BACK",
+      "text": "Before recording we deleted Readmitted from SwarmMemberModes. Now we add it back. A new element goes under the selection, so first open SA › SwarmMember.",
+      "do": [
+        {
+          "expand": "SurveillanceDroneSwarm::SA"
+        },
+        {
+          "expand": "SurveillanceDroneSwarm::SA::SwarmMember"
+        }
+      ]
+    },
+    {
+      "label": "SELECT WHERE IT GOES",
+      "text": "Select the state machine SwarmMemberModes in the Explorer.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes"
+        }
+      ]
+    },
+    {
+      "label": "PLACE A STATE",
+      "text": "Pick State in the palette, then click empty canvas. The new state is created inside SwarmMemberModes; until it has a transition it stands on its own.",
+      "do": [
+        {
+          "click": "palette:StateUsage:node"
+        },
+        {
+          "click": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "NAME IT",
+      "text": "Type the name in Properties.",
+      "do": [
+        {
+          "type": "Readmitted",
+          "into": "testid:prop-name"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "CONNECT IT",
+      "text": "Pick Transition, click the source state, then the target: Quarantined → Readmitted. The new transition is selected.",
+      "do": [
+        {
+          "click": "palette:TransitionUsage:edge"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Quarantined"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Readmitted"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GIVE IT A TRIGGER AND AN EFFECT",
+      "text": "In Properties: the trigger readmissionPassed, the effect rejoinAfterCheck. The line is labelled trigger / effect.",
+      "do": [
+        {
+          "type": "readmissionPassed",
+          "into": "testid:prop-trigger"
+        },
+        {
+          "type": "rejoinAfterCheck",
+          "into": "testid:prop-effect"
+        },
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "AND ONWARD",
+      "text": "Once checked, a readmitted drone returns to Nominal: Readmitted → Nominal.",
+      "do": [
+        {
+          "click": "palette:TransitionUsage:edge"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Readmitted"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Nominal"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "Readmitted is back between Quarantined and Nominal, as before we deleted it. Edits stay in this browser until you save or export them.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Readmitted"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes::Readmitted",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "Requirements and what satisfies each one. SwarmMember satisfies most of SA's; functions such as admitMember satisfy the rest.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    },
+    {
+      "label": "CASE VIEW",
+      "text": "The eleven use cases, from WatchTheTaskedArea to SwarmSelfCoordination, each with the system as its subject.",
+      "do": [
+        {
+          "view": "case"
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 5 of 7",
+    "title": "LA — Logical architecture",
+    "text": "The black box opened into logical components, with the functions allocated to them. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}

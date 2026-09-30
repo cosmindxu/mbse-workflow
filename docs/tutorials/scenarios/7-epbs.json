@@ -1,0 +1,301 @@
+{
+  "name": "7-epbs",
+  "kicker": "Drone-swarm model · tutorial 7 of 7",
+  "title": "EPBS — End-product breakdown",
+  "subtitle": "One configuration item per thing procured, built or delivered, each with its contract as a requirement definition and a verification case that checks it.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "js": "(() => { const api = window.sysml; const p = api.byName('SurveillanceDroneSwarm::EPBS::batteryPacks').id; const c = api.byName('SurveillanceDroneSwarm::EPBS::BatteryPackContract').id; const hits = api.descendants(api.byName('SurveillanceDroneSwarm::EPBS').id).filter((e) => e.eClass === 'Satisfy' && e.source?.[0] === p && e.target?.[0] === c); if (hits.length !== 1) throw new Error('satisfy BatteryPackContract by batteryPacks: found ' + hits.length); api.delete(hits[0].id); })()"
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE EPBS LAYER",
+      "text": "In the Explorer, ⊞ on EPBS scopes every diagram to the end-product breakdown: one configuration item per thing procured, built or delivered.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::EPBS"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::EPBS"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "Sixteen configuration items, each drawn with its fielded usage, its contract and its verification case. Too small to read whole, so pick one.",
+      "do": [
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "label": "READ ONE ITEM",
+      "text": "Select BatteryPack, press Selection. Around it: its contract, its verification case and a hazard. Properties lists its «Trace» with SwarmMember, the PA part it realises.",
+      "do": [
+        {
+          "expand": "SurveillanceDroneSwarm::EPBS"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::EPBS::BatteryPack"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::BatteryPack",
+            "to": 0.7,
+            "offset": [
+              200,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "No wiring at this level: 16 item definitions and their 16 fielded usages. Counts sit on the usages: select batteryPacks, Multiplicity 24.",
+      "do": [
+        {
+          "view": "interconnection"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::EPBS::batteryPacks"
+        },
+        {
+          "hover": "testid:prop-multiplicity"
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "Each fielded usage satisfies its item's contract, as storeForwardSoftware does ReportStoreForwardSoftwareContract. Before recording we deleted one of these links.",
+      "do": [
+        {
+          "view": "requirement"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::ReportStoreForwardSoftwareContract",
+            "to": 0.65
+          }
+        }
+      ]
+    },
+    {
+      "label": "A CONTRACT ON ITS OWN",
+      "text": "BatteryPackContract is now satisfied by nothing. Its text: at least 40 minutes of flight, a swap in no more than 20 minutes, at least two qualified sources.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::EPBS::BatteryPackContract"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::BatteryPackContract",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "DRAW A SATISFY LINK",
+      "text": "Pick Satisfy in the palette, then click the fielded usage first: batteryPacks, which now satisfies only the battery-supplier hazard.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::batteryPacks",
+            "to": 0.8
+          }
+        },
+        {
+          "click": "palette:Satisfy:edge"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::EPBS::batteryPacks"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::batteryPacks",
+            "to": 0.75
+          }
+        }
+      ]
+    },
+    {
+      "label": "THEN CLICK THE CONTRACT",
+      "text": "Then click the contract it satisfies, BatteryPackContract. The link is created and selected, and the diagram is laid out again.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::BatteryPackContract",
+            "to": 0.8
+          }
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::EPBS::BatteryPackContract"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "batteryPacks satisfies BatteryPackContract again. The file gets the same line back, satisfy BatteryPackContract by batteryPacks, at the end of EPBS.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::batteryPacks",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "PARAMETRIC VIEW",
+      "text": "48 constraints: each contract's assume and require, with its condition written in the box, and each verification's objective, which only names the contract it verifies.",
+      "do": [
+        {
+          "view": "parametric"
+        }
+      ]
+    },
+    {
+      "label": "READ ONE CONTRACT'S CONDITIONS",
+      "text": "Zoomed in, the first pair: DroneAirframeContract assumes a full charge at the start, and requires at least 40 minutes of flight and 18 m/s cruise.",
+      "do": [
+        {
+          "zoom": {
+            "at": "css:.react-flow__node >> nth=0",
+            "to": 1.0,
+            "offset": [
+              -75,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "CASE VIEW",
+      "text": "The verification cases, one per contract. Each is drawn with its subject, the item under test, and its objective, which in the text names the contract it verifies.",
+      "do": [
+        {
+          "view": "case"
+        }
+      ]
+    },
+    {
+      "label": "READ ONE CASE",
+      "text": "VerifyBatteryPack: a discharge test for endurance, a timed swap at the recharge point and an audit of sources. Its subject, pack, is the item under test.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::EPBS::VerifyBatteryPack"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::VerifyBatteryPack",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "What EPBS contains, one branch at a time. Select BatteryPackContract: +4 on its box opens its subject pack, its id and its two constraints, assume and require.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::EPBS::BatteryPackContract"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::BatteryPackContract",
+            "to": 0.7,
+            "offset": [
+              150,
+              0
+            ]
+          }
+        },
+        {
+          "click": "tree-toggle:SurveillanceDroneSwarm::EPBS::BatteryPackContract"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::EPBS::BatteryPackContract",
+            "to": 0.75
+          }
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "The series is complete",
+    "title": "Explore it, then propose a change",
+    "text": "The live model: cosmindxu.github.io/mbse-workflow. Edits come back through GitHub: see CONTRIBUTING.md, “Proposing a change to the model”."
+  }
+}

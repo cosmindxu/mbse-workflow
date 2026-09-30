@@ -11,6 +11,7 @@ on:
       - examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml
       - site/**
       - docs/diagram/hero-*.svg
+      - docs/tutorials/**
       - .github/workflows/deploy-pages.yml
   workflow_dispatch:
 
@@ -26,7 +27,7 @@ concurrency:
 env:
   # A full commit, not a branch or tag: the site changes only when this line
   # does, so a Sysprose change reaches it through a reviewed one-line PR.
-  SYSPROSE_REF: e6d29f7bf1da734605f29c34220030a2b572032b
+  SYSPROSE_REF: 81066291d96eb947957c11171c1742e023c3b79d
 
 jobs:
   build:
@@ -56,6 +57,9 @@ jobs:
           cp -r sysprose/dist/. _site/app/
           cp examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml _site/app/model/
           cp site/index.html docs/diagram/hero-light.svg docs/diagram/hero-dark.svg _site/
+          mkdir -p _site/tutorials
+          cp site/tutorials.html _site/tutorials/index.html
+          cp docs/tutorials/*.mp4 docs/tutorials/*.vtt docs/tutorials/*-poster.jpg _site/tutorials/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

@@ -1,0 +1,289 @@
+{
+  "name": "6-pa",
+  "kicker": "Drone-swarm model · tutorial 6 of 7",
+  "title": "PA — Physical architecture",
+  "subtitle": "The components that will be built: behaviour parts hosted in node parts, physical links that are typed, and the budgets the design must hold.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "delete": "SurveillanceDroneSwarm::PA::SafetyMonitorNode::ruleMonitor"
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE PA LAYER",
+      "text": "In the Explorer, ⊞ on PA scopes every diagram to the physical-architecture package: the components that will be built.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::PA"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::PA"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "PA's definitions and usages as boxes: node parts and the behaviour they host, the functions carried over from LA, states, hazards, budgets. Too many to read whole.",
+      "do": [
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "label": "READ ONE ELEMENT",
+      "text": "Select fleet: the twelve identical drones, multiplicity 12 in Properties. 14 of PA's 21 functions are allocated to it; the ground nodes take the rest.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::PA::fleet"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::fleet",
+            "to": 0.6
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "PA's centrepiece: parts with ports, joined by typed physical links. A node part draws the behaviour parts it hosts nested inside its box.",
+      "do": [
+        {
+          "view": "interconnection"
+        }
+      ]
+    },
+    {
+      "label": "THE GROUND LINKS",
+      "text": "The ground station, the recall transmitter and the fleet, port to port. Each line is a connection: taskingFeed, priorityFeed, recallBroadcastFeed…",
+      "do": [
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::groundRecallTransmitter",
+            "to": 0.7,
+            "offset": [
+              -134,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "A LINK IS TYPED",
+      "text": "Select recallBroadcastFeed in the Explorer. Properties › Types: RecallRadioMedium, a recall radio separate from the mesh and the ground link.",
+      "do": [
+        {
+          "expand": "SurveillanceDroneSwarm::PA"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::PA::recallBroadcastFeed"
+        }
+      ]
+    },
+    {
+      "label": "BEHAVIOUR NESTED IN A NODE",
+      "text": "Select MissionComputerNode and press Selection. The drone's mission computer hosts four behaviour parts: perception, swarmCoordination, reportHold, directiveUptake.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::PA::MissionComputerNode"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::MissionComputerNode",
+            "to": 0.9
+          }
+        }
+      ]
+    },
+    {
+      "label": "HOST A PART IN ITS NODE",
+      "text": "Before recording we deleted ruleMonitor, the flight-rule monitor that SafetyMonitorNode hosts. Select that node: its box is now empty.",
+      "do": [
+        {
+          "click": "tree:SurveillanceDroneSwarm::PA::SafetyMonitorNode"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::SafetyMonitorNode",
+            "to": 0.9
+          }
+        }
+      ]
+    },
+    {
+      "label": "PLACE A PART INSIDE IT",
+      "text": "Pick Part in the palette, then click ON the SafetyMonitorNode box. The part is created inside it and the box is redrawn as its host; Selection frames it.",
+      "do": [
+        {
+          "click": "palette:PartUsage:node"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::PA::SafetyMonitorNode"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::SafetyMonitorNode",
+            "to": 0.9
+          }
+        }
+      ]
+    },
+    {
+      "label": "NAME IT AND TYPE IT",
+      "text": "In Properties: the name ruleMonitor, then the type FlightRuleMonitor, and Enter binds it. That is all the original had: no documentation of its own.",
+      "do": [
+        {
+          "type": "ruleMonitor",
+          "into": "testid:prop-name"
+        },
+        {
+          "type": "FlightRuleMonitor",
+          "into": "testid:prop-type"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "The breadcrumb reads PA › SafetyMonitorNode › ruleMonitor, as before we deleted it: the flight rules run apart from the mission computer. Edits stay in this browser.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::SafetyMonitorNode::ruleMonitor",
+            "to": 0.75
+          }
+        }
+      ]
+    },
+    {
+      "label": "ACTION VIEW",
+      "text": "The 21 functions carried over from LA, each allocated to a component. No successions and no flows between them: a set, not a sequence.",
+      "do": [
+        {
+          "view": "action"
+        }
+      ]
+    },
+    {
+      "label": "STATE VIEW",
+      "text": "Five state machines: a drone's sortie and its operating condition, the ground station's link and duty, the fleet's mesh. The sortie one runs on the safety monitor.",
+      "do": [
+        {
+          "view": "state"
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "The six hazards this physical split adds, each satisfied by a component: fleet, the ground station, the recall transmitter, triage, the record store.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    },
+    {
+      "label": "PARAMETRIC VIEW",
+      "text": "15 constraints: the budgets and two checks on estimates, each with its condition in the box. Select one and zoom in: fleetMemberCount ≤ 12, the fleet is not larger than the twelve the brief fixes.",
+      "do": [
+        {
+          "view": "parametric"
+        },
+        {
+          "click": "css:.react-flow__node >> nth=0"
+        },
+        {
+          "zoom": {
+            "at": "css:.react-flow__node >> nth=0",
+            "to": 1.0
+          }
+        },
+        {
+          "hover": "css:[data-testid=\"properties\"] label:text-is(\"Documentation\")"
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "What PA contains, one branch at a time. +N on a box opens what it owns: +4 on MissionComputerNode shows its four behaviour parts.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::MissionComputerNode",
+            "to": 0.7
+          }
+        },
+        {
+          "click": "tree-toggle:SurveillanceDroneSwarm::PA::MissionComputerNode"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::PA::MissionComputerNode",
+            "to": 0.75
+          }
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 7 of 7",
+    "title": "EPBS — End-product breakdown",
+    "text": "One configuration item per thing procured, built or delivered, each with its contract and its verification. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}

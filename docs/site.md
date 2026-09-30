@@ -2,7 +2,8 @@
 
 **https://cosmindxu.github.io/mbse-workflow/** opens the v9 drone-swarm model
 in Sysprose. It is built and deployed by `.github/workflows/deploy-pages.yml`;
-nothing on it is written by hand except `site/index.html`.
+nothing on it is written by hand except `site/index.html` and the tutorials'
+scenarios.
 
 ## What is deployed
 
@@ -14,6 +15,8 @@ nothing on it is written by hand except `site/index.html`.
 /app/model/SurveillanceDroneSwarm.sysml
                            examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml, as committed
 /app/docs/LICENSES.html    from the Sysprose build: MIT, and EPL-2.0 for its standard-library data
+/tutorials/                site/tutorials.html, with the videos, subtitles and posters of
+                           docs/tutorials/ — see its README for how they are recorded
 ```
 
 The root forwards to
@@ -35,8 +38,8 @@ https://cosmindxu.github.io/sysprose/?model=https://raw.githubusercontent.com/co
 
 ## When it rebuilds
 
-On a push to `main` that touches the v9 model, `site/`, the hero figures or the
-workflow — so a `resume` that re-derives the model republishes it — and on
+On a push to `main` that touches the v9 model, `site/`, the hero figures,
+`docs/tutorials/` or the workflow — so a `resume` that re-derives the model republishes it — and on
 demand from the Actions tab.
 
 ## Moving the Sysprose pin
@@ -45,7 +48,9 @@ demand from the Actions tab.
 site changes only when that line does. To move it: pick the commit, check it
 opens the model (`npm run build && npm run preview` in Sysprose, copy the model
 to `dist/model/`, open `http://localhost:4173/?model=model/SurveillanceDroneSwarm.sysml`),
-and change the one line.
+and change the one line. The tutorials show the app at the pin, so re-record
+them from the new commit (`docs/tutorials/README.md`) when the screens they
+show have changed.
 
 This pin is separate from `sysprose.expected_commit` in `config/workflow.yaml`,
 which records the commit the workflow's checks were calibrated against.

@@ -1,0 +1,310 @@
+{
+  "name": "3-oa",
+  "kicker": "Drone-swarm model · tutorial 3 of 7",
+  "title": "OA — Operational analysis",
+  "subtitle": "How the tasked area is watched and reported today, with no system named: the entities, what each does, what they exchange, and the operational modes and states.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "delete": "SurveillanceDroneSwarm::OA::Hazards::ReportLostInLinkGapHazard"
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE OA LAYER",
+      "text": "In the Explorer, ⊞ on OA scopes every diagram to the operational-analysis package. The chip above the canvas says what is shown.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::OA"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::OA"
+        },
+        {
+          "hover": "node:SurveillanceDroneSwarm::OA::memberA"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "All of OA as boxes, read left to right: the people, drones and ground equipment of today's operation, and the activities allocated to each. No system is named.",
+      "do": [
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "label": "READ ONE ELEMENT",
+      "text": "Select a box: Properties shows what it is. memberA stands for one of the twelve drones, not an extra one. The purple lines on its left: the 14 activities it performs.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::OA::memberA"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "What OA contains, one branch at a time. +N on a box opens what it owns: here the action definition HandOverSector and its two ports, one out and one in.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "click": "tree-toggle:SurveillanceDroneSwarm::OA::HandOverSector"
+        },
+        {
+          "hover": "node:SurveillanceDroneSwarm::OA::HandOverSector::handoverIn"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::HandOverSector",
+            "to": 0.75
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "The twelve kinds of entity and their fourteen usages: people, drones, ground station, radios, recharge and recovery points, cameras. No connections at OA.",
+      "do": [
+        {
+          "view": "interconnection"
+        }
+      ]
+    },
+    {
+      "label": "ACTION VIEW",
+      "text": "The 38 activities, each allocated to the entity that performs it. No successions: at OA they are a set, not a sequence. The lines are the 33 flows between them, each labelled with what it carries.",
+      "do": [
+        {
+          "view": "action"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::issueTasking",
+            "to": 0.47
+          }
+        },
+        {
+          "hover": "pane:empty"
+        }
+      ]
+    },
+    {
+      "label": "STATE VIEW",
+      "text": "Four state machines: one drone's sortie and its operating condition, the fleet's mission and its mesh. Lines are transitions; most are labelled trigger / effect.",
+      "do": [
+        {
+          "view": "state"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching",
+            "to": 0.46
+          }
+        },
+        {
+          "hover": "pane:empty"
+        }
+      ]
+    },
+    {
+      "label": "READ ONE STATE MACHINE",
+      "text": "A drone that loses satellite positioning goes from Nominal to NavigationDegraded and navigates by camera; when positioning is back it resumes satellite navigation.",
+      "do": [
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal",
+            "to": 0.9,
+            "offset": [
+              48,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "CASE VIEW",
+      "text": "The mission, WatchTheTaskedArea, and ten capabilities as use cases. Each names its subject, holder: a drone, the duty controller or the analyst.",
+      "do": [
+        {
+          "view": "case"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::WatchTheTaskedArea",
+            "to": 0.5
+          }
+        },
+        {
+          "hover": "pane:empty"
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "OA's hazards, each satisfied by an activity. Before recording we deleted one, ReportLostInLinkGapHazard, and its «satisfy» went with it. Now we add it back.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    },
+    {
+      "label": "SELECT WHERE IT GOES",
+      "text": "A new element goes under the selection, so first select the Hazards package, inside OA, in the Explorer.",
+      "do": [
+        {
+          "expand": "SurveillanceDroneSwarm::OA"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::OA::Hazards"
+        }
+      ]
+    },
+    {
+      "label": "PLACE A REQUIREMENT",
+      "text": "Pick Requirement in the palette, then click empty canvas. The new requirement is created in Hazards and selected.",
+      "do": [
+        {
+          "click": "palette:RequirementUsage:node"
+        },
+        {
+          "click": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "NAME IT",
+      "text": "Type its name in Properties.",
+      "do": [
+        {
+          "type": "ReportLostInLinkGapHazard",
+          "into": "testid:prop-name"
+        },
+        {
+          "hover": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GIVE IT ITS TEXT",
+      "text": "The statement goes in Requirement text, word for word as in the model: a report is sent into a link gap and nobody knows it never arrived.",
+      "do": [
+        {
+          "type": "A detection report is sent into a link gap and nobody knows it never arrived.",
+          "into": "testid:prop-text"
+        },
+        {
+          "hover": "pane:empty"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "ITS «SATISFY» GOES IN GENERAL",
+      "text": "acknowledgeReports, which satisfied it, left the Requirement view with it; General shows both. Select it and press Selection, then pick Satisfy and click it: the satisfier first.",
+      "do": [
+        {
+          "view": "general"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::OA::acknowledgeReports"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "palette:Satisfy:edge"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::OA::acknowledgeReports"
+        }
+      ]
+    },
+    {
+      "label": "THEN CLICK THE REQUIREMENT",
+      "text": "The strip above the canvas now asks for the target. Fit, zoom to the new hazard and click it: the «satisfy» is drawn, and filed in OA, where it was.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::Hazards::ReportLostInLinkGapHazard",
+            "to": 0.8
+          }
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::OA::Hazards::ReportLostInLinkGapHazard"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::OA::Hazards::ReportLostInLinkGapHazard"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::OA::Hazards::ReportLostInLinkGapHazard",
+            "to": 0.6
+          }
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "The Requirement view is as it was: four hazards, each satisfied by an activity. Not re-entered: the hazard's #Hazard tag, its subject and SA's «satisfy» of it. Edits stay in this browser until saved or exported.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 4 of 7",
+    "title": "SA — System analysis",
+    "text": "The system as one black box: the functions it performs, the actors it serves, the modes it can be in and the requirements it meets. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "name": "2-foundations",
+  "kicker": "Drone-swarm model · tutorial 2 of 7",
+  "title": "Foundations: Kinds and Common",
+  "subtitle": "Before the layers: the #Tag keywords every layer uses, and the definitions every layer shares — the items that flow, the ports and interfaces they cross, and the measures of effectiveness.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml",
+  "setup": [
+    {
+      "settle": true
+    },
+    {
+      "click": "testid:linked-banner-close"
+    },
+    {
+      "click": "testid:bottom-collapse"
+    },
+    {
+      "delete": "SurveillanceDroneSwarm::Common::CoordinationMessage::sequenceNumber"
+    },
+    {
+      "settle": true
+    }
+  ],
+  "steps": [
+    {
+      "label": "SHOW ONLY THE KINDS PACKAGE",
+      "text": "⊞ on Kinds shows only it in the diagrams. Kinds declares the #Tag keywords the model uses: layer, role, mode and lifecycle tags.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::Kinds"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::Kinds"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "One metadata definition per tag: the five layers, then Mission, Actor, Mode, Hazard, MoE, Budget and more. The other packages write them as #MoE, #Hazard…",
+      "do": [
+        {
+          "wait": 300
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "Tree shows what Kinds contains: its 33 tags and nothing else. General and Tree are the only views that show anything for Kinds.",
+      "do": [
+        {
+          "view": "tree"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Kinds",
+            "to": 0.7,
+            "offset": [
+              100,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "SHOW ONLY COMMON",
+      "text": "⊞ on Common. It holds what every layer shares: the items that flow, the ports and interfaces they cross, and the measures of effectiveness.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::Common"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::Common"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Common",
+            "to": 0.7,
+            "offset": [
+              5,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "label": "TREE VIEW",
+      "text": "Its 116 members hang off one package. Zoomed in: each measure of effectiveness, an «attribute», is followed by the «constraint» holding it to its target.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::Common"
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW",
+      "text": "Definitions as boxes, attributes listed inside. Selected, CoordinationMessage is the hub: eight message kinds specialise it, so one mesh port carries them all.",
+      "do": [
+        {
+          "view": "general"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::Common::CoordinationMessage"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Common::CoordinationMessage",
+            "to": 0.8
+          }
+        }
+      ]
+    },
+    {
+      "label": "PUT AN ATTRIBUTE BACK",
+      "text": "Before recording we deleted sequenceNumber from CoordinationMessage, which now lists only senderId and sentAt. Now we add it back.",
+      "do": [
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Common::CoordinationMessage",
+            "to": 1.1
+          }
+        }
+      ]
+    },
+    {
+      "label": "PLACE AN ATTRIBUTE",
+      "text": "Pick Attribute in the palette, then click the definition box: a new attribute is created inside it and selected, ready to name.",
+      "do": [
+        {
+          "click": "palette:AttributeUsage:node"
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::Common::CoordinationMessage",
+          "offset": [
+            60,
+            20
+          ]
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "NAME IT AND TYPE IT",
+      "text": "In Properties: the name sequenceNumber, then the type ScalarValues::Integer, from the standard library; Enter binds it. The box lists it as name : type.",
+      "do": [
+        {
+          "type": "sequenceNumber",
+          "into": "testid:prop-name"
+        },
+        {
+          "type": "ScalarValues::Integer",
+          "into": "testid:prop-type"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "DOCUMENT IT",
+      "text": "The documentation goes in the same panel, word for word as before: where the message sits in the sender's stream.",
+      "do": [
+        {
+          "type": "Where it sits in the sender's stream, so loss over a jammed mesh is visible.",
+          "into": "testid:prop-doc"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "CoordinationMessage lists senderId, sentAt and sequenceNumber again, and the diagram is as it was. Edits stay in this browser until you Save or Export.",
+      "do": [
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Common::CoordinationMessage",
+            "to": 0.9
+          }
+        }
+      ]
+    },
+    {
+      "label": "INTERCONNECTION VIEW",
+      "text": "Interconnection is for parts and their connections, and Common has neither. It shows the 25 items declared inside its ports and definitions, unconnected.",
+      "do": [
+        {
+          "view": "interconnection"
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENT VIEW",
+      "text": "Common's 22 require constraints: 12 hold a measure of effectiveness to its target, 10 hold a budget that the brief fixes.",
+      "do": [
+        {
+          "view": "requirement"
+        }
+      ]
+    },
+    {
+      "label": "READ ONE CONSTRAINT",
+      "text": "Select one and zoom in to read it: areaUnderWatchTarget, areaUnderWatchFraction ≥ 0.9, at least 0.9 of the area under watch at any moment. Each box shows its condition.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::Common::areaUnderWatchTarget",
+          "offset": [
+            -40,
+            12
+          ]
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::Common::areaUnderWatchTarget",
+            "to": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "label": "PARAMETRIC VIEW",
+      "text": "Parametric is where values are bound to constraints, with the Bind tool. Common binds none, so it shows the same 22 constraints, each with its condition, standing alone.",
+      "do": [
+        {
+          "view": "parametric"
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 3 of 7",
+    "title": "OA — Operational analysis",
+    "text": "How the tasked area is watched and reported today, before any system is named. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}

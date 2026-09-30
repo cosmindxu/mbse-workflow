@@ -1,0 +1,76 @@
+WEBVTT
+
+1
+00:00:04.000 --> 00:00:15.336
+SHOW ONLY THE LA LAYER
+In the Explorer, ⊞ on LA scopes every diagram to the logical-architecture package. The chip above the canvas says what is shown.
+
+2
+00:00:15.336 --> 00:00:28.475
+GENERAL VIEW
+All of LA, left to right: 21 logical functions, each realising an SA function and allocated to a component, the state machines and the hazards. Nothing physical yet.
+
+3
+00:00:28.475 --> 00:00:41.526
+READ ONE ELEMENT
+Select a box: Properties shows what it is. fleet is the twelve identical drones, typed by SwarmMember. It gets 14 functions, the 8 coordination ones among them.
+
+4
+00:00:41.526 --> 00:00:54.660
+ADD A PART BACK
+Before recording we deleted memberB, the second representative drone. Now we add it back. A new part goes under the selection, so first select LA in the Explorer.
+
+5
+00:00:54.660 --> 00:01:03.054
+PLACE A PART
+Pick Part in the palette, then click empty canvas. The new part is created in LA and selected.
+
+6
+00:01:03.054 --> 00:01:11.979
+NAME IT
+Type its name in Properties. With no type yet, memberB sits apart, among the boxes nothing connects to.
+
+7
+00:01:11.979 --> 00:01:24.697
+TYPE IT
+In Properties, Type: SwarmMember, then Enter. The typing is bound, as the text's memberB : SwarmMember: its typed-by line is drawn and memberB moves beside memberA.
+
+8
+00:01:24.697 --> 00:01:37.488
+DOCUMENT IT
+Its documentation goes in Properties, word for word as in the model: the second representative member, the other end of the peer link.
+
+9
+00:01:37.488 --> 00:01:50.467
+THE RESULT
+memberB is back beside memberA, typed by SwarmMember. Not re-entered: its peerLink interface to memberA, whose end was a meshIn row in this box, and its trace to PA.
+
+10
+00:01:50.467 --> 00:02:01.584
+TREE VIEW
+What LA contains, one branch at a time. +N on SwarmMember opens what each member carries: its nine ports and its two state machines.
+
+11
+00:02:01.584 --> 00:02:15.510
+INTERCONNECTION VIEW
+Components with ports on their edges. The ten lines are connections: fleet sends reports to triageUnit, status and tracks to groundStation; tasking and recall come back.
+
+12
+00:02:15.510 --> 00:02:29.383
+ACTION VIEW
+The 21 logical functions, each allocated to a component: a set, not a sequence. Unlike SA, LA models no flows between them; what passes between components is on the connections.
+
+13
+00:02:29.383 --> 00:02:42.114
+STATE VIEW
+Five state machines: a member's sortie and its condition, the ground station's duty and its link, and the mesh across the fleet. No transition has a trigger yet.
+
+14
+00:02:42.114 --> 00:02:53.654
+REQUIREMENT VIEW
+The eight hazards this layer adds, all satisfied by fleet and four also by a function. The constraint at the top right is drawn here too.
+
+15
+00:02:53.654 --> 00:03:05.969
+PARAMETRIC VIEW
+One box: LA's coverage arithmetic as a constraint, its equation written in the box. Problems lists it as violated: LA's own numbers do not satisfy it.

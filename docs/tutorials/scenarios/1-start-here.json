@@ -1,0 +1,305 @@
+{
+  "name": "1-start-here",
+  "kicker": "Drone-swarm model · tutorial 1 of 7",
+  "title": "Start here: the whole model",
+  "subtitle": "How to read the model site: what the link opened, where the layers are, how to show one layer at a time, and which question each whole-model view answers.",
+  "query": "?model=model/SurveillanceDroneSwarm.sysml&source=https%3A%2F%2Fgithub.com%2Fcosmindxu%2Fmbse-workflow%2Fblob%2Fmain%2FCONTRIBUTING.md%23proposing-a-change-to-the-model",
+  "setup": [
+    {
+      "settle": true
+    }
+  ],
+  "steps": [
+    {
+      "label": "OPENED FROM ITS LINK",
+      "text": "The site opened the model file from its link. Edits stay in this browser; Save or Export keeps them.",
+      "do": [
+        {
+          "hover": "css:[data-testid=linked-banner] code"
+        }
+      ]
+    },
+    {
+      "label": "PROPOSE A CHANGE",
+      "text": "Propose a change leads to the repository's guide: changes come back through GitHub, by a branch or a fork and a pull request.",
+      "do": [
+        {
+          "hover": "testid:linked-banner-source"
+        }
+      ]
+    },
+    {
+      "label": "HIDE THE MESSAGE",
+      "text": "× hides the strip. Reloading the page fetches the model afresh and drops unsaved edits.",
+      "do": [
+        {
+          "click": "testid:linked-banner-close"
+        }
+      ]
+    },
+    {
+      "label": "THE EXPLORER",
+      "text": "Kinds and Common hold what every layer shares. OA, SA, LA, PA and EPBS are the layers, from operations down to the product breakdown.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::Kinds"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "hover": "tree:SurveillanceDroneSwarm::Common"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "hover": "tree:SurveillanceDroneSwarm::OA"
+        },
+        {
+          "wait": 400
+        },
+        {
+          "hover": "tree:SurveillanceDroneSwarm::EPBS"
+        }
+      ]
+    },
+    {
+      "label": "THE VIEW TABS",
+      "text": "Each tab shows the same model another way: diagrams, then tables, then analyses. General is open.",
+      "do": [
+        {
+          "hover": "view:general"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "hover": "view:allocation"
+        },
+        {
+          "wait": 500
+        },
+        {
+          "hover": "view:analysis"
+        }
+      ]
+    },
+    {
+      "label": "FOLD THE BOTTOM PANEL",
+      "text": "Problems, Text and more share the bottom panel. ▾ folds it down to its tabs, for more diagram.",
+      "do": [
+        {
+          "hover": "testid:tab-problems"
+        },
+        {
+          "wait": 400
+        },
+        {
+          "click": "testid:bottom-collapse"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "GENERAL VIEW: THE WHOLE MODEL",
+      "text": "Unscoped, General draws all 845 boxes, the layers side by side from OA on the left to EPBS. ⤢ Fit shrinks them to specks, too small to read.",
+      "do": [
+        {
+          "click": "testid:diagram-fit"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "ZOOM IN AND SELECT",
+      "text": "Wheel-zoom until the boxes read, then select one: the path above the canvas says where it lives. This one, taskSurveillanceArea, is in SA.",
+      "do": [
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::SA::acknowledgeDetectionReport",
+            "to": 0.6
+          }
+        },
+        {
+          "click": "node:SurveillanceDroneSwarm::SA::taskSurveillanceArea",
+          "offset": [
+            30,
+            12
+          ]
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "SHOW ONE LAYER AT A TIME",
+      "text": "So read one layer at a time: ⊞ beside a package shows only it in the diagrams. The chip above the canvas names it, here OA.",
+      "do": [
+        {
+          "hover": "tree:SurveillanceDroneSwarm::OA"
+        },
+        {
+          "click": "tree-scope:SurveillanceDroneSwarm::OA"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "OA ON ITS OWN",
+      "text": "OA alone is 138 boxes. Select one and ◎ Selection zooms to it: SwarmMember, the drone. Properties shows its documentation.",
+      "do": [
+        {
+          "click": "node:SurveillanceDroneSwarm::OA::SwarmMember"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "MOVE A BOX",
+      "text": "Drag a box and it stays where you drop it, through edits and view switches; its lines follow. Dropping it onto another box would move it inside that box.",
+      "do": [
+        {
+          "drag": {
+            "from": "node:SurveillanceDroneSwarm::OA::SwarmMember",
+            "to": "pane:empty"
+          }
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "AUTO-LAYOUT",
+      "text": "Auto-layout forgets the boxes moved by hand and lays the view out afresh, left to right.",
+      "do": [
+        {
+          "click": "testid:diagram-autolayout"
+        },
+        {
+          "settle": true
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "BACK TO THE WHOLE MODEL",
+      "text": "× on the chip shows the whole model again. Laying out all 845 boxes takes a few seconds.",
+      "do": [
+        {
+          "click": "testid:scope-clear"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "OPEN ANALYSIS",
+      "text": "Analysis turns all 1361 elements into one network and ranks them. On the whole model that takes a couple of seconds.",
+      "do": [
+        {
+          "view": "analysis"
+        }
+      ]
+    },
+    {
+      "label": "ANALYSIS",
+      "text": "What holds the model together? Dots are elements, sized by their links; labels are thinned so none overlap. Hubs keep theirs: SwarmMember, dutyController.",
+      "do": [
+        {
+          "wait": 300
+        }
+      ]
+    },
+    {
+      "label": "REQUIREMENTS TABLE",
+      "text": "What must hold, and what satisfies it? 49 requirements with their text and Satisfied By. Verified By is still empty in this model.",
+      "do": [
+        {
+          "view": "requirements"
+        }
+      ]
+    },
+    {
+      "label": "ALLOCATION MATRIX",
+      "text": "Which part performs which function? 106 functions against 23 parts, a tick per allocation: issueTasking goes to dutyController.",
+      "do": [
+        {
+          "view": "allocation"
+        }
+      ]
+    },
+    {
+      "label": "SEQUENCE",
+      "text": "Who sends what to whom, in order? Each flow is an arrow between lifelines. The first, handOverSectorAtoB: memberA proposes a sector handover to memberB.",
+      "do": [
+        {
+          "view": "sequence"
+        },
+        {
+          "hover": "css:[data-testid=sequence-message]"
+        }
+      ]
+    },
+    {
+      "label": "GRID",
+      "text": "What is each element, and of what type? One row per element: here DetectionReport and its attributes, each with its type.",
+      "do": [
+        {
+          "view": "grid"
+        },
+        {
+          "hover": "css:[data-testid=grid-row]:has-text(\"DetectionReport\") [data-testid=grid-cell][data-col-key=name]"
+        }
+      ]
+    },
+    {
+      "label": "CONTRACTS",
+      "text": "What does each requirement assume and guarantee? DroneAirframeContract assumes a full charge at the start; it guarantees endurance and speed.",
+      "do": [
+        {
+          "view": "contracts"
+        },
+        {
+          "hover": "css:[data-testid=contract-row]:has-text(\"DroneAirframeContract\") [data-testid=contract-shortid]"
+        }
+      ]
+    },
+    {
+      "label": "THE MODEL AS TEXT",
+      "text": "The Text tab holds the whole model as SysML-like text, kept in sync: a change made in a diagram shows up here. Parse warnings fold to one line under it.",
+      "do": [
+        {
+          "click": "testid:tab-text"
+        },
+        {
+          "settle": true
+        }
+      ]
+    }
+  ],
+  "outro": {
+    "kicker": "Next · tutorial 2 of 7",
+    "title": "Foundations — Kinds and Common",
+    "text": "The #Tag keywords every layer uses, and the definitions every layer shares. The live model: cosmindxu.github.io/mbse-workflow"
+  }
+}
