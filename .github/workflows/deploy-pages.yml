@@ -1,0 +1,71 @@
+name: Deploy the model site to GitHub Pages
+
+# https://cosmindxu.github.io/mbse-workflow/ opens the v9 drone-swarm model in
+# Sysprose. The site is the Sysprose app, built from a pinned commit, with the
+# model copied next to it so the app fetches it same-origin through `?model=`.
+# docs/site.md says how the pieces fit and how to move the pin.
+on:
+  push:
+    branches: [main]
+    paths:
+      - examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml
+      - site/**
+      - docs/diagram/hero-*.svg
+      - .github/workflows/deploy-pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  # A full commit, not a branch or tag: the site changes only when this line
+  # does, so a Sysprose change reaches it through a reviewed one-line PR.
+  SYSPROSE_REF: c53cec9fc95af670a8cb2d13055310a1177019bd
+
+jobs:
+  build:
+    # The workflow is mirrored into the private working repository, which has
+    # no Pages site: there it must do nothing rather than fail on every push.
+    if: github.repository == 'cosmindxu/mbse-workflow'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: cosmindxu/sysprose
+          ref: ${{ env.SYSPROSE_REF }}
+          path: sysprose
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: sysprose/package-lock.json
+      - run: npm ci
+        working-directory: sysprose
+      - run: npm run build
+        working-directory: sysprose
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/app/model
+          cp -r sysprose/dist/. _site/app/
+          cp examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml _site/app/model/
+          cp site/index.html docs/diagram/hero-light.svg docs/diagram/hero-dark.svg _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

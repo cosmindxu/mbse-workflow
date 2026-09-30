@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Drone-swarm model</title>
+    <meta
+      name="description"
+      content="The drone-swarm model from mbse-workflow, opened in the Sysprose browser modeller: diagrams, tables and text of a layered, SysML-like model written by LLM agents and gated at every step."
+    />
+    <!-- The site's root opens the model straight away. The redirect is script
+         only, not a meta refresh: the app needs JavaScript anyway, so without
+         it this page — with the model's text and how to propose a change — is
+         the useful one to land on. Crawlers index it too. -->
+    <script>
+      location.replace(
+        './app/?model=model/SurveillanceDroneSwarm.sysml&source=' +
+          encodeURIComponent(
+            'https://github.com/cosmindxu/mbse-workflow/blob/main/CONTRIBUTING.md#proposing-a-change-to-the-model',
+          ),
+      );
+    </script>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #1f2733;
+        --muted: #6b7686;
+        --accent: #2563eb;
+        --border: #d8dce3;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #14181f;
+          --text: #e6e9ef;
+          --muted: #9aa4b2;
+          --accent: #7aa7ff;
+          --border: #2b323d;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+          sans-serif;
+      }
+      main {
+        max-width: 46rem;
+        margin: 0 auto;
+        padding: 32px 16px 48px;
+      }
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.25;
+        margin: 0 0 16px;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 0 24px;
+      }
+      a {
+        color: var(--accent);
+      }
+      .open {
+        display: inline-block;
+        margin: 8px 0 16px;
+        padding: 10px 18px;
+        border-radius: 6px;
+        background: var(--accent);
+        color: var(--bg);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      small {
+        display: block;
+        margin-top: 32px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Drone-swarm model</h1>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="hero-dark.svg" />
+        <img
+          src="hero-light.svg"
+          alt="Twelve sectors over a twenty-five square kilometre area, four and four-fifths of them lit: what the brief's duty cycle allows, 4.8 of 12 drones aloft on average."
+        />
+      </picture>
+      <p>
+        This is the surveillance drone-swarm model from
+        <a href="https://github.com/cosmindxu/mbse-workflow">mbse-workflow</a>: a layered,
+        SysML-like model written layer by layer by LLM agents and gated at every step by a
+        deterministic checker. It opens in <strong>Sysprose</strong>, a browser modeller, where
+        every view of the model — general, interconnection, action, state, requirement, tree,
+        tables, 3D — is drawn from the one text file.
+      </p>
+      <a class="open" href="./app/?model=model/SurveillanceDroneSwarm.sysml&amp;source=https%3A%2F%2Fgithub.com%2Fcosmindxu%2Fmbse-workflow%2Fblob%2Fmain%2FCONTRIBUTING.md%23proposing-a-change-to-the-model">Open the model</a>
+      <p>
+        Anyone can change the model in the browser: edits stay in that browser until they are
+        saved or exported. Changes reach the repository through GitHub, under its usual
+        permissions — see
+        <a href="https://github.com/cosmindxu/mbse-workflow/blob/main/CONTRIBUTING.md#proposing-a-change-to-the-model">proposing a change to the model</a>.
+        The modeller needs JavaScript; the
+        <a href="https://github.com/cosmindxu/mbse-workflow/blob/main/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml">model's text</a>
+        does not.
+      </p>
+      <small>
+        Sysprose reads and writes a SysML v2–style notation. It is a candidate, not a certified or
+        conformance-tested implementation, and the model is spec-shaped, not conformant. SysML is
+        a trademark of the Object Management Group. This site bundles Sysprose (MIT) and its
+        standard-library data (EPL-2.0) — see the
+        <a href="./app/docs/LICENSES.html">licences</a>.
+      </small>
+    </main>
+  </body>
+</html>
