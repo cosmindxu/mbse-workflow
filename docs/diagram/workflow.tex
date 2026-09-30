@@ -156,7 +156,7 @@
   \draw[flowfaint] (838,402) -- (810,415);
   \draw[model] (907,382) rectangle (993,434); \node[tb] at (950,413) {package EPBS};
   \draw[model] (1022,382) rectangle (1248,434); \node[tb] at (1135,404) {<System>.sysml}; \node[tmu] at (1135,421) {every layer, assembled};
-  \node[tmu] at (700,462) {each layer traces up to the one above; references never point down};
+  \node[tmu, fill=white, inner xsep=3pt, inner ysep=1.5pt] at (700,462) {each layer traces up to the one above; references never point down};
 
   % author <-> check, shown once per authoring step
   \draw[flowagent] (289,224) -- (289,478);
@@ -172,7 +172,7 @@
   \draw[check] (392,480) rectangle (498,558);
   \node[tb] at (445,500) {check, trace, reach}; \node[tmono] at (445,518) {hazards.fromBrief}; \node[tmono] at (445,533) {rules.carried/hold}; \node[tmono] at (445,548) {modes.fromBrief};
   \draw[check] (522,480) rectangle (688,558);
-  \node[tb] at (605,500) {per alternative, then bounds}; \node[tmono] at (605,518) {hazardsByComponent}; \node[tmono] at (605,533) {moe.estimated, rules.hold}; \node[tmono] at (605,548) {c2Placement; bounds per measure};
+  \node[tb] at (605,500) {per alternative, then bounds}; \node[tmono] at (605,518) {hazardsByComponent}; \node[tmono] at (605,533) {moe.estimated, rules.hold}; \node[tmono] at (605,548) {c2Placement};
   \draw[check] (712,480) rectangle (878,558);
   \node[tb] at (795,500) {per alternative, then bounds}; \node[tmono] at (795,518) {everything LA has,}; \node[tmono] at (795,533) {plus pa.bearer:}; \node[tmono] at (795,548) {bounds per measure};
   \draw[check] (902,480) rectangle (998,558);
@@ -244,11 +244,12 @@
   \node[tmul] at (310,210) {a hazard may not vanish under repair};
   % Round 3 does not hand over to the gate chain: the run stops.
   \draw[flowhuman] (900,300) -- (1010,300) -- (1010,344);
-  \draw[model, fill=humanTint] (896,348) rectangle (1130,428);
-  \node[thl] at (910,374) {Run stops};
-  \node[tl] at (910,394) {a gate records who saw it, where};
-  \node[tl] at (910,410) {the step has one; the way on is an};
-  \node[tl] at (910,426) {edit and a \texttt{resume}};
+  % Clear of the repair loop's corner at (900,356), and inside the page.
+  \draw[model, fill=humanTint] (912,348) rectangle (1090,440);
+  \node[thl] at (926,374) {Run stops};
+  \node[tl] at (926,394) {a gate records who saw it, where};
+  \node[tl] at (926,410) {the step has one; the way on is an};
+  \node[tl] at (926,426) {edit and a \texttt{resume}};
 \end{tikzpicture}
 
 \captionof{figure}{\textbf{One alternative-authoring step (S32, S41); the model writes, it never edits files.} Compose is this step's own: a plain author (S10, S21, S31, S50) has its carried trace and allocate lines restored and its answer preflighted instead. A diagnostic anchored in a layer above is reported, not sent back — the author cannot change that layer — and travels on as a note. A blocking finding goes back with the fragment it came from, at most three times; after that the run stops. Check times: 0.2--5\,s per step's checks in v7.}
@@ -294,9 +295,9 @@
   }
 
   \draw[flow] (840,174) -- (878,174);
-  \draw[model] (880,112) rectangle (984,236);
-  \node[tb] at (932,136) {Chosen}; \node[t] at (932,156) {written into}; \node[t] at (932,172) {the layer, with}; \node[t] at (932,188) {its trade-off};
-  \node[tmono] at (932,206) {v7 LA alt1 0.67 / alt2 0.90}; \node[tmono] at (932,222) {v7 PA alt1 0.75 / alt2 0.88}; \node[tmono] at (932,238) {alt2 chosen at both};
+  \draw[model] (880,112) rectangle (1030,250);
+  \node[tb] at (955,136) {Chosen}; \node[t] at (955,156) {written into}; \node[t] at (955,172) {the layer, with}; \node[t] at (955,188) {its trade-off};
+  \node[tmono] at (955,206) {v7 LA alt1 0.67 / alt2 0.90}; \node[tmono] at (955,222) {v7 PA alt1 0.75 / alt2 0.88}; \node[tmono] at (955,238) {alt2 chosen at both};
 \end{tikzpicture}
 
 \captionof{figure}{\textbf{A measure decides only when some alternative misses it.} Each estimate is the architecture's own claim, bounded for its worst case; totals run to 1.15, not 1, because the four weights are not normalised. The final audit lists the targets every alternative met: in v7, 12 of 14. Without a population the resilience criteria are not judged and every alternative takes a neutral 0.5; the ground-centric/distributed split is a population rule, and if one alternative fails its checks the other is taken with no comparison.}
