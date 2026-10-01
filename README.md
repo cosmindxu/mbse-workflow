@@ -30,9 +30,11 @@ produced now stops it.
 
 The next run, v9, is where that gate lives — and where the model shows its
 arithmetic. Its logical layer states the coverage as an equation over its own
-numbers — a constraint, drawn in its Parametric view — which evaluated gives
-12 × (40 − 7.41) / 60 × 0.12 = 0.78 (computed in Python from those values;
-Sysprose's z3 bound on it was left undecided); the duty-cycle gate passes it;
+numbers — a constraint, drawn in its Parametric view — which Sysprose's
+evaluator reads as the estimate's definition: 12 × (40 − 7.41) / 60 × 0.12 =
+0.78, and z3 reaches the same value from both directions (the arithmetic is
+nonlinear, so it is a value reached, not one certified as the tightest); the
+duty-cycle gate passes it;
 and the model says why it misses the brief's 0.9: 7.41 of every
 40 minutes go on the round trip to a sector. Simulated from the model for two
 duty cycles in real time, the fleet watched 0.54 of its sectors — the same

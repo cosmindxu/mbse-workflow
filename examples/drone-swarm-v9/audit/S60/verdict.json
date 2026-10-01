@@ -4,7 +4,7 @@
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml",
   "prefixHash": "ab85e101c5ecb2c5",
   "elements": 3669,
-  "durationMs": 3447,
+  "durationMs": 5580,
   "checks": [
     {
       "name": "check",
@@ -12,14 +12,14 @@
       "blocking": true,
       "ok": true,
       "durationMs": 0,
-      "findings": 31
+      "findings": 28
     },
     {
       "name": "verify",
       "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 1778,
+      "durationMs": 2426,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/verify.json",
       "findings": 0
     },
@@ -28,7 +28,7 @@
       "command": "npm run sysprose -- consistency /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 621,
+      "durationMs": 633,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/consistency.json",
       "findings": 0
     },
@@ -37,7 +37,7 @@
       "command": "npm run sysprose -- refine /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --via composition --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 171,
+      "durationMs": 185,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/refine.json",
       "findings": 0
     },
@@ -55,7 +55,7 @@
       "command": "npm run sysprose -- fault-tree /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 176,
+      "durationMs": 180,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/fault-tree.json",
       "findings": 1
     },
@@ -64,7 +64,7 @@
       "command": "npm run sysprose -- check-behaviour /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --element <each state machine> --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 60,
+      "durationMs": 64,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/check-behaviour.json",
       "findings": 0
     }
@@ -310,36 +310,6 @@
       "line": 864,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "LA",
-      "line": 573,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "PA",
-      "line": 527,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour == alertCapPerHour\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "PA",
-      "line": 534,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
     {

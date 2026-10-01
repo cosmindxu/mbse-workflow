@@ -1,12 +1,12 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3669 elements)
-Sysprose: 9960861 (the checks were calibrated against 2486d72)
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 3 legs
+Sysprose: b82284f (the checks were calibrated against 2486d72)
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 4 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
-`npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 31 diagnostic(s)
+`npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 28 diagnostic(s)
 `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → 49/49 satisfied (100 %)
 
 ## Realization chain
@@ -133,7 +133,7 @@ The worst case over the `#Estimate` each layer's chosen architecture states. The
 
 | Measure | Target | LA | PA |
 |---|---|---|---|
-| `areaUnderWatchFraction` | ≥ 0.9 | inconclusive | 0.78 ✗ |
+| `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | 0.78 ✗ |
 | `coverageLossAfterMemberLossFraction` | ≤ 0.25 | 0.16 ✓ | 0.154 ✓ |
 | `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.58 ✗ | 0.68 ✗ |
 | `reportAgeAtOperationsCentreSeconds` | ≤ 60 s (placeholder) | 40 s ✓ | 40 s ✓ |
@@ -241,9 +241,6 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/constraint-violation` trackStaleAfterBudget: Constraint could not be evaluated ("trackStaleAfterSeconds <= 120.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes >= 10.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction >= 0.5"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("alertsReachingOperatorPerHour == alertCapPerHour"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true"): Could not evaluate: a referenced value is unknown.
@@ -274,4 +271,4 @@ One row per function definition. A definition is on board when every usage sits 
 | S43 | done | 0 | — |
 | S50 | done | 0 | auto |
 | S60 | done | 0 | — |
-| S70 | running | 0 | — |
+| S70 | running | 0 | auto |
