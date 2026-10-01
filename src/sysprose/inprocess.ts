@@ -33,7 +33,7 @@ import {
   traceabilityMatrix,
   verifyModel,
 } from '@api/index';
-import { resolveFullName, statementKindOf } from '@semantics/index';
+import { evaluateFeatureValue, resolveFullName, statementKindOf } from '@semantics/index';
 import { buildGrid } from '@diagram/grid';
 import { buildRequirementsTable } from '@diagram/requirements-table';
 import { loadModelText } from '@text/load';
@@ -340,6 +340,11 @@ export class InProcessBackend implements SysproseBackend {
 
   bounds(m: Loaded, measure: string, sense: 'min' | 'max' = 'max') {
     return boundsReport(m.model, { measure, sense, sourceText: m.text });
+  }
+
+  valueOf(m: Loaded, ref: string): number | undefined {
+    const result = evaluateFeatureValue(m.model, this.#resolve(m.model, ref).id);
+    return 'value' in result && typeof result.value === 'number' && Number.isFinite(result.value) ? result.value : undefined;
   }
 
   faultTree(m: Loaded) {

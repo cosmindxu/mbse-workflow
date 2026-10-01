@@ -19,7 +19,7 @@ import { withCanonicalBudgets } from '../spec/budgets.ts';
 import { readFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
-import type { SysproseBackend } from '../sysprose/backend.ts';
+import type { Loaded, SysproseBackend } from '../sysprose/backend.ts';
 import type { ElementRow } from '../sysprose/types.ts';
 import type { MachineView, SimulationInput } from './simulation.ts';
 
@@ -135,6 +135,27 @@ export interface AdapterOptions {
  * refusal belongs to `simulationOf`, which names the ones it wants, and
  * duplicating it here would put the same rule in two places.
  */
+/**
+ * An estimate PA fixes by an equation rather than a literal. Sysprose's
+ * evaluator reads the equation as the definition and gives the one value,
+ * deterministically. A backend without it falls back to z3: the value reached
+ * from below and from above, taken only when the two meet. Measured: under a
+ * loaded test run z3 gave up on the loss estimate (two nonlinear steps) and
+ * the claim came back null, while the evaluator never does.
+ */
+async function derivedValue(backend: SysproseBackend, model: Loaded, qualifiedName: string): Promise<number | null> {
+  try {
+    if (backend.valueOf) return backend.valueOf(model, qualifiedName) ?? null;
+    const [low, high] = await Promise.all(
+      (['min', 'max'] as const).map(async (sense) => (await backend.bounds(model, qualifiedName, sense)).bounds[0]?.value),
+    );
+    if (typeof low !== 'number' || typeof high !== 'number') return null;
+    return Math.abs(low - high) <= 1e-9 * Math.max(1, Math.abs(high)) ? high : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function simulationInputOf(
   runDir: string,
   backend: SysproseBackend,
@@ -167,22 +188,24 @@ export async function simulationInputOf(
   const root = brief.systemName!;
   const memberPath = `${root}::PA::${brief.population.memberDef}`;
 
-  const { rows, nodeNames, estimates } = await backend.withModel(text, basename(modelPath), (model) => {
+  const { rows, nodeNames, estimates } = await backend.withModel(text, basename(modelPath), async (model) => {
     const elements = backend.elements(model);
     const tags = backend.tags(model);
     // What the architecture claims for each measure. The report's whole point
     // is claimed against simulated, and the claim lives here — as an
     // `#Estimate` at PA, either a literal or (CV-17) fixed by a constraint.
-    // An estimate with no literal is carried as null rather than as a guess:
-    // the report then says the architecture derived it and this did not read
-    // the derivation, which is true, instead of inventing a number.
-    const claimed: Record<string, number | null> = {};
+    // A constraint-fixed estimate is read the way the final audit reads it:
+    // Sysprose's bound from both directions, taken only when the two meet. One
+    // that does not resolve is carried as null rather than as a guess.
+    const claimed: Record<string, { value: number | null; kind: 'stated' | 'derived' }> = {};
     for (const qualifiedName of tags.taggedWith('Estimate')) {
       if (!qualifiedName.startsWith(`${root}::PA::`)) continue;
       const row = elements.find((e) => e.qualifiedName === qualifiedName);
       if (!row) continue;
       const value = Number.parseFloat(row.value);
-      claimed[simpleName(qualifiedName)] = Number.isFinite(value) ? value : null;
+      claimed[simpleName(qualifiedName)] = Number.isFinite(value)
+        ? { value, kind: 'stated' }
+        : { value: await derivedValue(backend, model, qualifiedName), kind: 'derived' };
     }
     // `#Node` is what the architecture says gets built or bought, and the tag
     // is how every other part of this project finds them. Only the ones at PA
@@ -211,7 +234,7 @@ export async function simulationInputOf(
         // report can put the claim beside the result without a second lookup.
         measures: split.measures.map((m) => ({
           ...m,
-          ...(m.name in estimates ? { estimate: estimates[m.name] } : {}),
+          ...(m.name in estimates ? { estimate: estimates[m.name].value, estimateKind: estimates[m.name].kind } : {}),
         })),
       };
     })(),

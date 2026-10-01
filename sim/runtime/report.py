@@ -50,7 +50,9 @@ def claim_line(measure: dict, claimed: dict) -> str:
         claim = "derived by constraint" if kind == "derived" else "not stated"
         agreement = "—"
     else:
-        claim = f"{estimate:g} (stated)"
+        # A derived estimate with a value is the one Sysprose fixes from the
+        # model's equation; the report says which kind the claim is.
+        claim = f"{estimate:g} ({'derived' if kind == 'derived' else 'stated'})"
         # "Agrees" is a deliberately loose word: within a tenth of the claim.
         # The point of the column is to show contradiction, not to grade.
         close = abs(simulated - estimate) <= max(0.1 * abs(estimate), 1e-9)

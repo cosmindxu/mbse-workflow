@@ -50,6 +50,30 @@ describe.skipIf(!existsSync(example))('contribution ease on v7', () => {
     expect(loadState(join(example, 'state.json'))!.steps.S30?.status).toBe('done');
   });
 
+  it('re-checks a layer a person kept below an edit, instead of authoring it again', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'contribution-'));
+    try {
+      cpSync(join(example, 'fragments'), join(dir, 'fragments'), { recursive: true });
+      const copy = loadState(join(example, 'state.json'))!;
+      const scratch = makeLayout(dir, copy.root);
+      appendFileSync(scratch.fragmentPath('PA'), "\n// a reviewer's note\n");
+      // Measured on v9: two equations added to PA sent EPBS back to its author,
+      // and the 498-line layer came back as 177 lines. Kept, EPBS is re-checked
+      // against the new PA; a kept layer above the edit says nothing new.
+      const real = invalidate(copy, scratch, ['EPBS', 'SA']);
+      expect(real.changed).toEqual(['PA']);
+      expect(real.kept).toEqual(['EPBS']);
+      expect(real.recheck).toEqual(['S42', 'S50']);
+      expect(real.invalidated).not.toContain('S50');
+      expect(copy.steps.S50?.status).toBe('done');
+      expect(real.invalidated).toEqual(['S60', 'S70']);
+      // Without it, the same edit re-authors EPBS.
+      expect(invalidate(loadState(join(example, 'state.json'))!, scratch).invalidated).toContain('S50');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
   it('re-runs nothing that produces a layer a person edited, even below the first edit', () => {
     const dir = mkdtempSync(join(tmpdir(), 'contribution-'));
     try {

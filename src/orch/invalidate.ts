@@ -23,6 +23,8 @@ import type { RunState } from './state.ts';
 export interface Invalidation {
   /** Layers whose fragment differs from what the last run checked. */
   changed: Layer[];
+  /** Layers below an edit that a person kept as written: re-checked, not re-authored. */
+  kept?: Layer[];
   /**
    * The step that wrote each changed layer. It is NOT re-run — that would hand
    * the person's edit back to the model to rewrite — it is re-checked, and
@@ -48,7 +50,16 @@ export function writerOf(layer: Layer): StepId | undefined {
   return writers.at(-1)?.id;
 }
 
-export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
+/**
+ * `keep` names layers below an edit that a person says still stand as written.
+ * Without it, an edit to PA re-authors EPBS from scratch even when nothing EPBS
+ * realises moved. Measured on v9: two equations added to PA sent EPBS back to
+ * its author, and the 498-line layer came back as 177 lines that still cleared
+ * the checks. A kept layer is treated as one the person edited: its writer is
+ * re-checked against the new layers above it, and repaired only as far as the
+ * findings demand.
+ */
+export function invalidate(state: RunState, layout: ModelLayout, keep: readonly Layer[] = []): Invalidation {
   const now = assemble(layout, 'EPBS').fragmentHashes;
 
   // The hash each layer had when the step that saw it LAST finished — by the
@@ -77,12 +88,16 @@ export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
     return before !== undefined && before !== after;
   });
   if (changed.length === 0) return { changed, recheck: [], invalidated: [] };
+  // Kept only matters below an edit: a kept layer above every edit was never at
+  // risk, and re-checking it would say nothing new.
+  const firstChanged = Math.min(...changed.map((l) => layerIndex(l === 'Kinds' ? 'Common' : l)));
+  const kept = keep.filter((l) => !changed.includes(l) && layerIndex(l) > firstChanged);
 
   // A blocked step counts: the person editing the fragment a step could not
   // repair is the flow this exists for. Measured: the edit was hashed as a
   // change, the step was not re-checked, and the author ran again — paying
   // to replace the fragment the person had just fixed.
-  const recheck = changed
+  const recheck = [...changed, ...kept]
     .map(writerOf)
     .filter((id): id is StepId => id !== undefined && ['done', 'blocked'].includes(state.steps[id]?.status ?? ''));
 
@@ -93,7 +108,7 @@ export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
   // An edited Kinds counts as an edited Common: SEED wrote both, and treating
   // Kinds as the layer before SEED's re-ran SEED, which rewrites Kinds and
   // undoes the edit. Measured on v5 by simulating an edit to every layer.
-  const first = Math.min(...changed.map((l) => layerIndex(l === 'Kinds' ? 'Common' : l)));
+  const first = firstChanged;
   // The same holds for EVERY edited layer, not only the first. An edit to LA
   // and PA together used to re-check PA's writer and then also invalidate
   // PA's transition and alternatives: measured on v9, the transition wrote a
@@ -102,7 +117,7 @@ export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
   // never ran — the run shipped a skeleton PA. A step that PRODUCES an edited
   // layer stays done; that layer's audits, and everything for the layers below
   // that nobody edited, still run.
-  const edited = new Set<Layer>(changed.map((l) => (l === 'Kinds' ? 'Common' : l)));
+  const edited = new Set<Layer>([...changed.map((l) => (l === 'Kinds' ? 'Common' : l)), ...kept]);
   const produces = (step: (typeof STEPS)[number]): boolean =>
     step.layer !== undefined && edited.has(step.layer as Layer) && PRODUCERS.includes(step.agent);
   const invalidated: StepId[] = [];
@@ -118,7 +133,7 @@ export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
       invalidated.push(step.id);
     }
   }
-  return { changed, recheck, invalidated, resumeAt: invalidated[0] };
+  return { changed, ...(kept.length > 0 ? { kept } : {}), recheck, invalidated, resumeAt: invalidated[0] };
 }
 
 /** Leave a record beside the run of what the edit cost. */

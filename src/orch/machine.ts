@@ -47,6 +47,8 @@ export interface RunOptions {
   requirementsText?: string;
   infrastructureText?: string;
   fromStep?: StepId;
+  /** Layers below an edit that a person says still stand: re-checked, not re-authored. */
+  keep?: Layer[];
   log?: (message: string) => void;
 }
 
@@ -101,11 +103,12 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
   let ctx: AgentContext = { config: opts.config, layout, backend: opts.backend, llm: opts.llm, state, knobs, log };
 
   if (existing && opts.fromStep === undefined) {
-    const result = invalidate(state, layout);
+    const result = invalidate(state, layout, opts.keep);
     if (result.changed.length > 0) {
       const path = recordInvalidation(layout, result);
       log(
-        `  ${result.changed.join(', ')} changed since the last run: ` +
+        `  ${result.changed.join(', ')} changed since the last run` +
+          `${result.kept ? ` (${result.kept.join(', ')} kept as written)` : ''}: ` +
           `${result.recheck.join(', ') || 'nothing'} re-checked, ` +
           `${result.invalidated.join(', ') || 'nothing'} will run again (${path})`,
       );
@@ -116,7 +119,8 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
       for (const id of result.recheck) {
         const step = STEPS.find((s) => s.id === id)!;
         const record = stepRecord(state, id);
-        log(`\n${id} ${step.name} (${step.layer}) — re-checking a fragment a person edited`);
+        const why = result.kept?.includes(step.layer as Layer) ? 'a person kept as written' : 'a person edited';
+        log(`\n${id} ${step.name} (${step.layer}) — re-checking a fragment ${why}`);
         const recheck = (): Promise<Verdict> =>
           runStepChecks(step, {
             backend: ctx.backend,
@@ -140,7 +144,7 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
         record.fragmentHashes = assemble(layout, step.layer as Layer).fragmentHashes;
         record.status = repaired.verdict.blocking ? 'blocked' : 'done';
         if (record.status === 'done') record.note = undefined;
-        writePacket({ layout, step: id, verdict: repaired.verdict, rationales: ['Re-checked after a person edited the fragment.', ...repaired.rationales] });
+        writePacket({ layout, step: id, verdict: repaired.verdict, rationales: [why === 'a person edited' ? 'Re-checked after a person edited the fragment.' : 'Re-checked against the layers above it: a person kept this fragment as written.', ...repaired.rationales] });
         saveState(layout.statePath, state);
         if (repaired.verdict.blocking) {
           const gate = (step.gate ?? 'G-FINAL') as GateId;

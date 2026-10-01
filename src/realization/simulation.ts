@@ -54,8 +54,10 @@ export interface SimulationInput {
   /** The scored measures, with the targets a run is held to. */
   measures: readonly {
     name: string; sense: 'min' | 'max'; target: number; unit?: string;
-    /** What the architecture estimates for this measure; null when derived. */
+    /** What the architecture estimates for this measure; null when derived and not resolved to one value. */
     estimate?: number | null;
+    /** Whether PA states the estimate or fixes it by an equation (CV-17). */
+    estimateKind?: 'stated' | 'derived';
   }[];
   /** Wall-clock compression. 10 turns a 40-minute flight into 4 minutes. */
   timeScale?: number;
@@ -409,7 +411,7 @@ export function simulationOf(input: SimulationInput): SimulationOutput {
       sense: mm.sense,
       ...(mm.estimate === undefined
         ? {}
-        : { estimate: mm.estimate, estimate_kind: mm.estimate === null ? 'derived' : 'stated' }),
+        : { estimate: mm.estimate, estimate_kind: mm.estimateKind ?? (mm.estimate === null ? 'derived' : 'stated') }),
     })),
   })}`;
   trace.push({

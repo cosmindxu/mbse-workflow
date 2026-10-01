@@ -230,7 +230,9 @@ export async function writeFinalAudit(ctx: AgentContext, verdict: Verdict): Prom
                 try {
                   const name = `${ctx.layout.root}::${l}::${moe.name}`;
                   const row = await worstCase(async (sense) => (await ctx.backend.bounds(m, name, sense)).bounds[0], moe.sense);
-                  const shown = row.value !== undefined ? `${row.value}${moe.unit ? ` ${moe.unit}` : ''}${row.outcome === 'derived' ? ' (derived)' : ''}` : row.outcome;
+                  // Six significant figures, as Sysprose prints a defined value: a derived
+                  // estimate is otherwise shown to the last float digit.
+                  const shown = row.value !== undefined ? `${typeof row.value === 'number' ? Number(row.value.toPrecision(6)) : row.value}${moe.unit ? ` ${moe.unit}` : ''}${row.outcome === 'derived' ? ' (derived)' : ''}` : row.outcome;
                   layers.push({ layer: l, estimate: shown, met: meets(moe, row.outcome, row.value) });
                 } catch {
                   layers.push({ layer: l, estimate: 'no estimate' });

@@ -74,6 +74,12 @@ export interface Analyses {
   consistency(m: Loaded): Promise<ConsistencyReport>;
   refine(m: Loaded, via?: 'composition' | 'derive' | 'refine' | 'all'): Promise<RefinementReport>;
   bounds(m: Loaded, measure: string, sense?: 'min' | 'max'): Promise<BoundsReport>;
+  /**
+   * A feature's value as Sysprose's evaluator reads it: its own literal or
+   * expression, or (CV-17) the equation beside it that defines it. No solver:
+   * the same answer every time. Undefined when it does not come to a number.
+   */
+  valueOf?(m: Loaded, ref: string): number | undefined;
   faultTree(m: Loaded): Promise<FaultTreeReport>;
   /** One state machine's properties — its own, or `pattern` when it states none. */
   behaviour(m: Loaded, machineId: string, pattern?: string): BehaviourReport;

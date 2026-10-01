@@ -99,11 +99,15 @@ program
   .requiredOption('--out <dir>', 'the run directory')
   .option('--unattended', 'take every gate automatically', false)
   .option('--from-step <id>', 're-enter at this step')
+  .option('--keep <layers>', 'layers below an edit that still stand as written: re-check them, do not re-author (comma-separated)')
   .option('--budget-usd <amount>', 'ceiling for this leg of the run', parseFloat)
   .option('--model <name>', 'model for the agents that have no override')
   .option('--sysprose <dir>', 'the Sysprose checkout to drive')
   .option('--config <path>', 'settings file')
   .action(async (opts) => {
+    const keep = opts.keep ? String(opts.keep).split(',').map((l) => l.trim()) : [];
+    const unknown = keep.filter((l) => !isLayer(l));
+    if (unknown.length > 0) throw new Error(`--keep: not a layer: ${unknown.join(', ')}`);
     const state = loadState(resolve(opts.out, 'state.json'));
     if (!state) throw new Error(`no run in ${opts.out}`);
     // The budget counts this leg, not the whole history: what was already spent
@@ -132,6 +136,7 @@ program
       gates: gateController(opts, layout),
       briefText: existsSync(layout.briefPath) ? readFileSync(layout.briefPath, 'utf8') : '',
       fromStep: opts.fromStep as StepId | undefined,
+      keep: keep as Layer[],
     });
     report(result.state, result.layout.dir);
   });
