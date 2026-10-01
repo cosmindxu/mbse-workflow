@@ -3,25 +3,25 @@
   "layer": "PA",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/6_PA.sysml",
-  "prefixHash": "a2e6b4e73917149b",
-  "elements": 3271,
-  "durationMs": 1568,
+  "prefixHash": "7a02e97d2ad00015",
+  "elements": 3274,
+  "durationMs": 1841,
   "checks": [
     {
       "name": "check",
       "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/6_PA.sysml --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 0,
+      "durationMs": 1,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S42/check.json",
-      "findings": 25
+      "findings": 22
     },
     {
       "name": "trace-trace",
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/6_PA.sysml --relation trace --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 127,
+      "durationMs": 131,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S42/trace-trace.json",
       "findings": 5
     },
@@ -30,7 +30,7 @@
       "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/6_PA.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 957,
+      "durationMs": 1127,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S42/verify.json",
       "findings": 0
     }
@@ -276,36 +276,6 @@
       "line": 864,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "LA",
-      "line": 573,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "PA",
-      "line": 527,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour == alertCapPerHour\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "PA",
-      "line": 534,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
     {

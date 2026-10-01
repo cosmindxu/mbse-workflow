@@ -2300,16 +2300,17 @@ package SurveillanceDroneSwarm {
 
         // ---------------------------------------------------------------
         // Worst-case estimates of the measures of effectiveness (CV-17)
-        // These are the worst of the ground-centred and member-centred
-        // allocations, because that choice is not taken at this layer.
+        // The two LA alternatives (ground-centred and member-centred
+        // coordination) were scored on these; the taken one keeps them,
+        // derived from this layer's own values where the arithmetic allows.
         // ---------------------------------------------------------------
 
         #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction {
             doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 12 x (40 - 7.41) / 60 x 0.12 = 0.782. Basis: twelve drones, 40 min endurance and a 20 min battery swap, so each drone is airborne 40 of every 60 minutes; the round trip to a sector up to 4 km away at 18 m/s takes 7.41 of those 40; one drone keeps 3.0 km2 of the 25 km2 area, 0.12, under watch. Target 0.9 is not met by this arithmetic: it would need the round trip under 2.5 min, that is recharge points much closer to the sectors. */
         }
 
-        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction = 0.16 {
-            doc /* Worst case 0.16. Basis: one watching drone holds about 3.0 km2 of the roughly 19.6 km2 under watch, about 0.15, before any re-spread; the same for either allocation because the loss precedes the redistribution. */
+        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction {
+            doc /* Worst case, derived by the assert constraint below (CV-17): one watching drone holds 0.12 of the area out of the 0.782 under watch, 0.12 / 0.782 = 0.153 of the coverage lost before any re-spread; the same for either allocation because the loss precedes the redistribution. */
         }
 
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction = 0.58 {
@@ -2673,6 +2674,7 @@ package SurveillanceDroneSwarm {
         attribute sectorTransitMinutes = 7.41 { doc /* Round trip to the farthest sector and back at cruise speed, 2 x 4000 m / 18 m/s = 7.41 min, spent from the same 40 minutes of flight. Unit: minutes. */ }
         attribute memberCoverageFraction = 0.12;
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
+        assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         #prose part laTradeOff {
         doc /* Architecture trade-off for LA. Alternative 2 was taken.
                  alternative 1: total 0.52 (measures 0.29, review 0.44, structure 0.84, resilience 0.25)
@@ -3157,6 +3159,8 @@ package SurveillanceDroneSwarm {
         attribute memberFootprintSquareKilometres = 3.0 { doc /* Area under watch at once from one drone. Unit: square kilometres. */ }
         attribute areaOfInterestSquareKilometres = 25 { doc /* The tasked area, up to 25 square kilometres. */ }
         attribute memberCoverageFraction = 0.12 { doc /* Share of the tasked area one watching drone covers: 3.0 / 25. It is more than 1/12 because only the airborne drones watch; the area estimate follows from it, worked in the estimate's doc. */ }
+        assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - memberTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
+        assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         attribute operatorSecondsPerAlert = 30 { doc /* The least time the operator needs per alert. Unit: seconds. */ }
         attribute alertCapPerHour = 20 { doc /* Alerts the triage node releases to the operator per hour; alerts above it wait in the ranked backlog. Unit: 1/h. */ }
         attribute trackStaleAfterSeconds = 120 { doc /* A track is marked stale once nothing has seen the object for this long. Unit: seconds. */ }
@@ -3180,11 +3184,11 @@ package SurveillanceDroneSwarm {
         require constraint { doc /* A track goes stale within 120 seconds. */ trackStaleAfterSeconds <= 120 }
         require constraint { doc /* The on-board store holds the reports of one whole sortie at the peak rate. */ reportStoreCapacityReports >= memberFlightMinutes * peakReportsPerMemberPerMinute }
         // ===== worst-case estimates, directly in this package =====
-        #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction = 0.78 {
-            doc /* Worst case 0.78, rounded down from 0.782. Twelve drones, 40 min sortie, 20 min swap: 12 x 40/60 = 8 airborne. Transit of up to 4 km each way at 18 m/s is 7.41 min of the 40, leaving 32.59 min of watching per 60 min cycle, so 12 x 32.59/60 = 6.52 drones watch at a time. Each watching drone covers 0.12 of the area (3.0 of 25 km2), more than its 1/12 share, because only the airborne share of the fleet watches; 6.52 x 0.12 = 0.782. Target 0.9 is not met by this arithmetic. */
+        #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction {
+            doc /* Worst case, derived from this layer's own values by the assert constraint below (CV-17): 12 x (40 - 7.41) / 60 x 0.12 = 0.782. Twelve drones, a 40 min sortie and a 20 min swap keep each drone airborne 40 of every 60 minutes; the round trip to a sector up to 4 km away at 18 m/s takes 7.41 of those 40; one watching drone covers 0.12 of the area (3.0 of 25 km2). The same arithmetic LA states, over PA's own attributes: the physical architecture changes none of the numbers it rests on. Target 0.9 is not met; it would need the round trip under 2.5 min. */
         }
-        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction = 0.154 {
-            doc /* Worst case 0.154, rounded up from 0.1538. One watching drone holds 0.12 of the area out of the 0.78 under watch: 0.12 / 0.78 = 0.154 of coverage is lost before any re-spread. It is the same wherever redistribution runs, because the loss precedes it; the member-centred redistribution then re-spreads from the last agreed assignment without waiting for the ground. */
+        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction {
+            doc /* Worst case, derived by the assert constraint below (CV-17): one watching drone holds 0.12 of the area out of the 0.782 under watch, 0.12 / 0.782 = 0.153 of the coverage lost before any re-spread. It is the same wherever redistribution runs, because the loss precedes it; the member-centred redistribution then re-spreads from the last agreed assignment without waiting for the ground. */
         }
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction = 0.68 {
             doc /* Worst case 0.68. With half the links jammed a hand-over is lost only if the confirmation fails on both of the two nearest neighbours, about 0.5 x 0.5 = a quarter of hand-overs; the leaving member stays until confirmed, so a sector is empty only part of a swap turnaround, about half of it. That cuts the 0.78 baseline by about an eighth, to about 0.68. The dedicated coordination priority class on the mesh radio keeps hand-over messages ahead of relay traffic. Placeholder target 0.75 is not met. */

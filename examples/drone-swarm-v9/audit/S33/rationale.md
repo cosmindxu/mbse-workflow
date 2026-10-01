@@ -34,7 +34,6 @@ Re-checked after a person edited the fragment.
 - `validation/constraint-violation` trackStaleAfterBudget: Constraint could not be evaluated ("trackStaleAfterSeconds <= 120.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes >= 10.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction >= 0.5"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction"): Could not evaluate: a referenced value is unknown.
 - `trace.closure` SurveillanceDroneSwarm::SA::mergeTracks: SA → LA: `mergeTracks` is not realised.
 - `trace.closure` SurveillanceDroneSwarm::SA::provideCameraTracks: SA → LA: `provideCameraTracks` is not realised.
 - `trace.closure` SurveillanceDroneSwarm::SA::swapBatteryAct: SA → LA: `swapBatteryAct` is not realised.

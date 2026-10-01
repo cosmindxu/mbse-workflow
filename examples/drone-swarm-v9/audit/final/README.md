@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3669 elements)
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3672 elements)
 Sysprose: b82284f (the checks were calibrated against 2486d72)
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 4 legs
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 6 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -40,11 +40,11 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 4 
 | Common | 94 | 94 | 100 % |
 | OA | 103 | 103 | 100 % |
 | SA | 113 | 98 | 87 % |
-| LA | 65 | 54 | 83 % |
-| PA | 110 | 110 | 100 % |
+| LA | 66 | 54 | 82 % |
+| PA | 112 | 110 | 98 % |
 | EPBS | 64 | 64 | 100 % |
 
-26 element(s) carry no doc and no realization link — a reader cannot ask why they exist:
+29 element(s) carry no doc and no realization link — a reader cannot ask why they exist:
 - `SurveillanceDroneSwarm::SA::taskingLink`
 - `SurveillanceDroneSwarm::SA::supervisoryLink`
 - `SurveillanceDroneSwarm::SA::recallLink`
@@ -71,6 +71,9 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 4 
 - `SurveillanceDroneSwarm::LA::alertsFeed`
 - `SurveillanceDroneSwarm::LA::recordsFeed`
 - `SurveillanceDroneSwarm::LA::«ConstraintUsage»`
+- `SurveillanceDroneSwarm::LA::«ConstraintUsage»`
+- `SurveillanceDroneSwarm::PA::«ConstraintUsage»`
+- `SurveillanceDroneSwarm::PA::«ConstraintUsage»`
 
 | Step | Lines a reviewer read |
 |---|---|
@@ -123,8 +126,8 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Common | 894 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
-| LA | 582 | S33 | S40…S60 (6) | 11 | 4.58 |
-| PA | 610 | S42 | S50…S60 (2) | 7 | 1.96 |
+| LA | 584 | S33 | S40…S60 (6) | 11 | 4.58 |
+| PA | 612 | S42 | S50…S60 (2) | 7 | 1.96 |
 | EPBS | 499 | S50 | — | 0 | 0.00 |
 
 ## Measures
@@ -133,8 +136,8 @@ The worst case over the `#Estimate` each layer's chosen architecture states. The
 
 | Measure | Target | LA | PA |
 |---|---|---|---|
-| `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | 0.78 ✗ |
-| `coverageLossAfterMemberLossFraction` | ≤ 0.25 | 0.16 ✓ | 0.154 ✓ |
+| `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | 0.78216 (derived) ✗ |
+| `coverageLossAfterMemberLossFraction` | ≤ 0.25 | 0.153421 (derived) ✓ | 0.153421 (derived) ✓ |
 | `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.58 ✗ | 0.68 ✗ |
 | `reportAgeAtOperationsCentreSeconds` | ≤ 60 s (placeholder) | 40 s ✓ | 40 s ✓ |
 | `positionErrorWithoutSatelliteMetres` | ≤ 50 m (placeholder) | 80 m ✗ | 80 m ✗ |

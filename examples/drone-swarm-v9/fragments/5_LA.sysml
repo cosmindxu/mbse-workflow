@@ -198,16 +198,17 @@
 
         // ---------------------------------------------------------------
         // Worst-case estimates of the measures of effectiveness (CV-17)
-        // These are the worst of the ground-centred and member-centred
-        // allocations, because that choice is not taken at this layer.
+        // The two LA alternatives (ground-centred and member-centred
+        // coordination) were scored on these; the taken one keeps them,
+        // derived from this layer's own values where the arithmetic allows.
         // ---------------------------------------------------------------
 
         #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction {
             doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 12 x (40 - 7.41) / 60 x 0.12 = 0.782. Basis: twelve drones, 40 min endurance and a 20 min battery swap, so each drone is airborne 40 of every 60 minutes; the round trip to a sector up to 4 km away at 18 m/s takes 7.41 of those 40; one drone keeps 3.0 km2 of the 25 km2 area, 0.12, under watch. Target 0.9 is not met by this arithmetic: it would need the round trip under 2.5 min, that is recharge points much closer to the sectors. */
         }
 
-        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction = 0.16 {
-            doc /* Worst case 0.16. Basis: one watching drone holds about 3.0 km2 of the roughly 19.6 km2 under watch, about 0.15, before any re-spread; the same for either allocation because the loss precedes the redistribution. */
+        #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction {
+            doc /* Worst case, derived by the assert constraint below (CV-17): one watching drone holds 0.12 of the area out of the 0.782 under watch, 0.12 / 0.782 = 0.153 of the coverage lost before any re-spread; the same for either allocation because the loss precedes the redistribution. */
         }
 
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction = 0.58 {
@@ -571,6 +572,7 @@
         attribute sectorTransitMinutes = 7.41 { doc /* Round trip to the farthest sector and back at cruise speed, 2 x 4000 m / 18 m/s = 7.41 min, spent from the same 40 minutes of flight. Unit: minutes. */ }
         attribute memberCoverageFraction = 0.12;
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
+        assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         #prose part laTradeOff {
         doc /* Architecture trade-off for LA. Alternative 2 was taken.
                  alternative 1: total 0.52 (measures 0.29, review 0.44, structure 0.84, resilience 0.25)

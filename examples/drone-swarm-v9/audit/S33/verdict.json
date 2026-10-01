@@ -3,9 +3,9 @@
   "layer": "LA",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml",
-  "prefixHash": "7853fdeda815b99d",
-  "elements": 2577,
-  "durationMs": 2704,
+  "prefixHash": "ee5e7d560babffaa",
+  "elements": 2578,
+  "durationMs": 2791,
   "checks": [
     {
       "name": "check",
@@ -14,14 +14,14 @@
       "ok": true,
       "durationMs": 1,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/check.json",
-      "findings": 23
+      "findings": 22
     },
     {
       "name": "trace-trace",
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --relation trace --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 72,
+      "durationMs": 73,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/trace-trace.json",
       "findings": 5
     },
@@ -30,7 +30,7 @@
       "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 892,
+      "durationMs": 928,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/verify.json",
       "findings": 0
     }
@@ -276,16 +276,6 @@
       "line": 864,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
-      "layer": "LA",
-      "line": 573,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
     {
