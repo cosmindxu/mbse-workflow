@@ -1,81 +1,81 @@
 WEBVTT
 
 1
-00:00:04.000 --> 00:00:14.666
+00:00:04.000 --> 00:00:14.665
 SHOW ONLY THE PA LAYER
 In the Explorer, ⊞ on PA scopes every diagram to the physical-architecture package: the components that will be built.
 
 2
-00:00:14.666 --> 00:00:27.666
+00:00:14.665 --> 00:00:27.670
 GENERAL VIEW
 PA's definitions and usages as boxes: node parts and the behaviour they host, the functions carried over from LA, states, hazards, budgets. Too many to read whole.
 
 3
-00:00:27.666 --> 00:00:40.075
+00:00:27.670 --> 00:00:40.084
 READ ONE ELEMENT
 Select fleet: the twelve identical drones, multiplicity 12 in Properties. 14 of PA's 21 functions are allocated to it; the ground nodes take the rest.
 
 4
-00:00:40.075 --> 00:00:51.872
+00:00:40.084 --> 00:00:51.886
 INTERCONNECTION VIEW
 PA's centrepiece: parts with ports, joined by typed physical links. A node part draws the behaviour parts it hosts nested inside its box.
 
 5
-00:00:51.872 --> 00:01:04.000
+00:00:51.886 --> 00:01:04.023
 THE GROUND LINKS
 The ground station, the recall transmitter and the fleet, port to port. Each line is a connection: taskingFeed, priorityFeed, recallBroadcastFeed…
 
 6
-00:01:04.000 --> 00:01:15.734
+00:01:04.023 --> 00:01:15.741
 A LINK IS TYPED
 Select recallBroadcastFeed in the Explorer. Properties › Types: RecallRadioMedium, a recall radio separate from the mesh and the ground link.
 
 7
-00:01:15.734 --> 00:01:29.738
+00:01:15.741 --> 00:01:29.738
 BEHAVIOUR NESTED IN A NODE
 Select MissionComputerNode and press Selection. The drone's mission computer hosts four behaviour parts: perception, swarmCoordination, reportHold, directiveUptake.
 
 8
-00:01:29.738 --> 00:01:41.528
+00:01:29.738 --> 00:01:41.532
 HOST A PART IN ITS NODE
 Before recording we deleted ruleMonitor, the flight-rule monitor that SafetyMonitorNode hosts. Select that node: its box is now empty.
 
 9
-00:01:41.528 --> 00:01:54.524
+00:01:41.532 --> 00:01:54.528
 PLACE A PART INSIDE IT
 Pick Part in the palette, then click ON the SafetyMonitorNode box. The part is created inside it and the box is redrawn as its host; Selection frames it.
 
 10
-00:01:54.524 --> 00:02:06.969
+00:01:54.528 --> 00:02:06.978
 NAME IT AND TYPE IT
 In Properties: the name ruleMonitor, then the type FlightRuleMonitor, and Enter binds it. That is all the original had: no documentation of its own.
 
 11
-00:02:06.969 --> 00:02:19.962
+00:02:06.978 --> 00:02:19.969
 THE RESULT
 The breadcrumb reads PA › SafetyMonitorNode › ruleMonitor, as before we deleted it: the flight rules run apart from the mission computer. Edits stay in this browser.
 
 12
-00:02:19.962 --> 00:02:30.951
+00:02:19.969 --> 00:02:30.964
 ACTION VIEW
 The 21 functions carried over from LA, each allocated to a component. No successions and no flows between them: a set, not a sequence.
 
 13
-00:02:30.951 --> 00:02:43.817
+00:02:30.964 --> 00:02:43.820
 STATE VIEW
 Five state machines: a drone's sortie and its operating condition, the ground station's link and duty, the fleet's mesh. The sortie one runs on the safety monitor.
 
 14
-00:02:43.817 --> 00:02:56.157
+00:02:43.820 --> 00:02:56.162
 REQUIREMENT VIEW
 The six hazards this physical split adds, each satisfied by a component: fleet, the ground station, the recall transmitter, triage, the record store.
 
 15
-00:02:56.157 --> 00:03:11.550
+00:02:56.162 --> 00:03:14.223
 PARAMETRIC VIEW
-15 constraints: the budgets and two checks on estimates, each with its condition in the box. Select one and zoom in: fleetMemberCount ≤ 12, the fleet is not larger than the twelve the brief fixes.
+17 constraints: the budgets, two checks on estimates, and the two equations that derive the coverage estimates from PA's own values. Select one and zoom in: fleetMemberCount ≤ 12, the fleet is not larger than the twelve the brief fixes.
 
 16
-00:03:11.550 --> 00:03:22.961
+00:03:14.223 --> 00:03:25.259
 TREE VIEW
 What PA contains, one branch at a time. +N on a box opens what it owns: +4 on MissionComputerNode shows its four behaviour parts.
