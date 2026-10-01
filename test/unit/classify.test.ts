@@ -18,6 +18,7 @@ const knobs = (over: Partial<Knobs> = {}): Knobs => ({
 });
 
 const S10 = stepById('S10');
+const S41 = stepById('S41');
 
 describe('classification', () => {
   it('blocks text that did not parse, resolve or validate', () => {
@@ -83,5 +84,40 @@ describe('classification', () => {
     const item = itemFromDiagnostic({ severity: 'error', message: 'something' }, S10, knobs(), 'check');
     expect(item.code).toBe('uncoded');
     expect(item.blocking).toBe(false);
+  });
+  it('reports a target verdict and never blocks on it, while a violated constraint still blocks', () => {
+    // A missed target is a result of the comparison, not the fragment
+    // contradicting itself. A validation warning already reports; the code is
+    // pinned so that an error from Sysprose would report too.
+    for (const severity of ['info', 'warning', 'error'] as const) {
+      const c = classifyCode('validation/target-by-specialisation', severity, S41, knobs());
+      expect(c.blocking, severity).toBe(false);
+    }
+    expect(classifyCode('validation/target-by-specialisation', 'warning', S41, knobs()).reason).toContain('a result, not a defect');
+    expect(classifyCode('validation/constraint-violation', 'warning', S41, knobs()).blocking).toBe(true);
+  });
+
+  it('notes that a target verdict is a result, and a miss on a placeholder reads as one', () => {
+    const verdict = (elementName: string, severity = 'warning') =>
+      itemFromDiagnostic(
+        { code: 'validation/target-by-specialisation', severity, message: `areaUnderWatchTarget: violated for LA (${elementName.split('::').pop()} = 0.5)`, elementName },
+        S41,
+        knobs(),
+        'check',
+        new Set(['coverageUnderMeshJammingFraction', 'unattendedWatchDurationHours']),
+      );
+    const customer = verdict('Swarm::LA::areaUnderWatchFraction');
+    expect(customer.blocking).toBe(false);
+    expect(customer.hint).toContain('a result of the comparison, not a defect');
+    expect(customer.hint).toContain('Do not change an estimate to meet it');
+    expect(customer.message).not.toContain('placeholder');
+
+    const placeholder = verdict('Swarm::PA::coverageUnderMeshJammingFraction');
+    expect(placeholder.message).toContain('missed a placeholder');
+    expect(placeholder.hint).toContain("not the customer's number yet");
+    // A target SEED set where the brief gave none is read the same way.
+    expect(verdict('Swarm::PA::unattendedWatchDurationHours').message).toContain('missed a placeholder');
+    // An info is a target met or undecided: nothing was missed.
+    expect(verdict('Swarm::PA::coverageUnderMeshJammingFraction', 'info').message).not.toContain('missed');
   });
 });

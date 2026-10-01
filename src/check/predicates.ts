@@ -39,7 +39,7 @@ export interface BriefFacts {
   aliases: string[];
   moes: string[];
   /** The measures with what the brief said about each, for checks that need the numbers. */
-  measures?: { name: string; sense?: string; target?: number | null; unit?: string; doc?: string }[];
+  measures?: { name: string; sense?: string; target?: number | null; unit?: string; doc?: string; placeholder?: boolean; setBySeed?: boolean }[];
   /** The numbers the brief fixes, by name — `fleetSize`, the duty cycle, the area. */
   budgets?: Record<string, number>;
   /** The capabilities the brief named, which the operational analysis has to carry. */
@@ -648,6 +648,126 @@ const moeEstimated: Predicate = (input) => {
       return fail(`\`${name}\` has no value and nothing fixes it to one. Derive it — restate the numbers the brief fixes as attributes of this layer and write \`assert constraint { ${name} == <expression over them> }\` — or give it the worst case this architecture delivers: ${line}.`);
     if (!input.tags.has(qn, 'Estimate')) return fail(`\`${name}\` is not tagged. Write \`#Estimate attribute ${name}\` — the tag is how the trade-off and the audit find it.`);
     return [];
+  });
+};
+
+/** One layer's estimate of a measure, as `moe.carriedEstimate` compares two. */
+export interface EstimateSide {
+  /** The worst case, when the solver gives one. */
+  value?: number;
+  /** Fixed by an `assert constraint` over the layer's values, rather than stated (CV-17). */
+  derived: boolean;
+  /** The `#Estimate`'s doc: what the author says the number rests on. */
+  basis?: string;
+  /** For a derived estimate: each name its defining equation reads, and its value in that layer. */
+  inputs?: Record<string, number | undefined>;
+}
+
+/** The layer above's estimates beside this layer's, by measure: `payloads.carried`. */
+export interface CarriedEstimates {
+  above: Layer;
+  measures: Record<string, { above?: EstimateSide; here?: EstimateSide }>;
+}
+
+/**
+ * Relative difference under which two layers' estimates are the same number.
+ * Rounding, not design: v9's LA wrote 0.782 x 0.75 = 0.5866 as 0.58, 1.2% off.
+ */
+export const CARRIED_TOLERANCE = 0.02;
+
+const relativeGap = (a: number, b: number): number => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1e-12);
+
+/** `0.5 at LA, 0.25 at PA` — the inputs of two derived estimates whose values differ, or exist on one side only. */
+export function differingInputs(above: EstimateSide, here: EstimateSide): Array<{ name: string; above?: number; here?: number; readAbove: boolean; readHere: boolean }> {
+  const a = above.inputs ?? {};
+  const h = here.inputs ?? {};
+  const names = [...new Set([...Object.keys(a), ...Object.keys(h)])];
+  return names
+    .filter((n) => {
+      const x = a[n];
+      const y = h[n];
+      if (!(n in a) || !(n in h)) return true;
+      if (x === undefined || y === undefined) return x !== y;
+      return relativeGap(x, y) > 1e-9;
+    })
+    .map((n) => ({ name: n, above: a[n], here: h[n], readAbove: n in a, readHere: n in h }));
+}
+
+/**
+ * A measure whose estimate moved between the layer above and this one.
+ *
+ * Every other gate is per layer, and a literal satisfies all of them. v9's PA
+ * stated coverage under jamming as 0.68 against LA's 0.58 — the same template,
+ * one input changed (a hand-over lost 0.25 of the time, not 0.5) on the
+ * strength of a second confirming neighbour no PA element models — and no
+ * check, review or audit asked why the two layers differ. The author saw LA's
+ * number in its context; nothing asked it to account for the change.
+ *
+ * Reported, never blocking: a physical architecture may well know better than
+ * the logical one (v9's alert rate fell from 24 to 20 because PA caps it), and
+ * the layer above may be the one that is wrong (v9's LA rounded 40/60 h up to
+ * 0.7). So there is no exemption either — a derived estimate whose inputs
+ * differ is listed with the inputs that moved, because an input is as easy to
+ * assert as a literal, and the reviewer at the trade-off is who decides.
+ */
+const moeCarriedEstimate: Predicate = (input) => {
+  const carried = input.payloads.carried as CarriedEstimates | undefined;
+  if (!carried || !input.layer) return [];
+  const layer = input.layer;
+  const above = carried.above;
+  const fmt = (n: number | undefined): string => (n === undefined ? 'no value' : String(Number(n.toPrecision(6))));
+  const basis = (side: EstimateSide): string =>
+    side.basis ? `«${side.basis.replace(/\s+/g, ' ').trim()}»` : '(no basis in its doc)';
+  return (input.brief?.moes ?? []).flatMap((name) => {
+    const pair = carried.measures[name];
+    const a = pair?.above;
+    const h = pair?.here;
+    if (a?.value === undefined || h?.value === undefined) return [];
+    const gap = relativeGap(a.value, h.value);
+    if (gap <= CARRIED_TOLERANCE) return [];
+    const how = (side: EstimateSide): string => (side.derived ? 'derived' : 'stated');
+    let inputs = '';
+    // An equation not read, or an input with no value on either side (a
+    // feature chain such as `fleet.size` reads as `fleet`), is said as such:
+    // "the same inputs" is claimed only of inputs actually compared.
+    const unread = (l: Layer, side: EstimateSide): string[] => (side.inputs ? [] : [`the equation at ${l} could not be read`]);
+    const readFrom = (l: Layer, side: EstimateSide): string =>
+      `${l} derives it from ${Object.entries(side.inputs ?? {}).map(([n, v]) => `\`${n}\` ${fmt(v)}`).join(', ')}`;
+    if (a.derived && h.derived) {
+      const said: string[] = [...unread(above, a), ...unread(layer, h)];
+      if (a.inputs && h.inputs) {
+        const moved = differingInputs(a, h);
+        const blank = Object.keys(a.inputs).filter((n) => n in h.inputs! && a.inputs![n] === undefined && h.inputs![n] === undefined);
+        if (moved.length > 0)
+          said.push(`the inputs that differ: ${moved.map((x) => `\`${x.name}\` ${x.readAbove ? `${fmt(x.above)} at ${above}` : `not read at ${above}`}, ${x.readHere ? `${fmt(x.here)} at ${layer}` : `not read at ${layer}`}`).join('; ')}`);
+        if (blank.length > 0) said.push(`${blank.map((n) => `\`${n}\``).join(', ')} ${blank.length === 1 ? 'has' : 'have'} no value to compare at either layer`);
+        if (moved.length === 0 && blank.length === 0) said.push('every input the two equations read has the same value: the equations differ');
+      } else {
+        const readable = a.inputs ? ([above, a] as const) : h.inputs ? ([layer, h] as const) : undefined;
+        if (readable && Object.keys(readable[1].inputs!).length > 0) said.push(readFrom(readable[0], readable[1]));
+        said.push('which input moved is not known');
+      }
+      inputs = ` Both are derived; ${said.join('; ')}.`;
+    } else if (a.derived !== h.derived) {
+      // What the derived side rests on, since the other has only its doc.
+      const [l, side] = a.derived ? [above, a] : [layer, h];
+      if (!side.inputs) inputs = ` ${unread(l, side)[0].replace(/^t/, 'T')}.`;
+      else if (Object.keys(side.inputs).length > 0) inputs = ` ${readFrom(l, side)}.`;
+    }
+    return [
+      item({
+        code: 'moe.carriedEstimate',
+        severity: 'warning',
+        blocking: false,
+        cv: 'CV-17',
+        qualifiedName: `${input.root}::${layer}::${name}`,
+        message:
+          `\`${name}\` is ${fmt(h.value)} at ${layer} (${how(h)}) and ${fmt(a.value)} at ${above} (${how(a)}), ` +
+          `${Math.round(gap * 100)}% apart.${inputs} ${above}'s basis: ${basis(a)} ${layer}'s basis: ${basis(h)} ` +
+          `In ${layer}'s basis, say whether ${above}'s estimate was wrong, or which element modelled at ${layer} changes it. ` +
+          'Reported, not blocking: the reviewer of the trade-off reads it.',
+      }),
+    ];
   });
 };
 
@@ -1663,6 +1783,7 @@ export const PREDICATES: Record<PredicateId, Predicate> = {
   'moe.estimated': moeEstimated,
   'moe.dutyCycleBound': moeDutyCycleBound,
   'moe.transitBudget': moeTransitBudget,
+  'moe.carriedEstimate': moeCarriedEstimate,
   'requirements.hazardsByComponent': requirementsHazardsByComponent,
   'hazards.fromBrief': hazardsFromBrief,
   'hazards.notRestated': hazardsNotRestated,

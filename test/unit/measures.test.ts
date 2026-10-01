@@ -3,7 +3,7 @@
  * worst case, and the score counts what was decided.
  */
 import { describe, expect, it } from 'vitest';
-import { boundText, isDecided, meets, worstCaseSense } from '../../src/spec/measures.ts';
+import { boundText, isDecided, isProvisional, meets, worstCaseSense } from '../../src/spec/measures.ts';
 import { moeScore } from '../../src/agents/evaluate.ts';
 
 const coverage = { sense: 'max' as const, target: 0.95, unit: '' };
@@ -13,6 +13,19 @@ describe('measures', () => {
   it('renders a target as its bound, never the bare sense word', () => {
     expect(boundText(coverage)).toBe('≥ 0.95');
     expect(boundText(latency)).toBe('≤ 10 s');
+  });
+
+  it('renders a test condition as the value it is held to, whatever its sense', () => {
+    // v9's "half the links jammed" was a budget with sense max, written `>= 0.5`:
+    // at least half, whose mildest case is the one the estimates were taken at.
+    expect(boundText({ sense: 'max', target: 0.5, condition: true })).toBe('= 0.5');
+    expect(boundText({ sense: 'max', target: 10, unit: 'min', condition: true })).toBe('= 10 min');
+  });
+
+  it('reads a placeholder and a target SEED set as not the customer\'s', () => {
+    expect(isProvisional({ placeholder: true })).toBe(true);
+    expect(isProvisional({ setBySeed: true })).toBe(true);
+    expect(isProvisional({ placeholder: false })).toBe(false);
   });
 
   it('asks for the worst case: the least coverage, the most latency', () => {

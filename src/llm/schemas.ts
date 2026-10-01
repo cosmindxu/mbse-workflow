@@ -22,6 +22,14 @@ export const MoeSchema = z.object({
     .enum(['measure', 'budget'])
     .optional()
     .describe('"budget" when the brief FIXES the number (a fleet it can field, a time an operator has): held as a requirement, never scored; "measure" (the default) when architectures can do better or worse on it'),
+  condition: z
+    .boolean()
+    .optional()
+    .describe('true for a budget that is the CONDITION a measure is taken under (half the links jammed, ten minutes without satellite positioning), not a ceiling or a floor: its requirement holds it equal to the number, `<name> == <target>`, and `sense` does not apply'),
+  setBySeed: z
+    .boolean()
+    .optional()
+    .describe('true when the brief states no number for this measure and the target is one you set: every report marks it as not the customer\'s'),
 });
 
 /**

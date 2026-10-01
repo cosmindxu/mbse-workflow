@@ -63,6 +63,8 @@ export interface MeasureRow {
   metByAll?: string;
   /** The brief marks the target as a placeholder, not the customer's number. */
   placeholder?: boolean;
+  /** The brief gave no number and SEED set this target: not the customer's either. */
+  setBySeed?: boolean;
 }
 
 /**
@@ -255,7 +257,7 @@ export async function writeFinalAudit(ctx: AgentContext, verdict: Verdict): Prom
                   reports.push(await worstCase(async (sense) => read(sense === worstCaseSense(moe.sense) ? worstFile : otherFile), moe.sense));
                 }
               }
-              rows.push({ name: moe.name, target: boundText(moe), layers, unreachable: unreachableTarget(moe, reports), metByAll: metByEveryAlternative(moe, reports), placeholder: moe.placeholder === true });
+              rows.push({ name: moe.name, target: boundText(moe), layers, unreachable: unreachableTarget(moe, reports), metByAll: metByEveryAlternative(moe, reports), placeholder: moe.placeholder === true, setBySeed: moe.setBySeed === true });
             }
             return rows;
           })
@@ -514,8 +516,13 @@ export function behaviourMarkdown(audit: Pick<FinalAudit, 'behaviour' | 'faultTr
 }
 
 export function measuresMarkdown(rows: MeasureRow[]): string[] {
-  const cell = (x: MeasureRow['layers'][number] | undefined): string =>
-    x ? `${x.estimate}${x.met === undefined ? '' : x.met ? ' ✓' : ' ✗'}` : '—';
+  // A miss against a number nobody has asked for yet is not a failure of the
+  // design: v9's audit showed `0.66 h ✗` against a 12 h target whose own doc
+  // says no architecture should be failed on it.
+  const provisional = (r: MeasureRow): boolean => r.placeholder === true || r.setBySeed === true;
+  const cell = (r: MeasureRow, x: MeasureRow['layers'][number] | undefined): string =>
+    x ? `${x.estimate}${x.met === undefined ? '' : x.met ? ' ✓' : provisional(r) ? ' — missed a placeholder' : ' ✗'}` : '—';
+  const marked = (r: MeasureRow): string => `${r.target}${r.placeholder ? ' (placeholder)' : r.setBySeed ? ' (set by SEED)' : ''}`;
   return [
     '## Measures',
     '',
@@ -523,7 +530,7 @@ export function measuresMarkdown(rows: MeasureRow[]): string[] {
     '',
     '| Measure | Target | LA | PA |',
     '|---|---|---|---|',
-    ...rows.map((r) => `| \`${r.name}\` | ${r.target}${r.placeholder ? ' (placeholder)' : ''} | ${cell(r.layers.find((x) => x.layer === 'LA'))} | ${cell(r.layers.find((x) => x.layer === 'PA'))} |`),
+    ...rows.map((r) => `| \`${r.name}\` | ${marked(r)} | ${cell(r, r.layers.find((x) => x.layer === 'LA'))} | ${cell(r, r.layers.find((x) => x.layer === 'PA'))} |`),
     '',
     ...(rows.some((r) => r.unreachable)
       ? [
@@ -531,7 +538,7 @@ export function measuresMarkdown(rows: MeasureRow[]): string[] {
           '',
           'Every alternative at every layer missed the target. That is a question about the target or the brief — revisit the number, or what the brief fixes (a fleet size, a duty cycle) — not a reason to prefer one design.',
           '',
-          ...rows.filter((r) => r.unreachable).map((r) => `- \`${r.name}\` ${r.target}: missed by ${r.unreachable} alternatives`),
+          ...rows.filter((r) => r.unreachable).map((r) => `- \`${r.name}\` ${marked(r)}: missed by ${r.unreachable} alternatives`),
           '',
         ]
       : []),
@@ -541,12 +548,15 @@ export function measuresMarkdown(rows: MeasureRow[]): string[] {
           '',
           `They added the same to every alternative's score, so the choice was made by the rest${rows.every((r) => r.metByAll) ? ' — and here that is every measure: the measures decided nothing' : ''}. A target nobody misses is a question about the target: is it the customer's?`,
           '',
-          ...rows.filter((r) => r.metByAll).map((r) => `- \`${r.name}\` ${r.target}${r.placeholder ? ' (placeholder)' : ''}: met by ${r.metByAll} alternatives`),
+          ...rows.filter((r) => r.metByAll).map((r) => `- \`${r.name}\` ${marked(r)}: met by ${r.metByAll} alternatives`),
           '',
         ]
       : []),
     ...(rows.some((r) => r.placeholder)
-      ? [`${rows.filter((r) => r.placeholder).length} of these ${rows.length} targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more.`, '']
+      ? [`${rows.filter((r) => r.placeholder).length} of these ${rows.length} targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more, and a miss is a number to take to the customer, not a failure of the design.`, '']
+      : []),
+    ...(rows.some((r) => r.setBySeed)
+      ? [`${rows.filter((r) => r.setBySeed).map((r) => `\`${r.name}\``).join(', ')}: the brief gave no number, and SEED set the target. Read a miss against it as a placeholder miss, a number to take to the customer.`, '']
       : []),
   ];
 }

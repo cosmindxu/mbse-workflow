@@ -29,6 +29,22 @@ export const KNOB_CONDITIONAL: Record<string, KnobId> = {
   'validation/dangling-endpoint': 'interfaces',
 };
 
+/**
+ * Codes that report and never block, whatever their family and severity.
+ *
+ * `validation/target-by-specialisation` is Sysprose holding a target written
+ * in Common against each layer's estimate of its measure: one verdict per
+ * layer. A miss is a result of the trade-off — the final audit's "No
+ * architecture compared meets these" — not the fragment contradicting itself,
+ * and a repair round spent on it can only raise an estimate to meet the
+ * target, which is the one answer CV-17 forbids. It is a `validation/*` code,
+ * which blocks on an error; this keeps it reported if Sysprose ever raises one.
+ */
+export const REPORTED_ONLY: ReadonlySet<string> = new Set(['validation/target-by-specialisation']);
+
+/** The target-verdict code, named once: the repair prompt keeps it out of the repair list. */
+export const TARGET_VERDICT = 'validation/target-by-specialisation';
+
 export interface CodeNote {
   /** The convention that answers it. */
   cv?: string;
@@ -76,6 +92,10 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   'validation/constraint-violation': {
     cv: 'CV-17',
     note: "This layer's own values violate the constraint. If it fixes an `#Estimate`, do not also state the estimate as a literal: make the `#Estimate` valueless and let the `assert constraint` derive it from this layer's values (CV-17). Otherwise correct the value that contradicts its documented basis.",
+  },
+  'validation/target-by-specialisation': {
+    cv: 'CV-17',
+    note: "A target held against this layer's estimate of its measure: a verdict, per layer, on the brief's target — a result of the comparison, not a defect in the fragment. Do not change an estimate to meet it; an estimate is the worst case this design delivers, with its basis in the doc. A target no architecture meets is a question for whoever set it.",
   },
   'ref/unresolved-reference': {
     cv: 'CV-01',
@@ -139,3 +159,15 @@ export const CODE_NOTES: Record<string, CodeNote> = {
 };
 
 export const noteFor = (code: string): CodeNote | undefined => CODE_NOTES[code];
+
+/**
+ * The note for a target verdict on a measure whose target is not the
+ * customer's: a placeholder the brief marks, or one SEED set where the brief
+ * gave no number. Missing it is "missed a placeholder" — something to take to
+ * the customer — and no architecture should be failed on it (v9's
+ * `unattendedWatchDurationHours` says so in its own doc).
+ */
+export const PLACEHOLDER_MISS_NOTE: CodeNote = {
+  cv: 'CV-17',
+  note: "Missed a placeholder: this target is not the customer's number yet (a placeholder in the brief, or one SEED set where the brief gave none). It is reported so the number is revisited with the customer — not a failure of this design, and never a reason to change an estimate.",
+};

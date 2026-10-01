@@ -23,3 +23,11 @@ describe('a placeholder target', () => {
     expect(targetSource(20, 'at most 20 alerts per hour', true)).toBe('placeholder in the brief');
   });
 });
+
+describe('a target SEED set', () => {
+  it('is marked as SEED\'s even when the number happens to appear in the brief', () => {
+    // v9: the 12 h unattended watch matched "12" drones in the brief text.
+    expect(targetSource(12, 'twelve drones, 12 of them', false, true)).toBe('set by SEED');
+    expect(targetSource(12, 'twelve drones, 12 of them')).toBe('brief');
+  });
+});

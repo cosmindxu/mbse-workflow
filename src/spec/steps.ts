@@ -99,6 +99,7 @@ export type PredicateId =
   | 'moe.estimated'
   | 'moe.dutyCycleBound'
   | 'moe.transitBudget'
+  | 'moe.carriedEstimate'
   | 'requirements.hazardsByComponent'
   | 'hazards.fromBrief'
   | 'hazards.notRestated'
@@ -487,7 +488,7 @@ export const STEPS: readonly StepSpec[] = [
     ],
     checks: [
       check(),
-      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'functions.coordination', 'functions.c2', 'pa.bearer', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'rules.carried', 'rules.hold'] },
+      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'functions.coordination', 'functions.c2', 'pa.bearer', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'moe.carriedEstimate', 'rules.carried', 'rules.hold'] },
       { name: 'connectivity', cmd: 'connectivity', blocking: { knob: 'interfaces' }, predicates: ['connectivity.layerPorts'] },
       {
         name: 'trace-trace',

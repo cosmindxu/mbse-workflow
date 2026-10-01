@@ -61,7 +61,7 @@ export function briefSection(brief: SeedOutput): string {
     ...brief.capabilities.map((c) => `- \`${c.name}\` — ${c.doc}`),
     '',
     '**Measures of effectiveness** (the architectures are scored on these)',
-    ...brief.moes.map((m) => `- \`${m.name}\` (${m.kind === 'budget' ? `budget ${boundText(m)} — fixed by the brief, held by its requirement, not estimated or scored` : `target ${boundText(m)}`}) — ${m.doc}`),
+    ...brief.moes.map((m) => `- \`${m.name}\` (${m.kind === 'budget' ? `${m.condition ? 'test condition' : 'budget'} ${boundText(m)} — fixed by the brief, held by its requirement, not estimated or scored` : `target ${boundText(m)}`}) — ${m.doc}`),
     '',
     `**Operational entity the system takes over**: \`${brief.systemEntity}\` — declare its part under exactly this name, untagged.`,
     ...populationLines(brief),

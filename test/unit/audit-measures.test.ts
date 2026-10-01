@@ -47,3 +47,31 @@ describe('targets nobody misses, and placeholder targets', () => {
     expect(md).toContain('1 of these 1 targets are placeholders');
   });
 });
+
+describe('a miss on a target that is not the customer\'s', () => {
+  it('reads "missed a placeholder", not a plain failure, and a customer target still reads ✗', () => {
+    const md = measuresMarkdown([
+      { name: 'coverageUnderMeshJammingFraction', target: '≥ 0.75', layers: [{ layer: 'LA', estimate: '0.58', met: false }, { layer: 'PA', estimate: '0.58', met: false }], placeholder: true },
+      // The brief gave no number; SEED set 12 h, and its own doc says no
+      // architecture should be failed on it.
+      { name: 'unattendedWatchDurationHours', target: '≥ 12 h', layers: [{ layer: 'LA', estimate: '0.66 h', met: false }], setBySeed: true },
+      { name: 'areaUnderWatchFraction', target: '≥ 0.9', layers: [{ layer: 'LA', estimate: '0.78216 (derived)', met: false }] },
+    ]).join('\n');
+    expect(md).toContain('| `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.58 — missed a placeholder | 0.58 — missed a placeholder |');
+    expect(md).toContain('| `unattendedWatchDurationHours` | ≥ 12 h (set by SEED) | 0.66 h — missed a placeholder | — |');
+    expect(md).toContain('| `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | — |');
+    expect(md).toContain('a miss is a number to take to the customer, not a failure of the design');
+    expect(md).toContain('`unattendedWatchDurationHours`: the brief gave no number, and SEED set the target');
+    // Presentation only: the S33/S42 score still counts the miss, so the audit
+    // does not say no architecture was failed on it.
+    expect(md).toContain('Read a miss against it as a placeholder miss, a number to take to the customer.');
+    expect(md).not.toContain('no architecture is failed');
+  });
+
+  it('marks a placeholder in the list of targets nobody met', () => {
+    const md = measuresMarkdown([
+      { name: 'missedDetectionFraction', target: '≤ 0.1', layers: [{ layer: 'LA', estimate: '0.12', met: false }], unreachable: '4/4', placeholder: true },
+    ]).join('\n');
+    expect(md).toContain('- `missedDetectionFraction` ≤ 0.1 (placeholder): missed by 4/4 alternatives');
+  });
+});

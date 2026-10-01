@@ -11,11 +11,12 @@
  *   1. a code the design ties to a knob (an unreachable mode blocks while
  *      modes_states is on, and is a note when it is off),
  *   2. a code this step's design names as its failure,
- *   3. the family: text that did not lex, parse, map, resolve or validate is a
+ *   3. a code that only ever reports (`REPORTED_ONLY`: a target's verdict),
+ *   4. the family: text that did not lex, parse, map, resolve or validate is a
  *      finding about the fragment; verification outcomes are not,
- *   4. severity: warnings and infos report.
+ *   5. severity: warnings and infos report.
  */
-import { BLOCKING_FAMILIES, KNOB_CONDITIONAL, familyOf, noteFor } from '../spec/codes.ts';
+import { BLOCKING_FAMILIES, KNOB_CONDITIONAL, PLACEHOLDER_MISS_NOTE, REPORTED_ONLY, TARGET_VERDICT, familyOf, noteFor } from '../spec/codes.ts';
 import type { KnobId, StepSpec } from '../spec/steps.ts';
 import type { Layer } from '../spec/layers.ts';
 
@@ -70,6 +71,9 @@ export function classifyCode(code: string, severity: Severity, step: StepSpec, k
   if (step.failCodes.includes(code)) {
     return { blocking: true, reason: `${code} is a declared failure of ${step.id}` };
   }
+  if (REPORTED_ONLY.has(code)) {
+    return { blocking: false, reason: `${code} is a verdict on a target, reported: a missed target is a result, not a defect` };
+  }
   const family = familyOf(code);
   // Two warnings that are findings about the fragment, not about the world.
   // Sysprose reports an unresolved reference as a warning, so the family rule
@@ -104,16 +108,21 @@ export function itemFromDiagnostic(
   step: StepSpec,
   knobs: Knobs,
   check: string,
+  /** Measures whose target is not the customer's (placeholder, or set by SEED). */
+  provisional: ReadonlySet<string> = new Set(),
 ): RepairItem {
   const code = d.code ?? 'uncoded';
   const severity = (d.severity as Severity) ?? 'error';
   const { blocking } = classifyCode(code, severity, step, knobs);
-  const note = noteFor(code);
+  // A miss on a target nobody has asked for yet reads as what it is. An info
+  // is a target met (or undecided), and needs no such words.
+  const placeholder = code === TARGET_VERDICT && severity !== 'info' && namesMeasure(d, provisional);
+  const note = placeholder ? PLACEHOLDER_MISS_NOTE : noteFor(code);
   return {
     source: 'diagnostic',
     code,
     severity,
-    message: d.message,
+    message: placeholder ? `${d.message} — missed a placeholder, not the customer's number` : d.message,
     hint: note?.note ?? d.hint,
     cv: note?.cv,
     qualifiedName: d.elementName,
@@ -121,4 +130,17 @@ export function itemFromDiagnostic(
     blocking,
     check,
   };
+}
+
+/**
+ * Whether a diagnostic is about one of `measures`: the element it is anchored
+ * at, or a measure named as a word in its message. Sysprose anchors a target
+ * verdict at the layer's estimate (`Root::LA::<measure>`) and names the Common
+ * target in the message; either is enough.
+ */
+function namesMeasure(d: { message: string; elementName?: string }, measures: ReadonlySet<string>): boolean {
+  if (measures.size === 0) return false;
+  const anchored = d.elementName?.split('::').pop();
+  if (anchored && measures.has(anchored)) return true;
+  return [...measures].some((m) => new RegExp(`\\b${m}\\b`).test(d.message));
 }

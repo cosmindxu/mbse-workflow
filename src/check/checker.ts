@@ -17,12 +17,13 @@ import { assemble, toFragmentLine, writeBuild, type Assembly } from '../model/as
 import { matchingBrace, packageBody } from '../model/statements.ts';
 import type { ModelLayout } from '../model/layout.ts';
 import type { SysproseBackend, Loaded } from '../sysprose/backend.ts';
-import { AUTHORED_LAYERS, LAYERS, layerIndex, type Layer } from '../spec/layers.ts';
+import { AUTHORED_LAYERS, LAYERS, layerIndex, previousAuthoredLayer, type Layer } from '../spec/layers.ts';
 import { checkCommand, isBlocking, type CheckSpec, type StepSpec } from '../spec/steps.ts';
 import { carriersIn, ruleNameOf, sameFields, type RuleRow } from '../spec/rules.ts';
 import { itemFromDiagnostic, type Knobs, type RepairItem } from './classify.ts';
-import { PREDICATES, type BriefFacts, type PayloadBag } from './predicates.ts';
+import { PREDICATES, type BriefFacts, type CarriedEstimates, type EstimateSide, type PayloadBag } from './predicates.ts';
 import type { ElementRow } from '../sysprose/types.ts';
+import { definingExpression, expressionNames, isProvisional } from '../spec/measures.ts';
 
 export interface CheckContext {
   backend: SysproseBackend;
@@ -116,6 +117,15 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
         }
       }
       payloads.estimates = estimates;
+    }
+
+    // The layer above's estimate beside this one's, for moe.carriedEstimate.
+    // The layer above is already in this model — the prefix holds it — so this
+    // is more solver calls, not another load.
+    const above = step.layer ? previousAuthoredLayer(step.layer) : undefined;
+    const wantsCarried = step.checks.some((c) => c.predicates?.includes('moe.carriedEstimate'));
+    if (wantsCarried && above && measures.length > 0 && step.layer && m.report.summary.errors === 0) {
+      payloads.carried = await carriedEstimates(ctx, m, payloads.elements as ElementRow[], step.layer, above);
     }
 
     // The rules each machine of this layer carries, checked, for rules.carried
@@ -235,8 +245,9 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
   // Diagnostics attach to the `check` outcome, or to a synthetic one when the
   // step does not run `check` itself — a finding is never dropped for want of
   // somewhere to put it.
+  const provisional = new Set((ctx.brief?.measures ?? []).filter(isProvisional).map((m) => m.name));
   const diagnosticItems = result.report.diagnostics.map((d) =>
-    itemFromDiagnostic(d, step, ctx.knobs, 'check'),
+    itemFromDiagnostic(d, step, ctx.knobs, 'check', provisional),
   );
   const checkOutcome = outcomes.find((o) => o.cmd === 'check');
   if (checkOutcome) {
@@ -269,6 +280,57 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
     loaded: true,
     elementCount: result.elementCount,
   };
+}
+
+/**
+ * Each measure's estimate at `layer` and at the layer above, with its basis and,
+ * when it is derived, the value of every name its equation reads in that
+ * layer. Literal means the `#Estimate` carries a number; derived means it has
+ * none and the solver fixes it to one point (as moe.estimated accepts it).
+ */
+async function carriedEstimates(ctx: CheckContext, m: Loaded, elements: ElementRow[], layer: Layer, above: Layer): Promise<CarriedEstimates> {
+  const root = ctx.layout.root;
+  const rows = new Map(elements.map((e) => [e.qualifiedName, e]));
+  const literal = (row: ElementRow | undefined): number | undefined =>
+    row && /^-?\d+(\.\d+)?(e-?\d+)?$/i.test(row.value.trim()) ? Number(row.value.trim()) : undefined;
+  // One point both ways, or nothing: a value the solver will not pin is not
+  // one to compare.
+  const point = async (qn: string): Promise<number | undefined> => {
+    try {
+      const lo = (await ctx.backend.bounds(m, qn, 'min')).bounds[0]?.value ?? undefined;
+      const hi = (await ctx.backend.bounds(m, qn, 'max')).bounds[0]?.value ?? undefined;
+      if (lo === undefined || hi === undefined) return undefined;
+      return Math.abs(lo - hi) <= 1e-9 * Math.max(1, Math.abs(lo)) ? lo : undefined;
+    } catch {
+      return undefined;
+    }
+  };
+  const valueOf = async (l: Layer, name: string): Promise<number | undefined> => {
+    const qn = `${root}::${l}::${name}`;
+    const row = rows.get(qn);
+    if (!row) return undefined;
+    return literal(row) ?? point(qn);
+  };
+  const text = (l: Layer): string => packageBody(m.text, l)?.body ?? '';
+  const side = async (l: Layer, name: string): Promise<EstimateSide | undefined> => {
+    const qn = `${root}::${l}::${name}`;
+    const row = rows.get(qn);
+    if (!row || row.metaclass !== 'AttributeUsage') return undefined;
+    const stated = literal(row);
+    if (stated !== undefined) return { value: stated, derived: false, basis: row.doc || undefined };
+    const value = await point(qn);
+    const expr = definingExpression(text(l), name);
+    const inputs: Record<string, number | undefined> = {};
+    if (expr) for (const input of expressionNames(expr)) inputs[input] = await valueOf(l, input);
+    return { value, derived: value !== undefined, basis: row.doc || undefined, inputs: expr ? inputs : undefined };
+  };
+  const out: CarriedEstimates = { above, measures: {} };
+  for (const name of ctx.brief?.moes ?? []) {
+    const here = await side(layer, name);
+    const before = await side(above, name);
+    if (here || before) out.measures[name] = { above: before, here };
+  }
+  return out;
 }
 
 /**

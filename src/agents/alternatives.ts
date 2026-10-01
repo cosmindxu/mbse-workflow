@@ -151,7 +151,7 @@ export async function authorAlternatives(
           // this dialect reports as incompatible. Connections stay in the layer.
           'Connections stay inside this layer: between your components, and between a component and an actor part of this layer. Never connect to a port of the layer above (`SA::system::…`): that is a delegation, and it is expressed by the allocation and the trace, not by a connection. A connection joins an `out` port to an `in` port.',
           ...(population ? populationGuidance(k, layer, population, coordinationNames, c2Names) : []),
-          ...estimateGuidance(scoredMoes(ctx.state.brief?.moes ?? [])),
+          ...estimateGuidance(scoredMoes(ctx.state.brief?.moes ?? []), layer),
           ...briefFixedGuidance(ctx.state.brief, population !== undefined),
           ...(hazardNames.length > 0
             ? [
@@ -248,10 +248,24 @@ export function indent(section: string): string {
  * and its basis, and says that a restated target is not an estimate. The
  * evaluator sees both alternatives' bases side by side.
  */
-export function estimateGuidance(moes: readonly Moe[]): string[] {
+export function estimateGuidance(moes: readonly Moe[], layer?: Layer): string[] {
   if (moes.length === 0) return [];
+  // Below LA the layer above has stated its own estimates, and the author sees
+  // them in its context. v9's PA read LA's 0.58 for coverage under jamming and
+  // wrote 0.68 on a mechanism no PA element models; nothing asked it to
+  // account for the change. Asked neutrally: the layer above can be the one
+  // that is wrong, and a rule that a change "must name a PA element" would
+  // anchor this layer to it.
+  const above = layer ? previousAuthoredLayer(layer) : undefined;
+  const carried =
+    above && layerIndex(above) >= layerIndex('LA')
+      ? [
+          `${above}, the layer above, states its own estimate and basis for each of these measures (listed under "What is in ${above}"). Where your value differs from ${above}'s, say in your basis why: whether ${above}'s estimate was wrong, or which element modelled at this layer changes it.`,
+        ]
+      : [];
   return [
     `State this architecture's estimate for each of the ${moes.length} measures of effectiveness. The measures and their targets: ${moes.map((m) => `\`${m.name}\` ${boundText(m)}`).join(', ')}. Where the brief fixes the numbers a measure follows from (fleet size, flight and recharge time, sectors), DERIVE it so the solver checks the arithmetic: restate those numbers as attributes of this layer — \`attribute dronesFielded : ScalarValues::Real = 12;\` (a constraint cannot read \`Common::\`; where the brief's number is itself one of the measures, its literal \`#Estimate\` is that input — declare it once, never beside a plain attribute of the same name) — then \`#Estimate attribute <measure> :> Common::<measure> { doc /* the basis */ }\` with no value and \`assert constraint { doc /* what it computes */ <measure> == <expression over those attributes> }\` — the doc is what a reviewer reads, and an undocumented constraint counts against the layer's doc coverage. Where nothing derives it, state the literal: \`${estimateLine('<measure>')}\`. Either way the value is the WORST case this design delivers, not the target restated, with its basis in the doc. An estimate that misses its target is a legitimate answer — the comparison is what it is for.`,
+    ...carried,
   ];
 }
 

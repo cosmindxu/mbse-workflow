@@ -248,7 +248,15 @@ its basis in the doc (CV-17, gated by `moe.estimated`). The evaluator bounds eac
 alternative's own estimate for its worst case and scores 1 per target met, 0 per
 miss, ½ when undecided; the reports are kept in `audit/<step>/alt-<k>/`, and the final
 audit has a `## Measures` table. The estimates are the architectures' own claims, so
-the evaluating model is shown both bases side by side to challenge them.
+the evaluating model is shown both bases side by side to challenge them — and, at
+PA, LA's chosen estimate and basis beside them. A PA estimate that differs from
+LA's by more than rounding (2%) is reported, never blocking, with both values,
+both bases and, when both are derived, the inputs that differ
+(`moe.carriedEstimate`); the PA author is asked to say whether LA was wrong or
+which PA element changes the number. A missed target is a result, not a defect:
+Sysprose's per-layer target verdict (`validation/target-by-specialisation`) is
+reported and never offered for repair, and a miss on a placeholder, or on a target
+SEED set where the brief gave none (`setBySeed`), reads "missed a placeholder".
 
 **What the brief fixes by name.** A brief can name hazards it already knows, the
 operating modes of its members, the fields its items carry, and rules the system
@@ -264,7 +272,10 @@ A rule is one of three kinds a model checker decides — wins until, preceded by
 always return. It is written as a `@SysproseVerification::PropertyPattern` whose doc
 names the rule. A rule some run breaks blocks the step with that run (`rules.hold`).
 A number the brief fixes rather than asks the design to achieve (the fleet it can
-field) is a `budget`: held by its requirement, never estimated or scored.
+field) is a `budget`: held by its requirement, never estimated or scored. A budget
+that is the condition a measure is taken under (half the links jammed) is marked
+`condition` and held equal, `== 0.5`: written `>= 0.5` it read "at least half",
+whose mildest case is the one the estimates were taken at.
 
 The **step table is not a setting**: a step's checks and post-conditions are the
 workflow itself and live in `src/spec/steps.ts`, drift-tested against the design.

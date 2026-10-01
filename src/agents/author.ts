@@ -22,6 +22,7 @@ import type { StepSpec } from '../spec/steps.ts';
 import { modelFor } from '../config/load.ts';
 import type { RepairItem } from '../check/classify.ts';
 import type { BriefFacts } from '../check/predicates.ts';
+import { TARGET_VERDICT } from '../spec/codes.ts';
 import { dedupePackage, matchingBrace } from '../model/statements.ts';
 import type { AgentContext } from './context.ts';
 
@@ -478,7 +479,7 @@ export function briefFactsOf(brief: SeedOutput): BriefFacts {
     // estimate against what the brief's own budgets allow.
     measures: brief.moes
       .filter((m) => m.kind !== 'budget')
-      .map((m) => ({ name: m.name, sense: m.sense, target: m.target, unit: m.unit, doc: m.doc })),
+      .map((m) => ({ name: m.name, sense: m.sense, target: m.target, unit: m.unit, doc: m.doc, placeholder: m.placeholder, setBySeed: m.setBySeed })),
     budgets: Object.fromEntries(
       brief.moes
         .filter((m) => m.kind === 'budget' && typeof m.target === 'number')
@@ -554,9 +555,13 @@ const familyRank = (code: string): number => {
   return at < 0 ? FAMILY_ORDER.length : at;
 };
 
-function repairPrompt(fragment: string, items: RepairItem[], guidance: string[] = []): string {
+export function repairPrompt(fragment: string, items: RepairItem[], guidance: string[] = []): string {
   const blocking = [...items.filter((i) => i.blocking)].sort((x, y) => familyRank(x.code) - familyRank(y.code));
-  const notes = items.filter((i) => !i.blocking);
+  // A target's verdict is not offered for repair: the only edit that answers a
+  // missed target is a better-looking estimate, which CV-17 forbids — and
+  // twelve of them would push every other note past the cap.
+  const verdicts = items.filter((i) => !i.blocking && i.code === TARGET_VERDICT);
+  const notes = items.filter((i) => !i.blocking && i.code !== TARGET_VERDICT);
   const parseFirst = blocking.some((i) => familyRank(i.code) <= 1);
   const lines = [
     '## What the checker found',
@@ -573,6 +578,12 @@ function repairPrompt(fragment: string, items: RepairItem[], guidance: string[] 
   ];
   if (notes.length > 0) {
     lines.push('', '## Also reported, not blocking', '', ...notes.slice(0, 20).map(describe));
+  }
+  if (verdicts.length > 0) {
+    lines.push(
+      '',
+      `${verdicts.length} target verdict(s) were also reported (\`${TARGET_VERDICT}\`). A missed target is a result: do not change an estimate to meet it.`,
+    );
   }
   if (guidance.length > 0) {
     lines.push('', '## What still holds for this answer', '', ...guidance.map((g) => `- ${g}`));

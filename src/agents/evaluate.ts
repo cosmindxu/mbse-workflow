@@ -18,9 +18,9 @@ import { resolve } from 'node:path';
 import { assemble } from '../model/assembler.ts';
 import { insertBeforeClose } from '../model/fragments.ts';
 import { matchingBrace } from '../model/statements.ts';
-import { EvaluateOutputSchema, type EvaluateOutput } from '../llm/schemas.ts';
+import { EvaluateOutputSchema, type EvaluateOutput, type Moe } from '../llm/schemas.ts';
 import { modelFor } from '../config/load.ts';
-import type { Layer } from '../spec/layers.ts';
+import { layerIndex, previousAuthoredLayer, type Layer } from '../spec/layers.ts';
 import type { StepSpec } from '../spec/steps.ts';
 import type { AgentContext } from './context.ts';
 import { replicaFacts } from '../check/replicas.ts';
@@ -79,6 +79,8 @@ export async function evaluateAlternatives(
     metrics.push(await measure(ctx, step.id, layer, candidate.k, candidate.iterations));
   }
 
+  const above = await chosenAbove(ctx, layer);
+
   const rubric = await ctx.llm.complete({
     tag: `${step.id}:EVALUATE`,
     system: [
@@ -92,7 +94,7 @@ export async function evaluateAlternatives(
         : []),
       'Be specific about which component you mean. A reviewer reads your rationale before they read the model.',
     ].join('\n'),
-    user: rubricPrompt(ctx, step, layer, metrics),
+    user: rubricPrompt(ctx, step, layer, metrics, above),
     schema: EvaluateOutputSchema,
     model: modelFor(ctx.config, 'EVALUATE'),
     timeoutMs: ctx.config.limits.llm_call_timeout_ms,
@@ -346,7 +348,7 @@ export function resilienceFor(rubric: EvaluateOutput, k: number): number {
 
 /* ─────────────────────────────── reporting ──────────────────────────────── */
 
-export function rubricPrompt(ctx: AgentContext, step: StepSpec, layer: Layer, metrics: AlternativeMetrics[]): string {
+export function rubricPrompt(ctx: AgentContext, step: StepSpec, layer: Layer, metrics: AlternativeMetrics[], above?: EstimatesAbove): string {
   const lines: string[] = [];
   // What a person said when they rejected this comparison. Their comment used
   // to be written into the layer's fragment, which this step then overwrote
@@ -381,26 +383,7 @@ export function rubricPrompt(ctx: AgentContext, step: StepSpec, layer: Layer, me
       '',
     );
   }
-  const moes = scoredMoes(ctx.state.brief?.moes ?? []);
-  if (moes.length > 0) {
-    lines.push('## The measures these are held to', '');
-    for (const moe of moes) lines.push(`- \`${moe.name}\`: target ${boundText(moe)} — ${moe.doc}`);
-    lines.push(
-      '',
-      '## What each alternative claims on them',
-      '',
-      'These are estimates the author of each architecture stated, with the basis it gave. The score counts targets met at face value; your job is to say where a basis does not hold up — an estimate its architecture cannot deliver should cost it in realisability.',
-      '',
-    );
-    for (const moe of moes) {
-      lines.push(`### \`${moe.name}\` (target ${boundText(moe)})`, '');
-      for (const m of metrics) {
-        const x = m.moes.find((y) => y.name === moe.name);
-        lines.push(`- alternative ${m.k}: ${estimateText(x)}${x?.basis ? ` — ${x.basis}` : ''}`);
-      }
-      lines.push('');
-    }
-  }
+  lines.push(...measureClaimsLines(scoredMoes(ctx.state.brief?.moes ?? []), metrics, above));
   const rules = ctx.state.brief?.rules ?? [];
   if (rules.length > 0)
     lines.push(
@@ -419,6 +402,91 @@ export function rubricPrompt(ctx: AgentContext, step: StepSpec, layer: Layer, me
 }
 
 /** `0.97`, or the outcome when there is no value to show. */
+/** The chosen architecture of the layer above: its estimate and basis for each measure. */
+export interface EstimatesAbove {
+  layer: Layer;
+  moes: Array<{ name: string; value?: number; outcome: string; unit?: string; basis?: string }>;
+}
+
+/**
+ * What the layer above settled on, read from its head — the chosen alternative,
+ * already copied over the layer's fragment. Only below LA: SA states no
+ * estimates. The S42 evaluator compared v9's PA alternatives (0.665 and 0.68
+ * for coverage under jamming) and never saw LA's 0.58 beside them.
+ */
+async function chosenAbove(ctx: AgentContext, layer: Layer): Promise<EstimatesAbove | undefined> {
+  const above = previousAuthoredLayer(layer);
+  const moeSpecs = scoredMoes(ctx.state.brief?.moes ?? []);
+  if (!above || layerIndex(above) < layerIndex('LA') || moeSpecs.length === 0) return undefined;
+  try {
+    const assembly = assemble(ctx.layout, above);
+    if (!assembly.layers.includes(above)) return undefined;
+    return await ctx.backend.withModel(assembly.text, `above-${above}`, async (m) => {
+      const elements = ctx.backend.elements(m);
+      const moes: EstimatesAbove['moes'] = [];
+      for (const moe of moeSpecs) {
+        const name = `${ctx.layout.root}::${above}::${moe.name}`;
+        const row = elements.find((e) => e.qualifiedName === name);
+        if (!row) continue;
+        try {
+          const result = await worstCase(async (sense) => (await ctx.backend.bounds(m, name, sense)).bounds[0], moe.sense);
+          moes.push({ name: moe.name, value: result.value, outcome: result.outcome, unit: moe.unit, basis: row.doc || undefined });
+        } catch {
+          moes.push({ name: moe.name, outcome: 'no estimate', unit: moe.unit, basis: row.doc || undefined });
+        }
+      }
+      return { layer: above, moes };
+    });
+  } catch {
+    // Context for the reviewer, never a reason to lose the evaluation.
+    return undefined;
+  }
+}
+
+/**
+ * The measures section of the rubric prompt: the targets, then each measure
+ * with what every alternative claims on it — and, below LA, what the layer
+ * above's chosen architecture claimed, so a number that moved is seen moving.
+ * Worded neutrally on purpose: the layer above may be the one that is wrong
+ * (v9's LA rounded 40/60 h up to 0.7 for a measure where up is optimistic).
+ */
+export function measureClaimsLines(
+  moes: ReadonlyArray<Pick<Moe, 'name' | 'sense' | 'target' | 'unit' | 'doc'> & { condition?: boolean }>,
+  metrics: AlternativeMetrics[],
+  above?: EstimatesAbove,
+): string[] {
+  if (moes.length === 0) return [];
+  const lines: string[] = ['## The measures these are held to', ''];
+  for (const moe of moes) lines.push(`- \`${moe.name}\`: target ${boundText(moe)} — ${moe.doc}`);
+  const withAbove = above && above.moes.length > 0 ? above : undefined;
+  lines.push(
+    '',
+    '## What each alternative claims on them',
+    '',
+    'These are estimates the author of each architecture stated, with the basis it gave. The score counts targets met at face value; your job is to say where a basis does not hold up — an estimate its architecture cannot deliver should cost it in realisability.',
+    ...(withAbove
+      ? [
+          `Under each measure, the first line is what ${withAbove.layer}, the layer above, settled on — its chosen architecture's estimate and basis. Where an alternative's estimate differs from it, read both bases: either the layer above was wrong, or something modelled at this layer changes the number. A difference whose basis says neither is a basis that does not hold up.`,
+        ]
+      : []),
+    '',
+  );
+  for (const moe of moes) {
+    lines.push(`### \`${moe.name}\` (target ${boundText(moe)})`, '');
+    const prior = withAbove?.moes.find((y) => y.name === moe.name);
+    if (withAbove)
+      lines.push(
+        `- ${withAbove.layer} (the layer above, chosen): ${prior ? `${prior.value !== undefined ? `${prior.value}${prior.unit ? ` ${prior.unit}` : ''}${prior.outcome === 'optimum' ? '' : ` (${prior.outcome})`}` : prior.outcome}${prior.basis ? ` — ${prior.basis}` : ''}` : 'no estimate'}`,
+      );
+    for (const m of metrics) {
+      const x = m.moes.find((y) => y.name === moe.name);
+      lines.push(`- alternative ${m.k}: ${estimateText(x)}${x?.basis ? ` — ${x.basis}` : ''}`);
+    }
+    lines.push('');
+  }
+  return lines;
+}
+
 function estimateText(x: AlternativeMetrics['moes'][number] | undefined): string {
   if (!x) return 'no estimate';
   return x.value !== undefined ? `${x.value}${x.unit ? ` ${x.unit}` : ''}${x.outcome === 'optimum' ? '' : ` (${x.outcome})`}` : x.outcome;

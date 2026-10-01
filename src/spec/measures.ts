@@ -9,8 +9,9 @@
  * floor needs the least the design can do, so the two are opposite.
  */
 import type { Moe } from '../llm/schemas.ts';
+import { matchingBrace } from '../model/statements.ts';
 
-type MoeLike = Pick<Moe, 'sense' | 'target'> & { unit?: string };
+type MoeLike = Pick<Moe, 'sense' | 'target'> & { unit?: string; condition?: boolean };
 
 /**
  * The measures the architectures are scored on. A budget — a number the brief
@@ -20,10 +21,19 @@ type MoeLike = Pick<Moe, 'sense' | 'target'> & { unit?: string };
  */
 export const scoredMoes = <T extends { kind?: 'measure' | 'budget' }>(moes: readonly T[]): T[] => moes.filter((m) => m.kind !== 'budget');
 
-/** `≥ 0.95`, `≤ 10 s` — the bound a target sets, never the bare sense word. */
+/**
+ * `≥ 0.95`, `≤ 10 s` — the bound a target sets, never the bare sense word.
+ * A test condition is `= 0.5`: v9's "half the links jammed" was a budget with
+ * sense max, written `>= 0.5` in Common — "at least half", whose mildest case
+ * is the very number every estimate was computed at.
+ */
 export function boundText(moe: MoeLike): string {
-  return `${moe.sense === 'max' ? '≥' : '≤'} ${moe.target}${moe.unit ? ` ${moe.unit}` : ''}`;
+  const op = moe.condition ? '=' : moe.sense === 'max' ? '≥' : '≤';
+  return `${op} ${moe.target}${moe.unit ? ` ${moe.unit}` : ''}`;
 }
+
+/** Whether a target is not the customer's number yet: a placeholder in the brief, or one SEED set. */
+export const isProvisional = (moe: { placeholder?: boolean; setBySeed?: boolean }): boolean => moe.placeholder === true || moe.setBySeed === true;
 
 /** The optimisation that yields the worst case against the target. */
 export function worstCaseSense(sense: Moe['sense']): 'min' | 'max' {
@@ -81,4 +91,38 @@ export async function worstCase(
 /** The line an architecture writes to state its estimate for one measure (CV-17). */
 export function estimateLine(name: string): string {
   return `#Estimate attribute ${name} :> Common::${name} = <worst-case value> { doc /* how this design gets there */ }`;
+}
+
+/**
+ * The expression one layer's `assert constraint` fixes a measure to (CV-17):
+ * `m == <expr>` or `<expr> == m`, read from that layer's package text. The
+ * first such equation is the one Sysprose reads as the definition, and so is
+ * the one returned. Undefined when the layer states the measure as a literal.
+ */
+export function definingExpression(layerText: string, measure: string): string | undefined {
+  const open = /\bassert\s+constraint\b[^{;]*\{/g;
+  for (let m = open.exec(layerText); m; m = open.exec(layerText)) {
+    const start = m.index + m[0].length - 1;
+    const close = matchingBrace(layerText, start);
+    if (close < 0) continue;
+    const body = layerText
+      .slice(start + 1, close)
+      .replace(/\bdoc\s*\/\*[\s\S]*?\*\//g, ' ')
+      .replace(/\/\*[\s\S]*?\*\//g, ' ')
+      .replace(/\/\/[^\n]*/g, ' ');
+    const sides = body.split('==');
+    if (sides.length !== 2) continue;
+    const [lhs, rhs] = sides.map((x) => x.trim());
+    if (lhs === measure) return rhs;
+    if (rhs === measure) return lhs;
+  }
+  return undefined;
+}
+
+const EXPRESSION_WORDS = new Set(['and', 'or', 'not', 'xor', 'implies', 'true', 'false', 'null']);
+
+/** The names an expression reads, once each, in order: the inputs of a derived estimate. */
+export function expressionNames(expr: string): string[] {
+  const names = expr.match(/(?<![\w.])[A-Za-z_][A-Za-z0-9_]*(?:::[A-Za-z_][A-Za-z0-9_]*)*/g) ?? [];
+  return [...new Set(names.filter((n) => !EXPRESSION_WORDS.has(n)))];
 }
