@@ -322,19 +322,22 @@
     },
     {
       "label": "PARAMETRIC VIEW",
-      "text": "One box: LA's coverage arithmetic as a constraint, its equation written in the box. Problems lists it as violated: LA's own numbers do not satisfy it.",
+      "text": "One box: LA's coverage arithmetic, its equation in the box. It derives the coverage estimate from LA's own numbers, 12 × (40 − 7.41) / 60 × 0.12 = 0.78, short of the 0.9 target; the estimate's doc says so.",
       "do": [
         {
           "view": "parametric"
         },
         {
-          "click": "css:.react-flow__node"
+          "zoom": {
+            "at": "css:.react-flow__node",
+            "to": 1.0
+          }
         },
         {
-          "click": "testid:tab-problems"
+          "click": "tree:SurveillanceDroneSwarm::LA::areaUnderWatchFraction"
         },
         {
-          "settle": true
+          "hover": "testid:prop-doc"
         }
       ]
     }

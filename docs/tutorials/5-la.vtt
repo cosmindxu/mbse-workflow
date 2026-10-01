@@ -1,86 +1,86 @@
 WEBVTT
 
 1
-00:00:04.000 --> 00:00:15.354
+00:00:04.000 --> 00:00:15.349
 SHOW ONLY THE LA LAYER
 In the Explorer, ⊞ on LA scopes every diagram to the logical-architecture package. The chip above the canvas says what is shown.
 
 2
-00:00:15.354 --> 00:00:28.504
+00:00:15.349 --> 00:00:28.487
 GENERAL VIEW
 All of LA, left to right: 21 logical functions, each realising an SA function and allocated to a component, the state machines and the hazards. Nothing physical yet.
 
 3
-00:00:28.504 --> 00:00:41.570
+00:00:28.487 --> 00:00:41.536
 READ ONE ELEMENT
 Select a box: Properties shows what it is. fleet is the twelve identical drones, typed by SwarmMember. It gets 14 functions, the 8 coordination ones among them.
 
 4
-00:00:41.570 --> 00:00:54.713
+00:00:41.536 --> 00:00:54.688
 ADD A PART BACK
 Before recording we deleted memberB, the second representative drone. Now we add it back. A new part goes under the selection, so first select LA in the Explorer.
 
 5
-00:00:54.713 --> 00:01:03.108
+00:00:54.688 --> 00:01:03.102
 PLACE A PART
 Pick Part in the palette, then click empty canvas. The new part is created in LA and selected.
 
 6
-00:01:03.108 --> 00:01:11.744
+00:01:03.102 --> 00:01:11.757
 NAME IT
 Type its name in Properties. With no type yet, memberB sits apart, among the boxes nothing connects to.
 
 7
-00:01:11.744 --> 00:01:24.472
+00:01:11.757 --> 00:01:24.489
 TYPE IT
 In Properties, Type: SwarmMember, then Enter. The typing is bound, as the text's memberB : SwarmMember: its typed-by line is drawn and memberB moves beside memberA.
 
 8
-00:01:24.472 --> 00:01:36.812
+00:01:24.489 --> 00:01:36.714
 DOCUMENT IT
 Its documentation goes in Properties, word for word as in the model: the second representative member, the other end of the peer link.
 
 9
-00:01:36.812 --> 00:01:50.674
+00:01:36.715 --> 00:01:50.570
 WIRE THE PEER LINK
 In Interconnection, memberA and memberB show the ports a SwarmMember has. Pick Interface, click memberA's meshOut, then memberB's meshIn: the interface ends on the ports.
 
 10
-00:01:50.674 --> 00:02:05.995
+00:01:50.570 --> 00:02:05.891
 NAME IT AND TYPE IT
 In Properties: the name peerLink and the type Common::MeshInterface, then Enter. The Text tab now has interface peerLink : …MeshInterface connect memberA.meshOut to memberB.meshIn, as before.
 
 11
-00:02:05.995 --> 00:02:17.325
+00:02:05.891 --> 00:02:17.217
 THE RESULT
 memberB is back beside memberA, typed by SwarmMember and joined to it by peerLink. Not re-entered: PA's trace to memberB, which lives in PA.
 
 12
-00:02:17.325 --> 00:02:28.697
+00:02:17.217 --> 00:02:28.499
 TREE VIEW
 What LA contains, one branch at a time. +N on SwarmMember opens what each member carries: its nine ports and its two state machines.
 
 13
-00:02:28.697 --> 00:02:45.632
+00:02:28.499 --> 00:02:45.431
 INTERCONNECTION VIEW
 Components with ports on their edges. The eleven lines are connections: peerLink between the two representatives; fleet sends reports to triageUnit, status and tracks to groundStation; tasking and recall come back.
 
 14
-00:02:45.632 --> 00:02:59.500
+00:02:45.431 --> 00:02:59.290
 ACTION VIEW
 The 21 logical functions, each allocated to a component: a set, not a sequence. Unlike SA, LA models no flows between them; what passes between components is on the connections.
 
 15
-00:02:59.500 --> 00:03:12.232
+00:02:59.290 --> 00:03:12.036
 STATE VIEW
 Five state machines: a member's sortie and its condition, the ground station's duty and its link, and the mesh across the fleet. No transition has a trigger yet.
 
 16
-00:03:12.232 --> 00:03:23.764
+00:03:12.036 --> 00:03:23.564
 REQUIREMENT VIEW
 The eight hazards this layer adds, all satisfied by fleet and four also by a function. The constraint at the top right is drawn here too.
 
 17
-00:03:23.764 --> 00:03:36.080
+00:03:23.564 --> 00:03:39.562
 PARAMETRIC VIEW
-One box: LA's coverage arithmetic as a constraint, its equation written in the box. Problems lists it as violated: LA's own numbers do not satisfy it.
+One box: LA's coverage arithmetic, its equation in the box. It derives the coverage estimate from LA's own numbers, 12 × (40 − 7.41) / 60 × 0.12 = 0.78, short of the 0.9 target; the estimate's doc says so.
