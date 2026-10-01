@@ -211,8 +211,8 @@
             doc /* Worst case, derived by the assert constraint below (CV-17): one watching drone holds 0.12 of the area out of the 0.782 under watch, 0.12 / 0.782 = 0.153 of the coverage lost before any re-spread; the same for either allocation because the loss precedes the redistribution. */
         }
 
-        #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction = 0.58 {
-            doc /* Worst case 0.58. Basis: with half the links jammed, at worst half of the hand-overs between neighbours fail and leave a sector empty for part of a swap turnaround, so the 0.78 baseline is cut by about a quarter. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
+        #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction {
+            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 0.782 x (1 - 0.5 x 0.5) = 0.587. Basis: the 0.782 under watch, less the gaps of lost hand-overs. A member leaving to recharge hands its sector to a neighbour and stays until the neighbour confirms; a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5. Each lost hand-over leaves its sector empty for about half a swap turnaround, a stated assumption. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
         }
 
         #Estimate attribute reportAgeAtOperationsCentreSeconds :> Common::reportAgeAtOperationsCentreSeconds = 40 {
@@ -247,8 +247,8 @@
             doc /* Worst case 350 USD per member. Basis: the case in which the whole classification runs on the drone, as in the member-centred allocation. Placeholder target 300 USD is not met. Units are USD. */
         }
 
-        #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours = 0.7 {
-            doc /* Worst case 0.7 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The 12 h figure is a target set here, not the customer's. Units are hours. */
+        #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours {
+            doc /* Worst case, derived by the assert constraint below (CV-17): 40 / 60 = 0.667 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The 12 h figure is a target set here, not the customer's. Units are hours. */
         }
 
         // ---------------------------------------------------------------
@@ -573,6 +573,10 @@
         attribute memberCoverageFraction = 0.12;
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
         assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
+        attribute jammedLinkFraction = 0.5 { doc /* Share of the links between drones jammed in the brief's jamming test condition, restated here because a constraint body cannot reach Common. */ }
+        attribute sectorGapShareOfLostHandOver = 0.5 { doc /* Share of a sector's watch lost when its hand-over is lost. The leaving member stays until the neighbour confirms, so the sector is empty for about half a swap turnaround. An assumption, stated and not derived. */ }
+        assert constraint { doc /* Correlated worst case: a jammer covering a neighbourhood jams every confirmation path, so the share of hand-overs lost is the share of links jammed. */ coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1 - jammedLinkFraction * sectorGapShareOfLostHandOver) }
+        assert constraint { doc /* Without ground crew to swap batteries, the watch lasts one sortie; 60 minutes to the hour. */ unattendedWatchDurationHours == memberFlightMinutes / 60 }
         #prose part laTradeOff {
         doc /* Architecture trade-off for LA. Alternative 2 was taken.
                  alternative 1: total 0.52 (measures 0.29, review 0.44, structure 0.84, resilience 0.25)

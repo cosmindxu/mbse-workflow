@@ -3,9 +3,9 @@
   "layer": "LA",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml",
-  "prefixHash": "ee5e7d560babffaa",
-  "elements": 2578,
-  "durationMs": 2791,
+  "prefixHash": "48b3cdb60a9a1124",
+  "elements": 2586,
+  "durationMs": 1575,
   "checks": [
     {
       "name": "check",
@@ -14,14 +14,14 @@
       "ok": true,
       "durationMs": 1,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/check.json",
-      "findings": 22
+      "findings": 32
     },
     {
       "name": "trace-trace",
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --relation trace --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 73,
+      "durationMs": 74,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/trace-trace.json",
       "findings": 5
     },
@@ -30,7 +30,7 @@
       "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 928,
+      "durationMs": 1002,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/verify.json",
       "findings": 0
     }
@@ -44,7 +44,7 @@
       "layer": "Common",
       "line": 692,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: areaUnderWatchFraction has no value here; evaluated per specialisation: LA::areaUnderWatchFraction.",
       "check": "check"
     },
     {
@@ -55,7 +55,7 @@
       "layer": "Common",
       "line": 700,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: coverageLossAfterMemberLossFraction has no value here; evaluated per specialisation: LA::coverageLossAfterMemberLossFraction.",
       "check": "check"
     },
     {
@@ -66,7 +66,7 @@
       "layer": "Common",
       "line": 708,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: coverageUnderMeshJammingFraction has no value here; evaluated per specialisation: LA::coverageUnderMeshJammingFraction.",
       "check": "check"
     },
     {
@@ -77,7 +77,7 @@
       "layer": "Common",
       "line": 716,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: reportAgeAtOperationsCentreSeconds has no value here; evaluated per specialisation: LA::reportAgeAtOperationsCentreSeconds.",
       "check": "check"
     },
     {
@@ -88,7 +88,7 @@
       "layer": "Common",
       "line": 724,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: positionErrorWithoutSatelliteMetres has no value here; evaluated per specialisation: LA::positionErrorWithoutSatelliteMetres.",
       "check": "check"
     },
     {
@@ -99,7 +99,7 @@
       "layer": "Common",
       "line": 732,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: reportHoldWhileCutOffMinutes has no value here; evaluated per specialisation: LA::reportHoldWhileCutOffMinutes.",
       "check": "check"
     },
     {
@@ -110,7 +110,7 @@
       "layer": "Common",
       "line": 740,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: missedDetectionFraction has no value here; evaluated per specialisation: LA::missedDetectionFraction.",
       "check": "check"
     },
     {
@@ -121,7 +121,7 @@
       "layer": "Common",
       "line": 748,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: falseAlarmsPerHour has no value here; evaluated per specialisation: LA::falseAlarmsPerHour.",
       "check": "check"
     },
     {
@@ -132,7 +132,7 @@
       "layer": "Common",
       "line": 756,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: alertsReachingOperatorPerHour has no value here; evaluated per specialisation: LA::alertsReachingOperatorPerHour.",
       "check": "check"
     },
     {
@@ -143,7 +143,7 @@
       "layer": "Common",
       "line": 764,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: acknowledgedReportsThatMatterFraction has no value here; evaluated per specialisation: LA::acknowledgedReportsThatMatterFraction.",
       "check": "check"
     },
     {
@@ -154,7 +154,7 @@
       "layer": "Common",
       "line": 772,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: onboardClassificationCostUsdPerMember has no value here; evaluated per specialisation: LA::onboardClassificationCostUsdPerMember.",
       "check": "check"
     },
     {
@@ -165,7 +165,7 @@
       "layer": "Common",
       "line": 780,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: unattendedWatchDurationHours has no value here; evaluated per specialisation: LA::unattendedWatchDurationHours.",
       "check": "check"
     },
     {
@@ -176,7 +176,7 @@
       "layer": "Common",
       "line": 792,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -187,7 +187,7 @@
       "layer": "Common",
       "line": 800,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -198,7 +198,7 @@
       "layer": "Common",
       "line": 808,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -209,7 +209,7 @@
       "layer": "Common",
       "line": 816,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: cruiseSpeedMetresPerSecond has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -220,7 +220,7 @@
       "layer": "Common",
       "line": 824,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: instantaneousFootprintSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -231,7 +231,7 @@
       "layer": "Common",
       "line": 832,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -242,7 +242,7 @@
       "layer": "Common",
       "line": 840,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -253,29 +253,139 @@
       "layer": "Common",
       "line": 848,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
-      "code": "validation/constraint-violation",
-      "severity": "info",
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
       "blocking": false,
-      "element": "satellitePositioningOutageBudget",
-      "layer": "Common",
-      "line": 856,
+      "element": "areaUnderWatchFraction",
+      "layer": "LA",
+      "line": 206,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
+      "message": "LA::areaUnderWatchFraction = 0.78216 misses Common::areaUnderWatchTarget (areaUnderWatchFraction >= 0.9)",
       "check": "check"
     },
     {
-      "code": "validation/constraint-violation",
+      "code": "validation/target-by-specialisation",
       "severity": "info",
       "blocking": false,
-      "element": "meshLinksJammedBudget",
-      "layer": "Common",
-      "line": 864,
+      "element": "coverageLossAfterMemberLossFraction",
+      "layer": "LA",
+      "line": 210,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
+      "message": "LA::coverageLossAfterMemberLossFraction = 0.153421 meets Common::coverageLossAfterMemberLossTarget (coverageLossAfterMemberLossFraction <= 0.25)",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "coverageUnderMeshJammingFraction",
+      "layer": "LA",
+      "line": 214,
+      "rule": "CV-17",
+      "message": "LA::coverageUnderMeshJammingFraction = 0.58662 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportAgeAtOperationsCentreSeconds",
+      "layer": "LA",
+      "line": 218,
+      "rule": "CV-17",
+      "message": "LA::reportAgeAtOperationsCentreSeconds = 40 meets Common::reportAgeAtOperationsCentreTarget (reportAgeAtOperationsCentreSeconds <= 60.0)",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "positionErrorWithoutSatelliteMetres",
+      "layer": "LA",
+      "line": 222,
+      "rule": "CV-17",
+      "message": "LA::positionErrorWithoutSatelliteMetres = 80 misses Common::positionErrorWithoutSatelliteTarget (positionErrorWithoutSatelliteMetres <= 50.0) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "info",
+      "blocking": false,
+      "element": "reportHoldWhileCutOffMinutes",
+      "layer": "LA",
+      "line": 226,
+      "rule": "CV-17",
+      "message": "LA::reportHoldWhileCutOffMinutes = 40 meets Common::reportHoldWhileCutOffTarget (reportHoldWhileCutOffMinutes >= 30.0)",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "missedDetectionFraction",
+      "layer": "LA",
+      "line": 230,
+      "rule": "CV-17",
+      "message": "LA::missedDetectionFraction = 0.12 misses Common::missedDetectionTarget (missedDetectionFraction <= 0.10) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "falseAlarmsPerHour",
+      "layer": "LA",
+      "line": 234,
+      "rule": "CV-17",
+      "message": "LA::falseAlarmsPerHour = 3 misses Common::falseAlarmsPerHourTarget (falseAlarmsPerHour <= 2.0) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "alertsReachingOperatorPerHour",
+      "layer": "LA",
+      "line": 238,
+      "rule": "CV-17",
+      "message": "LA::alertsReachingOperatorPerHour = 24 misses Common::alertsReachingOperatorTarget (alertsReachingOperatorPerHour <= 20.0) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "acknowledgedReportsThatMatterFraction",
+      "layer": "LA",
+      "line": 242,
+      "rule": "CV-17",
+      "message": "LA::acknowledgedReportsThatMatterFraction = 0.7 misses Common::acknowledgedReportsThatMatterTarget (acknowledgedReportsThatMatterFraction >= 0.8) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "onboardClassificationCostUsdPerMember",
+      "layer": "LA",
+      "line": 246,
+      "rule": "CV-17",
+      "message": "LA::onboardClassificationCostUsdPerMember = 350 misses Common::onboardClassificationCostTarget (onboardClassificationCostUsdPerMember <= 300.0) — missed a placeholder, not the customer's number",
+      "check": "check"
+    },
+    {
+      "code": "validation/target-by-specialisation",
+      "severity": "warning",
+      "blocking": false,
+      "element": "unattendedWatchDurationHours",
+      "layer": "LA",
+      "line": 250,
+      "rule": "CV-17",
+      "message": "LA::unattendedWatchDurationHours = 0.666667 misses Common::unattendedWatchDurationTarget (unattendedWatchDurationHours >= 12.0) — missed a placeholder, not the customer's number",
       "check": "check"
     },
     {

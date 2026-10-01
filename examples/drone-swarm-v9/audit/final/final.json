@@ -5,7 +5,7 @@
     "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json",
     "exitCode": 0,
     "meaning": "clean",
-    "diagnostics": 28
+    "diagnostics": 50
   },
   "closure": [
     {
@@ -62,15 +62,15 @@
       },
       {
         "layer": "LA",
-        "elements": 66,
-        "documented": 54,
-        "coverage": 0.8181818181818182
+        "elements": 68,
+        "documented": 56,
+        "coverage": 0.8235294117647058
       },
       {
         "layer": "PA",
-        "elements": 112,
-        "documented": 110,
-        "coverage": 0.9821428571428571
+        "elements": 114,
+        "documented": 112,
+        "coverage": 0.9824561403508771
       },
       {
         "layer": "EPBS",
@@ -475,7 +475,8 @@
           "met": false
         }
       ],
-      "placeholder": false
+      "placeholder": false,
+      "setBySeed": false
     },
     {
       "name": "coverageLossAfterMemberLossFraction",
@@ -492,7 +493,8 @@
           "met": true
         }
       ],
-      "placeholder": false
+      "placeholder": false,
+      "setBySeed": false
     },
     {
       "name": "coverageUnderMeshJammingFraction",
@@ -500,16 +502,17 @@
       "layers": [
         {
           "layer": "LA",
-          "estimate": "0.58",
+          "estimate": "0.58662 (derived)",
           "met": false
         },
         {
           "layer": "PA",
-          "estimate": "0.68",
+          "estimate": "0.58662 (derived)",
           "met": false
         }
       ],
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "reportAgeAtOperationsCentreSeconds",
@@ -527,7 +530,8 @@
         }
       ],
       "metByAll": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "positionErrorWithoutSatelliteMetres",
@@ -545,7 +549,8 @@
         }
       ],
       "unreachable": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "reportHoldWhileCutOffMinutes",
@@ -563,7 +568,8 @@
         }
       ],
       "metByAll": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "missedDetectionFraction",
@@ -581,7 +587,8 @@
         }
       ],
       "unreachable": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "falseAlarmsPerHour",
@@ -599,7 +606,8 @@
         }
       ],
       "unreachable": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "alertsReachingOperatorPerHour",
@@ -616,7 +624,8 @@
           "met": true
         }
       ],
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "acknowledgedReportsThatMatterFraction",
@@ -634,7 +643,8 @@
         }
       ],
       "unreachable": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "onboardClassificationCostUsdPerMember",
@@ -652,7 +662,8 @@
         }
       ],
       "unreachable": "4/4",
-      "placeholder": true
+      "placeholder": true,
+      "setBySeed": false
     },
     {
       "name": "unattendedWatchDurationHours",
@@ -660,17 +671,18 @@
       "layers": [
         {
           "layer": "LA",
-          "estimate": "0.7 h",
+          "estimate": "0.666667 h (derived)",
           "met": false
         },
         {
           "layer": "PA",
-          "estimate": "0.66 h",
+          "estimate": "0.666667 h (derived)",
           "met": false
         }
       ],
       "unreachable": "4/4",
-      "placeholder": false
+      "placeholder": false,
+      "setBySeed": true
     }
   ],
   "behaviour": {
@@ -1027,7 +1039,7 @@
     },
     {
       "layer": "LA",
-      "fragmentLines": 584,
+      "fragmentLines": 588,
       "recheck": [
         "S33"
       ],
@@ -1044,7 +1056,7 @@
     },
     {
       "layer": "PA",
-      "fragmentLines": 612,
+      "fragmentLines": 616,
       "recheck": [
         "S42"
       ],

@@ -874,16 +874,16 @@ package SurveillanceDroneSwarm {
             doc /* The ten minutes without satellite positioning the position-error measure is taken over. It is a test condition from the same placeholder statement as the 50 m figure, not something to be better at. */
         }
         require constraint satellitePositioningOutageBudget {
-            doc /* The position-error measure is taken after at least 10 minutes without satellite positioning — placeholder. */
-            satellitePositioningOutageMinutes >= 10.0
+            doc /* The position-error measure is taken after 10 minutes without satellite positioning: the test condition, held equal, not a floor — placeholder. */
+            satellitePositioningOutageMinutes == 10.0
         }
 
         #Budget #Placeholder attribute meshLinksJammedFraction : ScalarValues::Real {
             doc /* The half of the links between drones jammed that the jammed-coverage measure is taken under. It is a test condition from the same placeholder statement as the 0.75 figure. */
         }
         require constraint meshLinksJammedBudget {
-            doc /* The jammed-coverage measure is taken with at least half the links between drones jammed — placeholder. */
-            meshLinksJammedFraction >= 0.5
+            doc /* The jammed-coverage measure is taken with half the links between drones jammed: the test condition, held equal, not a floor — placeholder. */
+            meshLinksJammedFraction == 0.5
         }
         // ── shared definitions asked for by OA ──
         item def SectorHandoverProposal { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }

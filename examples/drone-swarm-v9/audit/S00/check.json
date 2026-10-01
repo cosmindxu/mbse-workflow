@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "fileName": "/home/xcos/Work/mbse-workflow/runs/v9/build/1_Common.sysml",
+  "fileName": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/1_Common.sysml",
   "format": "sysml-text",
   "normalization": {
     "bomStripped": false,
@@ -9,44 +9,23 @@
   },
   "diagnostics": [
     {
-      "id": "parse#0",
-      "ruleId": "parse",
-      "severity": "warning",
-      "message": "Unresolved reference 'ScalarValues::Real'",
-      "code": "ref/unresolved-specialization",
-      "range": {
-        "start": {
-          "line": 77,
-          "column": 39,
-          "offset": 4653
-        },
-        "end": {
-          "line": 77,
-          "column": 60,
-          "offset": 4674
-        }
-      },
-      "hint": "Check the specialized name is declared and visible from here.",
-      "source": "mapper"
-    },
-    {
       "id": "constraint-violation#0",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "39e5ab06-43d0-4dd4-b5cd-2f5882f37f04",
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: areaUnderWatchFraction has no value anywhere and nothing specialises it.",
+      "elementId": "04905f11-48f9-4ea3-8254-ed253d4b963a",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 711,
+          "line": 712,
           "column": 9,
-          "offset": 35625
+          "offset": 35646
         },
         "end": {
-          "line": 714,
+          "line": 715,
           "column": 10,
-          "offset": 35800
+          "offset": 35821
         }
       },
       "elementName": "areaUnderWatchTarget",
@@ -56,20 +35,20 @@
       "id": "constraint-violation#1",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "05697527-75bb-400c-928b-f6b287cd5610",
+      "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: coverageLossAfterMemberLossFraction has no value anywhere and nothing specialises it.",
+      "elementId": "9f635467-5c01-4228-9527-b5e5a9b0c6cf",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 719,
+          "line": 720,
           "column": 9,
-          "offset": 36140
+          "offset": 36161
         },
         "end": {
-          "line": 722,
+          "line": 723,
           "column": 10,
-          "offset": 36378
+          "offset": 36399
         }
       },
       "elementName": "coverageLossAfterMemberLossTarget",
@@ -79,20 +58,20 @@
       "id": "constraint-violation#2",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "f4316a66-bd4b-4d6a-b421-8986e0b8c866",
+      "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: coverageUnderMeshJammingFraction has no value anywhere and nothing specialises it.",
+      "elementId": "d1e1412e-6fc0-49f5-946f-9faf9a5d6314",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 727,
+          "line": 728,
           "column": 9,
-          "offset": 36706
+          "offset": 36727
         },
         "end": {
-          "line": 730,
+          "line": 731,
           "column": 10,
-          "offset": 36948
+          "offset": 36969
         }
       },
       "elementName": "coverageUnderMeshJammingTarget",
@@ -102,20 +81,20 @@
       "id": "constraint-violation#3",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "ac00004d-9bde-42c8-92d1-7e4da26bcac6",
+      "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: reportAgeAtOperationsCentreSeconds has no value anywhere and nothing specialises it.",
+      "elementId": "3937ff77-963f-4da0-9fcd-a35d253106b8",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 735,
+          "line": 736,
           "column": 9,
-          "offset": 37268
+          "offset": 37289
         },
         "end": {
-          "line": 738,
+          "line": 739,
           "column": 10,
-          "offset": 37517
+          "offset": 37538
         }
       },
       "elementName": "reportAgeAtOperationsCentreTarget",
@@ -125,20 +104,20 @@
       "id": "constraint-violation#4",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "4b6b39ab-a0f0-493f-8422-3ce541c621e5",
+      "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: positionErrorWithoutSatelliteMetres has no value anywhere and nothing specialises it.",
+      "elementId": "d5859eb5-f897-4f51-8cb6-8c7be44938c0",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 743,
+          "line": 744,
           "column": 9,
-          "offset": 37881
+          "offset": 37902
         },
         "end": {
-          "line": 746,
+          "line": 747,
           "column": 10,
-          "offset": 38135
+          "offset": 38156
         }
       },
       "elementName": "positionErrorWithoutSatelliteTarget",
@@ -148,20 +127,20 @@
       "id": "constraint-violation#5",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "3300cb3e-0495-4d10-8f3d-327fc120c396",
+      "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: reportHoldWhileCutOffMinutes has no value anywhere and nothing specialises it.",
+      "elementId": "3313a4ac-ed58-4fed-8f62-0e09663974d3",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 751,
+          "line": 752,
           "column": 9,
-          "offset": 38421
+          "offset": 38442
         },
         "end": {
-          "line": 754,
+          "line": 755,
           "column": 10,
-          "offset": 38645
+          "offset": 38666
         }
       },
       "elementName": "reportHoldWhileCutOffTarget",
@@ -171,20 +150,20 @@
       "id": "constraint-violation#6",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "e7f3425f-88ef-4214-8d84-3c9fc9b6062e",
+      "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: missedDetectionFraction has no value anywhere and nothing specialises it.",
+      "elementId": "807efa0c-3646-4616-ac5c-43eea97e38ad",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 759,
+          "line": 760,
           "column": 9,
-          "offset": 38942
+          "offset": 38963
         },
         "end": {
-          "line": 762,
+          "line": 763,
           "column": 10,
-          "offset": 39127
+          "offset": 39148
         }
       },
       "elementName": "missedDetectionTarget",
@@ -194,20 +173,20 @@
       "id": "constraint-violation#7",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "804f445f-5234-4b47-9ed4-b044e00d0ff9",
+      "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: falseAlarmsPerHour has no value anywhere and nothing specialises it.",
+      "elementId": "161428d7-6269-4d4b-9703-47d3fa3494a7",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 767,
+          "line": 768,
           "column": 9,
-          "offset": 39409
+          "offset": 39430
         },
         "end": {
-          "line": 770,
+          "line": 771,
           "column": 10,
-          "offset": 39599
+          "offset": 39620
         }
       },
       "elementName": "falseAlarmsPerHourTarget",
@@ -217,20 +196,20 @@
       "id": "constraint-violation#8",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "27066d6e-d0a8-4762-aed1-25390ccc1a8c",
+      "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: alertsReachingOperatorPerHour has no value anywhere and nothing specialises it.",
+      "elementId": "f19d9423-820a-4135-9f65-8acfe5fbb2c4",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 775,
+          "line": 776,
           "column": 9,
-          "offset": 39912
+          "offset": 39933
         },
         "end": {
-          "line": 778,
+          "line": 779,
           "column": 10,
-          "offset": 40132
+          "offset": 40153
         }
       },
       "elementName": "alertsReachingOperatorTarget",
@@ -240,20 +219,20 @@
       "id": "constraint-violation#9",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "2cfecafb-cafb-4924-8508-e531f59c6d3a",
+      "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: acknowledgedReportsThatMatterFraction has no value anywhere and nothing specialises it.",
+      "elementId": "6ad618a1-b71d-48ff-b421-d6354cb6867f",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 783,
+          "line": 784,
           "column": 9,
-          "offset": 40453
+          "offset": 40474
         },
         "end": {
-          "line": 786,
+          "line": 787,
           "column": 10,
-          "offset": 40691
+          "offset": 40712
         }
       },
       "elementName": "acknowledgedReportsThatMatterTarget",
@@ -263,20 +242,20 @@
       "id": "constraint-violation#10",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "1bdaadb0-2b68-40b7-a461-57f9887563fa",
+      "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: onboardClassificationCostUsdPerMember has no value anywhere and nothing specialises it.",
+      "elementId": "2af251d2-d224-48cd-b841-42de1d8b1649",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 791,
+          "line": 792,
           "column": 9,
-          "offset": 41032
+          "offset": 41053
         },
         "end": {
-          "line": 794,
+          "line": 795,
           "column": 10,
-          "offset": 41272
+          "offset": 41293
         }
       },
       "elementName": "onboardClassificationCostTarget",
@@ -286,20 +265,20 @@
       "id": "constraint-violation#11",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "edb7431a-15a9-4ad0-b20f-da4c7878d006",
+      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: unattendedWatchDurationHours has no value anywhere and nothing specialises it.",
+      "elementId": "369ef1b8-9b83-404a-a9f5-b15637caa6d3",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 799,
+          "line": 800,
           "column": 9,
-          "offset": 41659
+          "offset": 41680
         },
         "end": {
-          "line": 802,
+          "line": 803,
           "column": 10,
-          "offset": 41911
+          "offset": 41932
         }
       },
       "elementName": "unattendedWatchDurationTarget",
@@ -309,20 +288,20 @@
       "id": "constraint-violation#12",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "7e00aa0d-7e5c-4d4f-a873-d194639a3ba5",
+      "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.",
+      "elementId": "afdd0188-d77b-4de7-8d94-1c3e2cebdc60",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 811,
+          "line": 812,
           "column": 9,
-          "offset": 42316
+          "offset": 42337
         },
         "end": {
-          "line": 814,
+          "line": 815,
           "column": 10,
-          "offset": 42443
+          "offset": 42464
         }
       },
       "elementName": "fleetSizeBudget",
@@ -332,20 +311,20 @@
       "id": "constraint-violation#13",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "a6688eb1-1d4b-4a30-bbc4-3e04c80cd7b9",
+      "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.",
+      "elementId": "97e980e0-752f-43b5-99d2-472478eb7e80",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 819,
+          "line": 820,
           "column": 9,
-          "offset": 42802
+          "offset": 42823
         },
         "end": {
-          "line": 822,
+          "line": 823,
           "column": 10,
-          "offset": 42988
+          "offset": 43009
         }
       },
       "elementName": "memberEnduranceBudget",
@@ -355,20 +334,20 @@
       "id": "constraint-violation#14",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "93be3e0e-7fc6-4674-a412-0a4af2a807bd",
+      "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.",
+      "elementId": "53d02df5-c407-46d5-a89f-be009d7af963",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 827,
+          "line": 828,
           "column": 9,
-          "offset": 43248
+          "offset": 43269
         },
         "end": {
-          "line": 830,
+          "line": 831,
           "column": 10,
-          "offset": 43453
+          "offset": 43474
         }
       },
       "elementName": "groundTurnaroundBudget",
@@ -378,20 +357,20 @@
       "id": "constraint-violation#15",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "1a6ac6d1-c7d2-4c02-83e1-f3849b21a6ee",
+      "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: cruiseSpeedMetresPerSecond has no value anywhere and nothing specialises it.",
+      "elementId": "321ed055-7164-43bd-8738-290432cf0d09",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 835,
+          "line": 836,
           "column": 9,
-          "offset": 43813
+          "offset": 43834
         },
         "end": {
-          "line": 838,
+          "line": 839,
           "column": 10,
-          "offset": 43980
+          "offset": 44001
         }
       },
       "elementName": "cruiseSpeedBudget",
@@ -401,20 +380,20 @@
       "id": "constraint-violation#16",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "e0aa6367-e76a-40ab-8ba4-ef63bbf1ce25",
+      "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: instantaneousFootprintSquareKilometres has no value anywhere and nothing specialises it.",
+      "elementId": "d178fef0-8347-4652-bca9-67e611830b31",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 843,
+          "line": 844,
           "column": 9,
-          "offset": 44235
+          "offset": 44256
         },
         "end": {
-          "line": 846,
+          "line": 847,
           "column": 10,
-          "offset": 44449
+          "offset": 44470
         }
       },
       "elementName": "instantaneousFootprintBudget",
@@ -424,20 +403,20 @@
       "id": "constraint-violation#17",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "6b0b9f7f-fd18-4700-9dae-93a45b4edfc4",
+      "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.",
+      "elementId": "851370b8-0abf-429f-8d3b-1544ffbcef3d",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 851,
+          "line": 852,
           "column": 9,
-          "offset": 44685
+          "offset": 44706
         },
         "end": {
-          "line": 854,
+          "line": 855,
           "column": 10,
-          "offset": 44842
+          "offset": 44863
         }
       },
       "elementName": "areaOfInterestBudget",
@@ -447,20 +426,20 @@
       "id": "constraint-violation#18",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "442f2666-c0b0-49ee-b485-897631b29222",
+      "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.",
+      "elementId": "20230a35-70eb-4346-8d3c-b48fee8678cb",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 859,
+          "line": 860,
           "column": 9,
-          "offset": 45159
+          "offset": 45180
         },
         "end": {
-          "line": 862,
+          "line": 863,
           "column": 10,
-          "offset": 45359
+          "offset": 45380
         }
       },
       "elementName": "operatorSecondsPerAlertBudget",
@@ -470,79 +449,33 @@
       "id": "constraint-violation#19",
       "ruleId": "constraint-violation",
       "severity": "info",
-      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "62b9f499-9242-4b02-9066-7b304d33c565",
+      "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.",
+      "elementId": "9ea81fff-ffe2-4eb4-8eaa-700f529cb6eb",
       "code": "validation/constraint-violation",
       "source": "validation",
       "range": {
         "start": {
-          "line": 867,
+          "line": 868,
           "column": 9,
-          "offset": 45644
+          "offset": 45665
         },
         "end": {
-          "line": 870,
+          "line": 871,
           "column": 10,
-          "offset": 45866
+          "offset": 45887
         }
       },
       "elementName": "trackStaleAfterBudget",
-      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
-    },
-    {
-      "id": "constraint-violation#20",
-      "ruleId": "constraint-violation",
-      "severity": "info",
-      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "d43a11dc-48e5-48b7-9ac0-b2f5fb1045c9",
-      "code": "validation/constraint-violation",
-      "source": "validation",
-      "range": {
-        "start": {
-          "line": 875,
-          "column": 9,
-          "offset": 46202
-        },
-        "end": {
-          "line": 878,
-          "column": 10,
-          "offset": 46448
-        }
-      },
-      "elementName": "satellitePositioningOutageBudget",
-      "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
-    },
-    {
-      "id": "constraint-violation#21",
-      "ruleId": "constraint-violation",
-      "severity": "info",
-      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
-      "elementId": "2f2cd332-b44e-4000-a8f8-b8844baeace2",
-      "code": "validation/constraint-violation",
-      "source": "validation",
-      "range": {
-        "start": {
-          "line": 883,
-          "column": 9,
-          "offset": 46748
-        },
-        "end": {
-          "line": 886,
-          "column": 10,
-          "offset": 46968
-        }
-      },
-      "elementName": "meshLinksJammedBudget",
       "hint": "Check the constraint expression and the values it reads; an unevaluable constraint usually references a feature with no value, or compares two different physical dimensions — read the message, which names the actual fault."
     }
   ],
   "summary": {
     "errors": 0,
-    "warnings": 1,
-    "infos": 22
+    "warnings": 0,
+    "infos": 20
   },
   "elements": {
-    "count": 648,
+    "count": 717,
     "roots": [
       "SurveillanceDroneSwarm"
     ]
