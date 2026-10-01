@@ -161,11 +161,80 @@
       ]
     },
     {
-      "label": "THE RESULT",
-      "text": "memberB is back beside memberA, typed by SwarmMember. Not re-entered: its peerLink interface to memberA, whose end was a meshIn row in this box, and its trace to PA.",
+      "label": "WIRE THE PEER LINK",
+      "text": "In Interconnection, memberA and memberB show the ports a SwarmMember has. Pick Interface, click memberA's meshOut, then memberB's meshIn: the interface ends on the ports.",
       "do": [
         {
-          "wait": 300
+          "view": "interconnection"
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::memberA",
+            "to": 0.9,
+            "offset": [
+              120,
+              0
+            ]
+          }
+        },
+        {
+          "click": "palette:InterfaceUsage:edge"
+        },
+        {
+          "click": "port:SurveillanceDroneSwarm::LA::memberA>meshOut"
+        },
+        {
+          "click": "port:SurveillanceDroneSwarm::LA::memberB>meshIn"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "NAME IT AND TYPE IT",
+      "text": "In Properties: the name peerLink and the type Common::MeshInterface, then Enter. The Text tab now has interface peerLink : …MeshInterface connect memberA.meshOut to memberB.meshIn, as before.",
+      "do": [
+        {
+          "type": "peerLink",
+          "into": "testid:prop-name"
+        },
+        {
+          "type": "Common::MeshInterface",
+          "into": "testid:prop-type"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
+      "label": "THE RESULT",
+      "text": "memberB is back beside memberA, typed by SwarmMember and joined to it by peerLink. Not re-entered: PA's trace to memberB, which lives in PA.",
+      "do": [
+        {
+          "view": "general"
+        },
+        {
+          "click": "tree:SurveillanceDroneSwarm::LA::memberB"
+        },
+        {
+          "click": "testid:diagram-fit-selection"
+        },
+        {
+          "settle": true
+        },
+        {
+          "zoom": {
+            "at": "node:SurveillanceDroneSwarm::LA::memberB",
+            "to": 0.55
+          }
+        },
+        {
+          "hover": "pane:empty"
         }
       ]
     },
@@ -208,7 +277,7 @@
     },
     {
       "label": "INTERCONNECTION VIEW",
-      "text": "Components with ports on their edges. The ten lines are connections: fleet sends reports to triageUnit, status and tracks to groundStation; tasking and recall come back.",
+      "text": "Components with ports on their edges. The eleven lines are connections: peerLink between the two representatives; fleet sends reports to triageUnit, status and tracks to groundStation; tasking and recall come back.",
       "do": [
         {
           "view": "interconnection"

@@ -230,6 +230,32 @@
       ]
     },
     {
+      "label": "TAG IT AND NAME ITS SUBJECT",
+      "text": "Tags takes the #Hazard keyword, which resolves to Kinds::Hazard. Subject takes name : Type: the hazard is about holder, the operations-centre analyst.",
+      "do": [
+        {
+          "type": "#Hazard",
+          "into": "testid:prop-tags"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "type": "holder : OperationsCentreAnalyst",
+          "into": "testid:prop-subject"
+        },
+        {
+          "press": "Enter"
+        },
+        {
+          "hover": "testid:prop-keywords"
+        },
+        {
+          "settle": true
+        }
+      ]
+    },
+    {
       "label": "ITS «SATISFY» GOES IN GENERAL",
       "text": "acknowledgeReports, which satisfied it, left the Requirement view with it; General shows both. Select it and press Selection, then pick Satisfy and click it: the satisfier first.",
       "do": [
@@ -294,7 +320,7 @@
     },
     {
       "label": "THE RESULT",
-      "text": "The Requirement view is as it was: four hazards, each satisfied by an activity. Not re-entered: the hazard's #Hazard tag, its subject and SA's «satisfy» of it. Edits stay in this browser until saved or exported.",
+      "text": "The Requirement view is as it was: four hazards, each satisfied by an activity, and the hazard has its tag and subject back. Not re-entered: SA's «satisfy» of it, which lives in SA. Edits stay in this browser until saved or exported.",
       "do": [
         {
           "view": "requirement"
