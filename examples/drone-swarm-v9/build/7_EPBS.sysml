@@ -3,6 +3,7 @@ package SurveillanceDroneSwarm {
            Mission: The SurveillanceDroneSwarm holds continuous watch over a tasked area of up to 25 km² and turns what happens there into acknowledged, triaged detection reports at the operations centre, inside the airspace clearance, weather, radio interference and satellite-positioning outages the environment imposes, using twelve battery-swapped drones, a mesh radio between them, a ground station and an intermittent link to the operations centre.
            Function: SurveillanceDroneSwarm moves the tasked area from unwatched and unreported to continuously watched and reported to the operations centre.
            One package per perspective; references point upward only. */
+    private import Kinds::*;
     package Kinds {
         doc /* User-defined keywords (CV-02): layer, structural role, mode and lifecycle tags.
                Every `#Tag` used anywhere in this model is declared here. */
@@ -2100,7 +2101,7 @@ package SurveillanceDroneSwarm {
         satisfy SurveillanceDroneSwarm::OA::Hazards::WatchBeyondClearanceHazard by SwarmMember;
     }
     package LA {
-        doc /* Logical architecture of the SurveillanceDroneSwarm. The system is decomposed into logical functions, the member definition of the twelve-drone population and the state machines every member and the fleet follow. Every logical function realises an SA function. Nothing physical is chosen: every function stays allocated to one placeholder component, mainComponent, and whether the coordination and command-and-control functions end up on the ground or on the members is the decision of the next step, which also places the counted fleet and its peer representatives. */
+        doc /* Logical architecture of the SurveillanceDroneSwarm. The system is decomposed into logical functions, the member definition of the twelve-drone population and the state machines every member and the fleet follow. Every logical function realises an SA function and is allocated to one of three logical components: the fleet of twelve identical members, which performs every sensing, reporting and coordination function (memberA and memberB stand for two of them, joined by the peer link); a thin ground station, which holds tasking, supervisory priorities, recall, acknowledgement and the status picture; and an alert triage unit, which ranks alerts and keeps the decision records. Nothing physical is chosen: the next step decides the nodes that carry them. */
 
         // ---------------------------------------------------------------
         // Placeholder component
@@ -2208,71 +2209,71 @@ package SurveillanceDroneSwarm {
         }
 
         // ---------------------------------------------------------------
-        // Function usages, all allocated to the placeholder
+        // Function usages, each allocated to its logical component (see the allocations below)
         // ---------------------------------------------------------------
 
         action handOverSector : HandOverSector {
-            doc /* Usage of the sector hand-over function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the sector hand-over function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action rotateRecharge : RotateRecharge {
-            doc /* Usage of the recharge rotation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the recharge rotation function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action redistributeCoverage : RedistributeCoverage {
-            doc /* Usage of the coverage redistribution function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the coverage redistribution function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action deconflictFlight : DeconflictFlight {
-            doc /* Usage of the flight deconfliction function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the flight deconfliction function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action relayReportsThroughNeighbour : RelayReportsThroughNeighbour {
-            doc /* Usage of the report relay function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report relay function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action correlateTracks : CorrelateTracks {
-            doc /* Usage of the track correlation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track correlation function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action handOverTrack : HandOverTrack {
-            doc /* Usage of the track hand-over function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track hand-over function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action admitMember : AdmitMember {
-            doc /* Usage of the member admission function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the member admission function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action taskSurveillanceArea : TaskSurveillanceArea {
-            doc /* Usage of the tasking function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the tasking function; allocated to the ground station. */
         }
         action commandSupervisoryPriorities : CommandSupervisoryPriorities {
-            doc /* Usage of the supervisory command function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the supervisory command function; allocated to the ground station. */
         }
         action recallAndLand : RecallAndLand {
-            doc /* Usage of the recall function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the recall function; allocated to the ground station. */
         }
         action presentStatusPicture : PresentStatusPicture {
-            doc /* Usage of the status presentation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the status presentation function; allocated to the ground station. */
         }
         action acknowledgeDetectionReport : AcknowledgeDetectionReport {
-            doc /* Usage of the report acknowledgement function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report acknowledgement function; allocated to the ground station. */
         }
         action detectAndClassifyObject : DetectAndClassifyObject {
-            doc /* Usage of the detection and classification function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the detection and classification function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action deliverDetectionReport : DeliverDetectionReport {
-            doc /* Usage of the report delivery function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report delivery function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action applySupervisoryDirectives : ApplySupervisoryDirectives {
-            doc /* Usage of the directive uptake function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the directive uptake function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action reportMemberStatus : ReportMemberStatus {
-            doc /* Usage of the status reporting function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the status reporting function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action reportTrackPicture : ReportTrackPicture {
-            doc /* Usage of the track reporting function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track reporting function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action returnToRecoveryPoint : ReturnToRecoveryPoint {
-            doc /* Usage of the return-to-recovery function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the return-to-recovery function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action triageAlerts : TriageAlerts {
-            doc /* Usage of the alert triage function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the alert triage function; allocated to the alert triage unit. */
         }
         action keepDecisionRecords : KeepDecisionRecords {
-            doc /* Usage of the decision record function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the decision record function; allocated to the alert triage unit. */
         }
 
         // ---------------------------------------------------------------
@@ -2409,15 +2410,11 @@ package SurveillanceDroneSwarm {
         satisfy Hazards::RelayedReportDroppedHazard by deliverDetectionReport;
         satisfy Hazards::TrackHandOverGapHazard by correlateTracks;
             // carried from the layer above; restored by the orchestrator
-            allocate taskSurveillanceArea to dutyController;
             trace taskSurveillanceArea to SurveillanceDroneSwarm::SA::taskSurveillanceArea;
-            allocate commandSupervisoryPriorities to dutyController;
             trace commandSupervisoryPriorities to SurveillanceDroneSwarm::SA::commandSupervisoryPriorities;
-            allocate recallAndLand to dutyController;
             trace recallAndLand to SurveillanceDroneSwarm::SA::recallAndLand;
             allocate presentStatusPicture to groundStation;
             trace presentStatusPicture to SurveillanceDroneSwarm::SA::presentStatusPicture;
-            allocate acknowledgeDetectionReport to operationsCentreAnalyst;
             trace acknowledgeDetectionReport to SurveillanceDroneSwarm::SA::acknowledgeDetectionReport;
             trace handOverSector to SurveillanceDroneSwarm::SA::handOverSector;
             trace rotateRecharge to SurveillanceDroneSwarm::SA::rotateRecharge;
@@ -2698,7 +2695,7 @@ package SurveillanceDroneSwarm {
             in port priorityIn : LA::SwarmMember::priorityIn;
             in port recallIn : LA::SwarmMember::recallIn;
             in port receiptIn : LA::SwarmMember::receiptIn;
-            doc /* TODO: decompose into components and move the functions onto them. */
+            doc /* The system as one physical whole, carried over from LA with its ports. It is built from the PA parts declared beside it — fleet, groundStation, groundRecallTransmitter, groundAlertTriage, groundDecisionRecordStore — which carry the functions (see the allocations); mainAssembly is its usage. */
         }
 
         // the population: 12 identical members (CV-16)
@@ -2708,67 +2705,67 @@ package SurveillanceDroneSwarm {
 
         // functions, carried over from LA: every one of them has to be realised here
         action def HandOverSector {
-            doc /* TODO: how `handOverSector` is realised at PA. */
+            doc /* Realises LA::HandOverSector at PA: performed on board every drone of the fleet (allocate handOverSector to fleet). */
         }
         action def RotateRecharge {
-            doc /* TODO: how `rotateRecharge` is realised at PA. */
+            doc /* Realises LA::RotateRecharge at PA: performed on board every drone of the fleet (allocate rotateRecharge to fleet). */
         }
         action def RedistributeCoverage {
-            doc /* TODO: how `redistributeCoverage` is realised at PA. */
+            doc /* Realises LA::RedistributeCoverage at PA: performed on board every drone of the fleet (allocate redistributeCoverage to fleet). */
         }
         action def DeconflictFlight {
-            doc /* TODO: how `deconflictFlight` is realised at PA. */
+            doc /* Realises LA::DeconflictFlight at PA: performed on board every drone of the fleet (allocate deconflictFlight to fleet). */
         }
         action def RelayReportsThroughNeighbour {
-            doc /* TODO: how `relayReportsThroughNeighbour` is realised at PA. */
+            doc /* Realises LA::RelayReportsThroughNeighbour at PA: performed on board every drone of the fleet (allocate relayReportsThroughNeighbour to fleet). */
         }
         action def CorrelateTracks {
-            doc /* TODO: how `correlateTracks` is realised at PA. */
+            doc /* Realises LA::CorrelateTracks at PA: performed on board every drone of the fleet (allocate correlateTracks to fleet). */
         }
         action def HandOverTrack {
-            doc /* TODO: how `handOverTrack` is realised at PA. */
+            doc /* Realises LA::HandOverTrack at PA: performed on board every drone of the fleet (allocate handOverTrack to fleet). */
         }
         action def AdmitMember {
-            doc /* TODO: how `admitMember` is realised at PA. */
+            doc /* Realises LA::AdmitMember at PA: performed on board every drone of the fleet (allocate admitMember to fleet). */
         }
         action def TaskSurveillanceArea {
-            doc /* TODO: how `taskSurveillanceArea` is realised at PA. */
+            doc /* Realises LA::TaskSurveillanceArea at PA: performed by the ground station (groundStation, command and control only) (allocate taskSurveillanceArea to groundStation). */
         }
         action def CommandSupervisoryPriorities {
-            doc /* TODO: how `commandSupervisoryPriorities` is realised at PA. */
+            doc /* Realises LA::CommandSupervisoryPriorities at PA: performed by the ground station (groundStation, command and control only) (allocate commandSupervisoryPriorities to groundStation). */
         }
         action def RecallAndLand {
-            doc /* TODO: how `recallAndLand` is realised at PA. */
+            doc /* Realises LA::RecallAndLand at PA: performed by the ground recall transmitter, the direct recall path from the ground to the fleet (allocate recallAndLand to groundRecallTransmitter). */
         }
         action def PresentStatusPicture {
-            doc /* TODO: how `presentStatusPicture` is realised at PA. */
+            doc /* Realises LA::PresentStatusPicture at PA: performed by the ground station (groundStation, command and control only) (allocate presentStatusPicture to groundStation). */
         }
         action def AcknowledgeDetectionReport {
-            doc /* TODO: how `acknowledgeDetectionReport` is realised at PA. */
+            doc /* Realises LA::AcknowledgeDetectionReport at PA: performed by the ground station (groundStation, command and control only) (allocate acknowledgeDetectionReport to groundStation). */
         }
         action def DetectAndClassifyObject {
-            doc /* TODO: how `detectAndClassifyObject` is realised at PA. */
+            doc /* Realises LA::DetectAndClassifyObject at PA: performed on board every drone of the fleet (allocate detectAndClassifyObject to fleet). */
         }
         action def DeliverDetectionReport {
-            doc /* TODO: how `deliverDetectionReport` is realised at PA. */
+            doc /* Realises LA::DeliverDetectionReport at PA: performed on board every drone of the fleet (allocate deliverDetectionReport to fleet). */
         }
         action def ApplySupervisoryDirectives {
-            doc /* TODO: how `applySupervisoryDirectives` is realised at PA. */
+            doc /* Realises LA::ApplySupervisoryDirectives at PA: performed on board every drone of the fleet (allocate applySupervisoryDirectives to fleet). */
         }
         action def ReportMemberStatus {
-            doc /* TODO: how `reportMemberStatus` is realised at PA. */
+            doc /* Realises LA::ReportMemberStatus at PA: performed on board every drone of the fleet (allocate reportMemberStatus to fleet). */
         }
         action def ReportTrackPicture {
-            doc /* TODO: how `reportTrackPicture` is realised at PA. */
+            doc /* Realises LA::ReportTrackPicture at PA: performed on board every drone of the fleet (allocate reportTrackPicture to fleet). */
         }
         action def ReturnToRecoveryPoint {
-            doc /* TODO: how `returnToRecoveryPoint` is realised at PA. */
+            doc /* Realises LA::ReturnToRecoveryPoint at PA: performed on board every drone of the fleet (allocate returnToRecoveryPoint to fleet). */
         }
         action def TriageAlerts {
-            doc /* TODO: how `triageAlerts` is realised at PA. */
+            doc /* Realises LA::TriageAlerts at PA: performed by the ground alert-triage node, before the operator (allocate triageAlerts to groundAlertTriage). */
         }
         action def KeepDecisionRecords {
-            doc /* TODO: how `keepDecisionRecords` is realised at PA. */
+            doc /* Realises LA::KeepDecisionRecords at PA: performed by the ground decision-record store (allocate keepDecisionRecords to groundDecisionRecordStore). */
         }
         #Coordination action handOverSector : HandOverSector;
         trace handOverSector to SurveillanceDroneSwarm::LA::handOverSector;
@@ -3498,13 +3495,13 @@ package SurveillanceDroneSwarm {
       trace DetectionClassifierSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
       trace ReportStoreForwardSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
       trace MemberCoordinationSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
-      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::GroundStation;
-      trace GroundLinkRadio to SurveillanceDroneSwarm::PA::GroundStation;
-      trace GroundCoordinationSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace FleetLoaderSoftware to SurveillanceDroneSwarm::PA::GroundStation;
+      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace GroundLinkRadio to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace GroundCoordinationSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace FleetLoaderSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
 
       // Realisation of the PA usages: the fleet and its two representatives are
       // built from the drone airframe and the mesh radio; the ground-side usages

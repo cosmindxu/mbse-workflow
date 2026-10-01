@@ -45,6 +45,23 @@ describe('restoring carried links', () => {
     expect(text).not.toContain('operator');
   });
 
+  it('does not put back an allocation the author moved to another component', () => {
+    const answer = [
+      '    package LA {',
+      '        action watch : Watch;',
+      '        allocate watch to groundStation;',
+      '        action report : Report;',
+      '    }',
+    ].join('\n');
+    const { text, restored } = restoreCarriedLinks(skeleton, answer);
+    expect(restored.sort()).toEqual([
+      'allocate report to mainComponent;',
+      'trace report to Swarm::SA::report;',
+      'trace watch to Swarm::SA::watch;',
+    ]);
+    expect(text).not.toContain('allocate watch to mainComponent;');
+  });
+
   it('is idempotent', () => {
     const once = restoreCarriedLinks(skeleton, '    package LA {\n        action watch : Watch;\n    }').text;
     const twice = restoreCarriedLinks(skeleton, once);

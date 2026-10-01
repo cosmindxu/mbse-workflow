@@ -12,7 +12,7 @@
             in port priorityIn : LA::SwarmMember::priorityIn;
             in port recallIn : LA::SwarmMember::recallIn;
             in port receiptIn : LA::SwarmMember::receiptIn;
-            doc /* TODO: decompose into components and move the functions onto them. */
+            doc /* The system as one physical whole, carried over from LA with its ports. It is built from the PA parts declared beside it — fleet, groundStation, groundRecallTransmitter, groundAlertTriage, groundDecisionRecordStore — which carry the functions (see the allocations); mainAssembly is its usage. */
         }
 
         // the population: 12 identical members (CV-16)
@@ -22,67 +22,67 @@
 
         // functions, carried over from LA: every one of them has to be realised here
         action def HandOverSector {
-            doc /* TODO: how `handOverSector` is realised at PA. */
+            doc /* Realises LA::HandOverSector at PA: performed on board every drone of the fleet (allocate handOverSector to fleet). */
         }
         action def RotateRecharge {
-            doc /* TODO: how `rotateRecharge` is realised at PA. */
+            doc /* Realises LA::RotateRecharge at PA: performed on board every drone of the fleet (allocate rotateRecharge to fleet). */
         }
         action def RedistributeCoverage {
-            doc /* TODO: how `redistributeCoverage` is realised at PA. */
+            doc /* Realises LA::RedistributeCoverage at PA: performed on board every drone of the fleet (allocate redistributeCoverage to fleet). */
         }
         action def DeconflictFlight {
-            doc /* TODO: how `deconflictFlight` is realised at PA. */
+            doc /* Realises LA::DeconflictFlight at PA: performed on board every drone of the fleet (allocate deconflictFlight to fleet). */
         }
         action def RelayReportsThroughNeighbour {
-            doc /* TODO: how `relayReportsThroughNeighbour` is realised at PA. */
+            doc /* Realises LA::RelayReportsThroughNeighbour at PA: performed on board every drone of the fleet (allocate relayReportsThroughNeighbour to fleet). */
         }
         action def CorrelateTracks {
-            doc /* TODO: how `correlateTracks` is realised at PA. */
+            doc /* Realises LA::CorrelateTracks at PA: performed on board every drone of the fleet (allocate correlateTracks to fleet). */
         }
         action def HandOverTrack {
-            doc /* TODO: how `handOverTrack` is realised at PA. */
+            doc /* Realises LA::HandOverTrack at PA: performed on board every drone of the fleet (allocate handOverTrack to fleet). */
         }
         action def AdmitMember {
-            doc /* TODO: how `admitMember` is realised at PA. */
+            doc /* Realises LA::AdmitMember at PA: performed on board every drone of the fleet (allocate admitMember to fleet). */
         }
         action def TaskSurveillanceArea {
-            doc /* TODO: how `taskSurveillanceArea` is realised at PA. */
+            doc /* Realises LA::TaskSurveillanceArea at PA: performed by the ground station (groundStation, command and control only) (allocate taskSurveillanceArea to groundStation). */
         }
         action def CommandSupervisoryPriorities {
-            doc /* TODO: how `commandSupervisoryPriorities` is realised at PA. */
+            doc /* Realises LA::CommandSupervisoryPriorities at PA: performed by the ground station (groundStation, command and control only) (allocate commandSupervisoryPriorities to groundStation). */
         }
         action def RecallAndLand {
-            doc /* TODO: how `recallAndLand` is realised at PA. */
+            doc /* Realises LA::RecallAndLand at PA: performed by the ground recall transmitter, the direct recall path from the ground to the fleet (allocate recallAndLand to groundRecallTransmitter). */
         }
         action def PresentStatusPicture {
-            doc /* TODO: how `presentStatusPicture` is realised at PA. */
+            doc /* Realises LA::PresentStatusPicture at PA: performed by the ground station (groundStation, command and control only) (allocate presentStatusPicture to groundStation). */
         }
         action def AcknowledgeDetectionReport {
-            doc /* TODO: how `acknowledgeDetectionReport` is realised at PA. */
+            doc /* Realises LA::AcknowledgeDetectionReport at PA: performed by the ground station (groundStation, command and control only) (allocate acknowledgeDetectionReport to groundStation). */
         }
         action def DetectAndClassifyObject {
-            doc /* TODO: how `detectAndClassifyObject` is realised at PA. */
+            doc /* Realises LA::DetectAndClassifyObject at PA: performed on board every drone of the fleet (allocate detectAndClassifyObject to fleet). */
         }
         action def DeliverDetectionReport {
-            doc /* TODO: how `deliverDetectionReport` is realised at PA. */
+            doc /* Realises LA::DeliverDetectionReport at PA: performed on board every drone of the fleet (allocate deliverDetectionReport to fleet). */
         }
         action def ApplySupervisoryDirectives {
-            doc /* TODO: how `applySupervisoryDirectives` is realised at PA. */
+            doc /* Realises LA::ApplySupervisoryDirectives at PA: performed on board every drone of the fleet (allocate applySupervisoryDirectives to fleet). */
         }
         action def ReportMemberStatus {
-            doc /* TODO: how `reportMemberStatus` is realised at PA. */
+            doc /* Realises LA::ReportMemberStatus at PA: performed on board every drone of the fleet (allocate reportMemberStatus to fleet). */
         }
         action def ReportTrackPicture {
-            doc /* TODO: how `reportTrackPicture` is realised at PA. */
+            doc /* Realises LA::ReportTrackPicture at PA: performed on board every drone of the fleet (allocate reportTrackPicture to fleet). */
         }
         action def ReturnToRecoveryPoint {
-            doc /* TODO: how `returnToRecoveryPoint` is realised at PA. */
+            doc /* Realises LA::ReturnToRecoveryPoint at PA: performed on board every drone of the fleet (allocate returnToRecoveryPoint to fleet). */
         }
         action def TriageAlerts {
-            doc /* TODO: how `triageAlerts` is realised at PA. */
+            doc /* Realises LA::TriageAlerts at PA: performed by the ground alert-triage node, before the operator (allocate triageAlerts to groundAlertTriage). */
         }
         action def KeepDecisionRecords {
-            doc /* TODO: how `keepDecisionRecords` is realised at PA. */
+            doc /* Realises LA::KeepDecisionRecords at PA: performed by the ground decision-record store (allocate keepDecisionRecords to groundDecisionRecordStore). */
         }
         #Coordination action handOverSector : HandOverSector;
         trace handOverSector to SurveillanceDroneSwarm::LA::handOverSector;

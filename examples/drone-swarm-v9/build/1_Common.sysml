@@ -3,6 +3,7 @@ package SurveillanceDroneSwarm {
            Mission: The SurveillanceDroneSwarm holds continuous watch over a tasked area of up to 25 km² and turns what happens there into acknowledged, triaged detection reports at the operations centre, inside the airspace clearance, weather, radio interference and satellite-positioning outages the environment imposes, using twelve battery-swapped drones, a mesh radio between them, a ground station and an intermittent link to the operations centre.
            Function: SurveillanceDroneSwarm moves the tasked area from unwatched and unreported to continuously watched and reported to the operations centre.
            One package per perspective; references point upward only. */
+    private import Kinds::*;
     package Kinds {
         doc /* User-defined keywords (CV-02): layer, structural role, mode and lifecycle tags.
                Every `#Tag` used anywhere in this model is declared here. */
@@ -884,5 +885,30 @@ package SurveillanceDroneSwarm {
             doc /* The jammed-coverage measure is taken with at least half the links between drones jammed — placeholder. */
             meshLinksJammedFraction >= 0.5
         }
+        // ── shared definitions asked for by OA ──
+        item def SectorHandoverProposal { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }
+        item def RechargeRotationSlot { doc /* A drone's place in the recharge rotation: when it leaves and who takes over. */ }
+        item def CoverageAssignment { doc /* A share of the tasked area assigned to a drone when coverage is re-spread. */ }
+        item def FlightIntent { doc /* A drone's announced flight path and altitude, exchanged to deconflict flight. */ }
+        item def TaskingOrder { doc /* Tasking given by the duty controller: the area of interest, its sectors and the mission window. */ }
+        item def PriorityDirective { doc /* Supervisory command: priorities, a sector to look at more closely, and the reporting threshold. */ }
+        item def RecallDirective { doc /* An order to recall and land the whole swarm or one drone. */ }
+        item def ReportReceipt { doc /* The operations centre's acknowledgement of one detection report. */ }
+        item def ConditionNotice { doc /* A notice that a condition has changed: positioning, sensing, contact, or mesh jamming. */ }
+        // ── shared definitions asked for by SA ──
+        item def MovingObjectsInArea { doc /* The objects moving through the tasked area that the swarm must detect, classify and place in time and space. */ }
+        item def TriagedAlerts { doc /* Detection reports ranked so that what is most likely to matter reaches the operator first, with duplicates merged. */ }
+        item def DecisionRecords { doc /* For every report: the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */ }
+        item def DroneArrival { doc /* A drone arriving on the ground at the recharge point or the recovery point, to be serviced or recovered by ground crew. */ }
+        item def DroneServiced { doc /* A drone handed back to the swarm by ground crew after a battery swap or a recovery. */ }
+        item def PositioningStatus { doc /* Whether satellite positioning is available to a drone, so it can tell when it must navigate by camera against stored maps. */ }
+        item def SensorHealthStatus { doc /* Whether a drone's sensors can be trusted, so reports from a degraded sensor can be marked as such. */ }
+        item def MeshLinkStatus { doc /* The state of a drone's links to the other drones over the mesh: contact lost or regained, and the share of links jammed. */ }
+        item def WeatherCondition { doc /* Wind, lighting and weather as sensed on board; above moderate wind the swarm lands. */ }
+        // ── shared definitions asked for by LA ──
+        item def CoordinationDirective { doc /* A directive from the coordinator to a drone: sector assignment, handover, rotation, redistribution, deconfliction, launch, release, or an admission verdict. */ attribute directiveKind { doc /* Which kind of directive this is. */ } attribute memberId { doc /* The drone the directive is for. */ } attribute sectorId { doc /* The sector the directive concerns, where it has one. */ } attribute effectiveTime { doc /* When the directive takes effect. */ } }
+        item def DirectiveAck { doc /* A drone's acknowledgement of one coordination directive. */ attribute memberId { doc /* The drone acknowledging. */ } attribute directiveKind { doc /* The kind of directive acknowledged. */ } attribute ackTime { doc /* When the drone acknowledged. */ } }
+        item def AdmissionRequest { doc /* What a drone offers to be admitted to coordination. */ attribute memberId { doc /* Identity the drone claims. */ } attribute classifierVersion { doc /* The classifier version the drone runs. */ } attribute credential { doc /* Proof that the drone is one of the twelve. */ } }
+        item def MemberSituationNotice { doc /* A notice of a change in a drone's or the mesh's situation that triggers a transition: positioning lost or back, sensing degraded or restored, contact lost or back, jamming, wind above moderate. */ attribute memberId { doc /* The drone concerned, or empty for the mesh as a whole. */ } attribute situation { doc /* What changed. */ } }
     }
 }

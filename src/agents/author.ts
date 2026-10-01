@@ -282,19 +282,33 @@ export function flattenSharedPackages(common: string): string {
  * prompt. The links are not the model's to decide: they are the record of
  * where each function came from, and the transition wrote them. So for every
  * function the skeleton traced or allocated that still exists in the answer,
- * the line is put back if it is missing. Nothing is added for a function the
- * author removed; that is a decision, and the gates judge it.
+ * the line is put back if it is missing — an allocation only when the answer
+ * allocates the function nowhere. Nothing is added for a function the author
+ * removed, or one the author allocated somewhere else; those are decisions,
+ * and the gates judge them.
  */
 export function restoreCarriedLinks(skeleton: string, answer: string): { text: string; restored: string[] } {
   // Tags first: `#Coordination action handOverSector` is a function whose trace
   // and allocation are as much the transition's as any other.
   const functions = new Set([...answer.matchAll(/^\s*(?:#[\w']+\s+)*action\s+([A-Za-z_][A-Za-z0-9_]*)\s*[:;{]/gm)].map((m) => m[1]));
-  const carried = [...skeleton.matchAll(/^\s*((?:trace|allocate)\s+([A-Za-z_][A-Za-z0-9_]*)\s+to\s+[^;\n]+;)/gm)]
-    .map((m) => ({ line: m[1].trim(), subject: m[2] }))
+  const link = /^\s*((trace|allocate)\s+([A-Za-z_][A-Za-z0-9_]*)\s+to\s+[^;\n]+;)/gm;
+  const carried = [...skeleton.matchAll(link)]
+    .map((m) => ({ line: m[1].trim(), verb: m[2], subject: m[3] }))
     .filter((c) => functions.has(c.subject));
   const normalise = (l: string): string => l.replace(/\s+/g, ' ').trim();
   const present = new Set(answer.split('\n').map(normalise));
-  const restored = carried.map((c) => c.line).filter((line) => !present.has(normalise(line)));
+  // A function the answer already ALLOCATES is the author's to place: putting
+  // the skeleton's allocation back as well left LA with `allocate
+  // taskSurveillanceArea to groundStation;` AND the SA-era `allocate
+  // taskSurveillanceArea to dutyController;` — an actor LA does not see, so
+  // the second named nothing and contradicted the first. Traces are records
+  // of origin, and a merged function rightly has several: each missing one
+  // still comes back.
+  const allocated = new Set([...answer.matchAll(link)].filter((m) => m[2] === 'allocate').map((m) => m[3]));
+  const restored = carried
+    .filter((c) => !present.has(normalise(c.line)))
+    .filter((c) => c.verb !== 'allocate' || !allocated.has(c.subject))
+    .map((c) => c.line);
   if (restored.length === 0) return { text: answer, restored };
   const block = ['// carried from the layer above; restored by the orchestrator', ...restored].join('\n');
   return { text: insertBeforeClose(answer, block), restored };

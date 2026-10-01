@@ -51,11 +51,19 @@ export function assemble(layout: ModelLayout, upTo: Layer, opts: AssembleOptions
     ? readFileSync(layout.rootHeaderPath, 'utf8')
     : DEFAULT_HEADER(layout.root);
 
-  const parts: string[] = [`package ${layout.root} {\n`, header];
+  // Every `#Tag` in the model is a `metadata def` in Kinds (CV-02), but the
+  // layers are sibling packages: from OA, `#Hazard` names nothing unless Kinds
+  // is imported, and a tool that resolves keywords reads every tag as broken.
+  // One import at the root makes the tags resolve in every layer.
+  const kinds =
+    wanted.includes('Kinds') && (opts.substitute?.Kinds !== undefined || existsSync(layout.fragmentPath('Kinds')))
+      ? '    private import Kinds::*;\n'
+      : '';
+  const parts: string[] = [`package ${layout.root} {\n`, header, kinds];
   const offsets: AssemblyOffset[] = [];
   const fragmentHashes: Partial<Record<Layer, string>> = {};
-  // The root line plus the header block are already in front of the first fragment.
-  let line = 1 + countLines(header);
+  // The root line, the header block and the import are already in front of the first fragment.
+  let line = 1 + countLines(header) + countLines(kinds);
 
   const layers: Layer[] = [];
   for (const layer of wanted) {

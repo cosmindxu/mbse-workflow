@@ -203,13 +203,13 @@
       trace DetectionClassifierSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
       trace ReportStoreForwardSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
       trace MemberCoordinationSoftware to SurveillanceDroneSwarm::PA::SwarmMember;
-      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::GroundStation;
-      trace GroundLinkRadio to SurveillanceDroneSwarm::PA::GroundStation;
-      trace GroundCoordinationSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::GroundStation;
-      trace FleetLoaderSoftware to SurveillanceDroneSwarm::PA::GroundStation;
+      trace GroundStationEquipment to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace GroundLinkRadio to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace GroundCoordinationSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace AlertTriageSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace DecisionRecordSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace OperatorConsoleSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
+      trace FleetLoaderSoftware to SurveillanceDroneSwarm::PA::GroundStationNode;
 
       // Realisation of the PA usages: the fleet and its two representatives are
       // built from the drone airframe and the mesh radio; the ground-side usages

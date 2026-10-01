@@ -1,5 +1,5 @@
     package LA {
-        doc /* Logical architecture of the SurveillanceDroneSwarm. The system is decomposed into logical functions, the member definition of the twelve-drone population and the state machines every member and the fleet follow. Every logical function realises an SA function. Nothing physical is chosen: every function stays allocated to one placeholder component, mainComponent, and whether the coordination and command-and-control functions end up on the ground or on the members is the decision of the next step, which also places the counted fleet and its peer representatives. */
+        doc /* Logical architecture of the SurveillanceDroneSwarm. The system is decomposed into logical functions, the member definition of the twelve-drone population and the state machines every member and the fleet follow. Every logical function realises an SA function and is allocated to one of three logical components: the fleet of twelve identical members, which performs every sensing, reporting and coordination function (memberA and memberB stand for two of them, joined by the peer link); a thin ground station, which holds tasking, supervisory priorities, recall, acknowledgement and the status picture; and an alert triage unit, which ranks alerts and keeps the decision records. Nothing physical is chosen: the next step decides the nodes that carry them. */
 
         // ---------------------------------------------------------------
         // Placeholder component
@@ -107,71 +107,71 @@
         }
 
         // ---------------------------------------------------------------
-        // Function usages, all allocated to the placeholder
+        // Function usages, each allocated to its logical component (see the allocations below)
         // ---------------------------------------------------------------
 
         action handOverSector : HandOverSector {
-            doc /* Usage of the sector hand-over function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the sector hand-over function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action rotateRecharge : RotateRecharge {
-            doc /* Usage of the recharge rotation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the recharge rotation function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action redistributeCoverage : RedistributeCoverage {
-            doc /* Usage of the coverage redistribution function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the coverage redistribution function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action deconflictFlight : DeconflictFlight {
-            doc /* Usage of the flight deconfliction function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the flight deconfliction function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action relayReportsThroughNeighbour : RelayReportsThroughNeighbour {
-            doc /* Usage of the report relay function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report relay function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action correlateTracks : CorrelateTracks {
-            doc /* Usage of the track correlation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track correlation function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action handOverTrack : HandOverTrack {
-            doc /* Usage of the track hand-over function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track hand-over function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action admitMember : AdmitMember {
-            doc /* Usage of the member admission function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the member admission function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action taskSurveillanceArea : TaskSurveillanceArea {
-            doc /* Usage of the tasking function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the tasking function; allocated to the ground station. */
         }
         action commandSupervisoryPriorities : CommandSupervisoryPriorities {
-            doc /* Usage of the supervisory command function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the supervisory command function; allocated to the ground station. */
         }
         action recallAndLand : RecallAndLand {
-            doc /* Usage of the recall function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the recall function; allocated to the ground station. */
         }
         action presentStatusPicture : PresentStatusPicture {
-            doc /* Usage of the status presentation function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the status presentation function; allocated to the ground station. */
         }
         action acknowledgeDetectionReport : AcknowledgeDetectionReport {
-            doc /* Usage of the report acknowledgement function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report acknowledgement function; allocated to the ground station. */
         }
         action detectAndClassifyObject : DetectAndClassifyObject {
-            doc /* Usage of the detection and classification function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the detection and classification function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action deliverDetectionReport : DeliverDetectionReport {
-            doc /* Usage of the report delivery function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the report delivery function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action applySupervisoryDirectives : ApplySupervisoryDirectives {
-            doc /* Usage of the directive uptake function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the directive uptake function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action reportMemberStatus : ReportMemberStatus {
-            doc /* Usage of the status reporting function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the status reporting function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action reportTrackPicture : ReportTrackPicture {
-            doc /* Usage of the track reporting function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the track reporting function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action returnToRecoveryPoint : ReturnToRecoveryPoint {
-            doc /* Usage of the return-to-recovery function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the return-to-recovery function; allocated to fleet: every one of the twelve drones performs it. */
         }
         action triageAlerts : TriageAlerts {
-            doc /* Usage of the alert triage function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the alert triage function; allocated to the alert triage unit. */
         }
         action keepDecisionRecords : KeepDecisionRecords {
-            doc /* Usage of the decision record function; allocated to the placeholder until the next step places it. */
+            doc /* Usage of the decision record function; allocated to the alert triage unit. */
         }
 
         // ---------------------------------------------------------------
@@ -308,15 +308,11 @@
         satisfy Hazards::RelayedReportDroppedHazard by deliverDetectionReport;
         satisfy Hazards::TrackHandOverGapHazard by correlateTracks;
             // carried from the layer above; restored by the orchestrator
-            allocate taskSurveillanceArea to dutyController;
             trace taskSurveillanceArea to SurveillanceDroneSwarm::SA::taskSurveillanceArea;
-            allocate commandSupervisoryPriorities to dutyController;
             trace commandSupervisoryPriorities to SurveillanceDroneSwarm::SA::commandSupervisoryPriorities;
-            allocate recallAndLand to dutyController;
             trace recallAndLand to SurveillanceDroneSwarm::SA::recallAndLand;
             allocate presentStatusPicture to groundStation;
             trace presentStatusPicture to SurveillanceDroneSwarm::SA::presentStatusPicture;
-            allocate acknowledgeDetectionReport to operationsCentreAnalyst;
             trace acknowledgeDetectionReport to SurveillanceDroneSwarm::SA::acknowledgeDetectionReport;
             trace handOverSector to SurveillanceDroneSwarm::SA::handOverSector;
             trace rotateRecharge to SurveillanceDroneSwarm::SA::rotateRecharge;
