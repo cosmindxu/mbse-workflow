@@ -1,86 +1,86 @@
 WEBVTT
 
 1
-00:00:04.000 --> 00:00:14.988
+00:00:04.000 --> 00:00:14.995
 SHOW ONLY THE SA LAYER
 In the Explorer, ⊞ on SA scopes every diagram to the system-analysis package. The chip above the canvas says what is shown.
 
 2
-00:00:14.988 --> 00:00:27.264
+00:00:14.995 --> 00:00:27.260
 GENERAL VIEW
 Definitions and usages as boxes, read left to right. At SA the system is one part, system, with functions allocated to it and requirements it satisfies.
 
 3
-00:00:27.264 --> 00:00:37.395
+00:00:27.260 --> 00:00:37.388
 READ ONE ELEMENT
 Select a box: Properties shows what it is. Selection zooms to it. system is the twelve-drone swarm as one black box.
 
 4
-00:00:37.395 --> 00:00:47.248
+00:00:37.388 --> 00:00:47.242
 TREE VIEW
 What SA contains, one branch at a time. +N on a box opens what it owns — here SwarmMember, with its two state machines.
 
 5
-00:00:47.248 --> 00:00:57.846
+00:00:47.242 --> 00:00:57.845
 INTERCONNECTION VIEW
 The system and its actors, with ports on their edges. Each line is a connection: tasking, supervision, recall, reports.
 
 6
-00:00:57.846 --> 00:01:13.909
+00:00:57.845 --> 00:01:13.911
 ACTION VIEW
 The 26 functions of the system and its actors: a set allocated to owners, not a sequence. The 13 lines are flows, labelled with what they carry: a detection report goes to acknowledgement, a receipt comes back.
 
 7
-00:01:13.909 --> 00:01:26.432
+00:01:13.911 --> 00:01:26.436
 STATE VIEW
 Each drone has two state machines: where it is in its sortie, and its operating condition. The fleet has mesh modes. Arrows are transitions: trigger / effect.
 
 8
-00:01:26.432 --> 00:01:39.018
+00:01:26.436 --> 00:01:39.038
 ADD A STATE BACK
 Before recording we deleted Readmitted from SwarmMemberModes. Now we add it back. A new element goes under the selection, so first open SA › SwarmMember.
 
 9
-00:01:39.018 --> 00:01:45.546
+00:01:39.038 --> 00:01:45.576
 SELECT WHERE IT GOES
 Select the state machine SwarmMemberModes in the Explorer.
 
 10
-00:01:45.546 --> 00:01:57.676
+00:01:45.576 --> 00:01:57.710
 PLACE A STATE
 Pick State in the palette, then click empty canvas. The new state is created inside SwarmMemberModes; until it has a transition it stands on its own.
 
 11
-00:01:57.676 --> 00:02:04.751
+00:01:57.710 --> 00:02:04.602
 NAME IT
 Type the name in Properties.
 
 12
-00:02:04.751 --> 00:02:14.410
+00:02:04.602 --> 00:02:14.276
 CONNECT IT
 Pick Transition, click the source state, then the target: Quarantined → Readmitted. The new transition is selected.
 
 13
-00:02:14.410 --> 00:02:26.311
+00:02:14.276 --> 00:02:26.049
 GIVE IT A TRIGGER AND AN EFFECT
 In Properties: the trigger readmissionPassed, the effect rejoinAfterCheck. The line is labelled trigger / effect.
 
 14
-00:02:26.311 --> 00:02:35.248
+00:02:26.049 --> 00:02:35.001
 AND ONWARD
 Once checked, a readmitted drone returns to Nominal: Readmitted → Nominal.
 
 15
-00:02:35.248 --> 00:02:46.180
+00:02:35.001 --> 00:02:45.937
 THE RESULT
 Readmitted is back between Quarantined and Nominal, as before we deleted it. Edits stay in this browser until you save or export them.
 
 16
-00:02:46.180 --> 00:02:56.923
+00:02:45.937 --> 00:02:56.658
 REQUIREMENT VIEW
 Requirements and what satisfies each one. SwarmMember satisfies most of SA's; functions such as admitMember satisfy the rest.
 
 17
-00:02:56.923 --> 00:03:06.043
+00:02:56.658 --> 00:03:05.792
 CASE VIEW
 The eleven use cases, from WatchTheTaskedArea to SwarmSelfCoordination, each with the system as its subject.

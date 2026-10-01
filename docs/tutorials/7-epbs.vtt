@@ -1,71 +1,71 @@
 WEBVTT
 
 1
-00:00:04.000 --> 00:00:16.279
+00:00:04.000 --> 00:00:16.277
 SHOW ONLY THE EPBS LAYER
 In the Explorer, ⊞ on EPBS scopes every diagram to the end-product breakdown: one configuration item per thing procured, built or delivered.
 
 2
-00:00:16.279 --> 00:00:27.832
+00:00:16.277 --> 00:00:27.814
 GENERAL VIEW
 Sixteen configuration items, each drawn with its fielded usage, its contract and its verification case. Too small to read whole, so pick one.
 
 3
-00:00:27.833 --> 00:00:41.287
+00:00:27.814 --> 00:00:41.285
 READ ONE ITEM
 Select BatteryPack, press Selection. Around it: its contract, its verification case and a hazard. Properties lists its «Trace» with SwarmMember, the PA part it realises.
 
 4
-00:00:41.287 --> 00:00:53.086
+00:00:41.285 --> 00:00:53.103
 INTERCONNECTION VIEW
 No wiring at this level: 16 item definitions and their 16 fielded usages. Counts sit on the usages: select batteryPacks, Multiplicity 24.
 
 5
-00:00:53.086 --> 00:01:06.284
+00:00:53.103 --> 00:01:06.295
 REQUIREMENT VIEW
 Each fielded usage satisfies its item's contract, as storeForwardSoftware does ReportStoreForwardSoftwareContract. Before recording we deleted one of these links.
 
 6
-00:01:06.284 --> 00:01:19.408
+00:01:06.295 --> 00:01:19.422
 A CONTRACT ON ITS OWN
 BatteryPackContract is now satisfied by nothing. Its text: at least 40 minutes of flight, a swap in no more than 20 minutes, at least two qualified sources.
 
 7
-00:01:19.408 --> 00:01:30.807
+00:01:19.422 --> 00:01:30.825
 DRAW A SATISFY LINK
 Pick Satisfy in the palette, then click the fielded usage first: batteryPacks, which now satisfies only the battery-supplier hazard.
 
 8
-00:01:30.807 --> 00:01:42.134
+00:01:30.825 --> 00:01:42.147
 THEN CLICK THE CONTRACT
 Then click the contract it satisfies, BatteryPackContract. The link is created and selected, and the diagram is laid out again.
 
 9
-00:01:42.134 --> 00:01:53.996
+00:01:42.147 --> 00:01:54.014
 THE RESULT
 batteryPacks satisfies BatteryPackContract again. The file gets the same line back, satisfy BatteryPackContract by batteryPacks, at the end of EPBS.
 
 10
-00:01:53.996 --> 00:02:07.523
+00:01:54.014 --> 00:02:07.546
 PARAMETRIC VIEW
 48 constraints: each contract's assume and require, with its condition written in the box, and each verification's objective, which only names the contract it verifies.
 
 11
-00:02:07.523 --> 00:02:20.577
+00:02:07.546 --> 00:02:20.602
 READ ONE CONTRACT'S CONDITIONS
 Zoomed in, the first pair: DroneAirframeContract assumes a full charge at the start, and requires at least 40 minutes of flight and 18 m/s cruise.
 
 12
-00:02:20.577 --> 00:02:33.382
+00:02:20.602 --> 00:02:33.405
 CASE VIEW
 The verification cases, one per contract. Each is drawn with its subject, the item under test, and its objective, which in the text names the contract it verifies.
 
 13
-00:02:33.382 --> 00:02:45.791
+00:02:33.405 --> 00:02:45.816
 READ ONE CASE
 VerifyBatteryPack: a discharge test for endurance, a timed swap at the recharge point and an audit of sources. Its subject, pack, is the item under test.
 
 14
-00:02:45.791 --> 00:02:58.301
+00:02:45.816 --> 00:02:58.340
 TREE VIEW
 What EPBS contains, one branch at a time. Select BatteryPackContract: +4 on its box opens its subject pack, its id and its two constraints, assume and require.
