@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 import pathlib
 import sys
 
@@ -31,6 +32,7 @@ import yaml
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "agents"))
 
 from log import Event  # noqa: E402
+from member_agent import States  # noqa: E402
 
 
 def frames_from(events: list[Event], sectors: list[dict], *, until: float,
@@ -227,20 +229,26 @@ def build(run: pathlib.Path, out: pathlib.Path,
     events = [Event(**json.loads(l)) for l in (run / "events.jsonl").read_text().splitlines() if l.strip()]
 
     sectors = fleet["sectors"][: results.get("members_flown", len(fleet["sectors"]))]
-    watching = next((r["state"] for r in mapping["states"] if r["autopilot"] and "AUTO" in str(r["autopilot"])), "Watching")
+    # The same reading of the mapping the run used. "The first state flown in
+    # AUTO" picked v9's `Isolated` ("AUTO, no peer traffic accepted"), listed
+    # before `Watching`, and drew every v9 replay as an empty board.
+    watching = States.from_mapping(mapping).watching
     duration = float(results.get("scenario_seconds", 1200))
     frames = frames_from(events, sectors, until=duration, watching=watching)
 
     measures = {m["measure"]: m for m in results.get("measures", [])}
-    watch = measures.get("areaUnderWatchShare", {})
+    # The coverage measure is whichever one run.py reported first — named by
+    # the run's own brief (v7 `areaUnderWatchShare`, v9 `areaUnderWatchFraction`).
+    watch_name = next((n for n in measures if not re.search(r"loss|link|jamm", n, re.I)), "areaUnderWatchShare")
+    watch = measures.get(watch_name, {})
     columns = max(1, int(len(sectors) ** 0.5 + 0.999))
 
     root = fleet["member_definition"].split("::")[0]
     caveat = (
-        "A sector counts as watched when a member is over it. The model states no sensor "
-        "footprint anywhere, so this is T-05's reading of coverage and not the architecture's: "
-        "it answers how many sectors had someone above them, which is a different question from "
-        "how much ground was under watch."
+        "A sector counts as watched when a member is over it: this is T-05's reading of "
+        "coverage, not a sensor model, whatever footprint the brief states. It answers how many "
+        "sectors had someone above them, which is a different question from how much ground "
+        "was under watch."
     )
     if results.get("offline"):
         caveat += (" This run was flown offline — the agents against cooperative stand-ins, with "
@@ -260,7 +268,7 @@ def build(run: pathlib.Path, out: pathlib.Path,
         last=len(frames) - 1,
         frames=json.dumps(frames),
         sector_ids=json.dumps([s["id"] for s in sectors]),
-        measure_a="areaUnderWatchShare",
+        measure_a=watch_name,
         target_a=watch.get("target", "—"),
         target_value=watch.get("target", 0.9),
         footer=html.escape(

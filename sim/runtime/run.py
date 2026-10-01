@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import pathlib
 import subprocess
 import sys
@@ -376,13 +377,26 @@ def report(
     )
 
     measures = {m["measure"]: m for m in mapping.get("measures", [])}
-    def target_of(name: str) -> tuple[float, str] | None:
-        row = measures.get(name)
+    def target_of(name: str | None) -> tuple[float, str] | None:
+        row = measures.get(name) if name else None
         if not row:
             return None
         text = str(row["target"])
         sense = "max" if ">=" in text else "min"
         return float(text.replace(">=", "").replace("<=", "").strip()), sense
+
+    # The measures by what they mean, not by v7's spelling. SEED names them:
+    # v7 wrote `areaUnderWatchShare` and `coverageLossOnMemberLoss`, v9
+    # `areaUnderWatchFraction` and `coverageLossAfterMemberLossFraction`, and a
+    # lookup keyed on the first left v9's run with no measure at all.
+    def measure_like(want: str, avoid: str | None = None) -> str | None:
+        for name in measures:
+            if re.search(want, name, re.I) and not (avoid and re.search(avoid, name, re.I)):
+                return name
+        return None
+    watch_name = measure_like(r"area.?under.?watch|watch.*share", r"loss|jamm|link|ground")
+    link_name = measure_like(r"ground.?link|link.?loss")
+    loss_name = measure_like(r"loss.*member|member.?loss")
 
     results: dict = {
         "offline": offline,
@@ -411,8 +425,8 @@ def report(
         "not_exercised": [
             "the simulated vehicle never runs out of power: charge is the agent's, "
             "because SITL takes battery state from the simulator and the plugin sends none",
-            "a sector counts as watched when a member is over it; v7 states no sensor "
-            "footprint, so this is T-05's reading of coverage and not the model's",
+            "a sector counts as watched while a member is over it: T-05's reading of "
+            "coverage, not a sensor model, whatever footprint the brief states",
         ],
     }
     if offline:
@@ -420,22 +434,22 @@ def report(
             0, "no autopilot and no physics: the agents flew against cooperative fakes"
         )
 
-    watch = target_of("areaUnderWatchShare")
+    watch = target_of(watch_name)
     if watch:
         target, sense = watch
         results["measures"].append({
-            "measure": "areaUnderWatchShare",
+            "measure": watch_name,
             "target": target, "sense": sense,
             "simulated": coverage.mean,
             "lowest": coverage.lowest,
             "meets_target": against_target(coverage.mean, target, sense),
         })
     ground_loss = coverage_after_ground_loss(log.events, coverage, until=duration)
-    link = target_of("groundLinkLossAreaUnderWatchShare")
+    link = target_of(link_name)
     if ground_loss and link:
         target, sense = link
         results["measures"].append({
-            "measure": "groundLinkLossAreaUnderWatchShare",
+            "measure": link_name,
             "target": target, "sense": sense,
             "simulated": ground_loss["mean_after"],
             "coordination": coordination,
@@ -443,11 +457,11 @@ def report(
             "meets_target": against_target(ground_loss["mean_after"], target, sense),
         })
 
-    loss = target_of("coverageLossOnMemberLoss")
+    loss = target_of(loss_name)
     if loss and impact:
         target, sense = loss
         results["measures"].append({
-            "measure": "coverageLossOnMemberLoss",
+            "measure": loss_name,
             "target": target, "sense": sense,
             "simulated": impact.loss,
             "before": impact.before, "lowest_after": impact.lowest_after,

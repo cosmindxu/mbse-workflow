@@ -16,6 +16,7 @@
  *
  * So "X realises Y" reads as a link FROM Y (the upper element) TO X.
  */
+import { BUDGET, budgetLike } from '../spec/budgets.ts';
 import { estimateLine } from '../spec/measures.ts';
 import { identifierOf } from '../spec/names.ts';
 import { RULE_PATTERN, isUnreadable, ruleReading, ruleTemplate, type RuleRow } from '../spec/rules.ts';
@@ -439,34 +440,7 @@ const replicasTopology: Predicate = (input) => {
   ];
 };
 
-/**
- * A budget the brief fixes, found by what it means rather than by its spelling.
- *
- * SEED names the budgets; the brief is prose. v7 produced
- * `memberRechargeMinutes` and `areaOfInterestKm2`, v8 produced
- * `groundTurnaroundMinutes` and `areaOfInterestSquareKilometres` from the same
- * paragraph — and two gates keyed on the first spellings went silent on the
- * second run without anyone noticing, which is the worst way for a check to
- * fail. Patterns, and the first match wins.
- */
-const budgetLike = (
-  budgets: Readonly<Record<string, number>>,
-  pattern: RegExp,
-): number | undefined => {
-  const key = Object.keys(budgets).find((name) => pattern.test(name));
-  return key === undefined ? undefined : budgets[key];
-};
 
-const BUDGET = {
-  endurance: /enduran/i,
-  /** Time on the ground between sorties, however the brief words it. */
-  turnaround: /recharge|turnaround|refuel|swap/i,
-  area: /area/i,
-  speed: /speed|cruise/i,
-  fleet: /fleet.?size|size.?fleet|fleet.?count/i,
-  /** What one member keeps under watch at once, when the brief fixes it. */
-  footprint: /footprint|sensor.?(area|coverage)|coverage.?per/i,
-} as const;
 
 
 /**

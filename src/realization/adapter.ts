@@ -15,6 +15,7 @@
  * `kind` says whether it is a budget or a measure. A future brief naming its
  * drones something else goes through unchanged.
  */
+import { withCanonicalBudgets } from '../spec/budgets.ts';
 import { readFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
@@ -205,7 +206,7 @@ export async function simulationInputOf(
     ...(() => {
       const split = moesOf(brief);
       return {
-        budgets: split.budgets,
+        budgets: withCanonicalBudgets(split.budgets),
         // Each measure carries what the architecture claimed for it, so the
         // report can put the claim beside the result without a second lookup.
         measures: split.measures.map((m) => ({
