@@ -3,9 +3,9 @@
   "layer": "LA",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml",
-  "prefixHash": "48b3cdb60a9a1124",
+  "prefixHash": "e86ee771348b1324",
   "elements": 2586,
-  "durationMs": 1575,
+  "durationMs": 1618,
   "checks": [
     {
       "name": "check",
@@ -21,7 +21,7 @@
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --relation trace --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 74,
+      "durationMs": 78,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/trace-trace.json",
       "findings": 5
     },
@@ -30,7 +30,7 @@
       "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/5_LA.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 1002,
+      "durationMs": 1022,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S33/verify.json",
       "findings": 0
     }
@@ -161,20 +161,9 @@
       "code": "validation/constraint-violation",
       "severity": "info",
       "blocking": false,
-      "element": "unattendedWatchDurationTarget",
-      "layer": "Common",
-      "line": 780,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: unattendedWatchDurationHours has no value here; evaluated per specialisation: LA::unattendedWatchDurationHours.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
       "element": "fleetSizeBudget",
       "layer": "Common",
-      "line": 792,
+      "line": 788,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -185,7 +174,7 @@
       "blocking": false,
       "element": "memberEnduranceBudget",
       "layer": "Common",
-      "line": 800,
+      "line": 796,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -196,7 +185,7 @@
       "blocking": false,
       "element": "groundTurnaroundBudget",
       "layer": "Common",
-      "line": 808,
+      "line": 804,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -207,7 +196,7 @@
       "blocking": false,
       "element": "cruiseSpeedBudget",
       "layer": "Common",
-      "line": 816,
+      "line": 812,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: cruiseSpeedMetresPerSecond has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -218,7 +207,7 @@
       "blocking": false,
       "element": "instantaneousFootprintBudget",
       "layer": "Common",
-      "line": 824,
+      "line": 820,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: instantaneousFootprintSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -229,7 +218,7 @@
       "blocking": false,
       "element": "areaOfInterestBudget",
       "layer": "Common",
-      "line": 832,
+      "line": 828,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -240,7 +229,7 @@
       "blocking": false,
       "element": "operatorSecondsPerAlertBudget",
       "layer": "Common",
-      "line": 840,
+      "line": 836,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -251,9 +240,31 @@
       "blocking": false,
       "element": "trackStaleAfterBudget",
       "layer": "Common",
-      "line": 848,
+      "line": 844,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "satellitePositioningOutageBudget",
+      "layer": "Common",
+      "line": 852,
+      "rule": "CV-17",
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "meshLinksJammedBudget",
+      "layer": "Common",
+      "line": 860,
+      "rule": "CV-17",
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.",
       "check": "check"
     },
     {
@@ -286,7 +297,7 @@
       "layer": "LA",
       "line": 214,
       "rule": "CV-17",
-      "message": "LA::coverageUnderMeshJammingFraction = 0.58662 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number",
+      "message": "LA::coverageUnderMeshJammingFraction = 0.66216 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number",
       "check": "check"
     },
     {
@@ -375,17 +386,6 @@
       "line": 246,
       "rule": "CV-17",
       "message": "LA::onboardClassificationCostUsdPerMember = 350 misses Common::onboardClassificationCostTarget (onboardClassificationCostUsdPerMember <= 300.0) — missed a placeholder, not the customer's number",
-      "check": "check"
-    },
-    {
-      "code": "validation/target-by-specialisation",
-      "severity": "warning",
-      "blocking": false,
-      "element": "unattendedWatchDurationHours",
-      "layer": "LA",
-      "line": 250,
-      "rule": "CV-17",
-      "message": "LA::unattendedWatchDurationHours = 0.666667 misses Common::unattendedWatchDurationTarget (unattendedWatchDurationHours >= 12.0) — missed a placeholder, not the customer's number",
       "check": "check"
     },
     {

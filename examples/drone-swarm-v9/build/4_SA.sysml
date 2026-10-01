@@ -19,7 +19,7 @@ package SurveillanceDroneSwarm {
         metadata def Budget; metadata def Placeholder;
     }
     package Common {
-        doc /* Definitions every layer of SurveillanceDroneSwarm shares: the items that flow between a drone, its peers, the ground station, the operations centre and the environment; the ports and interfaces those flows cross; and one #MoE attribute per measure of effectiveness, each held to its target by a require constraint. Nothing happens here — no parts, no behaviour, no state machines: those belong to a layer. */
+        doc /* Definitions every layer of SurveillanceDroneSwarm shares: the items that flow between a drone, its peers, the ground station, the operations centre and the environment; the ports and interfaces those flows cross; and one #MoE attribute per measure of effectiveness, each held to its target by a require constraint where the brief states one. Nothing happens here — no parts, no behaviour, no state machines: those belong to a layer. */
 
         // ---------------------------------------------------------------
         // Value-level attribute definitions
@@ -795,11 +795,7 @@ package SurveillanceDroneSwarm {
         }
 
         #MoE attribute unattendedWatchDurationHours : ScalarValues::Real {
-            doc /* How long the swarm holds the watch before it needs people. The brief asks for this but states no number, so 12 hours is a target set in this model and NOT asked for by the customer; it should be replaced by the customer's figure before any architecture is failed on it. */
-        }
-        require constraint unattendedWatchDurationTarget {
-            doc /* The swarm holds the watch for at least 12 hours before it needs people — a target set in this model, not the customer's. */
-            unattendedWatchDurationHours >= 12.0
+            doc /* How long the swarm holds the watch before it needs people. The brief asks for this but states no number, so it has no target and no require constraint: the customer's figure is awaited. Each layer still estimates it and reports the estimate; nothing is met or missed against it until that figure comes. */
         }
 
         // ---------------------------------------------------------------

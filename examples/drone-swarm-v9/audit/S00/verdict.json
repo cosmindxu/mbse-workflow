@@ -3,9 +3,9 @@
   "layer": "Common",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/1_Common.sysml",
-  "prefixHash": "2e98ca2d85046999",
-  "elements": 717,
-  "durationMs": 1545,
+  "prefixHash": "2b0fdfa1c79240f8",
+  "elements": 715,
+  "durationMs": 1556,
   "checks": [
     {
       "name": "check",
@@ -14,7 +14,7 @@
       "ok": true,
       "durationMs": 1,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S00/check.json",
-      "findings": 20
+      "findings": 21
     },
     {
       "name": "elements",
@@ -152,20 +152,9 @@
       "code": "validation/constraint-violation",
       "severity": "info",
       "blocking": false,
-      "element": "unattendedWatchDurationTarget",
-      "layer": "Common",
-      "line": 780,
-      "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: unattendedWatchDurationHours has no value anywhere and nothing specialises it.",
-      "check": "check"
-    },
-    {
-      "code": "validation/constraint-violation",
-      "severity": "info",
-      "blocking": false,
       "element": "fleetSizeBudget",
       "layer": "Common",
-      "line": 792,
+      "line": 788,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -176,7 +165,7 @@
       "blocking": false,
       "element": "memberEnduranceBudget",
       "layer": "Common",
-      "line": 800,
+      "line": 796,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -187,7 +176,7 @@
       "blocking": false,
       "element": "groundTurnaroundBudget",
       "layer": "Common",
-      "line": 808,
+      "line": 804,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -198,7 +187,7 @@
       "blocking": false,
       "element": "cruiseSpeedBudget",
       "layer": "Common",
-      "line": 816,
+      "line": 812,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: cruiseSpeedMetresPerSecond has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -209,7 +198,7 @@
       "blocking": false,
       "element": "instantaneousFootprintBudget",
       "layer": "Common",
-      "line": 824,
+      "line": 820,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: instantaneousFootprintSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -220,7 +209,7 @@
       "blocking": false,
       "element": "areaOfInterestBudget",
       "layer": "Common",
-      "line": 832,
+      "line": 828,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -231,7 +220,7 @@
       "blocking": false,
       "element": "operatorSecondsPerAlertBudget",
       "layer": "Common",
-      "line": 840,
+      "line": 836,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -242,9 +231,31 @@
       "blocking": false,
       "element": "trackStaleAfterBudget",
       "layer": "Common",
-      "line": 848,
+      "line": 844,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "satellitePositioningOutageBudget",
+      "layer": "Common",
+      "line": 852,
+      "rule": "CV-17",
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.",
+      "check": "check"
+    },
+    {
+      "code": "validation/constraint-violation",
+      "severity": "info",
+      "blocking": false,
+      "element": "meshLinksJammedBudget",
+      "layer": "Common",
+      "line": 860,
+      "rule": "CV-17",
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.",
       "check": "check"
     }
   ]

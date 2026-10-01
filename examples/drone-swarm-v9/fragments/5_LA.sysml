@@ -212,7 +212,7 @@
         }
 
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction {
-            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 0.782 x (1 - 0.5 x 0.5) = 0.587. Basis: the 0.782 under watch, less the gaps of lost hand-overs. A member leaving to recharge hands its sector to a neighbour and stays until the neighbour confirms; a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5. Each lost hand-over leaves its sector empty for about half a swap turnaround, a stated assumption. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
+            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 0.782 x (1 - 0.5 x 0.307) = 0.662. Basis: the 0.782 under watch, less the gaps of lost hand-overs. A member leaving to recharge hands its sector to a neighbour and stays until the neighbour confirms; a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5. Each lost hand-over leaves its sector empty for about half a swap turnaround, 10 min out of the 32.59 min a member watches between hand-overs, 0.307, derived from the same time model as the 0.782. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
         }
 
         #Estimate attribute reportAgeAtOperationsCentreSeconds :> Common::reportAgeAtOperationsCentreSeconds = 40 {
@@ -248,7 +248,7 @@
         }
 
         #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours {
-            doc /* Worst case, derived by the assert constraint below (CV-17): 40 / 60 = 0.667 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The 12 h figure is a target set here, not the customer's. Units are hours. */
+            doc /* Worst case, derived by the assert constraint below (CV-17): 40 / 60 = 0.667 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The brief states no number for this measure, so it has no target: the estimate is reported until the customer's figure comes. Units are hours. */
         }
 
         // ---------------------------------------------------------------
@@ -574,7 +574,8 @@
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
         assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         attribute jammedLinkFraction = 0.5 { doc /* Share of the links between drones jammed in the brief's jamming test condition, restated here because a constraint body cannot reach Common. */ }
-        attribute sectorGapShareOfLostHandOver = 0.5 { doc /* Share of a sector's watch lost when its hand-over is lost. The leaving member stays until the neighbour confirms, so the sector is empty for about half a swap turnaround. An assumption, stated and not derived. */ }
+        attribute sectorGapShareOfLostHandOver { doc /* Share of a sector's watch lost when its hand-over is lost, derived by the assert constraint below (CV-17): 10 / 32.59 = 0.307. The leaving member stays until the neighbour confirms, so a lost hand-over leaves the sector empty for about half a swap turnaround, 20 / 2 = 10 min, out of the watch a member keeps between hand-overs, its flight less the round trip, 40 - 7.41 = 32.59 min. */ }
+        assert constraint { doc /* A lost hand-over empties the sector for half a swap turnaround, out of the watch between hand-overs. */ sectorGapShareOfLostHandOver == (memberTurnaroundMinutes / 2) / (memberFlightMinutes - sectorTransitMinutes) }
         assert constraint { doc /* Correlated worst case: a jammer covering a neighbourhood jams every confirmation path, so the share of hand-overs lost is the share of links jammed. */ coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1 - jammedLinkFraction * sectorGapShareOfLostHandOver) }
         assert constraint { doc /* Without ground crew to swap batteries, the watch lasts one sortie; 60 minutes to the hour. */ unattendedWatchDurationHours == memberFlightMinutes / 60 }
         #prose part laTradeOff {

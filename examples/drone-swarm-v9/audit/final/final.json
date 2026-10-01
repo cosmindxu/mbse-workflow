@@ -5,7 +5,7 @@
     "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json",
     "exitCode": 0,
     "meaning": "clean",
-    "diagnostics": 50
+    "diagnostics": 49
   },
   "closure": [
     {
@@ -44,8 +44,8 @@
     "docCoverage": [
       {
         "layer": "Common",
-        "elements": 94,
-        "documented": 94,
+        "elements": 93,
+        "documented": 93,
         "coverage": 1
       },
       {
@@ -62,15 +62,15 @@
       },
       {
         "layer": "LA",
-        "elements": 68,
-        "documented": 56,
-        "coverage": 0.8235294117647058
+        "elements": 69,
+        "documented": 57,
+        "coverage": 0.8260869565217391
       },
       {
         "layer": "PA",
-        "elements": 114,
-        "documented": 112,
-        "coverage": 0.9824561403508771
+        "elements": 115,
+        "documented": 113,
+        "coverage": 0.9826086956521739
       },
       {
         "layer": "EPBS",
@@ -476,7 +476,8 @@
         }
       ],
       "placeholder": false,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "coverageLossAfterMemberLossFraction",
@@ -494,7 +495,8 @@
         }
       ],
       "placeholder": false,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "coverageUnderMeshJammingFraction",
@@ -502,17 +504,18 @@
       "layers": [
         {
           "layer": "LA",
-          "estimate": "0.58662 (derived)",
+          "estimate": "0.66216 (derived)",
           "met": false
         },
         {
           "layer": "PA",
-          "estimate": "0.58662 (derived)",
+          "estimate": "0.66216 (derived)",
           "met": false
         }
       ],
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "reportAgeAtOperationsCentreSeconds",
@@ -531,7 +534,8 @@
       ],
       "metByAll": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "positionErrorWithoutSatelliteMetres",
@@ -550,7 +554,8 @@
       ],
       "unreachable": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "reportHoldWhileCutOffMinutes",
@@ -569,7 +574,8 @@
       ],
       "metByAll": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "missedDetectionFraction",
@@ -588,7 +594,8 @@
       ],
       "unreachable": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "falseAlarmsPerHour",
@@ -607,7 +614,8 @@
       ],
       "unreachable": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "alertsReachingOperatorPerHour",
@@ -625,7 +633,8 @@
         }
       ],
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "acknowledgedReportsThatMatterFraction",
@@ -644,7 +653,8 @@
       ],
       "unreachable": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "onboardClassificationCostUsdPerMember",
@@ -663,26 +673,25 @@
       ],
       "unreachable": "4/4",
       "placeholder": true,
-      "setBySeed": false
+      "setBySeed": false,
+      "noTarget": false
     },
     {
       "name": "unattendedWatchDurationHours",
-      "target": "≥ 12 h",
+      "target": "—",
       "layers": [
         {
           "layer": "LA",
-          "estimate": "0.666667 h (derived)",
-          "met": false
+          "estimate": "0.666667 h (derived)"
         },
         {
           "layer": "PA",
-          "estimate": "0.666667 h (derived)",
-          "met": false
+          "estimate": "0.666667 h (derived)"
         }
       ],
-      "unreachable": "4/4",
       "placeholder": false,
-      "setBySeed": true
+      "setBySeed": false,
+      "noTarget": true
     }
   ],
   "behaviour": {
@@ -965,7 +974,7 @@
     },
     {
       "layer": "Common",
-      "fragmentLines": 894,
+      "fragmentLines": 890,
       "recheck": [
         "S00"
       ],
@@ -1039,7 +1048,7 @@
     },
     {
       "layer": "LA",
-      "fragmentLines": 588,
+      "fragmentLines": 589,
       "recheck": [
         "S33"
       ],
@@ -1056,7 +1065,7 @@
     },
     {
       "layer": "PA",
-      "fragmentLines": 616,
+      "fragmentLines": 617,
       "recheck": [
         "S42"
       ],

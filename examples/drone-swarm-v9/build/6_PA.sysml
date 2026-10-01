@@ -19,7 +19,7 @@ package SurveillanceDroneSwarm {
         metadata def Budget; metadata def Placeholder;
     }
     package Common {
-        doc /* Definitions every layer of SurveillanceDroneSwarm shares: the items that flow between a drone, its peers, the ground station, the operations centre and the environment; the ports and interfaces those flows cross; and one #MoE attribute per measure of effectiveness, each held to its target by a require constraint. Nothing happens here — no parts, no behaviour, no state machines: those belong to a layer. */
+        doc /* Definitions every layer of SurveillanceDroneSwarm shares: the items that flow between a drone, its peers, the ground station, the operations centre and the environment; the ports and interfaces those flows cross; and one #MoE attribute per measure of effectiveness, each held to its target by a require constraint where the brief states one. Nothing happens here — no parts, no behaviour, no state machines: those belong to a layer. */
 
         // ---------------------------------------------------------------
         // Value-level attribute definitions
@@ -795,11 +795,7 @@ package SurveillanceDroneSwarm {
         }
 
         #MoE attribute unattendedWatchDurationHours : ScalarValues::Real {
-            doc /* How long the swarm holds the watch before it needs people. The brief asks for this but states no number, so 12 hours is a target set in this model and NOT asked for by the customer; it should be replaced by the customer's figure before any architecture is failed on it. */
-        }
-        require constraint unattendedWatchDurationTarget {
-            doc /* The swarm holds the watch for at least 12 hours before it needs people — a target set in this model, not the customer's. */
-            unattendedWatchDurationHours >= 12.0
+            doc /* How long the swarm holds the watch before it needs people. The brief asks for this but states no number, so it has no target and no require constraint: the customer's figure is awaited. Each layer still estimates it and reports the estimate; nothing is met or missed against it until that figure comes. */
         }
 
         // ---------------------------------------------------------------
@@ -2314,7 +2310,7 @@ package SurveillanceDroneSwarm {
         }
 
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction {
-            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 0.782 x (1 - 0.5 x 0.5) = 0.587. Basis: the 0.782 under watch, less the gaps of lost hand-overs. A member leaving to recharge hands its sector to a neighbour and stays until the neighbour confirms; a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5. Each lost hand-over leaves its sector empty for about half a swap turnaround, a stated assumption. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
+            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 0.782 x (1 - 0.5 x 0.307) = 0.662. Basis: the 0.782 under watch, less the gaps of lost hand-overs. A member leaving to recharge hands its sector to a neighbour and stays until the neighbour confirms; a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5. Each lost hand-over leaves its sector empty for about half a swap turnaround, 10 min out of the 32.59 min a member watches between hand-overs, 0.307, derived from the same time model as the 0.782. The member-centred allocation is the worse case. Placeholder target 0.75 is not met. */
         }
 
         #Estimate attribute reportAgeAtOperationsCentreSeconds :> Common::reportAgeAtOperationsCentreSeconds = 40 {
@@ -2350,7 +2346,7 @@ package SurveillanceDroneSwarm {
         }
 
         #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours {
-            doc /* Worst case, derived by the assert constraint below (CV-17): 40 / 60 = 0.667 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The 12 h figure is a target set here, not the customer's. Units are hours. */
+            doc /* Worst case, derived by the assert constraint below (CV-17): 40 / 60 = 0.667 h. Basis: batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent. The brief states no number for this measure, so it has no target: the estimate is reported until the customer's figure comes. Units are hours. */
         }
 
         // ---------------------------------------------------------------
@@ -2676,7 +2672,8 @@ package SurveillanceDroneSwarm {
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
         assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         attribute jammedLinkFraction = 0.5 { doc /* Share of the links between drones jammed in the brief's jamming test condition, restated here because a constraint body cannot reach Common. */ }
-        attribute sectorGapShareOfLostHandOver = 0.5 { doc /* Share of a sector's watch lost when its hand-over is lost. The leaving member stays until the neighbour confirms, so the sector is empty for about half a swap turnaround. An assumption, stated and not derived. */ }
+        attribute sectorGapShareOfLostHandOver { doc /* Share of a sector's watch lost when its hand-over is lost, derived by the assert constraint below (CV-17): 10 / 32.59 = 0.307. The leaving member stays until the neighbour confirms, so a lost hand-over leaves the sector empty for about half a swap turnaround, 20 / 2 = 10 min, out of the watch a member keeps between hand-overs, its flight less the round trip, 40 - 7.41 = 32.59 min. */ }
+        assert constraint { doc /* A lost hand-over empties the sector for half a swap turnaround, out of the watch between hand-overs. */ sectorGapShareOfLostHandOver == (memberTurnaroundMinutes / 2) / (memberFlightMinutes - sectorTransitMinutes) }
         assert constraint { doc /* Correlated worst case: a jammer covering a neighbourhood jams every confirmation path, so the share of hand-overs lost is the share of links jammed. */ coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1 - jammedLinkFraction * sectorGapShareOfLostHandOver) }
         assert constraint { doc /* Without ground crew to swap batteries, the watch lasts one sortie; 60 minutes to the hour. */ unattendedWatchDurationHours == memberFlightMinutes / 60 }
         #prose part laTradeOff {
@@ -3166,7 +3163,8 @@ package SurveillanceDroneSwarm {
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - memberTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
         assert constraint { coverageLossAfterMemberLossFraction == memberCoverageFraction / areaUnderWatchFraction }
         attribute jammedLinkFraction = 0.5 { doc /* Share of the links between drones jammed in the brief's jamming test condition, restated here because a constraint body cannot reach Common. */ }
-        attribute sectorGapShareOfLostHandOver = 0.5 { doc /* Share of a sector's watch lost when its hand-over is lost. The leaving member stays until the neighbour confirms, so the sector is empty for about half a swap turnaround. An assumption, stated and not derived. */ }
+        attribute sectorGapShareOfLostHandOver { doc /* Share of a sector's watch lost when its hand-over is lost, derived by the assert constraint below (CV-17): 10 / 32.59 = 0.307. The leaving member stays until the neighbour confirms, so a lost hand-over leaves the sector empty for about half a swap turnaround, 20 / 2 = 10 min, out of the watch a member keeps between hand-overs, its flight less the round trip, 40 - 7.41 = 32.59 min. The same as LA: the physical architecture changes none of these times. */ }
+        assert constraint { doc /* A lost hand-over empties the sector for half a swap turnaround, out of the watch between hand-overs. */ sectorGapShareOfLostHandOver == (memberTurnaroundMinutes / 2) / (memberFlightMinutes - memberTransitMinutes) }
         assert constraint { doc /* Correlated worst case: a jammer covering a neighbourhood jams every confirmation path, so the share of hand-overs lost is the share of links jammed. */ coverageUnderMeshJammingFraction == areaUnderWatchFraction * (1 - jammedLinkFraction * sectorGapShareOfLostHandOver) }
         attribute operatorSecondsPerAlert = 30 { doc /* The least time the operator needs per alert. Unit: seconds. */ }
         attribute alertCapPerHour = 20 { doc /* Alerts the triage node releases to the operator per hour; alerts above it wait in the ranked backlog. Unit: 1/h. */ }
@@ -3198,7 +3196,7 @@ package SurveillanceDroneSwarm {
             doc /* Worst case, derived by the assert constraint below (CV-17): one watching drone holds 0.12 of the area out of the 0.782 under watch, 0.12 / 0.782 = 0.153 of the coverage lost before any re-spread. It is the same wherever redistribution runs, because the loss precedes it; the member-centred redistribution then re-spreads from the last agreed assignment without waiting for the ground. */
         }
         #Estimate attribute coverageUnderMeshJammingFraction :> Common::coverageUnderMeshJammingFraction {
-            doc /* Worst case, derived from this layer's own values by the assert constraint above (CV-17): 0.782 x (1 - 0.5 x 0.5) = 0.587. The baseline under watch less the gaps of lost hand-overs: a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5; each lost hand-over leaves its sector empty for about half a swap turnaround, a stated assumption. The same arithmetic LA states: the physical architecture adds no modelled confirmation path and changes none of the inputs, so the value equals LA's. Placeholder target 0.75 is not met. */
+            doc /* Worst case, derived from this layer's own values by the assert constraint above (CV-17): 0.782 x (1 - 0.5 x 0.307) = 0.662. The baseline under watch less the gaps of lost hand-overs: a jammer covering a neighbourhood jams every confirmation path there together, so in the worst case the share of hand-overs lost equals the share of links jammed, the brief's 0.5; each lost hand-over leaves its sector empty for about half a swap turnaround, 10 min out of the 32.59 min a member watches between hand-overs, 0.307, derived from the same time model as the 0.782. The same arithmetic LA states: the physical architecture adds no modelled confirmation path and changes none of the inputs, so the value equals LA's. Placeholder target 0.75 is not met. */
         }
         #Estimate attribute reportAgeAtOperationsCentreSeconds :> Common::reportAgeAtOperationsCentreSeconds = 40 {
             doc /* Worst case 40 s with the link up. About 5 s to classify, up to three relay hops of about 2 s each through neighbours, about 5 s on the ground link, about 20 s queuing at the triage server, and about 4 s to write the record. Relay hop count is the driver. Units are seconds. */
@@ -3227,7 +3225,7 @@ package SurveillanceDroneSwarm {
         }
         assert constraint { doc /* The per-member cost is the sum of the on-board parts. */ onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd }
         #Estimate attribute unattendedWatchDurationHours :> Common::unattendedWatchDurationHours {
-            doc /* Worst case, derived by the assert constraint below (CV-17): batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent, 40 / 60 = 0.667 h. The same as LA: the physical architecture changes neither number. The 12 h figure is a target set here, not the customer's. Units are hours. */
+            doc /* Worst case, derived by the assert constraint below (CV-17): batteries are swapped by ground crew, so without people the watch ends when the first 40 min sortie is spent, 40 / 60 = 0.667 h. The same as LA: the physical architecture changes neither number. The brief states no number for this measure, so it has no target: the estimate is reported until the customer's figure comes. Units are hours. */
         }
         assert constraint { doc /* Without ground crew to swap batteries, the watch lasts one sortie; 60 minutes to the hour. */ unattendedWatchDurationHours == memberFlightMinutes / 60 }
         // ===== hazards this physical split adds =====

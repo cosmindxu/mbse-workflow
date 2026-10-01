@@ -1,12 +1,12 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3688 elements)
-Sysprose: 90183cc (the checks were calibrated against 2486d72)
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 7 legs
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
+Sysprose: 69c65a4 (the checks were calibrated against 2486d72)
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 8 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
-`npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 50 diagnostic(s)
+`npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 49 diagnostic(s)
 `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → 49/49 satisfied (100 %)
 
 ## Realization chain
@@ -37,11 +37,11 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 7 
 
 | Layer | Elements | Documented | |
 |---|---|---|---|
-| Common | 94 | 94 | 100 % |
+| Common | 93 | 93 | 100 % |
 | OA | 103 | 103 | 100 % |
 | SA | 113 | 98 | 87 % |
-| LA | 68 | 56 | 82 % |
-| PA | 114 | 112 | 98 % |
+| LA | 69 | 57 | 83 % |
+| PA | 115 | 113 | 98 % |
 | EPBS | 64 | 64 | 100 % |
 
 29 element(s) carry no doc and no realization link — a reader cannot ask why they exist:
@@ -123,11 +123,11 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Layer edited | Fragment lines | Re-checked | Runs again | Calls those steps made | USD |
 |---|---|---|---|---|---|
 | Kinds | 15 | S00 | S10…S60 (16) | 20 | 9.44 |
-| Common | 894 | S00 | S10…S60 (16) | 20 | 9.44 |
+| Common | 890 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
-| LA | 588 | S33 | S40…S60 (6) | 11 | 4.58 |
-| PA | 616 | S42 | S50…S60 (2) | 7 | 1.96 |
+| LA | 589 | S33 | S40…S60 (6) | 11 | 4.58 |
+| PA | 617 | S42 | S50…S60 (2) | 7 | 1.96 |
 | EPBS | 499 | S50 | — | 0 | 0.00 |
 
 ## Measures
@@ -138,7 +138,7 @@ The worst case over the `#Estimate` each layer's chosen architecture states. The
 |---|---|---|---|
 | `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | 0.78216 (derived) ✗ |
 | `coverageLossAfterMemberLossFraction` | ≤ 0.25 | 0.153421 (derived) ✓ | 0.153421 (derived) ✓ |
-| `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.58662 (derived) — missed a placeholder | 0.58662 (derived) — missed a placeholder |
+| `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.66216 (derived) — missed a placeholder | 0.66216 (derived) — missed a placeholder |
 | `reportAgeAtOperationsCentreSeconds` | ≤ 60 s (placeholder) | 40 s ✓ | 40 s ✓ |
 | `positionErrorWithoutSatelliteMetres` | ≤ 50 m (placeholder) | 80 m — missed a placeholder | 80 m — missed a placeholder |
 | `reportHoldWhileCutOffMinutes` | ≥ 30 min (placeholder) | 40 min ✓ | 40 min ✓ |
@@ -147,7 +147,7 @@ The worst case over the `#Estimate` each layer's chosen architecture states. The
 | `alertsReachingOperatorPerHour` | ≤ 20 1/h (placeholder) | 24 1/h — missed a placeholder | 20 1/h ✓ |
 | `acknowledgedReportsThatMatterFraction` | ≥ 0.8 (placeholder) | 0.7 — missed a placeholder | 0.75 — missed a placeholder |
 | `onboardClassificationCostUsdPerMember` | ≤ 300 USD (placeholder) | 350 USD — missed a placeholder | 350 USD — missed a placeholder |
-| `unattendedWatchDurationHours` | ≥ 12 h (set by SEED) | 0.666667 h (derived) — missed a placeholder | 0.666667 h (derived) — missed a placeholder |
+| `unattendedWatchDurationHours` | — | 0.666667 h (derived) | 0.666667 h (derived) |
 
 ### No architecture compared meets these
 
@@ -158,7 +158,6 @@ Every alternative at every layer missed the target. That is a question about the
 - `falseAlarmsPerHour` ≤ 2 1/h (placeholder): missed by 4/4 alternatives
 - `acknowledgedReportsThatMatterFraction` ≥ 0.8 (placeholder): missed by 4/4 alternatives
 - `onboardClassificationCostUsdPerMember` ≤ 300 USD (placeholder): missed by 4/4 alternatives
-- `unattendedWatchDurationHours` ≥ 12 h (set by SEED): missed by 4/4 alternatives
 
 ### Every architecture compared meets these
 
@@ -167,9 +166,9 @@ They added the same to every alternative's score, so the choice was made by the 
 - `reportAgeAtOperationsCentreSeconds` ≤ 60 s (placeholder): met by 4/4 alternatives
 - `reportHoldWhileCutOffMinutes` ≥ 30 min (placeholder): met by 4/4 alternatives
 
-9 of these 12 targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more, and a miss is a number to take to the customer, not a failure of the design.
+9 of these 11 targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more, and a miss is a number to take to the customer, not a failure of the design.
 
-`unattendedWatchDurationHours`: the brief gave no number, and SEED set the target. Read a miss against it as a placeholder miss, a number to take to the customer.
+`unattendedWatchDurationHours`: the brief states no number, so there is no target. Each layer's estimate is shown, nothing is met or missed, and the trade-offs did not score it.
 
 ## The fleet
 
@@ -235,7 +234,6 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/constraint-violation` alertsReachingOperatorTarget: Constraint could not be evaluated ("alertsReachingOperatorPerHour <= 20.0"): Could not evaluate: alertsReachingOperatorPerHour has no value here; evaluated per specialisation: LA::alertsReachingOperatorPerHour, PA::alertsReachingOperatorPerHour.
 - `validation/constraint-violation` acknowledgedReportsThatMatterTarget: Constraint could not be evaluated ("acknowledgedReportsThatMatterFraction >= 0.8"): Could not evaluate: acknowledgedReportsThatMatterFraction has no value here; evaluated per specialisation: LA::acknowledgedReportsThatMatterFraction, PA::acknowledgedReportsThatMatterFraction.
 - `validation/constraint-violation` onboardClassificationCostTarget: Constraint could not be evaluated ("onboardClassificationCostUsdPerMember <= 300.0"): Could not evaluate: onboardClassificationCostUsdPerMember has no value here; evaluated per specialisation: LA::onboardClassificationCostUsdPerMember, PA::onboardClassificationCostUsdPerMember.
-- `validation/constraint-violation` unattendedWatchDurationTarget: Constraint could not be evaluated ("unattendedWatchDurationHours >= 12.0"): Could not evaluate: unattendedWatchDurationHours has no value here; evaluated per specialisation: LA::unattendedWatchDurationHours, PA::unattendedWatchDurationHours.
 - `validation/constraint-violation` fleetSizeBudget: Constraint could not be evaluated ("fleetSizeMembers <= 12"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` memberEnduranceBudget: Constraint could not be evaluated ("memberEnduranceMinutes <= 40.0"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` groundTurnaroundBudget: Constraint could not be evaluated ("groundTurnaroundMinutes >= 20.0"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.
@@ -244,9 +242,11 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/constraint-violation` areaOfInterestBudget: Constraint could not be evaluated ("areaOfInterestSquareKilometres <= 25.0"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` operatorSecondsPerAlertBudget: Constraint could not be evaluated ("operatorSecondsPerAlert >= 30.0"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` trackStaleAfterBudget: Constraint could not be evaluated ("trackStaleAfterSeconds <= 120.0"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.
+- `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes == 10.0"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.
+- `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction == 0.5"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.
 - `validation/target-by-specialisation` areaUnderWatchFraction: LA::areaUnderWatchFraction = 0.78216 misses Common::areaUnderWatchTarget (areaUnderWatchFraction >= 0.9)
 - `validation/target-by-specialisation` coverageLossAfterMemberLossFraction: LA::coverageLossAfterMemberLossFraction = 0.153421 meets Common::coverageLossAfterMemberLossTarget (coverageLossAfterMemberLossFraction <= 0.25)
-- `validation/target-by-specialisation` coverageUnderMeshJammingFraction: LA::coverageUnderMeshJammingFraction = 0.58662 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number
+- `validation/target-by-specialisation` coverageUnderMeshJammingFraction: LA::coverageUnderMeshJammingFraction = 0.66216 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` reportAgeAtOperationsCentreSeconds: LA::reportAgeAtOperationsCentreSeconds = 40 meets Common::reportAgeAtOperationsCentreTarget (reportAgeAtOperationsCentreSeconds <= 60.0)
 - `validation/target-by-specialisation` positionErrorWithoutSatelliteMetres: LA::positionErrorWithoutSatelliteMetres = 80 misses Common::positionErrorWithoutSatelliteTarget (positionErrorWithoutSatelliteMetres <= 50.0) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` reportHoldWhileCutOffMinutes: LA::reportHoldWhileCutOffMinutes = 40 meets Common::reportHoldWhileCutOffTarget (reportHoldWhileCutOffMinutes >= 30.0)
@@ -255,10 +255,9 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/target-by-specialisation` alertsReachingOperatorPerHour: LA::alertsReachingOperatorPerHour = 24 misses Common::alertsReachingOperatorTarget (alertsReachingOperatorPerHour <= 20.0) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` acknowledgedReportsThatMatterFraction: LA::acknowledgedReportsThatMatterFraction = 0.7 misses Common::acknowledgedReportsThatMatterTarget (acknowledgedReportsThatMatterFraction >= 0.8) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` onboardClassificationCostUsdPerMember: LA::onboardClassificationCostUsdPerMember = 350 misses Common::onboardClassificationCostTarget (onboardClassificationCostUsdPerMember <= 300.0) — missed a placeholder, not the customer's number
-- `validation/target-by-specialisation` unattendedWatchDurationHours: LA::unattendedWatchDurationHours = 0.666667 misses Common::unattendedWatchDurationTarget (unattendedWatchDurationHours >= 12.0) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` areaUnderWatchFraction: PA::areaUnderWatchFraction = 0.78216 misses Common::areaUnderWatchTarget (areaUnderWatchFraction >= 0.9)
 - `validation/target-by-specialisation` coverageLossAfterMemberLossFraction: PA::coverageLossAfterMemberLossFraction = 0.153421 meets Common::coverageLossAfterMemberLossTarget (coverageLossAfterMemberLossFraction <= 0.25)
-- `validation/target-by-specialisation` coverageUnderMeshJammingFraction: PA::coverageUnderMeshJammingFraction = 0.58662 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number
+- `validation/target-by-specialisation` coverageUnderMeshJammingFraction: PA::coverageUnderMeshJammingFraction = 0.66216 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` reportAgeAtOperationsCentreSeconds: PA::reportAgeAtOperationsCentreSeconds = 40 meets Common::reportAgeAtOperationsCentreTarget (reportAgeAtOperationsCentreSeconds <= 60.0)
 - `validation/target-by-specialisation` positionErrorWithoutSatelliteMetres: PA::positionErrorWithoutSatelliteMetres = 80 misses Common::positionErrorWithoutSatelliteTarget (positionErrorWithoutSatelliteMetres <= 50.0) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` reportHoldWhileCutOffMinutes: PA::reportHoldWhileCutOffMinutes = 40 meets Common::reportHoldWhileCutOffTarget (reportHoldWhileCutOffMinutes >= 30.0)
@@ -267,7 +266,6 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/target-by-specialisation` alertsReachingOperatorPerHour: PA::alertsReachingOperatorPerHour = 20 meets Common::alertsReachingOperatorTarget (alertsReachingOperatorPerHour <= 20.0)
 - `validation/target-by-specialisation` acknowledgedReportsThatMatterFraction: PA::acknowledgedReportsThatMatterFraction = 0.75 misses Common::acknowledgedReportsThatMatterTarget (acknowledgedReportsThatMatterFraction >= 0.8) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` onboardClassificationCostUsdPerMember: PA::onboardClassificationCostUsdPerMember = 350 misses Common::onboardClassificationCostTarget (onboardClassificationCostUsdPerMember <= 300.0) — missed a placeholder, not the customer's number
-- `validation/target-by-specialisation` unattendedWatchDurationHours: PA::unattendedWatchDurationHours = 0.666667 misses Common::unattendedWatchDurationTarget (unattendedWatchDurationHours >= 12.0) — missed a placeholder, not the customer's number
 - `validation/constraint-violation` : Constraint could not be evaluated ("compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true"): Could not evaluate: a referenced value is unknown.
