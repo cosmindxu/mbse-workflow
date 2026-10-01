@@ -73,6 +73,10 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   'validation/redefinition-conformance': {
     note: 'A redefinition (`:>>`) must conform to what it redefines: same kind, compatible type and multiplicity.',
   },
+  'validation/constraint-violation': {
+    cv: 'CV-17',
+    note: "This layer's own values violate the constraint. If it fixes an `#Estimate`, do not also state the estimate as a literal: make the `#Estimate` valueless and let the `assert constraint` derive it from this layer's values (CV-17). Otherwise correct the value that contradicts its documented basis.",
+  },
   'ref/unresolved-reference': {
     cv: 'CV-01',
     note: 'A name resolves to nothing. References across layers are qualified: `<Root>::<Layer>::<name>`. References downward are not allowed at all (A1-R-05).',

@@ -1,13 +1,13 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml` (3671 elements)
-Sysprose: 2486d72
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 2 legs
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3669 elements)
+Sysprose: 9960861 (the checks were calibrated against 2486d72)
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 3 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
-`npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 43 diagnostic(s)
-`npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml --json` → 49/49 satisfied (100 %)
+`npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → exit 0 (clean), 31 diagnostic(s)
+`npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json` → 49/49 satisfied (100 %)
 
 ## Realization chain
 
@@ -22,16 +22,16 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 2 
 
 | Check | Verdict | Command |
 |---|---|---|
-| `check` | clear | `npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `stats` | clear | `npm run sysprose -- stats /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `trace-trace` | clear | `npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --relation trace --json` |
-| `trace-allocate` | clear | `npm run sysprose -- trace /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --relation allocate --from ActionUsage --to PartUsage --json` |
-| `requirements` | clear | `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `reach` | clear | `npm run sysprose -- reach /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `connectivity` | clear | `npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `orphans` | clear | `npm run sysprose -- orphans /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `elements` | clear | `npm run sysprose -- elements /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
-| `evidence-status` | clear | `npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json` |
+| `check` | clear | `npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `stats` | clear | `npm run sysprose -- stats /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `trace-trace` | clear | `npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --relation trace --json` |
+| `trace-allocate` | clear | `npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --relation allocate --from ActionUsage --to PartUsage --json` |
+| `requirements` | clear | `npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `reach` | clear | `npm run sysprose -- reach /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `connectivity` | clear | `npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `orphans` | clear | `npm run sysprose -- orphans /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `elements` | clear | `npm run sysprose -- elements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
+| `evidence-status` | clear | `npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json` |
 
 ## Can a person review this?
 
@@ -123,7 +123,7 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Common | 894 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
-| LA | 586 | S33 | S40…S60 (6) | 11 | 4.58 |
+| LA | 582 | S33 | S40…S60 (6) | 11 | 4.58 |
 | PA | 610 | S42 | S50…S60 (2) | 7 | 1.96 |
 | EPBS | 499 | S50 | — | 0 | 0.00 |
 
@@ -133,7 +133,7 @@ The worst case over the `#Estimate` each layer's chosen architecture states. The
 
 | Measure | Target | LA | PA |
 |---|---|---|---|
-| `areaUnderWatchFraction` | ≥ 0.9 | vacuous | 0.78 ✗ |
+| `areaUnderWatchFraction` | ≥ 0.9 | inconclusive | 0.78 ✗ |
 | `coverageLossAfterMemberLossFraction` | ≤ 0.25 | 0.16 ✓ | 0.154 ✓ |
 | `coverageUnderMeshJammingFraction` | ≥ 0.75 (placeholder) | 0.58 ✗ | 0.68 ✗ |
 | `reportAgeAtOperationsCentreSeconds` | ≤ 60 s (placeholder) | 40 s ✓ | 40 s ✓ |
@@ -217,34 +217,8 @@ One row per function definition. A definition is on board when every usage sits 
 | `PresentStatusPicture` | C2 | `presentStatusPicture` → `groundStation` | ground |
 | `AcknowledgeDetectionReport` | C2 | `acknowledgeDetectionReport` → `groundStation` | ground |
 
-## Left as TODO
-
-- `SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical`
-- `SurveillanceDroneSwarm::PA::HandOverSector`
-- `SurveillanceDroneSwarm::PA::RotateRecharge`
-- `SurveillanceDroneSwarm::PA::RedistributeCoverage`
-- `SurveillanceDroneSwarm::PA::DeconflictFlight`
-- `SurveillanceDroneSwarm::PA::RelayReportsThroughNeighbour`
-- `SurveillanceDroneSwarm::PA::CorrelateTracks`
-- `SurveillanceDroneSwarm::PA::HandOverTrack`
-- `SurveillanceDroneSwarm::PA::AdmitMember`
-- `SurveillanceDroneSwarm::PA::TaskSurveillanceArea`
-- `SurveillanceDroneSwarm::PA::CommandSupervisoryPriorities`
-- `SurveillanceDroneSwarm::PA::RecallAndLand`
-- `SurveillanceDroneSwarm::PA::PresentStatusPicture`
-- `SurveillanceDroneSwarm::PA::AcknowledgeDetectionReport`
-- `SurveillanceDroneSwarm::PA::DetectAndClassifyObject`
-- `SurveillanceDroneSwarm::PA::DeliverDetectionReport`
-- `SurveillanceDroneSwarm::PA::ApplySupervisoryDirectives`
-- `SurveillanceDroneSwarm::PA::ReportMemberStatus`
-- `SurveillanceDroneSwarm::PA::ReportTrackPicture`
-- `SurveillanceDroneSwarm::PA::ReturnToRecoveryPoint`
-- `SurveillanceDroneSwarm::PA::TriageAlerts`
-- `SurveillanceDroneSwarm::PA::KeepDecisionRecords`
-
 ## Reported, not blocking
 
-- `ref/unresolved-specialization` : Unresolved reference 'ScalarValues::Real'
 - `validation/constraint-violation` areaUnderWatchTarget: Constraint could not be evaluated ("areaUnderWatchFraction >= 0.9"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` coverageLossAfterMemberLossTarget: Constraint could not be evaluated ("coverageLossAfterMemberLossFraction <= 0.25"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` coverageUnderMeshJammingTarget: Constraint could not be evaluated ("coverageUnderMeshJammingFraction >= 0.75"): Could not evaluate: a referenced value is unknown.
@@ -267,43 +241,15 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/constraint-violation` trackStaleAfterBudget: Constraint could not be evaluated ("trackStaleAfterSeconds <= 120.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes >= 10.0"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction >= 0.5"): Could not evaluate: a referenced value is unknown.
-- `ref/unresolved-allocation-end` : Unresolved allocation target 'dutyController'
-- `ref/unresolved-allocation-end` : Unresolved allocation target 'dutyController'
-- `ref/unresolved-allocation-end` : Unresolved allocation target 'dutyController'
-- `ref/unresolved-allocation-end` : Unresolved allocation target 'operationsCentreAnalyst'
-- `validation/constraint-violation` : Constraint violated: areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction
+- `validation/constraint-violation` : Constraint could not be evaluated ("areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("alertsReachingOperatorPerHour == alertCapPerHour"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd"): Could not evaluate: a referenced value is unknown.
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
-- `ref/unresolved-requirement` : Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'
 - `validation/constraint-violation` : Constraint could not be evaluated ("compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: a referenced value is unknown.
 - `validation/constraint-violation` : Constraint could not be evaluated ("triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true"): Could not evaluate: a referenced value is unknown.
-- `final.todos` SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical: `SurveillanceDroneSwarmPhysical` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::HandOverSector: `HandOverSector` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::RotateRecharge: `RotateRecharge` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::RedistributeCoverage: `RedistributeCoverage` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::DeconflictFlight: `DeconflictFlight` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::RelayReportsThroughNeighbour: `RelayReportsThroughNeighbour` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::CorrelateTracks: `CorrelateTracks` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::HandOverTrack: `HandOverTrack` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::AdmitMember: `AdmitMember` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::TaskSurveillanceArea: `TaskSurveillanceArea` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::CommandSupervisoryPriorities: `CommandSupervisoryPriorities` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::RecallAndLand: `RecallAndLand` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::PresentStatusPicture: `PresentStatusPicture` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::AcknowledgeDetectionReport: `AcknowledgeDetectionReport` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::DetectAndClassifyObject: `DetectAndClassifyObject` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::DeliverDetectionReport: `DeliverDetectionReport` still carries a TODO from the transition skeleton.
-- `final.todos` SurveillanceDroneSwarm::PA::ApplySupervisoryDirectives: `ApplySupervisoryDirectives` still carries a TODO from the transition skeleton.
 
 ## Steps
 
@@ -326,6 +272,6 @@ One row per function definition. A definition is on board when every usage sits 
 | S41 | done | 1 | — |
 | S42 | done | 0 | — |
 | S43 | done | 0 | — |
-| S50 | done | 2 | auto |
+| S50 | done | 0 | auto |
 | S60 | done | 0 | — |
 | S70 | running | 0 | — |

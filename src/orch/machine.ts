@@ -83,6 +83,10 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
       sysprose: { dir: version.dir, commit: version.commit, expected: version.expected, matches: version.matches },
     });
   state.mode = opts.mode;
+  // The Sysprose that checks THIS leg. It was recorded once, at the first leg,
+  // so a resumed run's final audit printed the commit of a leg that checked an
+  // earlier model — v9's re-audit said 2486d72 after 9960861 had checked it.
+  state.sysprose = { dir: version.dir, commit: version.commit, expected: version.expected, matches: version.matches };
   const leg = openLeg(state);
   // Saved after every call, not only when a step finishes (see LlmClient.onSpend).
   opts.llm.onSpend = () => {

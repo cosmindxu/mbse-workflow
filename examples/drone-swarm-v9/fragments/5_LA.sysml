@@ -202,8 +202,8 @@
         // allocations, because that choice is not taken at this layer.
         // ---------------------------------------------------------------
 
-        #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction = 0.78 {
-            doc /* Worst case 0.78. Basis: twelve drones, 40 min endurance, 20 min battery swap gives at most 40/60 airborne. Transit of up to 4 km each way at 18 m/s is about 7.4 min of the 40, leaving about 32.6 min of watching per 60 min cycle, so about 6.5 drones watch at a time. 6.5 x 3.0 km2 is about 19.6 km2 of 25 km2. Target 0.9 is not met by this arithmetic. */
+        #Estimate attribute areaUnderWatchFraction :> Common::areaUnderWatchFraction {
+            doc /* Worst case, derived rather than stated (CV-17): the assert constraint below fixes it from this layer's own values, 12 x (40 - 7.41) / 60 x 0.12 = 0.782. Basis: twelve drones, 40 min endurance and a 20 min battery swap, so each drone is airborne 40 of every 60 minutes; the round trip to a sector up to 4 km away at 18 m/s takes 7.41 of those 40; one drone keeps 3.0 km2 of the 25 km2 area, 0.12, under watch. Target 0.9 is not met by this arithmetic: it would need the round trip under 2.5 min, that is recharge points much closer to the sectors. */
         }
 
         #Estimate attribute coverageLossAfterMemberLossFraction :> Common::coverageLossAfterMemberLossFraction = 0.16 {
@@ -568,7 +568,7 @@
         attribute fleetMemberCount = 12;
         attribute memberFlightMinutes = 40;
         attribute memberTurnaroundMinutes = 20;
-        attribute sectorTransitMinutes = 6.6;
+        attribute sectorTransitMinutes = 7.41 { doc /* Round trip to the farthest sector and back at cruise speed, 2 x 4000 m / 18 m/s = 7.41 min, spent from the same 40 minutes of flight. Unit: minutes. */ }
         attribute memberCoverageFraction = 0.12;
         assert constraint { areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction }
         #prose part laTradeOff {

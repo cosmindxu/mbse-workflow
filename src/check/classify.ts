@@ -71,6 +71,18 @@ export function classifyCode(code: string, severity: Severity, step: StepSpec, k
     return { blocking: true, reason: `${code} is a declared failure of ${step.id}` };
   }
   const family = familyOf(code);
+  // Two warnings that are findings about the fragment, not about the world.
+  // Sysprose reports an unresolved reference as a warning, so the family rule
+  // let a model ship naming things that are not there — v9 went out with seven
+  // traces to `PA::GroundStation` and four allocations to SA actors LA cannot
+  // see. And a VIOLATED constraint (a warning; one that could not be evaluated
+  // is an info, and reports) is the layer's own numbers contradicting each
+  // other — v9's LA asserted 0.78 == an expression of its own values that
+  // gives 0.80. Both block; one anchored in a layer above is still only
+  // reported (`inherit`).
+  if (severity !== 'info' && (family === 'ref' || code === 'validation/constraint-violation')) {
+    return { blocking: true, reason: `${code}: the fragment contradicts itself or names what is not there` };
+  }
   if ((BLOCKING_FAMILIES as readonly string[]).includes(family)) {
     return severity === 'error'
       ? { blocking: true, reason: `${family} error` }

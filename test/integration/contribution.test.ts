@@ -49,4 +49,25 @@ describe.skipIf(!existsSync(example))('contribution ease on v7', () => {
     }
     expect(loadState(join(example, 'state.json'))!.steps.S30?.status).toBe('done');
   });
+
+  it('re-runs nothing that produces a layer a person edited, even below the first edit', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'contribution-'));
+    try {
+      cpSync(join(example, 'fragments'), join(dir, 'fragments'), { recursive: true });
+      const copy = loadState(join(example, 'state.json'))!;
+      const scratch = makeLayout(dir, copy.root);
+      appendFileSync(scratch.fragmentPath('SA'), "\n// a reviewer's note\n");
+      appendFileSync(scratch.fragmentPath('LA'), "\n// a second reviewer's note\n");
+      const real = invalidate(copy, scratch);
+      expect(real.changed).toEqual(['SA', 'LA']);
+      expect(real.recheck).toEqual(['S21', 'S33']);
+      // LA's transition, author, alternatives and evaluation would each
+      // rewrite the person's LA; its audit and everything for PA still run.
+      for (const id of ['S30', 'S31', 'S32', 'S33']) expect(real.invalidated, id).not.toContain(id);
+      expect(real.invalidated).toContain('S34');
+      expect(real.invalidated).toContain('S40');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
 });

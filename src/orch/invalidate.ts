@@ -35,6 +35,9 @@ export interface Invalidation {
   resumeAt?: StepId;
 }
 
+/** The agents whose output IS a layer's fragment — re-running one rewrites the layer. */
+const PRODUCERS: readonly string[] = ['SEED', 'REQ-INTAKE', 'INFRA-INTAKE', 'TRANSITION', 'AUTHOR', 'ALTERNATIVES', 'EVALUATE'];
+
 /** The step whose output a layer's fragment is: the last one that writes it. */
 export function writerOf(layer: Layer): StepId | undefined {
   // Kinds has no step of its own: SEED writes it beside Common.
@@ -91,12 +94,23 @@ export function invalidate(state: RunState, layout: ModelLayout): Invalidation {
   // Kinds as the layer before SEED's re-ran SEED, which rewrites Kinds and
   // undoes the edit. Measured on v5 by simulating an edit to every layer.
   const first = Math.min(...changed.map((l) => layerIndex(l === 'Kinds' ? 'Common' : l)));
+  // The same holds for EVERY edited layer, not only the first. An edit to LA
+  // and PA together used to re-check PA's writer and then also invalidate
+  // PA's transition and alternatives: measured on v9, the transition wrote a
+  // fresh skeleton over the person's PA, the alternatives were generated, and
+  // the evaluation that would have chosen one was the re-checked step, so it
+  // never ran — the run shipped a skeleton PA. A step that PRODUCES an edited
+  // layer stays done; that layer's audits, and everything for the layers below
+  // that nobody edited, still run.
+  const edited = new Set<Layer>(changed.map((l) => (l === 'Kinds' ? 'Common' : l)));
+  const produces = (step: (typeof STEPS)[number]): boolean =>
+    step.layer !== undefined && edited.has(step.layer as Layer) && PRODUCERS.includes(step.agent);
   const invalidated: StepId[] = [];
   let cascading = false;
   for (const step of STEPS) {
     const record = state.steps[step.id];
     if (step.layer !== undefined && layerIndex(step.layer) > first) cascading = true;
-    if (!cascading || !record || record.status === 'skipped') continue;
+    if (!cascading || !record || record.status === 'skipped' || produces(step)) continue;
     if (record.status === 'done' || record.status === 'blocked') {
       record.status = 'pending';
       record.note = `invalidated: ${changed.join(', ')} changed since this step ran`;

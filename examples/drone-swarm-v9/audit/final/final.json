@@ -1,11 +1,11 @@
 {
-  "dir": "/home/xcos/Work/mbse-workflow/runs/v9/audit/final",
-  "modelPath": "/home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml",
+  "dir": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final",
+  "modelPath": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml",
   "witness": {
-    "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/SurveillanceDroneSwarm.sysml --json",
+    "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml --json",
     "exitCode": 0,
     "meaning": "clean",
-    "diagnostics": 43
+    "diagnostics": 31
   },
   "closure": [
     {
@@ -38,30 +38,7 @@
     "satisfied": 49,
     "coverage": 1
   },
-  "todos": [
-    "SurveillanceDroneSwarm::PA::SurveillanceDroneSwarmPhysical",
-    "SurveillanceDroneSwarm::PA::HandOverSector",
-    "SurveillanceDroneSwarm::PA::RotateRecharge",
-    "SurveillanceDroneSwarm::PA::RedistributeCoverage",
-    "SurveillanceDroneSwarm::PA::DeconflictFlight",
-    "SurveillanceDroneSwarm::PA::RelayReportsThroughNeighbour",
-    "SurveillanceDroneSwarm::PA::CorrelateTracks",
-    "SurveillanceDroneSwarm::PA::HandOverTrack",
-    "SurveillanceDroneSwarm::PA::AdmitMember",
-    "SurveillanceDroneSwarm::PA::TaskSurveillanceArea",
-    "SurveillanceDroneSwarm::PA::CommandSupervisoryPriorities",
-    "SurveillanceDroneSwarm::PA::RecallAndLand",
-    "SurveillanceDroneSwarm::PA::PresentStatusPicture",
-    "SurveillanceDroneSwarm::PA::AcknowledgeDetectionReport",
-    "SurveillanceDroneSwarm::PA::DetectAndClassifyObject",
-    "SurveillanceDroneSwarm::PA::DeliverDetectionReport",
-    "SurveillanceDroneSwarm::PA::ApplySupervisoryDirectives",
-    "SurveillanceDroneSwarm::PA::ReportMemberStatus",
-    "SurveillanceDroneSwarm::PA::ReportTrackPicture",
-    "SurveillanceDroneSwarm::PA::ReturnToRecoveryPoint",
-    "SurveillanceDroneSwarm::PA::TriageAlerts",
-    "SurveillanceDroneSwarm::PA::KeepDecisionRecords"
-  ],
+  "todos": [],
   "acceptedHazards": [],
   "reviewability": {
     "docCoverage": [
@@ -486,7 +463,7 @@
       "layers": [
         {
           "layer": "LA",
-          "estimate": "vacuous"
+          "estimate": "inconclusive"
         },
         {
           "layer": "PA",
@@ -1046,7 +1023,7 @@
     },
     {
       "layer": "LA",
-      "fragmentLines": 586,
+      "fragmentLines": 582,
       "recheck": [
         "S33"
       ],

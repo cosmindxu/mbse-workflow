@@ -1,84 +1,75 @@
 {
   "step": "S60",
   "blocking": false,
-  "prefix": "/home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml",
-  "prefixHash": "0dfca41cba950a9b",
-  "elements": 3671,
-  "durationMs": 2439,
+  "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml",
+  "prefixHash": "ab85e101c5ecb2c5",
+  "elements": 3669,
+  "durationMs": 3447,
   "checks": [
     {
       "name": "check",
-      "command": "npm run check -- /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": true,
       "ok": true,
       "durationMs": 0,
-      "findings": 43
+      "findings": 31
     },
     {
       "name": "verify",
-      "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "command": "npm run sysprose -- verify /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 887,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/verify.json",
+      "durationMs": 1778,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/verify.json",
       "findings": 0
     },
     {
       "name": "consistency",
-      "command": "npm run sysprose -- consistency /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "command": "npm run sysprose -- consistency /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 581,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/consistency.json",
+      "durationMs": 621,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/consistency.json",
       "findings": 0
     },
     {
       "name": "refine",
-      "command": "npm run sysprose -- refine /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --via composition --json",
+      "command": "npm run sysprose -- refine /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --via composition --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 168,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/refine.json",
+      "durationMs": 171,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/refine.json",
       "findings": 0
     },
     {
       "name": "evidence-status",
-      "command": "npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "command": "npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 88,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/evidence-status.json",
+      "durationMs": 89,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/evidence-status.json",
       "findings": 0
     },
     {
       "name": "fault-tree",
-      "command": "npm run sysprose -- fault-tree /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --json",
+      "command": "npm run sysprose -- fault-tree /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 170,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/fault-tree.json",
+      "durationMs": 176,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/fault-tree.json",
       "findings": 1
     },
     {
       "name": "check-behaviour",
-      "command": "npm run sysprose -- check-behaviour /home/xcos/Work/mbse-workflow/runs/v9/build/7_EPBS.sysml --element <each state machine> --json",
+      "command": "npm run sysprose -- check-behaviour /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --element <each state machine> --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 53,
-      "payload": "/home/xcos/Work/mbse-workflow/runs/v9/audit/S60/check-behaviour.json",
+      "durationMs": 60,
+      "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S60/check-behaviour.json",
       "findings": 0
     }
   ],
   "items": [
-    {
-      "code": "ref/unresolved-specialization",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "Common",
-      "line": 58,
-      "message": "Unresolved reference 'ScalarValues::Real'",
-      "check": "check"
-    },
     {
       "code": "validation/constraint-violation",
       "severity": "info",
@@ -86,6 +77,7 @@
       "element": "areaUnderWatchTarget",
       "layer": "Common",
       "line": 692,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -96,6 +88,7 @@
       "element": "coverageLossAfterMemberLossTarget",
       "layer": "Common",
       "line": 700,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -106,6 +99,7 @@
       "element": "coverageUnderMeshJammingTarget",
       "layer": "Common",
       "line": 708,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -116,6 +110,7 @@
       "element": "reportAgeAtOperationsCentreTarget",
       "layer": "Common",
       "line": 716,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -126,6 +121,7 @@
       "element": "positionErrorWithoutSatelliteTarget",
       "layer": "Common",
       "line": 724,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -136,6 +132,7 @@
       "element": "reportHoldWhileCutOffTarget",
       "layer": "Common",
       "line": 732,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -146,6 +143,7 @@
       "element": "missedDetectionTarget",
       "layer": "Common",
       "line": 740,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -156,6 +154,7 @@
       "element": "falseAlarmsPerHourTarget",
       "layer": "Common",
       "line": 748,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -166,6 +165,7 @@
       "element": "alertsReachingOperatorTarget",
       "layer": "Common",
       "line": 756,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -176,6 +176,7 @@
       "element": "acknowledgedReportsThatMatterTarget",
       "layer": "Common",
       "line": 764,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -186,6 +187,7 @@
       "element": "onboardClassificationCostTarget",
       "layer": "Common",
       "line": 772,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -196,6 +198,7 @@
       "element": "unattendedWatchDurationTarget",
       "layer": "Common",
       "line": 780,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"unattendedWatchDurationHours >= 12.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -206,6 +209,7 @@
       "element": "fleetSizeBudget",
       "layer": "Common",
       "line": 792,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -216,6 +220,7 @@
       "element": "memberEnduranceBudget",
       "layer": "Common",
       "line": 800,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -226,6 +231,7 @@
       "element": "groundTurnaroundBudget",
       "layer": "Common",
       "line": 808,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -236,6 +242,7 @@
       "element": "cruiseSpeedBudget",
       "layer": "Common",
       "line": 816,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -246,6 +253,7 @@
       "element": "instantaneousFootprintBudget",
       "layer": "Common",
       "line": 824,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -256,6 +264,7 @@
       "element": "areaOfInterestBudget",
       "layer": "Common",
       "line": 832,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -266,6 +275,7 @@
       "element": "operatorSecondsPerAlertBudget",
       "layer": "Common",
       "line": 840,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -276,6 +286,7 @@
       "element": "trackStaleAfterBudget",
       "layer": "Common",
       "line": 848,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -286,6 +297,7 @@
       "element": "satellitePositioningOutageBudget",
       "layer": "Common",
       "line": 856,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes >= 10.0\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -296,56 +308,18 @@
       "element": "meshLinksJammedBudget",
       "layer": "Common",
       "line": 864,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"meshLinksJammedFraction >= 0.5\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
     {
-      "code": "ref/unresolved-allocation-end",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "LA",
-      "line": 311,
-      "rule": "CV-04",
-      "message": "Unresolved allocation target 'dutyController'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-allocation-end",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "LA",
-      "line": 313,
-      "rule": "CV-04",
-      "message": "Unresolved allocation target 'dutyController'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-allocation-end",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "LA",
-      "line": 315,
-      "rule": "CV-04",
-      "message": "Unresolved allocation target 'dutyController'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-allocation-end",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "LA",
-      "line": 319,
-      "rule": "CV-04",
-      "message": "Unresolved allocation target 'operationsCentreAnalyst'",
-      "check": "check"
-    },
-    {
       "code": "validation/constraint-violation",
-      "severity": "warning",
+      "severity": "info",
       "blocking": false,
       "layer": "LA",
-      "line": 577,
-      "message": "Constraint violated: areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction",
+      "line": 573,
+      "rule": "CV-17",
+      "message": "Constraint could not be evaluated (\"areaUnderWatchFraction == fleetMemberCount * ((memberFlightMinutes - sectorTransitMinutes) / (memberFlightMinutes + memberTurnaroundMinutes)) * memberCoverageFraction\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
     {
@@ -354,6 +328,7 @@
       "blocking": false,
       "layer": "PA",
       "line": 527,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour == alertCapPerHour\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -363,77 +338,8 @@
       "blocking": false,
       "layer": "PA",
       "line": 534,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember == acceleratorModuleCostUsd + modelMemoryCostUsd + reportStoreFlashCostUsd + identityElementCostUsd\"): Could not evaluate: a referenced value is unknown.",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 206,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 207,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 208,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 209,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 210,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 211,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
-      "check": "check"
-    },
-    {
-      "code": "ref/unresolved-requirement",
-      "severity": "warning",
-      "blocking": false,
-      "layer": "EPBS",
-      "line": 212,
-      "rule": "CV-09",
-      "message": "Unresolved trace element 'SurveillanceDroneSwarm::PA::GroundStation'",
       "check": "check"
     },
     {
@@ -442,6 +348,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 254,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -451,6 +358,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 294,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -460,6 +368,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 302,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -469,6 +378,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 318,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -478,6 +388,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 326,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },
@@ -487,6 +398,7 @@
       "blocking": false,
       "layer": "EPBS",
       "line": 334,
+      "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true\"): Could not evaluate: a referenced value is unknown.",
       "check": "check"
     },

@@ -45,6 +45,16 @@ describe('classification', () => {
     expect(off.reason).toContain('interfaces');
   });
 
+  it('blocks an unresolved reference and a violated constraint even at warning severity', () => {
+    for (const code of ['ref/unresolved-requirement', 'ref/unresolved-allocation-end', 'ref/unresolved-specialization']) {
+      expect(classifyCode(code, 'warning', S10, knobs()).blocking, code).toBe(true);
+    }
+    expect(classifyCode('validation/constraint-violation', 'warning', S10, knobs()).blocking).toBe(true);
+    // A constraint that could not be evaluated is an info: a target on a
+    // measure with no value yet, reported.
+    expect(classifyCode('validation/constraint-violation', 'info', S10, knobs()).blocking).toBe(false);
+  });
+
   it('does not block on a warning from a blocking family', () => {
     expect(classifyCode('validation/rules', 'warning', S10, knobs()).blocking).toBe(false);
   });
