@@ -29,13 +29,17 @@ produced now stops it.
 </p>
 
 The next run, v9, is where that gate lives — and where the model shows its
-arithmetic. Its logical layer states the coverage as an equation over its own
-numbers — a constraint, drawn in its Parametric view — which Sysprose's
-evaluator reads as the estimate's definition: 12 × (40 − 7.41) / 60 × 0.12 =
-0.78, and z3 reaches the same value from both directions (the arithmetic is
-nonlinear, so it is a value reached, not one certified as the tightest); the
-duty-cycle gate passes it;
-and the model says why it misses the brief's 0.9: 7.41 of every
+arithmetic. The logical layer states the coverage as an equation over its own
+numbers — a constraint, drawn in its Parametric view — because that is the
+layer where two architectures were compared and scored on it, as ARCADIA
+expects candidates to be weighed at the logical layer (they scored the same on
+it; review, structure and resilience decided); the physical
+layer, built from the one taken, derives the same number from its own values,
+and that is the layer the simulation is generated from. Sysprose reads each
+equation as the estimate's definition, 12 × (40 − 7.41) / 60 × 0.12 = 0.78,
+and z3 reaches the same value from both directions (the arithmetic is
+nonlinear, so a value reached, not one certified as the tightest); the
+duty-cycle gate passes it; and the model says why it misses the brief's 0.9: 7.41 of every
 40 minutes go on the round trip to a sector. Simulated from the model for two
 duty cycles in real time, the fleet watched 0.54 of its sectors — the same
 arithmetic at one sector per drone — and showed what the 0.78 assumes: with
@@ -43,9 +47,9 @@ twelve sectors for twelve drones nobody can relieve anyone, so the fleet
 recharges together and the watch drops to zero between sorties.
 
 <p align="center">
-  <a href="docs/media/drone-swarm-v9.mp4"><img src="docs/media/drone-swarm-v9.gif" width="600" alt="A 48-second clip of run v9. The brief: 12 drones, 25 square kilometres, 40 minutes of flight then a 20-minute battery swap, 3 square kilometres watched per drone, at least 0.9 of the area watched at any moment. AI agents write the five layers, a checker gating each. The duty-cycle gate learnt from v7 sets a ceiling of 0.96. The model states the coverage as an equation over its own values, which evaluates to 0.78, short of 0.9 because the round trip to a sector takes 7.41 of every 40 minutes. A two-hour real-time simulation watches 0.54 of its sectors, the same arithmetic at one sector per drone, and the whole fleet recharges at once, so the watch drops to zero between sorties."></a>
+  <a href="docs/media/drone-swarm-v9.mp4"><img src="docs/media/drone-swarm-v9.gif" width="600" alt="A 56-second clip of run v9. The brief: 12 drones, 25 square kilometres, 40 minutes of flight then a 20-minute battery swap, 3 square kilometres watched per drone, at least 0.9 of the area watched at any moment. AI agents write the five layers, a checker gating each. The duty-cycle gate learnt from v7 sets a ceiling of 0.96. The model states the coverage as an equation over its own values, which evaluates to 0.78, short of 0.9 because the round trip to a sector takes 7.41 of every 40 minutes. The estimate is made at LA, where the two candidate architectures were scored on it, and PA, built from the one taken, derives the same value. A two-hour real-time simulation watches 0.54 of its sectors, the same arithmetic at one sector per drone, and the whole fleet recharges at once, so the watch drops to zero between sorties."></a>
   <br>
-  <sub>Derived, gated, simulated: run v9 in 48 seconds. Click for the MP4 file. The footage under the title is the same test flight; the simulation is drawn from the run's own event log, flown offline with stand-in autopilots.</sub>
+  <sub>Derived, gated, simulated: run v9 in 56 seconds. Click for the MP4 file. The footage under the title is the same test flight; the simulation is drawn from the run's own event log, flown offline with stand-in autopilots.</sub>
 </p>
 
 The layers follow a well-established layered MBSE method, chosen because its
