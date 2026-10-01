@@ -11,29 +11,61 @@
 import type { Moe } from '../llm/schemas.ts';
 import { matchingBrace } from '../model/statements.ts';
 
-type MoeLike = Pick<Moe, 'sense' | 'target'> & { unit?: string; condition?: boolean };
+type MoeLike = Pick<Moe, 'sense'> & { target?: number | null; unit?: string; condition?: boolean };
 
 /**
  * The measures the architectures are scored on. A budget — a number the brief
  * fixes, like the fleet it can field — is held by its requirement and never
  * scored: in v6 `fleetSize ≤ 12` read "met" for every alternative and added
  * nothing but a constant to the comparison.
+ *
+ * Every measure here is estimated and reported. One the brief gives no number,
+ * or whose number SEED set, is among them and still left out of the score:
+ * `unscoredBecause` says which.
  */
 export const scoredMoes = <T extends { kind?: 'measure' | 'budget' }>(moes: readonly T[]): T[] => moes.filter((m) => m.kind !== 'budget');
+
+/**
+ * Whether the brief gave the measure a number to be held to. A brief can name
+ * a measure and leave its number to the customer (v9's unattended watch): it
+ * is estimated by every architecture and has nothing to be met or missed
+ * against. `null` reads the same as absent, as a hand-edited brief writes it.
+ */
+export const hasTarget = (moe: { target?: number | null }): boolean => typeof moe.target === 'number';
 
 /**
  * `≥ 0.95`, `≤ 10 s` — the bound a target sets, never the bare sense word.
  * A test condition is `= 0.5`: v9's "half the links jammed" was a budget with
  * sense max, written `>= 0.5` in Common — "at least half", whose mildest case
- * is the very number every estimate was computed at.
+ * is the very number every estimate was computed at. A measure with no target
+ * reads `no target`, never `≥ undefined`.
  */
 export function boundText(moe: MoeLike): string {
+  if (!hasTarget(moe)) return 'no target';
   const op = moe.condition ? '=' : moe.sense === 'max' ? '≥' : '≤';
   return `${op} ${moe.target}${moe.unit ? ` ${moe.unit}` : ''}`;
 }
 
 /** Whether a target is not the customer's number yet: a placeholder in the brief, or one SEED set. */
 export const isProvisional = (moe: { placeholder?: boolean; setBySeed?: boolean }): boolean => moe.placeholder === true || moe.setBySeed === true;
+
+/**
+ * Why a measure is reported and left out of the trade-off's measures term, or
+ * `undefined` when it counts there.
+ *
+ * With no target there is nothing to meet, and counting it as undecided would
+ * add the same ½ to every alternative. A target SEED set is a number nobody
+ * asked for: v9's 12 h unattended watch was SEED's, its own doc said to wait
+ * for the customer's figure before any architecture is failed on it, and all
+ * four alternatives at S33 and S42 scored 0 on it.
+ * A placeholder in the brief still counts: the customer asked for the measure
+ * and gave a number to work to, if not yet the final one.
+ */
+export function unscoredBecause(moe: { target?: number | null; setBySeed?: boolean }): 'no target' | 'set by SEED' | undefined {
+  if (!hasTarget(moe)) return 'no target';
+  if (moe.setBySeed === true) return 'set by SEED';
+  return undefined;
+}
 
 /** The optimisation that yields the worst case against the target. */
 export function worstCaseSense(sense: Moe['sense']): 'min' | 'max' {
@@ -49,10 +81,11 @@ export function worstCaseSense(sense: Moe['sense']): 'min' | 'max' {
 const DECIDED = new Set(['optimum', 'supremum', 'infimum', 'derived']);
 export const isDecided = (outcome: string | undefined): boolean => outcome !== undefined && DECIDED.has(outcome);
 
-/** Whether a decided worst-case value meets the target; `undefined` when undecided. */
+/** Whether a decided worst-case value meets the target; `undefined` when undecided, or when there is no target. */
 export function meets(moe: MoeLike, outcome: string | undefined, value: number | null | undefined): boolean | undefined {
-  if (!isDecided(outcome) || value === null || value === undefined) return undefined;
-  return moe.sense === 'max' ? value >= moe.target : value <= moe.target;
+  if (!hasTarget(moe) || !isDecided(outcome) || value === null || value === undefined) return undefined;
+  const target = moe.target as number;
+  return moe.sense === 'max' ? value >= target : value <= target;
 }
 
 /** One `bounds` row, as much of it as the score reads. */

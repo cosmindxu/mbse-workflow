@@ -19,7 +19,7 @@ import type { AgentContext } from '../agents/context.ts';
 import type { ElementRow, RequirementsPayload, TracePayload } from '../sysprose/types.ts';
 import { replicaFacts, type FunctionType } from '../check/replicas.ts';
 import { contributionMarkdown, contributionSurface, readCallLog, unrecordedSpend, type ContributionRow } from './contribution.ts';
-import { boundText, meets, scoredMoes, worstCase, worstCaseSense } from '../spec/measures.ts';
+import { boundText, hasTarget, meets, scoredMoes, worstCase, worstCaseSense } from '../spec/measures.ts';
 
 export interface Reviewability {
   /** Per layer: how much a reader can read. */
@@ -68,6 +68,8 @@ export interface MeasureRow {
   placeholder?: boolean;
   /** The brief gave no number and SEED set this target: not the customer's either. */
   setBySeed?: boolean;
+  /** The brief gave no number, and the measure has no target: its estimates are shown, nothing is met or missed. */
+  noTarget?: boolean;
 }
 
 /**
@@ -80,7 +82,7 @@ export interface MeasureRow {
  * person who set it, not a reason to prefer one alternative.
  */
 export function unreachableTarget(
-  moe: { name: string; sense: 'min' | 'max'; target: number },
+  moe: { name: string; sense: 'min' | 'max'; target?: number | null },
   reports: Array<{ outcome?: string; value?: number | null }>,
 ): string | undefined {
   if (reports.length === 0) return undefined;
@@ -96,7 +98,7 @@ export function unreachableTarget(
  * the brief's planner had set.
  */
 export function metByEveryAlternative(
-  moe: { name: string; sense: 'min' | 'max'; target: number },
+  moe: { name: string; sense: 'min' | 'max'; target?: number | null },
   reports: Array<{ outcome?: string; value?: number | null }>,
 ): string | undefined {
   if (reports.length === 0) return undefined;
@@ -264,7 +266,7 @@ export async function writeFinalAudit(ctx: AgentContext, verdict: Verdict): Prom
                   reports.push(await worstCase(async (sense) => read(sense === worstCaseSense(moe.sense) ? worstFile : otherFile), moe.sense));
                 }
               }
-              rows.push({ name: moe.name, target: boundText(moe), layers, unreachable: unreachableTarget(moe, reports), metByAll: metByEveryAlternative(moe, reports), placeholder: moe.placeholder === true, setBySeed: moe.setBySeed === true });
+              rows.push({ name: moe.name, target: hasTarget(moe) ? boundText(moe) : '—', layers, unreachable: unreachableTarget(moe, reports), metByAll: metByEveryAlternative(moe, reports), placeholder: moe.placeholder === true, setBySeed: moe.setBySeed === true, noTarget: !hasTarget(moe) });
             }
             return rows;
           })
@@ -538,6 +540,10 @@ export function measuresMarkdown(rows: MeasureRow[]): string[] {
   const cell = (r: MeasureRow, x: MeasureRow['layers'][number] | undefined): string =>
     x ? `${x.estimate}${x.met === undefined ? '' : x.met ? ' ✓' : provisional(r) ? ' — missed a placeholder' : ' ✗'}` : '—';
   const marked = (r: MeasureRow): string => `${r.target}${r.placeholder ? ' (placeholder)' : r.setBySeed ? ' (set by SEED)' : ''}`;
+  // What the trade-offs scored: a measure with no target, or one SEED set, was
+  // reported beside the score and never in it.
+  const withTarget = rows.filter((r) => !r.noTarget);
+  const scored = withTarget.filter((r) => !r.setBySeed);
   return [
     '## Measures',
     '',
@@ -561,17 +567,20 @@ export function measuresMarkdown(rows: MeasureRow[]): string[] {
       ? [
           '### Every architecture compared meets these',
           '',
-          `They added the same to every alternative's score, so the choice was made by the rest${rows.every((r) => r.metByAll) ? ' — and here that is every measure: the measures decided nothing' : ''}. A target nobody misses is a question about the target: is it the customer's?`,
+          `They added the same to every alternative's score, so the choice was made by the rest${scored.length > 0 && scored.every((r) => r.metByAll) ? ' — and here that is every measure: the measures decided nothing' : ''}. A target nobody misses is a question about the target: is it the customer's?`,
           '',
           ...rows.filter((r) => r.metByAll).map((r) => `- \`${r.name}\` ${marked(r)}: met by ${r.metByAll} alternatives`),
           '',
         ]
       : []),
     ...(rows.some((r) => r.placeholder)
-      ? [`${rows.filter((r) => r.placeholder).length} of these ${rows.length} targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more, and a miss is a number to take to the customer, not a failure of the design.`, '']
+      ? [`${rows.filter((r) => r.placeholder).length} of these ${withTarget.length} targets are placeholders in the brief, awaiting the customer's numbers: a ✓ against one says the design meets the placeholder, nothing more, and a miss is a number to take to the customer, not a failure of the design.`, '']
       : []),
     ...(rows.some((r) => r.setBySeed)
-      ? [`${rows.filter((r) => r.setBySeed).map((r) => `\`${r.name}\``).join(', ')}: the brief gave no number, and SEED set the target. Read a miss against it as a placeholder miss, a number to take to the customer.`, '']
+      ? [`${rows.filter((r) => r.setBySeed).map((r) => `\`${r.name}\``).join(', ')}: the brief gave no number, and SEED set the target. The trade-offs reported it and did not score it; read a miss against it as a placeholder miss, a number to take to the customer.`, '']
+      : []),
+    ...(rows.some((r) => r.noTarget)
+      ? [`${rows.filter((r) => r.noTarget).map((r) => `\`${r.name}\``).join(', ')}: the brief states no number, so there is no target. Each layer's estimate is shown, nothing is met or missed, and the trade-offs did not score it.`, '']
       : []),
   ];
 }

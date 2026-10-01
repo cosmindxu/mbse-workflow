@@ -74,23 +74,26 @@ function modelPathOf(runDir: string, brief: BriefShape): string {
  * world dimensions and the second as acceptance criteria, so they are split
  * here rather than in the generator.
  */
-function moesOf(brief: BriefShape): Pick<SimulationInput, 'budgets' | 'measures'> {
+export function moesOf(brief: BriefShape): Pick<SimulationInput, 'budgets' | 'measures'> {
   const budgets: Record<string, number> = {};
-  const measures: { name: string; sense: 'min' | 'max'; target: number; unit?: string }[] = [];
+  const measures: { name: string; sense: 'min' | 'max'; target?: number; unit?: string }[] = [];
 
   for (const moe of brief.moes ?? []) {
-    if (moe.target === null || moe.target === undefined) continue;
+    const target = typeof moe.target === 'number' ? moe.target : undefined;
     if (moe.kind === 'budget') {
-      budgets[moe.name] = moe.target;
+      // A budget with no number fixes nothing the world can be sized from.
+      if (target !== undefined) budgets[moe.name] = target;
       continue;
     }
     // Anything not marked a budget is a measure: earlier briefs left the kind
     // off entirely for measures, and that reading is the one that matches them.
+    // One the brief gives no number is carried all the same: its estimate is
+    // the architecture's claim, and the report puts it beside the result.
     const sense = moe.sense === 'min' ? 'min' : 'max';
     measures.push({
       name: moe.name,
       sense,
-      target: moe.target,
+      ...(target === undefined ? {} : { target }),
       ...(moe.unit ? { unit: moe.unit } : {}),
     });
   }

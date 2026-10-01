@@ -100,6 +100,7 @@ export type PredicateId =
   | 'moe.dutyCycleBound'
   | 'moe.transitBudget'
   | 'moe.carriedEstimate'
+  | 'budgets.subset'
   | 'requirements.hazardsByComponent'
   | 'hazards.fromBrief'
   | 'hazards.notRestated'
@@ -386,7 +387,7 @@ export const STEPS: readonly StepSpec[] = [
     agent: 'ALTERNATIVES',
     layer: 'LA',
     alternatives: true,
-    uses: ['M1-STEP-08', 'CV-04', 'CV-05', 'CV-06', 'CV-07', 'CV-15', 'CV-08', 'CV-16', 'CV-17', 'CV-18', 'CV-19'],
+    uses: ['M1-STEP-08', 'CV-04', 'CV-05', 'CV-06', 'CV-07', 'CV-15', 'CV-08', 'CV-16', 'CV-17', 'CV-18', 'CV-19', 'CV-20'],
     postconditions: [
       'every hazard stated at SA or below is satisfied by a component of this architecture, not only by a shared function, or tagged #Accepted (safety knob)',
       'every measure of effectiveness has a #Estimate attribute in the layer with its worst-case value and basis (CV-17)',
@@ -403,7 +404,7 @@ export const STEPS: readonly StepSpec[] = [
     checks: [
       check(),
       { name: 'requirements-hazards', cmd: 'requirements', args: { kind: 'requirement' }, blocking: { knob: 'safety' }, predicates: ['requirements.hazards', 'requirements.hazardsMitigated', 'requirements.hazardsByComponent', 'hazards.notRestated'] },
-      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'rules.carried', 'rules.hold'] },
+      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'budgets.subset', 'rules.carried', 'rules.hold'] },
       // An architecture is a way of carrying the functions, not a replacement
       // for them. Measured on a live run: both alternatives rewrote the layer
       // from scratch and dropped all 46 realization links, and the step cleared
@@ -470,7 +471,7 @@ export const STEPS: readonly StepSpec[] = [
     agent: 'ALTERNATIVES',
     layer: 'PA',
     alternatives: true,
-    uses: ['M1-STEP-10-13', 'CV-05', 'CV-06', 'CV-12', 'B-03', 'CV-08', 'CV-16', 'CV-17', 'CV-18', 'CV-19'],
+    uses: ['M1-STEP-10-13', 'CV-05', 'CV-06', 'CV-12', 'B-03', 'CV-08', 'CV-16', 'CV-17', 'CV-18', 'CV-19', 'CV-20'],
     deferredChecks: ['bounds --measure <root>::<layer>::<MoE> (run by EVALUATE per measure per alternative, over the alternative\'s own #Estimate: the command needs a measure)'],
     postconditions: [
       'every hazard stated at SA or below is satisfied by a component of this architecture, not only by a shared function, or tagged #Accepted (safety knob)',
@@ -488,7 +489,7 @@ export const STEPS: readonly StepSpec[] = [
     ],
     checks: [
       check(),
-      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'functions.coordination', 'functions.c2', 'pa.bearer', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'moe.carriedEstimate', 'rules.carried', 'rules.hold'] },
+      { name: 'elements', cmd: 'elements', blocking: true, predicates: ['docs.coverage', 'replicas.memberPair', 'alt.c2Placement', 'replicas.topology', 'fleet.scenario', 'fleet.configuration', 'functions.coordination', 'functions.c2', 'pa.bearer', 'moe.estimated', 'moe.dutyCycleBound', 'moe.transitBudget', 'moe.carriedEstimate', 'budgets.subset', 'rules.carried', 'rules.hold'] },
       { name: 'connectivity', cmd: 'connectivity', blocking: { knob: 'interfaces' }, predicates: ['connectivity.layerPorts'] },
       {
         name: 'trace-trace',

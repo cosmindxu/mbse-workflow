@@ -12,7 +12,10 @@ export const MoeSchema = z.object({
   name: z.string().describe('camelCase attribute name, e.g. missionEnduranceMinutes'),
   unit: z.string().describe('unit of measure, or "" when the measure is a count or a ratio'),
   sense: z.enum(['min', 'max']).describe('is a smaller or a larger value better'),
-  target: z.number().describe('the value the requirement holds the design to'),
+  target: z
+    .number()
+    .optional()
+    .describe('the number the brief states for this measure, which the requirement holds the design to. Leave it out when the brief states none: the measure is still estimated and reported, and nothing is scored against it. A budget always has one'),
   doc: z.string().describe('one sentence: what this measures and why it decides between architectures'),
   placeholder: z
     .boolean()
@@ -29,7 +32,7 @@ export const MoeSchema = z.object({
   setBySeed: z
     .boolean()
     .optional()
-    .describe('true when the brief states no number for this measure and the target is one you set: every report marks it as not the customer\'s'),
+    .describe('true only for a target the brief does not state and you set anyway — leave the target out instead. A target set here is reported as not the customer\'s and never scored'),
 });
 
 /**

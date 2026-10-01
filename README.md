@@ -242,11 +242,13 @@ ground link drops and when the ground node fails. The final audit has a
 population.
 
 **Measures.** Each measure of effectiveness is a `#MoE attribute` in Common with
-a `require constraint` holding it to its target. Every architecture states what it
-achieves as `#Estimate attribute <measure> :> Common::<measure> = <worst case>`, with
+a `require constraint` holding it to its target; a measure the brief asks for and
+gives no number has no target, and SEED leaves it so rather than inventing one. Every
+architecture states what it achieves as `#Estimate attribute <measure> :> Common::<measure> = <worst case>`, with
 its basis in the doc (CV-17, gated by `moe.estimated`). The evaluator bounds each
 alternative's own estimate for its worst case and scores 1 per target met, 0 per
-miss, ½ when undecided; the reports are kept in `audit/<step>/alt-<k>/`, and the final
+miss, ½ when undecided; a measure with no target, and a target SEED set
+(`setBySeed`), are reported and left out of that mean. The reports are kept in `audit/<step>/alt-<k>/`, and the final
 audit has a `## Measures` table. The estimates are the architectures' own claims, so
 the evaluating model is shown both bases side by side to challenge them — and, at
 PA, LA's chosen estimate and basis beside them. A PA estimate that differs from
@@ -257,6 +259,10 @@ which PA element changes the number. A missed target is a result, not a defect:
 Sysprose's per-layer target verdict (`validation/target-by-specialisation`) is
 reported and never offered for repair, and a miss on a placeholder, or on a target
 SEED set where the brief gave none (`setBySeed`), reads "missed a placeholder".
+A layer that restates a budget the brief fixes writes a valued feature that subsets
+it, `attribute fleetMemberCount :> Common::fleetSizeMembers = 12;` (CV-20), so the
+budget's requirement is judged at that layer too; a budget no feature of LA or PA
+subsets is noted there, never blocking (`budgets.subset`).
 
 **What the brief fixes by name.** A brief can name hazards it already knows, the
 operating modes of its members, the fields its items carry, and rules the system

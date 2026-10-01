@@ -62,10 +62,8 @@ describe('a miss on a target that is not the customer\'s', () => {
     expect(md).toContain('| `areaUnderWatchFraction` | ≥ 0.9 | 0.78216 (derived) ✗ | — |');
     expect(md).toContain('a miss is a number to take to the customer, not a failure of the design');
     expect(md).toContain('`unattendedWatchDurationHours`: the brief gave no number, and SEED set the target');
-    // Presentation only: the S33/S42 score still counts the miss, so the audit
-    // does not say no architecture was failed on it.
-    expect(md).toContain('Read a miss against it as a placeholder miss, a number to take to the customer.');
-    expect(md).not.toContain('no architecture is failed');
+    // The S33/S42 score leaves a target SEED set out, and the audit says so.
+    expect(md).toContain('The trade-offs reported it and did not score it; read a miss against it as a placeholder miss, a number to take to the customer.');
   });
 
   it('marks a placeholder in the list of targets nobody met', () => {
@@ -73,5 +71,36 @@ describe('a miss on a target that is not the customer\'s', () => {
       { name: 'missedDetectionFraction', target: '≤ 0.1', layers: [{ layer: 'LA', estimate: '0.12', met: false }], unreachable: '4/4', placeholder: true },
     ]).join('\n');
     expect(md).toContain('- `missedDetectionFraction` ≤ 0.1 (placeholder): missed by 4/4 alternatives');
+  });
+});
+
+describe('a measure the brief gives no number', () => {
+  const watch = { name: 'unattendedWatchDurationHours', sense: 'max' as const };
+
+  it('is neither unreachable nor met by all: there is nothing to meet', () => {
+    expect(unreachableTarget(watch, [{ outcome: 'optimum', value: 0.7 }, { outcome: 'derived', value: 0.66 }])).toBeUndefined();
+    expect(unreachableTarget({ ...watch, target: null }, [{ outcome: 'optimum', value: 0.7 }])).toBeUndefined();
+  });
+
+  it('shows each layer\'s estimate under a `—` target, with no ✓, ✗ or placeholder miss', async () => {
+    const { metByEveryAlternative } = await import('../../src/audit/final.ts');
+    expect(metByEveryAlternative(watch, [{ outcome: 'optimum', value: 0.7 }, { outcome: 'optimum', value: 0.66 }])).toBeUndefined();
+    const md = measuresMarkdown([
+      { name: 'unattendedWatchDurationHours', target: '—', layers: [{ layer: 'LA', estimate: '0.7 h (derived)' }, { layer: 'PA', estimate: '0.66 h (derived)' }], noTarget: true },
+      { name: 'areaUnderWatchFraction', target: '≥ 0.9', layers: [{ layer: 'LA', estimate: '0.78216 (derived)', met: false }], placeholder: true },
+    ]).join('\n');
+    expect(md).toContain('| `unattendedWatchDurationHours` | — | 0.7 h (derived) | 0.66 h (derived) |');
+    expect(md).toContain('`unattendedWatchDurationHours`: the brief states no number, so there is no target.');
+    expect(md).toContain('the trade-offs did not score it');
+    // Counted among targets only where there is one.
+    expect(md).toContain('1 of these 1 targets are placeholders');
+  });
+
+  it('does not stop "the measures decided nothing" being said of the measures that were scored', () => {
+    const md = measuresMarkdown([
+      { name: 'operatorAlertsPerHour', target: '≤ 20', layers: [{ layer: 'PA', estimate: '16', met: true }], metByAll: '2/2' },
+      { name: 'unattendedWatchDurationHours', target: '—', layers: [{ layer: 'PA', estimate: '0.66 h' }], noTarget: true },
+    ]).join('\n');
+    expect(md).toContain('the measures decided nothing');
   });
 });

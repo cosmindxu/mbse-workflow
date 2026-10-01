@@ -1,5 +1,5 @@
 /**
- * The house rules (CV-01..CV-15) an authoring agent works under.
+ * The house rules (CV-01..CV-20) an authoring agent works under.
  *
  * They are not style: each one is where the approach's concept meets what
  * Sysprose actually accepts, measured probe by probe in
@@ -97,7 +97,7 @@ export const CONVENTIONS: readonly Convention[] = [
   {
     id: 'CV-17',
     title: 'Measures and estimates',
-    rule: 'A measure of effectiveness is one #MoE attribute in Common with a require constraint holding it to its target. Each architecture states what it achieves as #Estimate attribute <measure> :> Common::<measure> = <worst-case value> { doc /* the basis */ } at the level of its layer. The estimate is what the trade-off bounds: a require clause is not a fact, and a value on a subsetting attribute is not a value on Common\'s, so bounding the Common name decides nothing. Where the brief fixes the numbers a measure follows from, derive it instead of stating it: restate those numbers as valued attributes of this layer (a constraint body cannot reach Common), leave the #Estimate without a literal, and fix it with assert constraint { <measure> == <expression over them> }. The solver then finds one value both ways, and the trade-off shows it as derived. One case of this is checked and blocks: a share the measure\'s own definition says holds at any moment cannot exceed the share of the population that is airborne at any moment, which the brief fixes as flight / (flight + recharge). An architecture whose members each cover more than their share may say so \u2014 state the per-member coverage as a valued attribute and derive the measure from it \u2014 but it may not simply state a larger number, because that is a claim the brief\'s own budgets contradict.',
+    rule: 'A measure of effectiveness is one #MoE attribute in Common with a require constraint holding it to its target; a measure the brief gives no number has no require constraint, and is estimated all the same. Each architecture states what it achieves as #Estimate attribute <measure> :> Common::<measure> = <worst-case value> { doc /* the basis */ } at the level of its layer. The estimate is what the trade-off bounds: a require clause is not a fact, and a value on a subsetting attribute is not a value on Common\'s, so bounding the Common name decides nothing. Where the brief fixes the numbers a measure follows from, derive it instead of stating it: restate those numbers as valued attributes of this layer (a constraint body cannot reach Common), leave the #Estimate without a literal, and fix it with assert constraint { <measure> == <expression over them> }. The solver then finds one value both ways, and the trade-off shows it as derived. One case of this is checked and blocks: a share the measure\'s own definition says holds at any moment cannot exceed the share of the population that is airborne at any moment, which the brief fixes as flight / (flight + recharge). An architecture whose members each cover more than their share may say so \u2014 state the per-member coverage as a valued attribute and derive the measure from it \u2014 but it may not simply state a larger number, because that is a claim the brief\'s own budgets contradict.',
   },
   {
     id: 'CV-18',
@@ -108,6 +108,11 @@ export const CONVENTIONS: readonly Convention[] = [
     id: 'CV-19',
     title: 'What the brief fixes by name',
     rule: 'Hazards, modes and items the brief names keep the brief\'s names. A brief hazard is a #Hazard requirement of that name in SA::Hazards, stated once and satisfied below by path (satisfy SA::Hazards::X by <part>) — never restated at LA or PA. A brief mode is a state of that name in a state def of its owner: the #Member def for a member, the fleet usage or a #Configuration machine for the fleet, a ground component for the ground. An item whose fields the brief lists is an item def in Common with exactly those attributes, each with a doc.',
+  },
+  {
+    id: 'CV-20',
+    title: 'Budgets restated at a layer',
+    rule: 'A number the brief fixes is a budget attribute in Common held by its require constraint, and it has no value there. A layer that restates it — as an input to a derived estimate, or as the value its design assumes — writes a valued feature that subsets the Common attribute, under a name of its own if it wants one: attribute fleetMemberCount :> Common::fleetSizeMembers = 12;. That feature is what the budget\'s requirement is judged on at this layer. A plain attribute with the same number is a copy nothing ties to the budget, and the budget reads "has no value anywhere and nothing specialises it". A test condition subsets the same way, at the value it is held to. Mind the direction: the Common budget states what a design may assume (memberEnduranceMinutes <= 40), and a component requirement at PA may state the opposite bound on its own attribute (memberFlightMinutes >= 40, the airframe flies at least that long). The value that subsets the budget is the value the design assumes, 40, so both hold.',
   },
 ];
 

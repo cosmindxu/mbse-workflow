@@ -12,7 +12,7 @@
  * lives only in a report is a trade-off the next reader of the model will
  * re-open.
  */
-import { boundText, meets, scoredMoes, worstCase, worstCaseSense } from '../spec/measures.ts';
+import { boundText, hasTarget, meets, scoredMoes, unscoredBecause, worstCase, worstCaseSense } from '../spec/measures.ts';
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { assemble } from '../model/assembler.ts';
@@ -42,8 +42,9 @@ export interface AlternativeMetrics {
   /**
    * Each measure as this alternative states it: the worst case `bounds` finds
    * over the alternative's own `#Estimate`, and whether that meets the target.
+   * `unscored` says why a measure is reported and left out of the score.
    */
-  moes: Array<{ name: string; outcome: string; value?: number; sense: 'min' | 'max'; target: number; unit: string; met?: boolean; basis?: string; detail?: string }>;
+  moes: Array<{ name: string; outcome: string; value?: number; sense: 'min' | 'max'; target?: number; unit: string; met?: boolean; basis?: string; detail?: string; unscored?: 'no target' | 'set by SEED' }>;
   /** Where coordination and command and control sit, when the system is a population. */
   population?: { peerLinks: number; onBoard: number; tagged: number; fleet?: string; acceptedHazards: number };
 }
@@ -216,7 +217,7 @@ async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, 
       // `#Estimate`, never Common's attribute: a subsetting attribute gives
       // Common no value, so bounding Common decides nothing (probed).
       const measureName = `${at}${moe.name}`;
-      const base = { name: moe.name, sense: moe.sense, target: moe.target, unit: moe.unit };
+      const base = { name: moe.name, sense: moe.sense, target: hasTarget(moe) ? moe.target : undefined, unit: moe.unit, unscored: unscoredBecause(moe) };
       const basis = elements.find((e) => e.qualifiedName === measureName)?.doc || undefined;
       try {
         mkdirSync(boundsDir, { recursive: true });
@@ -294,7 +295,10 @@ export function measuresThatDoNotDiscriminate(
 ): Array<{ name: string; value?: number; outcome: string }> {
   if (metrics.length < 2) return [];
   const first = metrics[0];
+  // Only what the score counts: a measure it leaves out moves no score by
+  // design, and listing it here would say the comparison failed on it.
   return first.moes
+    .filter((measure) => measure.unscored === undefined)
     .filter((measure) => {
       const others = metrics.slice(1).map((m) => m.moes.find((x) => x.name === measure.name));
       if (others.some((o) => o === undefined)) return false;
@@ -318,10 +322,15 @@ export function measuresThatDoNotDiscriminate(
  * Measured, before: the verdict was read from a field the tool does not emit,
  * so every measure was "undecided" and this returned 0.5 for every alternative
  * of every run — a 0.4 weight that never discriminated.
+ *
+ * A measure with no target, and a target SEED set, are left out — neither 0
+ * nor ½ (see `unscoredBecause`): they are reported beside the score, and the
+ * mean is over the rest. With nothing left to count, ½, as with no measures.
  */
 export function moeScore(m: Pick<AlternativeMetrics, 'moes'>): number {
-  if (m.moes.length === 0) return 0.5;
-  return m.moes.reduce((sum, x) => sum + (x.met === undefined ? 0.5 : x.met ? 1 : 0), 0) / m.moes.length;
+  const counted = m.moes.filter((x) => x.unscored === undefined);
+  if (counted.length === 0) return 0.5;
+  return counted.reduce((sum, x) => sum + (x.met === undefined ? 0.5 : x.met ? 1 : 0), 0) / counted.length;
 }
 
 /** What accepting `n` hazards takes off the structure score. */
@@ -468,13 +477,20 @@ async function chosenAbove(ctx: AgentContext, layer: Layer, boundsOf: BoundsRead
  * (v9's LA rounded 40/60 h up to 0.7 for a measure where up is optimistic).
  */
 export function measureClaimsLines(
-  moes: ReadonlyArray<Pick<Moe, 'name' | 'sense' | 'target' | 'unit' | 'doc'> & { condition?: boolean }>,
+  moes: ReadonlyArray<Pick<Moe, 'name' | 'sense' | 'target' | 'unit' | 'doc' | 'setBySeed'> & { condition?: boolean }>,
   metrics: AlternativeMetrics[],
   above?: EstimatesAbove,
 ): string[] {
   if (moes.length === 0) return [];
+  // What the reviewer reads the claims against. A measure the score leaves out
+  // says so, or a miss on it reads as a reason to mark an alternative down.
+  const held = (moe: (typeof moes)[number]): string => {
+    const why = unscoredBecause(moe);
+    if (why === 'no target') return 'no target, the brief states none: reported, not scored';
+    return `target ${boundText(moe)}${why === 'set by SEED' ? ', set by SEED: reported, not scored' : ''}`;
+  };
   const lines: string[] = ['## The measures these are held to', ''];
-  for (const moe of moes) lines.push(`- \`${moe.name}\`: target ${boundText(moe)} — ${moe.doc}`);
+  for (const moe of moes) lines.push(`- \`${moe.name}\`: ${held(moe)} — ${moe.doc}`);
   const withAbove = above && above.moes.length > 0 ? above : undefined;
   lines.push(
     '',
@@ -489,7 +505,7 @@ export function measureClaimsLines(
     '',
   );
   for (const moe of moes) {
-    lines.push(`### \`${moe.name}\` (target ${boundText(moe)})`, '');
+    lines.push(`### \`${moe.name}\` (${held(moe)})`, '');
     const prior = withAbove?.moes.find((y) => y.name === moe.name);
     if (withAbove)
       lines.push(
@@ -612,9 +628,14 @@ export function rationaleFor(
       '| Alternative | Measure | Worst case | Target | Met |',
       '|---|---|---|---|---|',
     );
+    const met = (moe: AlternativeMetrics['moes'][number]): string => {
+      if (moe.unscored === 'no target') return '— (not scored: no target)';
+      const verdict = moe.met === undefined ? 'undecided' : moe.met ? 'yes' : 'no';
+      return moe.unscored === 'set by SEED' ? `${verdict} (not scored: target set by SEED)` : verdict;
+    };
     for (const m of metrics) {
       for (const moe of m.moes) {
-        lines.push(`| ${m.k} | \`${moe.name}\` | ${estimateText(moe)} | ${boundText(moe)} | ${moe.met === undefined ? 'undecided' : moe.met ? 'yes' : 'no'} |`);
+        lines.push(`| ${m.k} | \`${moe.name}\` | ${estimateText(moe)} | ${hasTarget(moe) ? boundText(moe) : '—'} | ${met(moe)} |`);
       }
     }
     lines.push('');

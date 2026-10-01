@@ -775,6 +775,50 @@ const moeCarriedEstimate: Predicate = (input) => {
 };
 
 /**
+ * Each budget the brief fixes is restated at this layer by a feature that
+ * subsets it (CV-20).
+ *
+ * A budget is a valueless attribute in Common held by its require constraint,
+ * and Sysprose judges that requirement at each layer through the feature that
+ * specialises it. A layer that copies the number into a plain attribute leaves
+ * the budget judged nowhere: v9's final audit read eight of its ten budgets as
+ * "has no value anywhere and nothing specialises it", `fleetSizeMembers` among
+ * them, beside LA's and PA's own `fleetMemberCount = 12`.
+ *
+ * A note, never blocking: a layer that has no use for a budget need not
+ * restate it, and this cannot tell that case from a forgotten one. Read from
+ * the `elements` rows, whose type and redefines cells carry the simple name of
+ * what a feature subsets or redefines (measured: v9's PA estimate
+ * `:> Common::areaUnderWatchFraction` has type `areaUnderWatchFraction`), so a
+ * feature subsetting a namesake elsewhere would also count.
+ */
+const budgetsSubset: Predicate = (input) => {
+  const budgets = Object.keys(input.brief?.budgets ?? {});
+  const layer = input.layer;
+  if (budgets.length === 0 || !layer) return [];
+  const cells = (e: ElementRow): string[] =>
+    [e.type, e.redefines].flatMap((cell) => (cell ?? '').split(',').map((s) => s.trim()).filter(Boolean));
+  const features = elementsOf(input).filter((e) => e.metaclass.endsWith('Usage') && inLayer(e.qualifiedName, input.root, layer));
+  const unrestated = budgets.filter((name) => !features.some((e) => cells(e).includes(name)));
+  if (unrestated.length === 0) return [];
+  const example = unrestated[0];
+  return [
+    item({
+      code: 'budgets.subset',
+      severity: 'info',
+      blocking: false,
+      cv: 'CV-20',
+      message:
+        `no feature in \`package ${layer}\` subsets ${unrestated.length === 1 ? 'the budget' : `${unrestated.length} of the ${budgets.length} budgets`} the brief fixes: ` +
+        `${unrestated.map((n) => `\`Common::${n}\``).join(', ')}. Where this layer uses one — an input to a derived estimate, or the value the design assumes — ` +
+        `restate it as a valued feature that subsets it, under a name of this layer's own if you want one: ` +
+        `\`attribute <name> :> Common::${example} = ${input.brief?.budgets?.[example]};\`. Then the budget's requirement is judged at this layer; ` +
+        'a plain attribute with the same number is a copy nothing ties to it. Reported, not blocking.',
+    }),
+  ];
+};
+
+/**
  * The coordination and C2 functions the brief names exist, tagged.
  *
  * At SA by name — they are what the system takes over, and the brief named
@@ -1787,6 +1831,7 @@ export const PREDICATES: Record<PredicateId, Predicate> = {
   'moe.dutyCycleBound': moeDutyCycleBound,
   'moe.transitBudget': moeTransitBudget,
   'moe.carriedEstimate': moeCarriedEstimate,
+  'budgets.subset': budgetsSubset,
   'requirements.hazardsByComponent': requirementsHazardsByComponent,
   'hazards.fromBrief': hazardsFromBrief,
   'hazards.notRestated': hazardsNotRestated,

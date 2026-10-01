@@ -379,7 +379,9 @@ def report(
     measures = {m["measure"]: m for m in mapping.get("measures", [])}
     def target_of(name: str | None) -> tuple[float, str] | None:
         row = measures.get(name) if name else None
-        if not row:
+        # A measure the brief gives no number is mapped without a target, and
+        # there is nothing to judge the run against.
+        if not row or row.get("target") is None:
             return None
         text = str(row["target"])
         sense = "max" if ">=" in text else "min"

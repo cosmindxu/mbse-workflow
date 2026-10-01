@@ -3,7 +3,7 @@
  * worst case, and the score counts what was decided.
  */
 import { describe, expect, it } from 'vitest';
-import { boundText, isDecided, isProvisional, meets, worstCaseSense } from '../../src/spec/measures.ts';
+import { boundText, hasTarget, isDecided, isProvisional, meets, unscoredBecause, worstCaseSense } from '../../src/spec/measures.ts';
 import { moeScore } from '../../src/agents/evaluate.ts';
 
 const coverage = { sense: 'max' as const, target: 0.95, unit: '' };
@@ -20,6 +20,29 @@ describe('measures', () => {
     // at least half, whose mildest case is the one the estimates were taken at.
     expect(boundText({ sense: 'max', target: 0.5, condition: true })).toBe('= 0.5');
     expect(boundText({ sense: 'max', target: 10, unit: 'min', condition: true })).toBe('= 10 min');
+  });
+
+  it('renders a measure the brief gives no number as having no target, never `≥ undefined`', () => {
+    // v9's unattended watch: the brief asks for it and states no number.
+    expect(boundText({ sense: 'max', unit: 'h' })).toBe('no target');
+    expect(boundText({ sense: 'max', target: null, unit: 'h' })).toBe('no target');
+    expect(hasTarget({})).toBe(false);
+    expect(hasTarget({ target: null })).toBe(false);
+    expect(hasTarget({ target: 0 })).toBe(true);
+  });
+
+  it('has nothing to meet or miss without a target, however decided the estimate', () => {
+    expect(meets({ sense: 'max' }, 'optimum', 0.7)).toBeUndefined();
+    expect(meets({ sense: 'max', target: null }, 'derived', 0.7)).toBeUndefined();
+  });
+
+  it('leaves out of the score a measure with no target and a target SEED set, and keeps a placeholder', () => {
+    expect(unscoredBecause({})).toBe('no target');
+    expect(unscoredBecause({ target: 12, setBySeed: true })).toBe('set by SEED');
+    expect(unscoredBecause({ target: 0.75 })).toBeUndefined();
+    // A placeholder still counts: the customer asked for the measure and gave a number to work to.
+    const placeholder = { target: 0.75, placeholder: true };
+    expect(unscoredBecause(placeholder)).toBeUndefined();
   });
 
   it('reads a placeholder and a target SEED set as not the customer\'s', () => {
@@ -47,6 +70,17 @@ describe('measures', () => {
     expect(moeScore({ moes: [] })).toBe(0.5);
     expect(moeScore({ moes: [row(true), row(false), row(undefined), row(true)] })).toBe(0.625);
     expect(moeScore({ moes: [row(true), row(true)] })).toBe(1);
+  });
+
+  it('counts a measure with no target and a target SEED set as neither 0 nor ½: not at all', () => {
+    const row = (met?: boolean, unscored?: 'no target' | 'set by SEED') => ({ name: 'x', outcome: 'optimum', sense: 'max' as const, unit: '', met, unscored });
+    // v9's 12 h, SEED's number, missed by every alternative: 0 on it pulled
+    // each measures term down. Left out, the term is the mean of the rest.
+    expect(moeScore({ moes: [row(true), row(false), row(false, 'set by SEED')] })).toBe(0.5);
+    expect(moeScore({ moes: [row(true), row(true), row(undefined, 'no target')] })).toBe(1);
+    expect(moeScore({ moes: [row(true), row(undefined, 'no target'), row(false, 'set by SEED')] })).toBe(1);
+    // Nothing left to count: the same ½ as no measures, for every alternative.
+    expect(moeScore({ moes: [row(undefined, 'no target')] })).toBe(0.5);
   });
 });
 

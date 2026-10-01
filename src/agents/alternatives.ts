@@ -7,7 +7,7 @@
  * thing under study — how responsibilities are split across components — and
  * each one is checked in its own assembled file so their names never collide.
  */
-import { boundText, estimateLine, scoredMoes } from '../spec/measures.ts';
+import { boundText, estimateLine, hasTarget, scoredMoes } from '../spec/measures.ts';
 import type { Moe } from '../llm/schemas.ts';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -151,7 +151,7 @@ export async function authorAlternatives(
           // this dialect reports as incompatible. Connections stay in the layer.
           'Connections stay inside this layer: between your components, and between a component and an actor part of this layer. Never connect to a port of the layer above (`SA::system::…`): that is a delegation, and it is expressed by the allocation and the trace, not by a connection. A connection joins an `out` port to an `in` port.',
           ...(population ? populationGuidance(k, layer, population, coordinationNames, c2Names) : []),
-          ...estimateGuidance(scoredMoes(ctx.state.brief?.moes ?? []), layer),
+          ...estimateGuidance(scoredMoes(ctx.state.brief?.moes ?? []), layer, (ctx.state.brief?.moes ?? []).filter((m) => m.kind === 'budget')),
           ...briefFixedGuidance(ctx.state.brief, population !== undefined),
           ...(hazardNames.length > 0
             ? [
@@ -248,8 +248,13 @@ export function indent(section: string): string {
  * and its basis, and says that a restated target is not an estimate. The
  * evaluator sees both alternatives' bases side by side.
  */
-export function estimateGuidance(moes: readonly Moe[], layer?: Layer): string[] {
+export function estimateGuidance(moes: readonly Moe[], layer?: Layer, budgets: readonly Moe[] = []): string[] {
   if (moes.length === 0) return [];
+  // A restated budget subsets Common's (CV-20), so the budget's requirement is
+  // judged at this layer. The example names one of this brief's budgets: a
+  // name from another brief, copied, is a reference that resolves to nothing.
+  const budget = budgets.find((b) => hasTarget(b) && !b.condition) ?? budgets.find(hasTarget);
+  const restated = budget ? `attribute ${budget.name} :> Common::${budget.name} = ${budget.target};` : 'attribute <name> :> Common::<budget> = <the brief\'s number>;';
   // Below LA the layer above has stated its own estimates, and the author sees
   // them in its context. v9's PA read LA's 0.58 for coverage under jamming and
   // wrote 0.68 on a mechanism no PA element models; nothing asked it to
@@ -264,7 +269,7 @@ export function estimateGuidance(moes: readonly Moe[], layer?: Layer): string[] 
         ]
       : [];
   return [
-    `State this architecture's estimate for each of the ${moes.length} measures of effectiveness. The measures and their targets: ${moes.map((m) => `\`${m.name}\` ${boundText(m)}`).join(', ')}. Where the brief fixes the numbers a measure follows from (fleet size, flight and recharge time, sectors), DERIVE it so the solver checks the arithmetic: restate those numbers as attributes of this layer — \`attribute dronesFielded : ScalarValues::Real = 12;\` (a constraint cannot read \`Common::\`; where the brief's number is itself one of the measures, its literal \`#Estimate\` is that input — declare it once, never beside a plain attribute of the same name) — then \`#Estimate attribute <measure> :> Common::<measure> { doc /* the basis */ }\` with no value and \`assert constraint { doc /* what it computes */ <measure> == <expression over those attributes> }\` — the doc is what a reviewer reads, and an undocumented constraint counts against the layer's doc coverage. Where nothing derives it, state the literal: \`${estimateLine('<measure>')}\`. Either way the value is the WORST case this design delivers, not the target restated, with its basis in the doc. An estimate that misses its target is a legitimate answer — the comparison is what it is for.`,
+    `State this architecture's estimate for each of the ${moes.length} measures of effectiveness. The measures and their targets: ${moes.map((m) => `\`${m.name}\` ${hasTarget(m) ? boundText(m) : '(no target: the brief states none; estimate it all the same)'}`).join(', ')}. Where the brief fixes the numbers a measure follows from (fleet size, flight and recharge time, sectors), DERIVE it so the solver checks the arithmetic: restate those numbers as attributes of this layer that subset the brief's budget in Common, under that name or one of this layer's own — \`${restated}\` (CV-20: the budget's requirement is then judged at this layer, and a plain attribute with the same number is a copy nothing ties to it; a constraint cannot read \`Common::\`, so the equation reads this attribute; where the brief's number is itself one of the measures, its literal \`#Estimate\` is that input — declare it once, never beside a plain attribute of the same name) — then \`#Estimate attribute <measure> :> Common::<measure> { doc /* the basis */ }\` with no value and \`assert constraint { doc /* what it computes */ <measure> == <expression over those attributes> }\` — the doc is what a reviewer reads, and an undocumented constraint counts against the layer's doc coverage. Where nothing derives it, state the literal: \`${estimateLine('<measure>')}\`. Either way the value is the WORST case this design delivers, not the target restated, with its basis in the doc. An estimate that misses its target is a legitimate answer — the comparison is what it is for.`,
     ...carried,
   ];
 }

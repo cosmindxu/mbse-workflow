@@ -10,7 +10,7 @@
  * while the model is small enough for that to be free.
  */
 import { ruleTemplate } from '../spec/rules.ts';
-import { boundText } from '../spec/measures.ts';
+import { boundText, hasTarget } from '../spec/measures.ts';
 import type { ElementRow } from '../sysprose/types.ts';
 import type { PromptReport } from '../sysprose/types.ts';
 import type { Layer } from '../spec/layers.ts';
@@ -61,7 +61,10 @@ export function briefSection(brief: SeedOutput): string {
     ...brief.capabilities.map((c) => `- \`${c.name}\` — ${c.doc}`),
     '',
     '**Measures of effectiveness** (the architectures are scored on these)',
-    ...brief.moes.map((m) => `- \`${m.name}\` (${m.kind === 'budget' ? `${m.condition ? 'test condition' : 'budget'} ${boundText(m)} — fixed by the brief, held by its requirement, not estimated or scored` : `target ${boundText(m)}`}) — ${m.doc}`),
+    ...brief.moes.map(
+      (m) =>
+        `- \`${m.name}\` (${m.kind === 'budget' ? `${m.condition ? 'test condition' : 'budget'} ${boundText(m)} — fixed by the brief, held by its requirement, not estimated or scored` : hasTarget(m) ? `target ${boundText(m)}` : 'no target, the brief states none — estimated and reported, not scored'}) — ${m.doc}`,
+    ),
     '',
     `**Operational entity the system takes over**: \`${brief.systemEntity}\` — declare its part under exactly this name, untagged.`,
     ...populationLines(brief),
