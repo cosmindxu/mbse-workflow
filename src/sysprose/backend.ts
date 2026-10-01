@@ -107,3 +107,18 @@ export class ElementRefError extends Error {
     this.candidates = candidates;
   }
 }
+
+/**
+ * The solver's WASM module trapped under a call: the call is abandoned, the
+ * module discarded, and the next call runs on a fresh one. Not a finding about
+ * the model — the checker runs the check once more.
+ */
+export class SolverCrashedError extends Error {
+  /** The trap as it arrived: `memory access out of bounds`, `Aborted(…)`. */
+  readonly trap: string;
+  constructor(trap: string) {
+    super(`the solver crashed (WASM trap: ${trap})`);
+    this.name = 'SolverCrashedError';
+    this.trap = trap;
+  }
+}

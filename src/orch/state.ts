@@ -42,6 +42,8 @@ export interface StepRecord {
   startedAt?: string;
   finishedAt?: string;
   note?: string;
+  /** Checks and estimate reads of the step's last verdict run again after a solver crash; the final audit adds them up. */
+  solverRetries?: number;
 }
 
 export interface RunState {

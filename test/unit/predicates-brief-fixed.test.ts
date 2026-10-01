@@ -55,7 +55,7 @@ describe('hazards.notRestated', () => {
     expect(codes('hazards.notRestated', input('S21', 'SA', [], { Hazard: ['OA::Hazards::x', 'SA::Hazards::x'] }))).toEqual([]);
   });
   it('does not fight hazards.kept: removing a restated hazard is not a deletion', () => {
-    const verdict: Verdict = { step: 'S32', prefixPath: '', prefixHash: '', blocking: false, checks: [], items: [], durationMs: 0, loaded: true, elementCount: 0 };
+    const verdict: Verdict = { step: 'S32', prefixPath: '', prefixHash: '', blocking: false, checks: [], items: [], durationMs: 0, loaded: true, elementCount: 0, solverRetries: 0 };
     expect(withDroppedHazards(verdict, new Set(['linkGap', 'own']), new Set(['own']), new Set(['linkGap']))).toBe(verdict);
     expect(withDroppedHazards(verdict, new Set(['linkGap', 'own']), new Set([]), new Set(['linkGap'])).items.map((i) => i.message)).toEqual([expect.stringContaining('`own`')]);
   });

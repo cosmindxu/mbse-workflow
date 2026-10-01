@@ -12,7 +12,7 @@ import { dirname, resolve } from 'node:path';
 import { Command } from 'commander';
 import { loadConfig } from './config/load.ts';
 import { GATES_BY_MODE, ModeSchema, type RunMode } from './config/schema.ts';
-import { InProcessBackend } from './sysprose/inprocess.ts';
+import { InProcessBackend, exitAfterSolverDeath } from './sysprose/inprocess.ts';
 import { ClaudeCliClient } from './llm/claude-cli.ts';
 import { FakeLlmClient } from './llm/fake.ts';
 import { AutoGate, FileGate, TtyGate, type GateController } from './orch/gates.ts';
@@ -298,3 +298,8 @@ program
   });
 
 await program.parseAsync(process.argv);
+// A solver call abandoned on a dead module — a trap, or one Sysprose's guard
+// gave up on — leaves z3-solver's 600 s keep-alive timer behind (z3-built.js
+// `threadTimeouts`), which would hold the process open for ten minutes after
+// its work is done. Such a process ends here; any other the ordinary way.
+exitAfterSolverDeath();

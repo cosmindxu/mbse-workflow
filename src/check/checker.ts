@@ -16,11 +16,12 @@ import { resolve } from 'node:path';
 import { assemble, toFragmentLine, writeBuild, type Assembly } from '../model/assembler.ts';
 import { matchingBrace, packageBody } from '../model/statements.ts';
 import type { ModelLayout } from '../model/layout.ts';
-import type { SysproseBackend, Loaded } from '../sysprose/backend.ts';
+import { SolverCrashedError, type SysproseBackend, type Loaded } from '../sysprose/backend.ts';
 import { AUTHORED_LAYERS, LAYERS, layerIndex, previousAuthoredLayer, type Layer } from '../spec/layers.ts';
-import { checkCommand, isBlocking, type CheckSpec, type StepSpec } from '../spec/steps.ts';
+import { checkCommand, isBlocking, type CheckSpec, type PredicateId, type StepSpec } from '../spec/steps.ts';
 import { carriersIn, ruleNameOf, sameFields, type RuleRow } from '../spec/rules.ts';
 import { itemFromDiagnostic, type Knobs, type RepairItem } from './classify.ts';
+import { noteFor } from '../spec/codes.ts';
 import { PREDICATES, type BriefFacts, type CarriedEstimates, type EstimateSide, type PayloadBag } from './predicates.ts';
 import type { ElementRow } from '../sysprose/types.ts';
 import { definingExpression, expressionNames, isProvisional } from '../spec/measures.ts';
@@ -67,7 +68,65 @@ export interface Verdict {
   durationMs: number;
   loaded: boolean;
   elementCount: number;
+  /** Checks and estimate reads run a second time because the solver crashed under the first (`solver/retried`). */
+  solverRetries: number;
 }
+
+/** What a run says about the checks it ran again after a solver crash. */
+export const solverRetriesNote = (n: number): string =>
+  n === 1 ? '1 solver crash, retried once' : `${n} solver crashes, each retried once`;
+
+/**
+ * A solver read, run once more if the solver crashed under it.
+ *
+ * The crash is z3's WASM module trapping, not a finding about the model: the
+ * module is gone and the next call makes a fresh one. `onRetry` hears of each,
+ * so every retry is counted and noted; a second crash is thrown, for the
+ * caller to report as a check that could not run. One door for every site, so
+ * no read is retried by one rule and missed by another.
+ */
+export async function retryOnSolverCrash<T>(read: () => Promise<T> | T, onRetry: (err: SolverCrashedError) => void): Promise<T> {
+  try {
+    return await read();
+  } catch (err) {
+    if (!(err instanceof SolverCrashedError)) throw err;
+    onRetry(err);
+    return await read();
+  }
+}
+
+/** What a retried read says: `what` is the check, or the bound, it was. */
+const retriedMessage = (what: string, err: SolverCrashedError): string =>
+  `${what}: the solver crashed under it (WASM trap: ${err.trap}) and it was run again on a fresh module; the result is the second run's`;
+
+/** The non-blocking note a retried read leaves in a verdict. */
+const retriedItem = (what: string, err: SolverCrashedError, check?: string): RepairItem => ({
+  source: 'predicate',
+  code: 'solver/retried',
+  severity: 'warning',
+  blocking: false,
+  message: retriedMessage(what, err),
+  hint: noteFor('solver/retried')?.note,
+  check,
+});
+
+/**
+ * `bounds` for a reader with no check to carry a `solver/retried` item — the
+ * trade-off's measures, the final audit's table: read once more if the solver
+ * crashed under it, each retry logged and counted for the step that owns the
+ * read. A second crash is thrown, for the reader to say the solver crashed
+ * rather than that there is no estimate.
+ */
+export const boundsRetried =
+  (backend: SysproseBackend, m: Loaded, log: (line: string) => void, counted: () => void) =>
+  (qn: string, sense: 'min' | 'max') =>
+    retryOnSolverCrash(
+      () => backend.bounds(m, qn, sense),
+      (err) => {
+        counted();
+        log(`  ${retriedMessage(`the ${sense} bound of \`${qn}\``, err)}`);
+      },
+    );
 
 /** The highest layer that has a fragment — what a step with no layer of its own is checked against. */
 export function topLayer(layout: ModelLayout, substitute?: Partial<Record<Layer, string>>): Layer {
@@ -84,6 +143,14 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
 
   const outcomes: CheckOutcome[] = [];
   const payloads: PayloadBag = {};
+  let solverRetries = 0;
+  // Solver crashes on the estimate reads, kept until the checks that own those
+  // predicates have outcomes to carry them.
+  const estimateRetries: Array<{ predicate: PredicateId; item: RepairItem }> = [];
+  const unreadEstimates = new Map<PredicateId, Set<string>>();
+  const unread = (predicate: PredicateId, qn: string): void => {
+    unreadEstimates.set(predicate, (unreadEstimates.get(predicate) ?? new Set()).add(qn));
+  };
 
   const result = await ctx.backend.withModel(assembly.text, prefixPath, async (m: Loaded) => {
     // Always collected: every post-condition needs the element list and the
@@ -94,26 +161,43 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
     // The layer as the transitions see it: connections with their usage-level
     // ends, actions with their tags. What the population gates read.
     if (step.layer && (AUTHORED_LAYERS as readonly Layer[]).includes(step.layer)) payloads.layerView = ctx.backend.layerView(m, step.layer);
+    // Every bounds read below is run once more if the solver crashed under it,
+    // and noted against the check whose predicate reads it. One that crashed
+    // twice is not a missing estimate: the step could not be checked, and the
+    // gates leave that measure's verdict out rather than guess it.
+    const readBounds = (predicate: PredicateId) => (qn: string, sense: 'min' | 'max') =>
+      retryOnSolverCrash(
+        () => ctx.backend.bounds(m, qn, sense),
+        (err) => {
+          solverRetries += 1;
+          estimateRetries.push({ predicate, item: retriedItem(`the ${sense} bound of \`${qn}\``, err) });
+        },
+      );
     // What each measure's estimate bounds to in this layer, for moe.estimated:
     // an estimate derived by a constraint carries no literal, and only the
     // solver can say it is a point. Asked both ways; only where the gate runs.
     const measures = ctx.brief?.moes ?? [];
     const wantsEstimates = step.checks.some((c) => c.predicates?.includes('moe.estimated'));
     if (wantsEstimates && measures.length > 0 && step.layer && m.report.summary.errors === 0) {
-      const estimates: Record<string, { min?: number; max?: number; refused?: string }> = {};
+      const estimates: Record<string, { min?: number; max?: number; refused?: string; solverCrashed?: boolean }> = {};
       const names = new Set((payloads.elements as ElementRow[]).map((e) => e.qualifiedName));
+      const bounds = readBounds('moe.estimated');
       for (const name of measures) {
         const qn = `${ctx.layout.root}::${step.layer}::${name}`;
         if (!names.has(qn)) continue;
         try {
-          const lo = (await ctx.backend.bounds(m, qn, 'min')).bounds[0];
-          const hi = (await ctx.backend.bounds(m, qn, 'max')).bounds[0];
+          const lo = (await bounds(qn, 'min')).bounds[0];
+          const hi = (await bounds(qn, 'max')).bounds[0];
           // Why no value, when the solver answered and Sysprose would not
           // confirm the point — the repair needs that, not "nothing fixes it".
           const refused = [lo, hi].find((r) => r?.code === 'verification/not-evaluable')?.detail ?? undefined;
           estimates[name] = { min: lo?.value ?? undefined, max: hi?.value ?? undefined, refused };
-        } catch {
+        } catch (err) {
           // An estimate bounds cannot read is one the gate reports as missing.
+          if (err instanceof SolverCrashedError) {
+            estimates[name] = { solverCrashed: true };
+            unread('moe.estimated', qn);
+          }
         }
       }
       payloads.estimates = estimates;
@@ -125,7 +209,9 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
     const above = step.layer ? previousAuthoredLayer(step.layer) : undefined;
     const wantsCarried = step.checks.some((c) => c.predicates?.includes('moe.carriedEstimate'));
     if (wantsCarried && above && measures.length > 0 && step.layer && m.report.summary.errors === 0) {
-      payloads.carried = await carriedEstimates(ctx, m, payloads.elements as ElementRow[], step.layer, above);
+      payloads.carried = await carriedEstimates(ctx, m, payloads.elements as ElementRow[], step.layer, above, readBounds('moe.carriedEstimate'), (qn) =>
+        unread('moe.carriedEstimate', qn),
+      );
     }
 
     // The rules each machine of this layer carries, checked, for rules.carried
@@ -179,8 +265,15 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
         continue;
       }
       let payload: unknown;
+      const retried: RepairItem[] = [];
       try {
-        payload = await runOne(ctx.backend, m, spec);
+        payload = await retryOnSolverCrash(
+          () => runOne(ctx.backend, m, spec),
+          (err) => {
+            solverRetries += 1;
+            retried.push(retriedItem(`\`${spec.name}\``, err, spec.name));
+          },
+        );
       } catch (err) {
         outcomes.push({
           name: spec.name,
@@ -195,7 +288,7 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
               code: 'check/failed',
               severity: 'error',
               blocking,
-              message: `\`${spec.name}\` could not run: ${err instanceof Error ? err.message : String(err)}`,
+              message: `\`${spec.name}\` could not run: ${err instanceof Error ? err.message : String(err)}${retried.length > 0 ? ' — on the second attempt, the solver having crashed under the first' : ''}`,
               check: spec.name,
             },
           ],
@@ -213,8 +306,30 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
         ok: true,
         durationMs: Date.now() - at,
         payloadFile,
-        items: [],
+        items: retried,
       });
+    }
+
+    // The estimate reads' retries, and the reads that crashed twice, on the
+    // check whose predicate needed them.
+    for (const spec of step.checks) {
+      const outcome = outcomes.find((o) => o.name === spec.name);
+      if (!outcome) continue;
+      for (const r of estimateRetries) if (spec.predicates?.includes(r.predicate)) outcome.items.push({ ...r.item, check: spec.name });
+      for (const [predicate, unreadQns] of unreadEstimates) {
+        if (!spec.predicates?.includes(predicate)) continue;
+        const qns = [...unreadQns];
+        outcome.items.push({
+          source: 'predicate',
+          code: 'check/failed',
+          severity: 'error',
+          blocking: outcome.blocking,
+          message:
+            `the solver crashed twice reading the estimates (${qns.map((q) => `\`${q}\``).join(', ')}): the step could not be checked. ` +
+            `\`${predicate}\` says nothing about ${qns.length === 1 ? 'that measure' : 'those measures'} rather than call ${qns.length === 1 ? 'it' : 'them'} missing; check the step again.`,
+          check: spec.name,
+        });
+      }
     }
 
     // Post-conditions run after every payload is in, because several read more
@@ -279,6 +394,7 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
     durationMs: Date.now() - started,
     loaded: true,
     elementCount: result.elementCount,
+    solverRetries,
   };
 }
 
@@ -288,7 +404,15 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
  * layer. Literal means the `#Estimate` carries a number; derived means it has
  * none and the solver fixes it to one point (as moe.estimated accepts it).
  */
-async function carriedEstimates(ctx: CheckContext, m: Loaded, elements: ElementRow[], layer: Layer, above: Layer): Promise<CarriedEstimates> {
+async function carriedEstimates(
+  ctx: CheckContext,
+  m: Loaded,
+  elements: ElementRow[],
+  layer: Layer,
+  above: Layer,
+  bounds: (qn: string, sense: 'min' | 'max') => Promise<{ bounds: Array<{ value?: number | null }> }>,
+  crashedTwice: (qn: string) => void,
+): Promise<CarriedEstimates> {
   const root = ctx.layout.root;
   const rows = new Map(elements.map((e) => [e.qualifiedName, e]));
   const literal = (row: ElementRow | undefined): number | undefined =>
@@ -297,11 +421,14 @@ async function carriedEstimates(ctx: CheckContext, m: Loaded, elements: ElementR
   // one to compare.
   const point = async (qn: string): Promise<number | undefined> => {
     try {
-      const lo = (await ctx.backend.bounds(m, qn, 'min')).bounds[0]?.value ?? undefined;
-      const hi = (await ctx.backend.bounds(m, qn, 'max')).bounds[0]?.value ?? undefined;
+      const lo = (await bounds(qn, 'min')).bounds[0]?.value ?? undefined;
+      const hi = (await bounds(qn, 'max')).bounds[0]?.value ?? undefined;
       if (lo === undefined || hi === undefined) return undefined;
       return Math.abs(lo - hi) <= 1e-9 * Math.max(1, Math.abs(lo)) ? lo : undefined;
-    } catch {
+    } catch (err) {
+      // No value either way; a read the solver crashed under twice is also
+      // said, as a step that could not be checked.
+      if (err instanceof SolverCrashedError) crashedTwice(qn);
       return undefined;
     }
   };

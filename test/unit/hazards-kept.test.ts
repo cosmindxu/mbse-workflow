@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { hazardNamesIn, withDroppedHazards } from '../../src/agents/author.ts';
 import type { Verdict } from '../../src/check/checker.ts';
 
-const verdict: Verdict = { step: 'S32', prefixPath: '', prefixHash: '', blocking: false, checks: [], items: [], durationMs: 0, loaded: true, elementCount: 0 };
+const verdict: Verdict = { step: 'S32', prefixPath: '', prefixHash: '', blocking: false, checks: [], items: [], durationMs: 0, loaded: true, elementCount: 0, solverRetries: 0 };
 
 describe('hazards kept under repair', () => {
   it('reads hazard names whatever else they are tagged', () => {

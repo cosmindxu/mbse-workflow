@@ -146,12 +146,14 @@ export interface AdapterOptions {
 async function derivedValue(backend: SysproseBackend, model: Loaded, qualifiedName: string): Promise<number | null> {
   try {
     if (backend.valueOf) return backend.valueOf(model, qualifiedName) ?? null;
-    const [low, high] = await Promise.all(
-      (['min', 'max'] as const).map(async (sense) => (await backend.bounds(model, qualifiedName, sense)).bounds[0]?.value),
-    );
+    // One after the other: z3 runs one check at a time, and two in flight on
+    // its single-threaded module are the race that corrupts its heap.
+    const low = (await backend.bounds(model, qualifiedName, 'min')).bounds[0]?.value;
+    const high = (await backend.bounds(model, qualifiedName, 'max')).bounds[0]?.value;
     if (typeof low !== 'number' || typeof high !== 'number') return null;
     return Math.abs(low - high) <= 1e-9 * Math.max(1, Math.abs(high)) ? high : null;
   } catch {
+    // A solver crash included: not run again, the claim is null.
     return null;
   }
 }

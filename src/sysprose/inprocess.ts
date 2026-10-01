@@ -34,12 +34,13 @@ import {
   verifyModel,
 } from '@api/index';
 import { evaluateFeatureValue, resolveFullName, statementKindOf } from '@semantics/index';
+import { isZ3ModuleDeath, resetZ3Cache, z3DeathCount } from '@semantics/smt/z3-bridge';
 import { buildGrid } from '@diagram/grid';
 import { buildRequirementsTable } from '@diagram/requirements-table';
 import { loadModelText } from '@text/load';
 import { checkText } from '@text/check';
 import { TRACE_PRESETS } from '@sysprose/scripts/lib/sysprose-spec';
-import { ElementRefError, type Loaded, type SysproseBackend, type TagIndex } from './backend.ts';
+import { ElementRefError, SolverCrashedError, type Loaded, type SysproseBackend, type TagIndex } from './backend.ts';
 import { SerialQueue } from './queue.ts';
 import { buildLayerView, type LayerView } from '../transition/view.ts';
 import type { Layer } from '../spec/layers.ts';
@@ -63,6 +64,129 @@ const label = (ref: { declaredName?: string; qualifiedName: string; id: string }
 
 const qname = (model: Model, id: string): string => model.qualifiedName(id) || id;
 
+/* ─────────────────────────── a solver that traps ─────────────────────────── */
+
+/**
+ * Is this a trap of the z3 WASM module, rather than an error of ours?
+ *
+ * A trap on the main thread is a `WebAssembly.RuntimeError`. One on a solver
+ * thread reaches the main thread re-created by Node's serialisation as a plain
+ * `Error` named `RuntimeError`, so `instanceof` alone misses the usual case.
+ * Sysprose's own matcher covers the other shapes a dying module speaks in
+ * (`Aborted(…)`, `unwind`, a refused async call).
+ */
+export function isWasmTrap(err: unknown): boolean {
+  if (typeof WebAssembly !== 'undefined' && err instanceof WebAssembly.RuntimeError) return true;
+  if (typeof err === 'object' && err !== null && (err as { name?: unknown }).name === 'RuntimeError') return true;
+  return isZ3ModuleDeath(err);
+}
+
+/** The rejecters of the solver calls in flight: fired when the module under them traps. */
+const inFlight = new Set<(err: SolverCrashedError) => void>();
+let traps = 0;
+let diedAt = Number.NEGATIVE_INFINITY;
+let installed = false;
+
+/**
+ * How long after a trap another one is the same death, in milliseconds.
+ *
+ * A dying module's threads fail together — D5's trace has the check thread and
+ * the timer thread trapping in one burst — while a fresh module cannot trap
+ * before its init and a check have run. Measured on this host under load: init
+ * ~100 ms, the first check after it ~290 ms. A trap inside the window is
+ * counted and nothing else, so an echo of the old module cannot abandon the
+ * retry already running on the new one.
+ */
+const ECHO_MS = 250;
+
+/**
+ * The process-wide handler for the trap no call can catch.
+ *
+ * A trap on a solver thread arrives through the worker's `error` event, which
+ * emscripten rethrows: no promise Sysprose awaits ever settles, and Node's
+ * default kills the process — the whole leg, for one check. Here the module
+ * is discarded, every call in flight on it is rejected with
+ * {@link SolverCrashedError} (the checker runs that check once more), and the
+ * run goes on. Anything else is put back the way Node would have had it: this
+ * listener removed and the error rethrown outside it, which prints the stack
+ * and exits 1 — a throw inside the listener would exit 7. Exported for the
+ * tests, which cannot emit `uncaughtException` past the runner's own listener.
+ */
+export function onSolverTrap(err: unknown): void {
+  if (!isWasmTrap(err)) {
+    // Another listener (a test runner) has it already; a rethrow would report it twice.
+    if (process.listenerCount('uncaughtException') > 1) return;
+    process.removeListener('uncaughtException', onSolverTrap);
+    process.nextTick(() => {
+      throw err;
+    });
+    return;
+  }
+  traps += 1;
+  const at = Date.now();
+  if (at - diedAt < ECHO_MS) return;
+  diedAt = at;
+  const trap = err instanceof Error ? err.message : String(err);
+  resetZ3Cache({ terminate: true });
+  const pending = [...inFlight];
+  inFlight.clear();
+  process.stderr.write(
+    `  solver: z3 WASM trap (${trap}) — module discarded, ` +
+      `${pending.length === 0 ? 'no call was in flight' : `${pending.length} call(s) in flight abandoned`}; the next call runs on a fresh one\n`,
+  );
+  for (const reject of pending) reject(new SolverCrashedError(trap));
+}
+
+/** Traps this process has seen, echoes included. */
+export const solverTrapCount = (): number => traps;
+
+/**
+ * Whether a solver call was abandoned in this process: a trap here, or a death
+ * Sysprose found on its own — its guard giving up on a call at the budget plus
+ * 30 s, with no trap ever raised. Either leaves z3-solver's keep-alive behind.
+ */
+export const lingersAfterSolverDeath = (traps: number, deaths: number): boolean => traps > 0 || deaths > 0;
+
+/**
+ * End a process whose solver died, once its command has returned.
+ *
+ * A call abandoned on a dead module leaves timers that hold the process open
+ * after its work is done: Sysprose's guard on the call (its budget plus 30 s),
+ * and z3-solver's own keep-alive — every off-thread call pushes a ref'd 600 s
+ * timer (`threadTimeouts`, z3-built.js:1202-1210) that only the call's own
+ * completion clears, and a call whose thread died never completes; the array
+ * is a `let` inside the module factory, out of the bridge's reach. Measured:
+ * S41 over v9 with a trap under its first bound printed its verdict at 20 s
+ * and then held on for the ten minutes. Nothing of the command is pending by
+ * then, so the process ends, after its output is flushed (a write to a pipe is
+ * asynchronous), with the exit code the command set; one whose solver never
+ * died ends the ordinary way.
+ */
+export function exitAfterSolverDeath(): void {
+  if (!lingersAfterSolverDeath(traps, z3DeathCount())) return;
+  process.stdout.write('', () => process.stderr.write('', () => process.exit()));
+}
+
+/**
+ * A solver call a trap can abandon.
+ *
+ * Raced, not awaited: a call whose module trapped never settles on its own.
+ * Sysprose's guard gives up on it only at its budget plus 30 s, and counts a
+ * death then; the catch kept on the abandoned call is so that late rejection
+ * reaches nobody. Each call, not `SerialQueue`: the queue holds a whole step's
+ * `withModel`, and failing that would fail every check of the step rather than
+ * the one the checker can run again.
+ */
+export function solverCall<T>(call: Promise<T>): Promise<T> {
+  let abandon!: (err: SolverCrashedError) => void;
+  const trapped = new Promise<never>((_, reject) => {
+    abandon = reject;
+  });
+  inFlight.add(abandon);
+  call.catch(() => {});
+  return Promise.race([call, trapped]).finally(() => inFlight.delete(abandon));
+}
+
 export interface InProcessOptions {
   /** The Sysprose checkout being driven — reported, never imported from. */
   dir: string;
@@ -77,6 +201,11 @@ export class InProcessBackend implements SysproseBackend {
 
   constructor(opts: InProcessOptions) {
     this.#opts = opts;
+    // Once per process: there is one z3 module per process, whatever the backends.
+    if (!installed) {
+      installed = true;
+      process.on('uncaughtException', onSolverTrap);
+    }
   }
 
   async version(): Promise<SysproseVersion> {
@@ -326,20 +455,23 @@ export class InProcessBackend implements SysproseBackend {
     return { ...report, requestedDepth: depth };
   }
 
+  // The five that reach z3, each raced against a trap (see `solverCall`).
+  // `behaviour` is not one: it walks the state space itself, synchronously.
+
   verify(m: Loaded) {
-    return verifyModel(m.model, { sourceText: m.text });
+    return solverCall(verifyModel(m.model, { sourceText: m.text }));
   }
 
   consistency(m: Loaded) {
-    return consistencyReport(m.model, { sourceText: m.text });
+    return solverCall(consistencyReport(m.model, { sourceText: m.text }));
   }
 
   refine(m: Loaded, via: 'composition' | 'derive' | 'refine' | 'all' = 'composition') {
-    return refinementReport(m.model, { via, sourceText: m.text });
+    return solverCall(refinementReport(m.model, { via, sourceText: m.text }));
   }
 
   bounds(m: Loaded, measure: string, sense: 'min' | 'max' = 'max') {
-    return boundsReport(m.model, { measure, sense, sourceText: m.text });
+    return solverCall(boundsReport(m.model, { measure, sense, sourceText: m.text }));
   }
 
   valueOf(m: Loaded, ref: string): number | undefined {
@@ -348,7 +480,7 @@ export class InProcessBackend implements SysproseBackend {
   }
 
   faultTree(m: Loaded) {
-    return faultTreeReport(m.model, { sourceText: m.text });
+    return solverCall(faultTreeReport(m.model, { sourceText: m.text }));
   }
 
   evidenceStatus(m: Loaded) {

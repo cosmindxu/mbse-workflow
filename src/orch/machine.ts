@@ -13,7 +13,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { runStepChecks, topLayer, type Verdict } from '../check/checker.ts';
+import { runStepChecks, solverRetriesNote, topLayer, type Verdict } from '../check/checker.ts';
 import { assemble, writeBuild } from '../model/assembler.ts';
 import { makeLayout, type ModelLayout } from '../model/layout.ts';
 import { generateSkeleton } from '../transition/skeleton.ts';
@@ -144,6 +144,7 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
         record.fragmentHashes = assemble(layout, step.layer as Layer).fragmentHashes;
         record.status = repaired.verdict.blocking ? 'blocked' : 'done';
         if (record.status === 'done') record.note = undefined;
+        noteSolverRetries(record, repaired.verdict);
         writePacket({ layout, step: id, verdict: repaired.verdict, rationales: [why === 'a person edited' ? 'Re-checked after a person edited the fragment.' : 'Re-checked against the layers above it: a person kept this fragment as written.', ...repaired.rationales] });
         saveState(layout.statePath, state);
         if (repaired.verdict.blocking) {
@@ -231,6 +232,7 @@ export async function runWorkflow(opts: RunOptions): Promise<RunResult> {
       // "failed after 3 attempts: session limit", which is two contradictory
       // facts in one record.
       if (record.status === 'done') record.note = undefined;
+      noteSolverRetries(record, verdict);
       recordSpend(state, leg, opts.llm.spent());
       saveState(layout.statePath, state);
 
@@ -518,6 +520,9 @@ async function runStep(
         docCoverageMin: ctx.config.limits.doc_coverage_min,
         auditDir: ctx.layout.auditDirFor(step.id),
       });
+      // The trade-off's own bound reads have no check to note them on; the
+      // step's record counts them with the checks' (see `noteSolverRetries`).
+      verdict.solverRetries += evaluation.solverRetries;
       writePacket({
         layout: ctx.layout,
         step: step.id,
@@ -571,6 +576,16 @@ async function runStep(
 }
 
 /* ────────────────────────────── small parts ─────────────────────────────── */
+
+/**
+ * A step whose checks ran again after a solver crash says so beside its
+ * status, cleared or not: the result stands, and how it was reached is part of
+ * the record. The count is what the final audit's run line adds up.
+ */
+function noteSolverRetries(record: StepRecord, verdict: Verdict | undefined): void {
+  record.solverRetries = verdict?.solverRetries || undefined;
+  if (record.solverRetries) record.note = solverRetriesNote(record.solverRetries);
+}
 
 function gateRequest(gate: GateId, step: StepSpec, verdict: Verdict | undefined, layout: ModelLayout): GateRequest {
   const items = verdict?.items ?? [];

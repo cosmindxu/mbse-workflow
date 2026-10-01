@@ -10,8 +10,9 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { assemble } from '../model/assembler.ts';
-import { topLayer, type Verdict } from '../check/checker.ts';
+import { boundsRetried, solverRetriesNote, topLayer, type Verdict } from '../check/checker.ts';
 import { runCheck, runSysprose } from '../sysprose/spawn.ts';
+import { SolverCrashedError } from '../sysprose/backend.ts';
 import { AUTHORED_LAYERS, type Layer } from '../spec/layers.ts';
 import { isDocumented } from '../check/predicates.ts';
 import type { AgentContext } from '../agents/context.ts';
@@ -50,6 +51,8 @@ export interface FinalAudit {
   /** Each measure as the chosen architectures state it, LA and PA (CV-17). */
   measures?: MeasureRow[];
   measuresError?: string;
+  /** Bound reads of the measures table run again because the solver crashed under the first. */
+  solverRetries?: number;
 }
 
 export interface MeasureRow {
@@ -221,23 +224,27 @@ export async function writeFinalAudit(ctx: AgentContext, verdict: Verdict): Prom
   // like the fleet: an audit is never lost to one more analysis.
   const moeSpecs = scoredMoes(ctx.state.brief?.moes ?? []);
   let measuresError: string | undefined;
+  // A read the solver crashed under is read once more, and counted into the
+  // run line; one it crashed under twice says so, not "no estimate".
+  let solverRetries = 0;
   const measures =
     moeSpecs.length > 0
       ? await ctx.backend
           .withModel(assembly.text, ctx.layout.finalPath, async (m) => {
             const rows: MeasureRow[] = [];
+            const bounds = boundsRetried(ctx.backend, m, ctx.log, () => (solverRetries += 1));
             for (const moe of moeSpecs) {
               const layers: MeasureRow['layers'] = [];
               for (const l of ['LA', 'PA'] as Layer[]) {
                 try {
                   const name = `${ctx.layout.root}::${l}::${moe.name}`;
-                  const row = await worstCase(async (sense) => (await ctx.backend.bounds(m, name, sense)).bounds[0], moe.sense);
+                  const row = await worstCase(async (sense) => (await bounds(name, sense)).bounds[0], moe.sense);
                   // Six significant figures, as Sysprose prints a defined value: a derived
                   // estimate is otherwise shown to the last float digit.
                   const shown = row.value !== undefined ? `${typeof row.value === 'number' ? Number(row.value.toPrecision(6)) : row.value}${moe.unit ? ` ${moe.unit}` : ''}${row.outcome === 'derived' ? ' (derived)' : ''}` : row.outcome;
                   layers.push({ layer: l, estimate: shown, met: meets(moe, row.outcome, row.value) });
-                } catch {
-                  layers.push({ layer: l, estimate: 'no estimate' });
+                } catch (err) {
+                  layers.push({ layer: l, estimate: err instanceof SolverCrashedError ? 'solver crashed twice' : 'no estimate' });
                 }
               }
               const reports: Array<{ outcome?: string; value?: number | null }> = [];
@@ -282,6 +289,7 @@ export async function writeFinalAudit(ctx: AgentContext, verdict: Verdict): Prom
     fleetError,
     measures,
     measuresError,
+    solverRetries: solverRetries || undefined,
     ...bonusLane(ctx.layout.auditDirFor('S60')),
     contribution: (() => {
       try {
@@ -366,12 +374,19 @@ function markdown(ctx: AgentContext, verdict: Verdict, audit: FinalAudit, witnes
   const state = ctx.state;
   const blocking = verdict.items.filter((i) => i.blocking);
   const notes = verdict.items.filter((i) => !i.blocking);
+  // Every step's last verdict, this one's from the verdict in hand: its own
+  // record still holds the previous run of this step. Then this audit's own
+  // measure reads.
+  const retries =
+    verdict.solverRetries +
+    Object.entries(state.steps).reduce((n, [id, r]) => n + (id === verdict.step ? 0 : (r?.solverRetries ?? 0)), 0) +
+    (audit.solverRetries ?? 0);
   const lines = [
     `# ${ctx.layout.root} — final audit`,
     '',
     `Model: \`${audit.modelPath}\` (${verdict.elementCount} elements)`,
     `Sysprose: ${state.sysprose.commit}${state.sysprose.matches ? '' : ` (the checks were calibrated against ${state.sysprose.expected})`}`,
-    `Run: ${state.mode} mode, ${state.llm.calls} model call(s), ${state.llm.costUsd.toFixed(2)} USD, ${Math.round(state.llm.durationMs / 1000)} s of model time${(state.legs?.length ?? 1) > 1 ? `, over ${state.legs!.length} legs` : ""}${state.llm.killed ? `; ${state.llm.killed} call(s) killed by the timeout, which may be billed and report no cost — the total is a floor` : ""}${(() => { const note = unrecordedSpend(state.llm, readCallLog(ctx.layout.llmLogPath)); return note ? `; ${note}` : ''; })()}`,
+    `Run: ${state.mode} mode, ${state.llm.calls} model call(s), ${state.llm.costUsd.toFixed(2)} USD, ${Math.round(state.llm.durationMs / 1000)} s of model time${(state.legs?.length ?? 1) > 1 ? `, over ${state.legs!.length} legs` : ""}${state.llm.killed ? `; ${state.llm.killed} call(s) killed by the timeout, which may be billed and report no cost — the total is a floor` : ""}${(() => { const note = unrecordedSpend(state.llm, readCallLog(ctx.layout.llmLogPath)); return note ? `; ${note}` : ''; })()}${retries > 0 ? `; ${solverRetriesNote(retries)}` : ''}`,
     '',
     '## Checked by the shipped CLI, not by this workflow',
     '',

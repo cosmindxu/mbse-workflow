@@ -24,6 +24,8 @@ import { layerIndex, previousAuthoredLayer, type Layer } from '../spec/layers.ts
 import type { StepSpec } from '../spec/steps.ts';
 import type { AgentContext } from './context.ts';
 import { replicaFacts } from '../check/replicas.ts';
+import { boundsRetried } from '../check/checker.ts';
+import { SolverCrashedError, type Loaded } from '../sysprose/backend.ts';
 
 export interface AlternativeMetrics {
   k: number;
@@ -63,7 +65,12 @@ export interface EvaluationResult {
   rubric: EvaluateOutput;
   overrode: boolean;
   rationalePath: string;
+  /** Bound reads run again because the solver crashed under the first; the step's verdict carries them. */
+  solverRetries: number;
 }
+
+/** A measure's `bounds` reader over one loaded model. */
+type BoundsReader = (m: Loaded) => ReturnType<typeof boundsRetried>;
 
 export async function evaluateAlternatives(
   ctx: AgentContext,
@@ -73,13 +80,19 @@ export async function evaluateAlternatives(
   /** Every alternative the layer attempted, viable or not. */
   attempted: Array<{ k: number; status: string }> = [],
 ): Promise<EvaluationResult> {
+  // Every bound read here is run once more if the solver crashed under it: a
+  // read lost to a trap would score its alternative ½ on that measure, not the
+  // 1 or 0 it earns, and could pick the other architecture. No check here
+  // carries a `solver/retried` item, so each is logged and counted.
+  let solverRetries = 0;
+  const bounds: BoundsReader = (m) => boundsRetried(ctx.backend, m, ctx.log, () => (solverRetries += 1));
   const metrics: AlternativeMetrics[] = [];
   for (const candidate of candidates) {
     // Serial: one loaded model at a time, and each of these is a full load.
-    metrics.push(await measure(ctx, step.id, layer, candidate.k, candidate.iterations));
+    metrics.push(await measure(ctx, step.id, layer, candidate.k, candidate.iterations, bounds));
   }
 
-  const above = await chosenAbove(ctx, layer);
+  const above = await chosenAbove(ctx, layer, bounds);
 
   const rubric = await ctx.llm.complete({
     tag: `${step.id}:EVALUATE`,
@@ -153,6 +166,7 @@ export async function evaluateAlternatives(
     rubric: rubric.data,
     overrode: rubric.data.recommended !== chosen,
     rationalePath,
+    solverRetries,
   };
 }
 
@@ -169,7 +183,7 @@ export function withoutTradeOff(fragment: string, layer: Layer): string {
 
 /* ────────────────────────────── measurement ─────────────────────────────── */
 
-async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, k: number, iterations: number): Promise<AlternativeMetrics> {
+async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, k: number, iterations: number, boundsOf: BoundsReader): Promise<AlternativeMetrics> {
   const fragment = readFileSync(ctx.layout.fragmentPath(layer, k), 'utf8');
   const assembly = assemble(ctx.layout, layer, { substitute: { [layer]: fragment } });
   const at = `${ctx.layout.root}::${layer}::`;
@@ -195,6 +209,7 @@ async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, 
 
     const moes: AlternativeMetrics['moes'] = [];
     const boundsDir = resolve(ctx.layout.auditDirFor(stepId), `alt-${k}`);
+    const bounds = boundsOf(m);
     for (const moe of moeSpecs) {
       // Reported, never blocking (Q-04); the estimate itself is gated at the
       // alternatives step. What is bounded is this alternative's own
@@ -206,7 +221,7 @@ async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, 
       try {
         mkdirSync(boundsDir, { recursive: true });
         const result = await worstCase(async (sense) => {
-          const report = await ctx.backend.bounds(m, measureName, sense);
+          const report = await bounds(measureName, sense);
           // The worst-case report keeps the name every earlier run used; the
           // other sense, asked only for a derived estimate, gets its own.
           const file = sense === worstCaseSense(moe.sense) ? `bounds-${moe.name}.json` : `bounds-${moe.name}.${sense}.json`;
@@ -215,8 +230,9 @@ async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, 
         }, moe.sense);
         moes.push({ ...base, outcome: result.outcome, value: result.value, met: meets(moe, result.outcome, result.value), basis, detail: result.detail });
       } catch (err) {
-        // A name `bounds` cannot resolve is an estimate that was never written.
-        moes.push({ ...base, outcome: 'no estimate', basis, detail: err instanceof Error ? err.message : String(err) });
+        // A name `bounds` cannot resolve is an estimate that was never written;
+        // one the solver crashed under twice was written and not read.
+        moes.push({ ...base, outcome: err instanceof SolverCrashedError ? 'solver crashed twice' : 'no estimate', basis, detail: err instanceof Error ? err.message : String(err) });
       }
     }
 
@@ -414,7 +430,7 @@ export interface EstimatesAbove {
  * estimates. The S42 evaluator compared v9's PA alternatives (0.665 and 0.68
  * for coverage under jamming) and never saw LA's 0.58 beside them.
  */
-async function chosenAbove(ctx: AgentContext, layer: Layer): Promise<EstimatesAbove | undefined> {
+async function chosenAbove(ctx: AgentContext, layer: Layer, boundsOf: BoundsReader): Promise<EstimatesAbove | undefined> {
   const above = previousAuthoredLayer(layer);
   const moeSpecs = scoredMoes(ctx.state.brief?.moes ?? []);
   if (!above || layerIndex(above) < layerIndex('LA') || moeSpecs.length === 0) return undefined;
@@ -424,15 +440,16 @@ async function chosenAbove(ctx: AgentContext, layer: Layer): Promise<EstimatesAb
     return await ctx.backend.withModel(assembly.text, `above-${above}`, async (m) => {
       const elements = ctx.backend.elements(m);
       const moes: EstimatesAbove['moes'] = [];
+      const bounds = boundsOf(m);
       for (const moe of moeSpecs) {
         const name = `${ctx.layout.root}::${above}::${moe.name}`;
         const row = elements.find((e) => e.qualifiedName === name);
         if (!row) continue;
         try {
-          const result = await worstCase(async (sense) => (await ctx.backend.bounds(m, name, sense)).bounds[0], moe.sense);
+          const result = await worstCase(async (sense) => (await bounds(name, sense)).bounds[0], moe.sense);
           moes.push({ name: moe.name, value: result.value, outcome: result.outcome, unit: moe.unit, basis: row.doc || undefined });
-        } catch {
-          moes.push({ name: moe.name, outcome: 'no estimate', unit: moe.unit, basis: row.doc || undefined });
+        } catch (err) {
+          moes.push({ name: moe.name, outcome: err instanceof SolverCrashedError ? 'solver crashed twice' : 'no estimate', unit: moe.unit, basis: row.doc || undefined });
         }
       }
       return { layer: above, moes };

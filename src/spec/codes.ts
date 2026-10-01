@@ -156,6 +156,9 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   'verification/refinement-undecided': {
     note: 'The solver could not decide whether the component contracts imply the system contract. Reported, never blocking.',
   },
+  'solver/retried': {
+    note: "The solver's WASM module crashed under this check, or under one bound of an estimate — a trap in z3, not a finding about the model. It was run once more on a fresh module, and that run's result is the one reported. Nothing in the fragment to repair; reported, never blocking.",
+  },
 };
 
 export const noteFor = (code: string): CodeNote | undefined => CODE_NOTES[code];

@@ -635,7 +635,7 @@ const moeEstimated: Predicate = (input) => {
     }
     // Valueless is fine when constraints over this layer's own values fix it
     // to one number: the solver answered the same both ways.
-    const derived = (input.payloads.estimates as Record<string, { min?: number; max?: number; refused?: string }> | undefined)?.[name];
+    const derived = (input.payloads.estimates as Record<string, { min?: number; max?: number; refused?: string; solverCrashed?: boolean }> | undefined)?.[name];
     const isPoint = derived?.min !== undefined && derived.max !== undefined && Math.abs(derived.min - derived.max) <= 1e-9 * Math.max(1, Math.abs(derived.min));
     // Measured in v6 at S41: Sysprose re-evaluates the solver's point in
     // floating point and withholds the bound when an equation like
@@ -644,7 +644,10 @@ const moeEstimated: Predicate = (input) => {
     const why = derived?.refused?.match(/evaluator makes (`[^`]*`) false/)?.[1];
     if (!isPoint && derived?.refused && !/^-?\d+(\.\d+)?(e-?\d+)?$/.test(row.value.trim()))
       return fail(`\`${name}\` is derived, but the solver's value for it could not be confirmed: ${why ? `${why} does not hold exactly in floating point at the solver's point` : 'the evaluator would not reproduce the solver\'s point'}, and every measure that equation reaches gets no bound. Keep the inputs, drop that \`assert constraint\`, and state the worst case as a literal with its arithmetic in the doc: ${line}.`);
-    if (row.value.trim() === '' && !isPoint)
+    // The solver crashed twice reading it: the step reports that it could not
+    // be checked (`check/failed`), and what the solver would have said is not
+    // guessed. Only the tag, which needs no solver, is still judged.
+    if (row.value.trim() === '' && !isPoint && !derived?.solverCrashed)
       return fail(`\`${name}\` has no value and nothing fixes it to one. Derive it — restate the numbers the brief fixes as attributes of this layer and write \`assert constraint { ${name} == <expression over them> }\` — or give it the worst case this architecture delivers: ${line}.`);
     if (!input.tags.has(qn, 'Estimate')) return fail(`\`${name}\` is not tagged. Write \`#Estimate attribute ${name}\` — the tag is how the trade-off and the audit find it.`);
     return [];
