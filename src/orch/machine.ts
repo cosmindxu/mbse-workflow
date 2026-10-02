@@ -521,8 +521,11 @@ async function runStep(
         auditDir: ctx.layout.auditDirFor(step.id),
       });
       // The trade-off's own bound reads have no check to note them on; the
-      // step's record counts them with the checks' (see `noteSolverRetries`).
+      // step's record counts them with the checks' (see `noteSolverRetries`),
+      // and its verdict carries each measure a read that crashed twice left
+      // out of the score (`solver/failed`, never blocking).
       verdict.solverRetries += evaluation.solverRetries;
+      verdict.items.push(...evaluation.items);
       writePacket({
         layout: ctx.layout,
         step: step.id,

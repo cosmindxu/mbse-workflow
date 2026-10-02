@@ -25,6 +25,8 @@ import type { StepSpec } from '../spec/steps.ts';
 import type { AgentContext } from './context.ts';
 import { replicaFacts } from '../check/replicas.ts';
 import { boundsRetried } from '../check/checker.ts';
+import type { RepairItem } from '../check/classify.ts';
+import { noteFor } from '../spec/codes.ts';
 import { SolverCrashedError, type Loaded } from '../sysprose/backend.ts';
 
 export interface AlternativeMetrics {
@@ -44,7 +46,7 @@ export interface AlternativeMetrics {
    * over the alternative's own `#Estimate`, and whether that meets the target.
    * `unscored` says why a measure is reported and left out of the score.
    */
-  moes: Array<{ name: string; outcome: string; value?: number; sense: 'min' | 'max'; target?: number; unit: string; met?: boolean; basis?: string; detail?: string; unscored?: 'no target' | 'set by SEED' }>;
+  moes: Array<{ name: string; outcome: string; value?: number; sense: 'min' | 'max'; target?: number; unit: string; met?: boolean; basis?: string; detail?: string; unscored?: Unscored }>;
   /** Where coordination and command and control sit, when the system is a population. */
   population?: { peerLinks: number; onBoard: number; tagged: number; fleet?: string; acceptedHazards: number };
 }
@@ -59,6 +61,16 @@ export interface AlternativeMetrics {
  */
 export const RESILIENCE_CRITERIA = ['groundLinkLossResilience', 'groundNodeLossResilience'] as const;
 
+/**
+ * Why a measure is reported and left out of the measures term: the brief gives
+ * it no target, SEED set the target, or the solver crashed twice reading it
+ * for some alternative (see `leaveOutCrashed`).
+ */
+export type Unscored = 'no target' | 'set by SEED' | 'solver crashed';
+
+/** The outcome of a bound read the solver crashed under twice, as the trade-off records it. */
+export const SOLVER_CRASHED_TWICE = 'solver crashed twice';
+
 export interface EvaluationResult {
   chosen: number;
   metrics: AlternativeMetrics[];
@@ -68,6 +80,8 @@ export interface EvaluationResult {
   rationalePath: string;
   /** Bound reads run again because the solver crashed under the first; the step's verdict carries them. */
   solverRetries: number;
+  /** Non-blocking `solver/failed` items for the step's verdict: each measure left out because a read of it crashed twice. */
+  items: RepairItem[];
 }
 
 /** A measure's `bounds` reader over one loaded model. */
@@ -81,17 +95,19 @@ export async function evaluateAlternatives(
   /** Every alternative the layer attempted, viable or not. */
   attempted: Array<{ k: number; status: string }> = [],
 ): Promise<EvaluationResult> {
-  // Every bound read here is run once more if the solver crashed under it: a
-  // read lost to a trap would score its alternative ½ on that measure, not the
-  // 1 or 0 it earns, and could pick the other architecture. No check here
-  // carries a `solver/retried` item, so each is logged and counted.
+  // Every bound read here is run once more if the solver crashed under it. No
+  // check here carries a `solver/retried` item, so each is logged and counted.
+  // A read that crashed twice is not guessed: the measure leaves the measures
+  // term of every alternative (`leaveOutCrashed`), and the verdict says so.
   let solverRetries = 0;
   const bounds: BoundsReader = (m) => boundsRetried(ctx.backend, m, ctx.log, () => (solverRetries += 1));
-  const metrics: AlternativeMetrics[] = [];
+  const measured: AlternativeMetrics[] = [];
   for (const candidate of candidates) {
     // Serial: one loaded model at a time, and each of these is a full load.
-    metrics.push(await measure(ctx, step.id, layer, candidate.k, candidate.iterations, bounds));
+    measured.push(await measure(ctx, step.id, layer, candidate.k, candidate.iterations, bounds));
   }
+  const { metrics, crashed } = leaveOutCrashed(measured);
+  for (const c of crashed) ctx.log(`  \`${c.name}\` not scored for any alternative: the solver crashed twice reading alternative ${c.k}'s estimate`);
 
   const above = await chosenAbove(ctx, layer, bounds);
 
@@ -116,22 +132,15 @@ export async function evaluateAlternatives(
 
   const weights = ctx.config.evaluate.weights;
   const scores = metrics.map((m) => {
-    const moe = moeScore(m);
-    const penalty = acceptancePenalty(m.acceptedHazards ?? 0, ctx.config.evaluate.accepted_hazard_penalty);
-    const structure = Math.max(0, structureScore(m, metrics) - penalty);
-    const rubricScore = rubricFor(rubric.data, m.k);
-    const resilience = resilienceFor(rubric.data, m.k);
-    return {
-      k: m.k,
-      moe,
-      rubric: rubricScore,
-      structure,
-      resilience,
-      total: weights.moe * moe + weights.rubric * rubricScore + weights.structure * structure + (weights.resilience ?? 0) * resilience,
+    const parts = {
+      moe: moeScore(m),
+      rubric: rubricFor(rubric.data, m.k),
+      structure: Math.max(0, structureScore(m, metrics) - acceptancePenalty(m.acceptedHazards ?? 0, ctx.config.evaluate.accepted_hazard_penalty)),
+      resilience: resilienceFor(rubric.data, m.k),
     };
+    return { k: m.k, ...parts, total: weightedTotal(weights, parts) };
   });
-  const best = [...scores].sort((a, b) => b.total - a.total || a.k - b.k)[0];
-  const chosen = best.k;
+  const chosen = highestScoring(scores);
 
   // The chosen alternative becomes the layer, with the comparison written into
   // it. Everything that was measured stays in the packet beside it.
@@ -168,6 +177,7 @@ export async function evaluateAlternatives(
     overrode: rubric.data.recommended !== chosen,
     rationalePath,
     solverRetries,
+    items: solverFailedItems(crashed, `${ctx.layout.root}::${layer}::`),
   };
 }
 
@@ -233,7 +243,7 @@ async function measure(ctx: AgentContext, stepId: StepSpec["id"], layer: Layer, 
       } catch (err) {
         // A name `bounds` cannot resolve is an estimate that was never written;
         // one the solver crashed under twice was written and not read.
-        moes.push({ ...base, outcome: err instanceof SolverCrashedError ? 'solver crashed twice' : 'no estimate', basis, detail: err instanceof Error ? err.message : String(err) });
+        moes.push({ ...base, outcome: err instanceof SolverCrashedError ? SOLVER_CRASHED_TWICE : 'no estimate', basis, detail: err instanceof Error ? err.message : String(err) });
       }
     }
 
@@ -323,14 +333,68 @@ export function measuresThatDoNotDiscriminate(
  * so every measure was "undecided" and this returned 0.5 for every alternative
  * of every run — a 0.4 weight that never discriminated.
  *
- * A measure with no target, and a target SEED set, are left out — neither 0
- * nor ½ (see `unscoredBecause`): they are reported beside the score, and the
- * mean is over the rest. With nothing left to count, ½, as with no measures.
+ * A measure with no target, a target SEED set, and a measure the solver
+ * crashed under twice are left out — neither 0 nor ½ (see `unscoredBecause`,
+ * `leaveOutCrashed`): they are reported beside the score, and the mean is over
+ * the rest. With nothing left to count, ½, as with no measures.
  */
 export function moeScore(m: Pick<AlternativeMetrics, 'moes'>): number {
   const counted = m.moes.filter((x) => x.unscored === undefined);
   if (counted.length === 0) return 0.5;
   return counted.reduce((sum, x) => sum + (x.met === undefined ? 0.5 : x.met ? 1 : 0), 0) / counted.length;
+}
+
+/**
+ * Measures a read of which the solver crashed under twice, for any
+ * alternative, left out of the measures term of EVERY alternative.
+ *
+ * Scored, the crashed read was ½ — undecided — where the other alternatives
+ * earned 1 or 0 on the same measure, so a trap in z3 could move the choice,
+ * and the only record was a log line. Left out for one alternative alone, the
+ * two would be means over different measures. A measure with no target, or
+ * one SEED set, keeps that reason: it is left out either way.
+ */
+export function leaveOutCrashed<T extends Pick<AlternativeMetrics, 'k' | 'moes'>>(metrics: T[]): {
+  metrics: T[];
+  crashed: Array<{ name: string; k: number; detail?: string }>;
+} {
+  const crashed = metrics.flatMap((m) => m.moes.filter((x) => x.outcome === SOLVER_CRASHED_TWICE).map((x) => ({ name: x.name, k: m.k, detail: x.detail })));
+  const names = new Set(crashed.map((c) => c.name));
+  return {
+    metrics: metrics.map((m) => ({
+      ...m,
+      moes: m.moes.map((x) => (names.has(x.name) && x.unscored === undefined ? { ...x, unscored: 'solver crashed' as const } : x)),
+    })),
+    crashed,
+  };
+}
+
+/** The step's record of each measure `leaveOutCrashed` took out: never blocking, one per alternative whose read crashed. */
+export function solverFailedItems(crashed: Array<{ name: string; k: number; detail?: string }>, at: string): RepairItem[] {
+  return crashed.map((c) => ({
+    source: 'predicate',
+    code: 'solver/failed',
+    severity: 'warning',
+    blocking: false,
+    qualifiedName: `${at}${c.name}`,
+    message:
+      `the solver crashed twice reading alternative ${c.k}'s estimate of \`${c.name}\`${c.detail ? ` (${c.detail})` : ''}: ` +
+      'the measure is not scored for any alternative of this trade-off, rather than score that one undecided against the others\' verdicts',
+    hint: noteFor('solver/failed')?.note,
+  }));
+}
+
+/** The weighted sum the trade-off picks by. */
+export function weightedTotal(
+  weights: { moe: number; rubric: number; structure: number; resilience?: number },
+  s: { moe: number; rubric: number; structure: number; resilience: number },
+): number {
+  return weights.moe * s.moe + weights.rubric * s.rubric + weights.structure * s.structure + (weights.resilience ?? 0) * s.resilience;
+}
+
+/** The alternative with the highest total; a tie goes to the lower number. */
+export function highestScoring(scores: ReadonlyArray<{ k: number; total: number }>): number {
+  return [...scores].sort((a, b) => b.total - a.total || a.k - b.k)[0].k;
 }
 
 /** What accepting `n` hazards takes off the structure score. */
@@ -458,7 +522,7 @@ async function chosenAbove(ctx: AgentContext, layer: Layer, boundsOf: BoundsRead
           const result = await worstCase(async (sense) => (await bounds(name, sense)).bounds[0], moe.sense);
           moes.push({ name: moe.name, value: result.value, outcome: result.outcome, unit: moe.unit, basis: row.doc || undefined });
         } catch (err) {
-          moes.push({ name: moe.name, outcome: err instanceof SolverCrashedError ? 'solver crashed twice' : 'no estimate', unit: moe.unit, basis: row.doc || undefined });
+          moes.push({ name: moe.name, outcome: err instanceof SolverCrashedError ? SOLVER_CRASHED_TWICE : 'no estimate', unit: moe.unit, basis: row.doc || undefined });
         }
       }
       return { layer: above, moes };
@@ -487,7 +551,8 @@ export function measureClaimsLines(
   const held = (moe: (typeof moes)[number]): string => {
     const why = unscoredBecause(moe);
     if (why === 'no target') return 'no target, the brief states none: reported, not scored';
-    return `target ${boundText(moe)}${why === 'set by SEED' ? ', set by SEED: reported, not scored' : ''}`;
+    const crashed = metrics.some((m) => m.moes.some((x) => x.name === moe.name && x.unscored === 'solver crashed'));
+    return `target ${boundText(moe)}${why === 'set by SEED' ? ', set by SEED: reported, not scored' : crashed ? ', the solver crashed twice reading it: reported, not scored' : ''}`;
   };
   const lines: string[] = ['## The measures these are held to', ''];
   for (const moe of moes) lines.push(`- \`${moe.name}\`: ${held(moe)} — ${moe.doc}`);
@@ -525,6 +590,38 @@ function estimateText(x: AlternativeMetrics['moes'][number] | undefined): string
   return x.value !== undefined ? `${x.value}${x.unit ? ` ${x.unit}` : ''}${x.outcome === 'optimum' ? '' : ` (${x.outcome})`}` : x.outcome;
 }
 
+/** Which alternatives' reads of each measure the solver crashed under twice, by measure. */
+export function crashedReads(metrics: ReadonlyArray<Pick<AlternativeMetrics, 'k' | 'moes'>>): Map<string, number[]> {
+  const on = new Map<string, number[]>();
+  for (const m of metrics) for (const x of m.moes) if (x.outcome === SOLVER_CRASHED_TWICE) on.set(x.name, [...(on.get(x.name) ?? []), m.k]);
+  return on;
+}
+
+const alternativesText = (ks: number[]): string => `alternative${ks.length === 1 ? '' : 's'} ${ks.join(', ')}`;
+
+/**
+ * The trade-off's table of each alternative's worst case on each measure, and
+ * whether it meets the target — or why it is not scored. `target` writes the
+ * target cell (the re-score labels a placeholder there).
+ */
+export function measuresTable<T extends AlternativeMetrics['moes'][number]>(
+  metrics: ReadonlyArray<{ k: number; moes: T[] }>,
+  target: (moe: T) => string = (moe) => (hasTarget(moe) ? boundText(moe) : '—'),
+): string[] {
+  const crashedOn = crashedReads(metrics);
+  const met = (moe: AlternativeMetrics['moes'][number]): string => {
+    if (moe.unscored === 'no target') return '— (not scored: no target)';
+    const verdict = moe.outcome === SOLVER_CRASHED_TWICE ? '—' : moe.met === undefined ? 'undecided' : moe.met ? 'yes' : 'no';
+    if (moe.unscored === 'solver crashed') return `${verdict} (not scored: the solver crashed twice reading it for ${alternativesText(crashedOn.get(moe.name) ?? [])})`;
+    return moe.unscored === 'set by SEED' ? `${verdict} (not scored: target set by SEED)` : verdict;
+  };
+  return [
+    '| Alternative | Measure | Worst case | Target | Met |',
+    '|---|---|---|---|---|',
+    ...metrics.flatMap((m) => m.moes.map((moe) => `| ${m.k} | \`${moe.name}\` | ${estimateText(moe)} | ${target(moe)} | ${met(moe)} |`)),
+  ];
+}
+
 function tradeOffElement(
   layer: Layer,
   chosen: number,
@@ -553,6 +650,7 @@ export function rationaleFor(
   penaltyCost: { per: number; cap: number } = { per: 0.05, cap: 0.25 },
   attempted: Array<{ k: number; status: string }> = [],
 ): string {
+  const crashedOn = crashedReads(metrics);
   const lines = [
     `# ${layer} architecture trade-off`,
     '',
@@ -588,6 +686,15 @@ export function rationaleFor(
               'turned on nothing.',
             '',
           ])(measuresThatDoNotDiscriminate(metrics)),
+    ...(crashedOn.size === 0
+      ? []
+      : [
+          `> **${crashedOn.size} measure(s) not scored for any alternative: the solver crashed twice reading them** — ` +
+            `${[...crashedOn].map(([name, ks]) => `\`${name}\` (${alternativesText(ks)})`).join(', ')}. A read lost to a trap in z3 says ` +
+            'nothing about the design, so the measures term below is the mean over the others, the same set for every ' +
+            'alternative. Run the step again to have them scored.',
+          '',
+        ]),
     '## Score',
     '',
     '| Alternative | Total | Measures | Review | Structure | Resilience |',
@@ -625,20 +732,9 @@ export function rationaleFor(
       '',
       'Each value is the worst case the solver finds over the alternative\'s own `#Estimate` — a claim the architecture makes, not a measurement.',
       '',
-      '| Alternative | Measure | Worst case | Target | Met |',
-      '|---|---|---|---|---|',
+      ...measuresTable(metrics),
+      '',
     );
-    const met = (moe: AlternativeMetrics['moes'][number]): string => {
-      if (moe.unscored === 'no target') return '— (not scored: no target)';
-      const verdict = moe.met === undefined ? 'undecided' : moe.met ? 'yes' : 'no';
-      return moe.unscored === 'set by SEED' ? `${verdict} (not scored: target set by SEED)` : verdict;
-    };
-    for (const m of metrics) {
-      for (const moe of m.moes) {
-        lines.push(`| ${m.k} | \`${moe.name}\` | ${estimateText(moe)} | ${hasTarget(moe) ? boundText(moe) : '—'} | ${met(moe)} |`);
-      }
-    }
-    lines.push('');
   }
   lines.push('## Review', '', rubric.rationale, '');
   for (const entry of rubric.scores) {

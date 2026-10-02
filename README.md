@@ -192,6 +192,7 @@ mbse-workflow gate --out runs/drone --gate G-LA --reject "split the coordination
 | `status --out <dir>` | what each step did, and what it cost |
 | `gate --out <dir> --gate <G> --approve\|--reject "<why>"` | answer a gate |
 | `check --out <dir> --layer LA` | re-run a layer's checks against what is on disk |
+| `rescore --out <dir> --step S33\|S42` | re-score a recorded trade-off under the current rules, from its recorded payloads (no model call, no solver run): appends to its `trade-off.md`, writes `rescore.json`, exits 1 if the choice would change |
 
 Useful flags: `--mode`, `--unattended`, `--llm fake`, `--model`, `--budget-usd`,
 `--from-step`, `--requirements <file>`, `--infrastructure <file>`.

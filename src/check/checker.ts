@@ -24,7 +24,7 @@ import { itemFromDiagnostic, type Knobs, type RepairItem } from './classify.ts';
 import { noteFor } from '../spec/codes.ts';
 import { PREDICATES, type BriefFacts, type CarriedEstimates, type EstimateSide, type PayloadBag } from './predicates.ts';
 import type { ElementRow } from '../sysprose/types.ts';
-import { definingExpression, expressionNames, isProvisional } from '../spec/measures.ts';
+import { definingExpression, definingExpressions, expressionNames, isProvisional } from '../spec/measures.ts';
 
 export interface CheckContext {
   backend: SysproseBackend;
@@ -399,10 +399,24 @@ export async function runStepChecks(step: StepSpec, ctx: CheckContext): Promise<
 }
 
 /**
+ * How many equations deep a derived input is followed to the assumptions under
+ * it. v9's coverage under jamming is three deep (the coverage, the gap share,
+ * the transit time); past this, the input is compared as the value it has.
+ */
+const MAX_INPUT_DEPTH = 8;
+
+/**
  * Each measure's estimate at `layer` and at the layer above, with its basis and,
- * when it is derived, the value of every name its equation reads in that
- * layer. Literal means the `#Estimate` carries a number; derived means it has
- * none and the solver fixes it to one point (as moe.estimated accepts it).
+ * when it is derived, the value of every assumption its equation rests on in
+ * that layer. Literal means the `#Estimate` carries a number; derived means it
+ * has none and the solver fixes it to one point (as moe.estimated accepts it).
+ *
+ * The assumptions are the leaves: an input that is itself valueless and fixed
+ * by an asserted equation of the layer is followed into that equation's inputs.
+ * One level deep, v9's coverage under jamming at LA and PA read
+ * `areaUnderWatchFraction` and `sectorGapShareOfLostHandOver` — two derived
+ * quantities — so a move in the transit time under both was reported as two
+ * intermediates that moved, and never as the number that did.
  */
 async function carriedEstimates(
   ctx: CheckContext,
@@ -432,13 +446,62 @@ async function carriedEstimates(
       return undefined;
     }
   };
+  // The feature a chain (`fleet.size`) ends at, as `elements` lists it: a
+  // member declared in the head's own body, else one of its type's.
+  const chainRow = (l: Layer, chain: string): ElementRow | undefined => {
+    const [head, ...rest] = chain.split('.');
+    let at = rows.get(`${root}::${l}::${head}`);
+    for (const segment of rest) {
+      if (!at) return undefined;
+      const typeName = at.type.split(/[,\s]/)[0]?.split('::').pop();
+      const owner: ElementRow = at;
+      at =
+        rows.get(`${owner.qualifiedName}::${segment}`) ??
+        (typeName
+          ? (elements.find((e) => e.qualifiedName === `${root}::${l}::${typeName}::${segment}`) ??
+            elements.find((e) => e.qualifiedName.startsWith(`${root}::`) && e.qualifiedName.endsWith(`::${typeName}::${segment}`)))
+          : undefined);
+    }
+    return at;
+  };
   const valueOf = async (l: Layer, name: string): Promise<number | undefined> => {
     const qn = `${root}::${l}::${name}`;
     const row = rows.get(qn);
-    if (!row) return undefined;
-    return literal(row) ?? point(qn);
+    if (row) return literal(row) ?? point(qn);
+    if (!name.includes('.')) return undefined;
+    // A chain has no row of its own. Sysprose's evaluator reads it through the
+    // feature it resolves to — its type's member, or that member's equation —
+    // without the solver; a backend without the evaluator reads that feature.
+    // Only a number is an answer: every object has a `valueOf`, Object's own,
+    // and on a backend that does not define one it returns the backend.
+    try {
+      const value: unknown = ctx.backend.valueOf?.(m, qn);
+      if (typeof value === 'number' && Number.isFinite(value)) return value;
+    } catch {
+      // A chain the backend cannot resolve: the elements may still name it.
+    }
+    const resolved = chainRow(l, name);
+    return resolved ? (literal(resolved) ?? point(resolved.qualifiedName)) : undefined;
   };
   const text = (l: Layer): string => packageBody(m.text, l)?.body ?? '';
+  // The assumptions under `expr`, by name: each input, or — when the input is
+  // valueless and an asserted equation of the layer fixes it — the inputs of
+  // that equation, in turn. `path` guards a cycle (`a == b + 1`, `b == a - 1`):
+  // a name met again on its own path is compared as the value it has.
+  const leaves = async (l: Layer, expr: string, path: ReadonlySet<string>, into: Record<string, number | undefined>): Promise<void> => {
+    for (const input of expressionNames(expr)) {
+      if (input in into) continue;
+      const row = rows.get(`${root}::${l}::${input}`);
+      // Not the equation it was reached through, read backwards: from `m == p`,
+      // the expression "defining" `p` is `m`.
+      const deeper =
+        row && row.value.trim() === '' && !path.has(input) && path.size < MAX_INPUT_DEPTH
+          ? definingExpressions(text(l), input).find((e) => !path.has(e))
+          : undefined;
+      if (deeper !== undefined) await leaves(l, deeper, new Set([...path, input]), into);
+      else into[input] = await valueOf(l, input);
+    }
+  };
   const side = async (l: Layer, name: string): Promise<EstimateSide | undefined> => {
     const qn = `${root}::${l}::${name}`;
     const row = rows.get(qn);
@@ -448,7 +511,7 @@ async function carriedEstimates(
     const value = await point(qn);
     const expr = definingExpression(text(l), name);
     const inputs: Record<string, number | undefined> = {};
-    if (expr) for (const input of expressionNames(expr)) inputs[input] = await valueOf(l, input);
+    if (expr) await leaves(l, expr, new Set([name]), inputs);
     return { value, derived: value !== undefined, basis: row.doc || undefined, inputs: expr ? inputs : undefined };
   };
   const out: CarriedEstimates = { above, measures: {} };

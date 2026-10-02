@@ -159,6 +159,9 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   'solver/retried': {
     note: "The solver's WASM module crashed under this check, or under one bound of an estimate — a trap in z3, not a finding about the model. It was run once more on a fresh module, and that run's result is the one reported. Nothing in the fragment to repair; reported, never blocking.",
   },
+  'solver/failed': {
+    note: "The solver's WASM module crashed twice under the trade-off's read of one alternative's estimate, on the first module and on a fresh one — a trap in z3, not a finding about the model. The measure is left out of the measures term for every alternative of the trade-off rather than scored undecided for one, and the trade-off says so. Nothing in the fragment to repair; run the step again to have it scored. Reported, never blocking.",
+  },
 };
 
 export const noteFor = (code: string): CodeNote | undefined => CODE_NOTES[code];

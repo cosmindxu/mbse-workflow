@@ -5,7 +5,9 @@
  * Five verbs: `run` starts one, `resume` picks it up, `status` says where it
  * got to, `gate` is how a person answers a gate, and `check` re-runs one step's
  * checks against what is on disk (which is also how a contributor's edit is
- * verified before the run continues).
+ * verified before the run continues). `rescore` scores a recorded trade-off
+ * again under the current rules, from what the step recorded, and changes no
+ * fragment.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -27,6 +29,7 @@ import type { Knobs } from './check/classify.ts';
 import { readCallLog, unrecordedSpend } from './audit/contribution.ts';
 import { simulationInputOf } from './realization/adapter.ts';
 import { simulationOf } from './realization/simulation.ts';
+import { rescoreStep } from './audit/rescore.ts';
 
 const program = new Command();
 program.name('mbse-workflow').description('layered model authoring, gated on Sysprose checks').version('0.1.0');
@@ -205,6 +208,49 @@ program
       process.stdout.write(`  ${item.blocking ? 'BLOCK' : 'note '} ${item.code} ${item.qualifiedName ?? ''}: ${item.message}\n`);
     }
     process.exitCode = verdict.blocking ? 1 : 0;
+  });
+
+program
+  .command('rescore')
+  .summary('re-score a recorded trade-off under the current rules: no model call, no solver run')
+  .description(
+    're-score a recorded trade-off under the current rules, from what the step recorded: no model call, no solver run. ' +
+      'Appends a section to its trade-off.md and writes rescore.json; never rewrites a fragment. ' +
+      'Exits 1 when the current rules would choose another alternative than the one the layer was built from',
+  )
+  .requiredOption('--out <dir>', 'the run directory')
+  .requiredOption('--step <id>', 'the trade-off step: S33 (LA) or S42 (PA)')
+  .option('--config <path>', 'settings file: the weights the totals are summed with')
+  .action(async (opts) => {
+    const state = loadState(resolve(opts.out, 'state.json'));
+    const config = loadConfig(opts.config);
+    const layout = makeLayout(opts.out, state?.root ?? 'System');
+    const r = await rescoreStep(layout, state, opts.step as StepId, config.evaluate.weights, new Date().toISOString().slice(0, 10));
+    const was = (k: number) => r.recorded.scores.find((s) => s.k === k);
+    process.stdout.write(
+      [
+        `${r.step} ${r.layer} trade-off, re-scored under the current rules (${r.date})`,
+        ...r.rescored.scores.map(
+          (s) =>
+            `  alternative ${s.k}: total ${was(s.k)?.total.toFixed(3) ?? '—'} -> ${s.total.toFixed(3)} ` +
+            `(measures ${was(s.k)?.moe.toFixed(2) ?? '—'} -> ${s.moe.toFixed(2)})`,
+        ),
+        ...r.changes.map((c) => `  ${c.replace(/`/g, '')}`),
+        `  appended to ${r.tradeOffPath}`,
+        `  ${r.jsonPath}`,
+        '',
+      ].join('\n'),
+    );
+    if (r.changed) {
+      process.stderr.write(
+        `\n${r.step}: THE CHOICE WOULD CHANGE — alternative ${r.rescored.chosen} scores highest under the current rules, ` +
+          `and ${r.layer} was built from alternative ${r.recorded.chosen}. Nothing was rewritten: run the trade-off again ` +
+          `(resume --from-step ${r.step}) before relying on ${r.layer} or anything below it.\n\n`,
+      );
+      process.exitCode = 1;
+    } else {
+      process.stdout.write(`  the choice stands: alternative ${r.rescored.chosen}\n`);
+    }
   });
 
 function gateController(opts: { unattended?: boolean; mode?: string }, layout: ReturnType<typeof makeLayout>): GateController {

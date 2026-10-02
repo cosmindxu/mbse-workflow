@@ -133,6 +133,12 @@ export function estimateLine(name: string): string {
  * the one returned. Undefined when the layer states the measure as a literal.
  */
 export function definingExpression(layerText: string, measure: string): string | undefined {
+  return definingExpressions(layerText, measure)[0];
+}
+
+/** Every expression an `assert constraint` of the layer equates `measure` to, in the order written. */
+export function definingExpressions(layerText: string, measure: string): string[] {
+  const found: string[] = [];
   const open = /\bassert\s+constraint\b[^{;]*\{/g;
   for (let m = open.exec(layerText); m; m = open.exec(layerText)) {
     const start = m.index + m[0].length - 1;
@@ -146,16 +152,21 @@ export function definingExpression(layerText: string, measure: string): string |
     const sides = body.split('==');
     if (sides.length !== 2) continue;
     const [lhs, rhs] = sides.map((x) => x.trim());
-    if (lhs === measure) return rhs;
-    if (rhs === measure) return lhs;
+    if (lhs === measure) found.push(rhs);
+    else if (rhs === measure) found.push(lhs);
   }
-  return undefined;
+  return found;
 }
 
 const EXPRESSION_WORDS = new Set(['and', 'or', 'not', 'xor', 'implies', 'true', 'false', 'null']);
 
-/** The names an expression reads, once each, in order: the inputs of a derived estimate. */
+/**
+ * The names an expression reads, once each, in order: the inputs of a derived
+ * estimate. A feature chain is one name (`fleet.size`, not `fleet`): read as
+ * its head, it named a part with no value at either layer, and the drift check
+ * said "no value to compare" of an input that had one.
+ */
 export function expressionNames(expr: string): string[] {
-  const names = expr.match(/(?<![\w.])[A-Za-z_][A-Za-z0-9_]*(?:::[A-Za-z_][A-Za-z0-9_]*)*/g) ?? [];
+  const names = expr.match(/(?<![\w.])[A-Za-z_][A-Za-z0-9_]*(?:(?:::|\.)[A-Za-z_][A-Za-z0-9_]*)*/g) ?? [];
   return [...new Set(names.filter((n) => !EXPRESSION_WORDS.has(n)))];
 }

@@ -2,11 +2,17 @@
  * A measure whose estimate moved between the layer above and this one is
  * reported with both values and both bases — never blocking, never exempt.
  */
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { runStepChecks } from '../../src/check/checker.ts';
 import { CARRIED_TOLERANCE, PREDICATES, differingInputs, type CarriedEstimates, type EstimateSide, type PredicateInput } from '../../src/check/predicates.ts';
+import { makeLayout } from '../../src/model/layout.ts';
 import { definingExpression, expressionNames } from '../../src/spec/measures.ts';
-import { step as stepById } from '../../src/spec/steps.ts';
-import type { TagIndex } from '../../src/sysprose/backend.ts';
+import { step as stepById, type StepSpec } from '../../src/spec/steps.ts';
+import type { Loaded, SysproseBackend, TagIndex } from '../../src/sysprose/backend.ts';
+import type { ElementRow } from '../../src/sysprose/types.ts';
 
 const ROOT = 'Swarm';
 const noTags: TagIndex = { byElement: new Map(), byKeyword: new Map(), has: () => false, taggedWith: () => [] };
@@ -85,9 +91,10 @@ describe('moe.carriedEstimate', () => {
     expect(unread[0].message).not.toContain('same value');
     const neither = run({ m: { above: { value: 0.5, derived: true }, here: { value: 0.7, derived: true } } });
     expect(neither[0].message).toContain('the equation at LA could not be read; the equation at PA could not be read; which input moved is not known.');
-    // `fleet.size * 0.1` reads as `fleet`, which has no value at either layer.
-    const chain = run({ m: { above: derived(0.5, '', { fleet: undefined }), here: derived(0.7, '', { fleet: undefined }) } });
-    expect(chain[0].message).toContain('Both are derived; `fleet` has no value to compare at either layer.');
+    // An input with no value at either layer: a valueless assumption, or a
+    // chain neither the evaluator nor the elements resolve.
+    const chain = run({ m: { above: derived(0.5, '', { 'fleet.size': undefined }), here: derived(0.7, '', { 'fleet.size': undefined }) } });
+    expect(chain[0].message).toContain('Both are derived; `fleet.size` has no value to compare at either layer.');
     expect(chain[0].message).not.toContain('same value');
     // Against a literal, a derived side whose equation was not read says so.
     const literal = run({ m: { above: stated(0.5, 'a'), here: { value: 0.7, derived: true } } });
@@ -137,5 +144,123 @@ describe('reading the defining equation', () => {
       'sectorGapShareOfLostHandOver',
     ]);
     expect(expressionNames('2.5e-1 * alertCapPerHour')).toEqual(['alertCapPerHour']);
+  });
+
+  it('reads a feature chain as one name, not as its head', () => {
+    expect(expressionNames('fleet.size * share / Common::area')).toEqual(['fleet.size', 'share', 'Common::area']);
+    expect(expressionNames('1.0 / fleet.size + 2.5e-1')).toEqual(['fleet.size']);
+  });
+});
+
+describe('the inputs compared are the assumptions under the equations', () => {
+  const knobs = { modes_states: true, interfaces: true, variability: true, safety: false, views: false, verification: true, requirements_intake: false, infrastructure_intake: false };
+  const CARRIED: StepSpec = {
+    id: 'S41',
+    name: 'AUTHOR',
+    agent: 'AUTHOR',
+    layer: 'PA',
+    uses: [],
+    postconditions: [],
+    checks: [{ name: 'elements', cmd: 'elements', blocking: true, predicates: ['moe.carriedEstimate'] }],
+    failCodes: [],
+  };
+  const attr = (qualifiedName: string, value = '', type = ''): ElementRow => ({
+    id: qualifiedName,
+    qualifiedName,
+    name: qualifiedName.split('::').pop()!,
+    metaclass: qualifiedName.endsWith('::Fleet') ? 'PartDefinition' : type ? 'PartUsage' : 'AttributeUsage',
+    type,
+    multiplicity: '',
+    value,
+    redefines: '',
+    doc: '',
+  });
+
+  /**
+   * A model whose layers state `m` by the same equations over different
+   * assumptions. `points` is what the solver pins each valueless name to;
+   * `valueOf`, when given, is the evaluator, which reads a chain.
+   */
+  const check = async (text: string, rows: ElementRow[], points: Record<string, number>, valueOf?: (ref: string) => number | undefined) => {
+    const reads: string[] = [];
+    const fake = {
+      withModel: async <T>(_t: string, _n: string, fn: (m: Loaded) => Promise<T> | T) =>
+        fn({ model: {}, text, displayName: 'fake', report: { summary: { errors: 0 }, diagnostics: [], elements: { count: 0 } } } as unknown as Loaded),
+      elements: () => rows,
+      tags: () => ({ byElement: new Map(), byKeyword: new Map(), has: () => true, taggedWith: () => [] }),
+      layerView: () => ({}),
+      bounds: async (_m: Loaded, qn: string) => {
+        reads.push(qn);
+        return { bounds: [{ value: points[qn] }] };
+      },
+      ...(valueOf ? { valueOf: (_m: Loaded, ref: string) => valueOf(ref) } : {}),
+    };
+    const verdict = await runStepChecks(CARRIED, {
+      backend: fake as unknown as SysproseBackend,
+      layout: makeLayout(mkdtempSync(join(tmpdir(), 'carried-')), 'Sys'),
+      knobs,
+      brief: { systemName: 'Sys', aliases: [], moes: ['m'], capabilities: [] },
+    });
+    return { items: verdict.items.filter((i) => i.code === 'moe.carriedEstimate'), reads };
+  };
+
+  // m == a * g, g == t / 2: the gap share `g` is derived from the transit `t`.
+  const layerText = (t: number) =>
+    [
+      '        #Estimate attribute m :> Common::m;',
+      '        attribute a = 0.5;',
+      `        attribute t = ${t};`,
+      '        attribute g;',
+      '        assert constraint { doc /* the measure */ m == a * g }',
+      '        assert constraint { g == t / 2 }',
+    ].join('\n');
+  const model = (la: string, pa: string) => `package Sys {\n    package LA {\n${la}\n    }\n    package PA {\n${pa}\n    }\n}\n`;
+  const rowsFor = (l: string, t: number): ElementRow[] => [attr(`Sys::${l}::m`), attr(`Sys::${l}::a`, '0.5'), attr(`Sys::${l}::t`, String(t)), attr(`Sys::${l}::g`)];
+
+  it('follows a derived input into its own equation, and names the assumption that moved', async () => {
+    const { items } = await check(model(layerText(10), layerText(8)), [...rowsFor('LA', 10), ...rowsFor('PA', 8)], {
+      'Sys::LA::m': 2.5,
+      'Sys::PA::m': 2,
+      'Sys::LA::g': 5,
+      'Sys::PA::g': 4,
+    });
+    expect(items).toHaveLength(1);
+    expect(items[0].message).toContain('Both are derived; the inputs that differ: `t` 10 at LA, 8 at PA.');
+    // The intermediate that carried the move is not what moved.
+    expect(items[0].message).not.toContain('`g`');
+    expect(items[0].message).not.toContain('`a`');
+  });
+
+  it('reads a chain through the evaluator, so a fleet size that moved is named with its values', async () => {
+    const text = (share: number) => `        #Estimate attribute m :> Common::m;\n        attribute share = ${share};\n        assert constraint { m == fleet.size * share }`;
+    const rows = (l: string, share: number) => [attr(`Sys::${l}::m`), attr(`Sys::${l}::share`, String(share)), attr(`Sys::${l}::fleet`, '', 'Fleet')];
+    const sizes: Record<string, number> = { 'Sys::LA::fleet.size': 12, 'Sys::PA::fleet.size': 10 };
+    const { items } = await check(model(text(0.1), text(0.1)), [...rows('LA', 0.1), ...rows('PA', 0.1)], { 'Sys::LA::m': 1.2, 'Sys::PA::m': 1 }, (ref) => sizes[ref]);
+    expect(items[0].message).toContain('the inputs that differ: `fleet.size` 12 at LA, 10 at PA.');
+    expect(items[0].message).not.toContain('no value to compare');
+  });
+
+  it("without the evaluator, reads a chain at the feature it resolves to: the head's type's member", async () => {
+    const text = '        #Estimate attribute m :> Common::m;\n        assert constraint { m == fleet.size * 0.1 }';
+    const rows = (l: string, size: number) => [attr(`Sys::${l}::m`), attr(`Sys::${l}::fleet`, '', 'Fleet'), attr(`Sys::${l}::Fleet`), attr(`Sys::${l}::Fleet::size`, String(size))];
+    const { items } = await check(model(text, text), [...rows('LA', 12), ...rows('PA', 10)], { 'Sys::LA::m': 1.2, 'Sys::PA::m': 1 });
+    expect(items[0].message).toContain('the inputs that differ: `fleet.size` 12 at LA, 10 at PA.');
+  });
+
+  it('stops at a cycle, and at the depth cap, comparing the name as the value it has', async () => {
+    // m == p, p == q + 1, q == p - 1: p is met again on its own path.
+    const cyclic = '        #Estimate attribute m :> Common::m;\n        attribute p;\n        attribute q;\n        assert constraint { m == p }\n        assert constraint { p == q + 1 }\n        assert constraint { q == p - 1 }';
+    const rows = (l: string) => [attr(`Sys::${l}::m`), attr(`Sys::${l}::p`), attr(`Sys::${l}::q`)];
+    const cycle = await check(model(cyclic, cyclic), [...rows('LA'), ...rows('PA')], { 'Sys::LA::m': 2, 'Sys::PA::m': 3, 'Sys::LA::p': 2, 'Sys::PA::p': 3 });
+    expect(cycle.items[0].message).toContain('the inputs that differ: `p` 2 at LA, 3 at PA.');
+
+    // d0 == d1, d1 == d2, … d11 == 7: followed eight equations deep, then read.
+    const chainOf = (end: number) =>
+      ['        #Estimate attribute m :> Common::m;', '        assert constraint { m == d0 }', ...Array.from({ length: 11 }, (_, i) => `        attribute d${i};\n        assert constraint { d${i} == d${i + 1} }`), `        attribute d11 = ${end};`].join('\n');
+    const deepRows = (l: string, end: number) => [attr(`Sys::${l}::m`), ...Array.from({ length: 11 }, (_, i) => attr(`Sys::${l}::d${i}`)), attr(`Sys::${l}::d11`, String(end))];
+    const points: Record<string, number> = { 'Sys::LA::m': 7, 'Sys::PA::m': 9 };
+    for (let i = 0; i < 11; i += 1) Object.assign(points, { [`Sys::LA::d${i}`]: 7, [`Sys::PA::d${i}`]: 9 });
+    const deep = await check(model(chainOf(7), chainOf(9)), [...deepRows('LA', 7), ...deepRows('PA', 9)], points);
+    expect(deep.items[0].message).toContain('the inputs that differ: `d7` 7 at LA, 9 at PA.');
   });
 });

@@ -662,7 +662,11 @@ export interface EstimateSide {
   derived: boolean;
   /** The `#Estimate`'s doc: what the author says the number rests on. */
   basis?: string;
-  /** For a derived estimate: each name its defining equation reads, and its value in that layer. */
+  /**
+   * For a derived estimate: each assumption its defining equation rests on —
+   * the names it reads, with a valueless one fixed by an asserted equation
+   * followed into that equation's — and its value in that layer.
+   */
   inputs?: Record<string, number | undefined>;
 }
 
@@ -731,8 +735,11 @@ const moeCarriedEstimate: Predicate = (input) => {
     const how = (side: EstimateSide): string => (side.derived ? 'derived' : 'stated');
     let inputs = '';
     // An equation not read, or an input with no value on either side (a
-    // feature chain such as `fleet.size` reads as `fleet`), is said as such:
-    // "the same inputs" is claimed only of inputs actually compared.
+    // valueless assumption, or a chain neither the evaluator nor the elements
+    // resolve), is said as such: "the same inputs" is claimed only of inputs
+    // actually compared. The inputs are the leaf assumptions under each
+    // equation, followed through the derived quantities between (see
+    // `carriedEstimates`), so what differs is what moved.
     const unread = (l: Layer, side: EstimateSide): string[] => (side.inputs ? [] : [`the equation at ${l} could not be read`]);
     const readFrom = (l: Layer, side: EstimateSide): string =>
       `${l} derives it from ${Object.entries(side.inputs ?? {}).map(([n, v]) => `\`${n}\` ${fmt(v)}`).join(', ')}`;
