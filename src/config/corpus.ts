@@ -17,7 +17,10 @@ export const corpusDir = (): string =>
 
 export const corpusPath = (...parts: string[]): string => resolve(corpusDir(), ...parts);
 
+// The corpus names the reference model M1-arcadia-levelcrossing.sysml. Pointed at
+// a name it does not have, every corpus-backed suite skipped as "no corpus" —
+// the predicate calibration among them — while spawn-cli failed on the path.
 export const referenceModelPath = (): string =>
-  process.env.MBSE_REFERENCE_MODEL ?? corpusPath('evidence/examples/M1-levelcrossing.sysml');
+  process.env.MBSE_REFERENCE_MODEL ?? corpusPath('evidence/examples/M1-arcadia-levelcrossing.sysml');
 
 export const hasCorpus = (): boolean => existsSync(referenceModelPath());

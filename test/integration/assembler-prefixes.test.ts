@@ -29,8 +29,14 @@ describe.skipIf(!hasCorpus())('assembly and prefixes', () => {
     original = readFileSync(referenceModelPath(), 'utf8');
   });
 
-  it('reassembles the fragments into exactly the file they came from', () => {
-    expect(assemble(layout, 'EPBS').text).toBe(original);
+  it('reassembles the fragments into exactly the file they came from, plus the root Kinds import', () => {
+    // The assembler adds one root import so every #Tag resolves to its Kinds
+    // definition (1dd00c6). The suite skipped for weeks on a stale corpus path,
+    // so the expectation still predated it; everything else is byte-identical.
+    const text = assemble(layout, 'EPBS').text;
+    const imported = '    private import Kinds::*;\n';
+    expect(text.split(imported)).toHaveLength(2);
+    expect(text.replace(imported, '')).toBe(original);
   });
 
   it('maps an assembled line back to the fragment that holds it', () => {
