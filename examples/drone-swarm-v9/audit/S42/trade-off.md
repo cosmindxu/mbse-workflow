@@ -87,3 +87,49 @@ That advantage does not survive the two resilience questions this comparison exi
 - **evolvability** 4/5 — Adding or removing members is structural: identical members, no central assignment table, and the dense require constraints will fail visibly if endurance, cruise speed or fleet size move. The ground station is thin enough to replicate or relocate, and separating record keeping from triage means either can be replaced alone. A staged classifier or coordination rollout is supported by the admission check on classifier version, which is modelled rather than assumed. Held back by SwarmCoordinationSoftware being one monolith of eight functions on the host that is hardest to update, so any coordination change is a fleet-wide software update across twelve airframes — the cost Alternative 1 avoids.
 - **groundLinkLossResilience** 5/5 — When the link drops, all eight coordination functions keep running on fleet over the mesh; GroundStationModes.LinkDown says the members coordinate and hold reports on their own, and the station doc says plainly that if it or its link is lost the members keep the watch. Sector hand-over and rotation continue, so coverage is not abandoned as drones cycle to recharge, and deconfliction and geofence remain enforced on the independent SafetyMonitorNode. Against the link-outage measure, reportHoldWhileCutOffMinutes = 40 min is not merely asserted: reportStoreCapacityReports is constrained at 2000 against a computed need of 240, so the store is demonstrably not the binding limit. A commanded landing also remains available throughout, because recallBroadcastFeed uses RecallRadioMedium and not the ground link. Only human tasking, priorities and acknowledgements are lost.
 - **groundNodeLossResilience** 5/5 — There is no ground coordination node to lose. A groundStation failure costs tasking, priorities, the status picture and acknowledgements, and nothing else: coordination is on fleet, recall survives on groundRecallTransmitter with its own operator panel and radio, and groundDecisionRecordStore takes reports directly via reportsRecordFeed, so provenance survives loss of both triage and station. Against the coverage-restoration measure this is where it separates from Alternative 1: redistributeCoverage is allocated to fleet, so the 0.154 lost when a drone goes down is genuinely re-spread from the last agreed assignment regardless of any ground failure, rather than being frozen. Members are not flying a last assignment — they are still coordinating one. Remaining exposure is honestly declared: RecallRadioSilentHazard on the transmitter, and the station's backup role for it is weak since recallRequestFeed runs through the same transmitter, leaving the transmitter's own panel as the real independent path.
+
+## Re-scored under the current rules (2026-10-02)
+
+Appended by `mbse-workflow rescore`. The record above is the trade-off as it was made, and is unchanged; so is the layer. No model was called and no solver run: each alternative's worst case is read back from the `bounds` payloads recorded beside this file (`alt-<k>/bounds-*.json`) and judged against the brief as it stands now — a measure with no target, and a target SEED set, are reported and not scored; a placeholder target counts, and is labelled; a measure the solver crashed under twice for any alternative is left out for every alternative. The review, structure and resilience scores are the recorded ones; the totals use the configured weights (measures 0.4, review 0.35, structure 0.25, resilience 0.15).
+
+**The choice stands: alternative 2.**
+
+| Alternative | Total, recorded | Total, re-scored | Measures, recorded | Measures, re-scored | Review | Structure | Resilience |
+|---|---|---|---|---|---|---|---|
+| 1 | 0.533 | 0.542 | 0.25 | 0.27 | 0.47 | 0.93 | 0.25 |
+| 2 | 0.760 | 0.772 | 0.33 | 0.36 | 0.75 | 0.86 | 1.00 |
+
+What the current rules change:
+
+- `unattendedWatchDurationHours`: scored against ≥ 12 h then; now no target, not scored
+
+### Measures, re-scored
+
+A target marked (placeholder) is the brief's working number, awaiting the customer's: it is scored, and a miss against it is a number to take to the customer.
+
+| Alternative | Measure | Worst case | Target | Met |
+|---|---|---|---|---|
+| 1 | `areaUnderWatchFraction` | 0.7822222222222222 (derived) | ≥ 0.9 | no |
+| 1 | `coverageLossAfterMemberLossFraction` | 0.1534090909090909 (derived) | ≤ 0.25 | yes |
+| 1 | `coverageUnderMeshJammingFraction` | 0.6648888888888889 (derived) | ≥ 0.75 (placeholder) | no |
+| 1 | `reportAgeAtOperationsCentreSeconds` | 40 s | ≤ 60 s (placeholder) | yes |
+| 1 | `positionErrorWithoutSatelliteMetres` | 80 m | ≤ 50 m (placeholder) | no |
+| 1 | `reportHoldWhileCutOffMinutes` | 40 min | ≥ 30 min (placeholder) | yes |
+| 1 | `missedDetectionFraction` | 0.12 | ≤ 0.1 (placeholder) | no |
+| 1 | `falseAlarmsPerHour` | 3 1/h | ≤ 2 1/h (placeholder) | no |
+| 1 | `alertsReachingOperatorPerHour` | 21 1/h | ≤ 20 1/h (placeholder) | no |
+| 1 | `acknowledgedReportsThatMatterFraction` | 0.75 | ≥ 0.8 (placeholder) | no |
+| 1 | `onboardClassificationCostUsdPerMember` | 320 USD | ≤ 300 USD (placeholder) | no |
+| 1 | `unattendedWatchDurationHours` | 0.7 h | — | — (not scored: no target) |
+| 2 | `areaUnderWatchFraction` | 0.78 | ≥ 0.9 | no |
+| 2 | `coverageLossAfterMemberLossFraction` | 0.154 | ≤ 0.25 | yes |
+| 2 | `coverageUnderMeshJammingFraction` | 0.68 | ≥ 0.75 (placeholder) | no |
+| 2 | `reportAgeAtOperationsCentreSeconds` | 40 s | ≤ 60 s (placeholder) | yes |
+| 2 | `positionErrorWithoutSatelliteMetres` | 80 m | ≤ 50 m (placeholder) | no |
+| 2 | `reportHoldWhileCutOffMinutes` | 40 min | ≥ 30 min (placeholder) | yes |
+| 2 | `missedDetectionFraction` | 0.12 | ≤ 0.1 (placeholder) | no |
+| 2 | `falseAlarmsPerHour` | 3 1/h | ≤ 2 1/h (placeholder) | no |
+| 2 | `alertsReachingOperatorPerHour` | 20 1/h | ≤ 20 1/h (placeholder) | yes |
+| 2 | `acknowledgedReportsThatMatterFraction` | 0.75 | ≥ 0.8 (placeholder) | no |
+| 2 | `onboardClassificationCostUsdPerMember` | 350 USD | ≤ 300 USD (placeholder) | no |
+| 2 | `unattendedWatchDurationHours` | 0.66 h | — | — (not scored: no target) |

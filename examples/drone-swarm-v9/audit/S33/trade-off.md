@@ -77,3 +77,49 @@ This comparison exists to place command and control, and the two alternatives di
 - **evolvability** 3.5/5 — The thin GroundStation can be replaced, re-hosted or duplicated without touching the watch, and adding operator-side capability (feedback into triage to lift acknowledgedReportsThatMatterFraction off 0.7, for instance) touches only AlertTriageUnit. The likely next requirement — hold the watch through a link outage — is already satisfied rather than being a re-architecture. The drag is that changing any coordination policy means new firmware on twelve airframes plus re-verification of distributed behaviour, and because all eight protocols run inside one untyped MeshPort, none of those changes are visible at this layer; there is no typed peer interface to evolve against.
 - **groundLinkLossResilience** 4.5/5 — GroundStationModes states it: in LinkDown 'the station holds what it has and the swarm coordinates and holds reports on its own'. Handover, rotation, redistribution, deconfliction, correlation and admission all sit on fleet and keep running, so the watch is unaffected by the outage; reportHoldWhileCutOffMinutes of 40 min against the 30 min target covers the report backlog for a full sortie. What is genuinely lost is C2 — no tasking, no priority change, no recall, no status picture — and the model names that as GroundStationSinglePointHazard rather than hiding it. The half point off is for the recall gap: the operator cannot stop the swarm during the outage, and there is no direct recall path of the sort Alternative 1's recallToFleet provides.
 - **groundNodeLossResilience** 4/5 — With GroundStation gone, coverage is kept and restored: redistributeCoverage, rotateRecharge and handOverSector are on fleet, so the 0.16 coverage loss after a member loss is recoverable by the members themselves, which is exactly what the coverage-restoration measure is asking about. Discharging GroundStationSinglePointHazard onto fleet is defensible here, unlike the same move in Alternative 1, because the functions really are allocated there, and SwarmMemberStates gives Recovering → Landed and OutsideClearance → Landed for the controlled-landing case. Two accepted costs: losing AlertTriageUnit takes triage and the decision record with it in one stroke, and with the station gone no one can recall.
+
+## Re-scored under the current rules (2026-10-02)
+
+Appended by `mbse-workflow rescore`. The record above is the trade-off as it was made, and is unchanged; so is the layer. No model was called and no solver run: each alternative's worst case is read back from the `bounds` payloads recorded beside this file (`alt-<k>/bounds-*.json`) and judged against the brief as it stands now — a measure with no target, and a target SEED set, are reported and not scored; a placeholder target counts, and is labelled; a measure the solver crashed under twice for any alternative is left out for every alternative. The review, structure and resilience scores are the recorded ones; the totals use the configured weights (measures 0.4, review 0.35, structure 0.25, resilience 0.15).
+
+**The choice stands: alternative 2.**
+
+| Alternative | Total, recorded | Total, re-scored | Measures, recorded | Measures, re-scored | Review | Structure | Resilience |
+|---|---|---|---|---|---|---|---|
+| 1 | 0.517 | 0.528 | 0.29 | 0.32 | 0.44 | 0.84 | 0.25 |
+| 2 | 0.650 | 0.660 | 0.29 | 0.32 | 0.56 | 0.86 | 0.81 |
+
+What the current rules change:
+
+- `unattendedWatchDurationHours`: scored against ≥ 12 h then; now no target, not scored
+
+### Measures, re-scored
+
+A target marked (placeholder) is the brief's working number, awaiting the customer's: it is scored, and a miss against it is a number to take to the customer.
+
+| Alternative | Measure | Worst case | Target | Met |
+|---|---|---|---|---|
+| 1 | `areaUnderWatchFraction` | vacuous | ≥ 0.9 | undecided |
+| 1 | `coverageLossAfterMemberLossFraction` | vacuous | ≤ 0.25 | undecided |
+| 1 | `coverageUnderMeshJammingFraction` | vacuous | ≥ 0.75 (placeholder) | undecided |
+| 1 | `reportAgeAtOperationsCentreSeconds` | 40 s | ≤ 60 s (placeholder) | yes |
+| 1 | `positionErrorWithoutSatelliteMetres` | 80 m | ≤ 50 m (placeholder) | no |
+| 1 | `reportHoldWhileCutOffMinutes` | 40 min | ≥ 30 min (placeholder) | yes |
+| 1 | `missedDetectionFraction` | 0.12 | ≤ 0.1 (placeholder) | no |
+| 1 | `falseAlarmsPerHour` | 3 1/h | ≤ 2 1/h (placeholder) | no |
+| 1 | `alertsReachingOperatorPerHour` | 24 1/h | ≤ 20 1/h (placeholder) | no |
+| 1 | `acknowledgedReportsThatMatterFraction` | 0.7 | ≥ 0.8 (placeholder) | no |
+| 1 | `onboardClassificationCostUsdPerMember` | 350 USD | ≤ 300 USD (placeholder) | no |
+| 1 | `unattendedWatchDurationHours` | 0.7 h | — | — (not scored: no target) |
+| 2 | `areaUnderWatchFraction` | vacuous | ≥ 0.9 | undecided |
+| 2 | `coverageLossAfterMemberLossFraction` | 0.16 | ≤ 0.25 | yes |
+| 2 | `coverageUnderMeshJammingFraction` | 0.58 | ≥ 0.75 (placeholder) | no |
+| 2 | `reportAgeAtOperationsCentreSeconds` | 40 s | ≤ 60 s (placeholder) | yes |
+| 2 | `positionErrorWithoutSatelliteMetres` | 80 m | ≤ 50 m (placeholder) | no |
+| 2 | `reportHoldWhileCutOffMinutes` | 40 min | ≥ 30 min (placeholder) | yes |
+| 2 | `missedDetectionFraction` | 0.12 | ≤ 0.1 (placeholder) | no |
+| 2 | `falseAlarmsPerHour` | 3 1/h | ≤ 2 1/h (placeholder) | no |
+| 2 | `alertsReachingOperatorPerHour` | 24 1/h | ≤ 20 1/h (placeholder) | no |
+| 2 | `acknowledgedReportsThatMatterFraction` | 0.7 | ≥ 0.8 (placeholder) | no |
+| 2 | `onboardClassificationCostUsdPerMember` | 350 USD | ≤ 300 USD (placeholder) | no |
+| 2 | `unattendedWatchDurationHours` | 0.7 h | — | — (not scored: no target) |
