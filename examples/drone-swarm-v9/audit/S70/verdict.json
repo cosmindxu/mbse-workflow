@@ -4,14 +4,14 @@
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml",
   "prefixHash": "7f31cfe3b7ce9b2e",
   "elements": 3690,
-  "durationMs": 1109,
+  "durationMs": 2699,
   "checks": [
     {
       "name": "check",
       "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 0,
+      "durationMs": 1,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/check.json",
       "findings": 49
     },
@@ -20,7 +20,7 @@
       "command": "npm run sysprose -- stats /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 12,
+      "durationMs": 11,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/stats.json",
       "findings": 0
     },
@@ -29,7 +29,7 @@
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --relation trace --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 185,
+      "durationMs": 200,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/trace-trace.json",
       "findings": 0
     },
@@ -38,7 +38,7 @@
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --relation allocate --from ActionUsage --to PartUsage --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 26,
+      "durationMs": 24,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/trace-allocate.json",
       "findings": 0
     },
@@ -47,7 +47,7 @@
       "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 7,
+      "durationMs": 10,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/requirements.json",
       "findings": 0
     },
@@ -56,7 +56,7 @@
       "command": "npm run sysprose -- reach /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 16,
+      "durationMs": 28,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/reach.json",
       "findings": 0
     },
@@ -65,7 +65,7 @@
       "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 11,
+      "durationMs": 12,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/connectivity.json",
       "findings": 0
     },
@@ -83,7 +83,7 @@
       "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 27,
+      "durationMs": 32,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/elements.json",
       "findings": 0
     },
@@ -92,7 +92,7 @@
       "command": "npm run sysprose -- evidence-status /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/7_EPBS.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 98,
+      "durationMs": 122,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/final/evidence-status.json",
       "findings": 0
     }
@@ -315,7 +315,7 @@
       "layer": "Common",
       "line": 852,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.",
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere, no asserted equation, and nothing specialises it.",
       "check": "check"
     },
     {
@@ -326,7 +326,7 @@
       "layer": "Common",
       "line": 860,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.",
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere, no asserted equation, and nothing specialises it.",
       "check": "check"
     },
     {
@@ -578,7 +578,7 @@
       "layer": "EPBS",
       "line": 254,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30\"): Could not evaluate: compute.unitCostUsd has no value: OnboardComputeModule::unitCostUsd is declared without one and nothing specialises it.",
       "check": "check"
     },
     {
@@ -588,7 +588,7 @@
       "layer": "EPBS",
       "line": 294,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true\"): Could not evaluate: software.positionErrorMetres has no value: DroneFlightSoftware::positionErrorMetres is declared without one and nothing specialises it.",
       "check": "check"
     },
     {
@@ -598,7 +598,7 @@
       "layer": "EPBS",
       "line": 302,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true\"): Could not evaluate: detector.missedDetectionFraction has no value: DetectionClassifierSoftware::missedDetectionFraction is declared without one and nothing specialises it; detector.falseAlarmsPerHour has no value: DetectionClassifierSoftware::falseAlarmsPerHour is declared without one and nothing specialises it.",
       "check": "check"
     },
     {
@@ -608,7 +608,7 @@
       "layer": "EPBS",
       "line": 318,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: coordination.areaUnderWatchFraction has no value: MemberCoordinationSoftware::areaUnderWatchFraction is declared without one and nothing specialises it; coordination.coverageLossAfterMemberLossFraction has no value: MemberCoordinationSoftware::coverageLossAfterMemberLossFraction is declared without one and nothing specialises it; coordination.coverageUnderMeshJammingFraction has no value: MemberCoordinationSoftware::coverageUnderMeshJammingFraction is declared without one and nothing specialises it.",
       "check": "check"
     },
     {
@@ -618,7 +618,7 @@
       "layer": "EPBS",
       "line": 326,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true\"): Could not evaluate: coordination.areaUnderWatchFraction has no value: GroundCoordinationSoftware::areaUnderWatchFraction is declared without one and nothing specialises it; coordination.coverageLossAfterMemberLossFraction has no value: GroundCoordinationSoftware::coverageLossAfterMemberLossFraction is declared without one and nothing specialises it; coordination.coverageUnderMeshJammingFraction has no value: GroundCoordinationSoftware::coverageUnderMeshJammingFraction is declared without one and nothing specialises it.",
       "check": "check"
     },
     {
@@ -628,7 +628,7 @@
       "layer": "EPBS",
       "line": 334,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true\"): Could not evaluate: a referenced value is unknown.",
+      "message": "Constraint could not be evaluated (\"triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true\"): Could not evaluate: triage.alertsReachingOperatorPerHour has no value: AlertTriageSoftware::alertsReachingOperatorPerHour is declared without one and nothing specialises it.",
       "check": "check"
     }
   ]

@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: 69c65a4 (the checks were calibrated against 2486d72)
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 8 legs
+Sysprose: 2c9de31
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 9 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -242,8 +242,8 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/constraint-violation` areaOfInterestBudget: Constraint could not be evaluated ("areaOfInterestSquareKilometres <= 25.0"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` operatorSecondsPerAlertBudget: Constraint could not be evaluated ("operatorSecondsPerAlert >= 30.0"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.
 - `validation/constraint-violation` trackStaleAfterBudget: Constraint could not be evaluated ("trackStaleAfterSeconds <= 120.0"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.
-- `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes == 10.0"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.
-- `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction == 0.5"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.
+- `validation/constraint-violation` satellitePositioningOutageBudget: Constraint could not be evaluated ("satellitePositioningOutageMinutes == 10.0"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere, no asserted equation, and nothing specialises it.
+- `validation/constraint-violation` meshLinksJammedBudget: Constraint could not be evaluated ("meshLinksJammedFraction == 0.5"): Could not evaluate: meshLinksJammedFraction has no value anywhere, no asserted equation, and nothing specialises it.
 - `validation/target-by-specialisation` areaUnderWatchFraction: LA::areaUnderWatchFraction = 0.78216 misses Common::areaUnderWatchTarget (areaUnderWatchFraction >= 0.9)
 - `validation/target-by-specialisation` coverageLossAfterMemberLossFraction: LA::coverageLossAfterMemberLossFraction = 0.153421 meets Common::coverageLossAfterMemberLossTarget (coverageLossAfterMemberLossFraction <= 0.25)
 - `validation/target-by-specialisation` coverageUnderMeshJammingFraction: LA::coverageUnderMeshJammingFraction = 0.66216 misses Common::coverageUnderMeshJammingTarget (coverageUnderMeshJammingFraction >= 0.75) — missed a placeholder, not the customer's number
@@ -266,12 +266,12 @@ One row per function definition. A definition is on board when every usage sits 
 - `validation/target-by-specialisation` alertsReachingOperatorPerHour: PA::alertsReachingOperatorPerHour = 20 meets Common::alertsReachingOperatorTarget (alertsReachingOperatorPerHour <= 20.0)
 - `validation/target-by-specialisation` acknowledgedReportsThatMatterFraction: PA::acknowledgedReportsThatMatterFraction = 0.75 misses Common::acknowledgedReportsThatMatterTarget (acknowledgedReportsThatMatterFraction >= 0.8) — missed a placeholder, not the customer's number
 - `validation/target-by-specialisation` onboardClassificationCostUsdPerMember: PA::onboardClassificationCostUsdPerMember = 350 misses Common::onboardClassificationCostTarget (onboardClassificationCostUsdPerMember <= 300.0) — missed a placeholder, not the customer's number
-- `validation/constraint-violation` : Constraint could not be evaluated ("compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: a referenced value is unknown.
-- `validation/constraint-violation` : Constraint could not be evaluated ("triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true"): Could not evaluate: a referenced value is unknown.
+- `validation/constraint-violation` : Constraint could not be evaluated ("compute.unitCostUsd <= 300 and compute.reportStorageHoldMinutes >= 30"): Could not evaluate: compute.unitCostUsd has no value: OnboardComputeModule::unitCostUsd is declared without one and nothing specialises it.
+- `validation/constraint-violation` : Constraint could not be evaluated ("software.positionErrorMetres <= 50 and software.landsWhenRecalledOrOutsideClearance == true and software.returnsToRecoveryPointWhenIsolated == true and software.signedBaseline == true"): Could not evaluate: software.positionErrorMetres has no value: DroneFlightSoftware::positionErrorMetres is declared without one and nothing specialises it.
+- `validation/constraint-violation` : Constraint could not be evaluated ("detector.missedDetectionFraction <= 0.1 and detector.falseAlarmsPerHour <= 2 and detector.reportsUnknownBelowThreshold == true and detector.stampsClassifierVersion == true"): Could not evaluate: detector.missedDetectionFraction has no value: DetectionClassifierSoftware::missedDetectionFraction is declared without one and nothing specialises it; detector.falseAlarmsPerHour has no value: DetectionClassifierSoftware::falseAlarmsPerHour is declared without one and nothing specialises it.
+- `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: coordination.areaUnderWatchFraction has no value: MemberCoordinationSoftware::areaUnderWatchFraction is declared without one and nothing specialises it; coordination.coverageLossAfterMemberLossFraction has no value: MemberCoordinationSoftware::coverageLossAfterMemberLossFraction is declared without one and nothing specialises it; coordination.coverageUnderMeshJammingFraction has no value: MemberCoordinationSoftware::coverageUnderMeshJammingFraction is declared without one and nothing specialises it.
+- `validation/constraint-violation` : Constraint could not be evaluated ("coordination.areaUnderWatchFraction >= 0.9 and coordination.coverageLossAfterMemberLossFraction <= 0.25 and coordination.coverageUnderMeshJammingFraction >= 0.75 and coordination.admitsOnlyAuthenticated == true"): Could not evaluate: coordination.areaUnderWatchFraction has no value: GroundCoordinationSoftware::areaUnderWatchFraction is declared without one and nothing specialises it; coordination.coverageLossAfterMemberLossFraction has no value: GroundCoordinationSoftware::coverageLossAfterMemberLossFraction is declared without one and nothing specialises it; coordination.coverageUnderMeshJammingFraction has no value: GroundCoordinationSoftware::coverageUnderMeshJammingFraction is declared without one and nothing specialises it.
+- `validation/constraint-violation` : Constraint could not be evaluated ("triage.alertsReachingOperatorPerHour <= 20 and triage.alertsReachingOperatorPerHour * triage.operatorSecondsPerAlert <= 3600 and triage.mergesDuplicates == true"): Could not evaluate: triage.alertsReachingOperatorPerHour has no value: AlertTriageSoftware::alertsReachingOperatorPerHour is declared without one and nothing specialises it.
 
 ## Steps
 
@@ -296,4 +296,4 @@ One row per function definition. A definition is on board when every usage sits 
 | S43 | done | 0 | — |
 | S50 | done | 0 | auto |
 | S60 | done | 0 | — |
-| S70 | running | 0 | — |
+| S70 | running | 0 | auto |
