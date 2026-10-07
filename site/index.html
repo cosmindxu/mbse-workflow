@@ -11,14 +11,19 @@
     <!-- The site's root opens the model straight away. The redirect is script
          only, not a meta refresh: the app needs JavaScript anyway, so without
          it this page — with the model's text and how to propose a change — is
-         the useful one to land on. Crawlers index it too. -->
+         the useful one to land on. Crawlers index it too. With `?stay` in the
+         address (`/?stay`, `/?stay=1`, `/?x=y&stay`) the page stays put: that is
+         the homepage registered with Google for the Drive sign-in, which must
+         describe the app and link the privacy page, not forward at once. -->
     <script>
-      location.replace(
-        './app/?model=model/SurveillanceDroneSwarm.sysml&source=' +
-          encodeURIComponent(
-            'https://github.com/cosmindxu/mbse-workflow/blob/main/CONTRIBUTING.md#proposing-a-change-to-the-model',
-          ),
-      );
+      if (!/[?&]stay(=|&|$)/.test(location.search)) {
+        location.replace(
+          './app/?model=model/SurveillanceDroneSwarm.sysml&source=' +
+            encodeURIComponent(
+              'https://github.com/cosmindxu/mbse-workflow/blob/main/CONTRIBUTING.md#proposing-a-change-to-the-model',
+            ),
+        );
+      }
     </script>
     <style>
       :root {
@@ -120,6 +125,8 @@
         a trademark of the Object Management Group. This site bundles Sysprose (MIT) and its
         standard-library data (EPL-2.0) — see the
         <a href="./app/docs/LICENSES.html">licences</a>.
+        Where the app shows <strong>Drive ▾</strong>, you can sign in to Google there and keep your
+        own copy of the model in your Drive. <a href="./privacy/">Privacy &amp; data</a>.
       </small>
     </main>
   </body>

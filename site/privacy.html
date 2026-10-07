@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy and terms</title>
+    <meta name="description" content="What the drone-swarm model site and the Sysprose app on it do with your data, what reaches Google when you use the optional Google Drive commands, and the terms of use." />
+    <style>
+      :root { --bg: #ffffff; --text: #1f2733; --muted: #6b7686; --accent: #2563eb; --border: #d8dce3; --card: #f5f6f8; }
+      @media (prefers-color-scheme: dark) {
+        :root { --bg: #14181f; --text: #e6e9ef; --muted: #9aa4b2; --accent: #7aa7ff; --border: #2b323d; --card: #1a1f27; }
+      }
+      body { margin: 0; background: var(--bg); color: var(--text);
+        font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      main { max-width: 46rem; margin: 0 auto; padding: 32px 16px 56px; }
+      h1 { font-size: 1.7rem; line-height: 1.25; margin: 0 0 8px; }
+      .lede { color: var(--muted); margin: 0 0 28px; }
+      a { color: var(--accent); overflow-wrap: anywhere; }
+      section { margin: 0 0 28px; padding: 0 0 20px; border-bottom: 1px solid var(--border); }
+      section h2 { font-size: 1.2rem; margin: 0 0 8px; }
+      section p, section ul { margin: 0 0 12px; }
+      section ul { padding-left: 1.25em; }
+      code { font-size: 0.92em; background: var(--card); padding: 1px 4px; border-radius: 4px; overflow-wrap: anywhere; }
+      .fields { background: var(--card); padding: 10px 12px; border-radius: 6px; }
+      small { display: block; margin-top: 8px; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Privacy and terms</h1>
+      <p class="lede">
+        This page covers the drone-swarm model site at
+        <a href="../">cosmindxu.github.io/mbse-workflow</a>: the landing page, the
+        <a href="../tutorials/">tutorials</a> and the Sysprose app under
+        <a href="../app/">/app/</a>, including its optional <strong>Google Drive</strong>
+        commands. In short: there is no server of ours, the site's operator keeps no record of you, and the
+        app talks to Google only when you use <strong>Drive ▾</strong> — and then only about the
+        files you make or choose with it.
+      </p>
+
+      <section id="operator">
+        <h2>Who runs this site</h2>
+        <p>
+          The maintainer of the
+          <a href="https://github.com/cosmindxu/mbse-workflow">mbse-workflow repository</a>
+          (GitHub user <code>cosmindxu</code>), personally — not a company or a school. The site
+          is built from that public repository and hosted on GitHub Pages.
+        </p>
+      </section>
+
+      <section id="app">
+        <h2>What the app is</h2>
+        <p>
+          Sysprose is a modeller that runs entirely in your browser. It is open-source software
+          under the MIT licence. Nothing you do in it is sent to a server of ours: there is none.
+          The site's own code sets no cookies and runs no analytics or advertising code; once you
+          use <strong>Drive ▾</strong>, Google's scripts run in the page too (see
+          <a href="#third-parties">third parties</a>), and what they keep is Google's. The
+          <strong>Collaborate</strong> command connects only to a relay that you start and name
+          yourself.
+        </p>
+      </section>
+
+      <section id="when-google">
+        <h2>When Google is contacted</h2>
+        <p>Never, until you do one of these:</p>
+        <ul>
+          <li>open <strong>Drive ▾</strong> on the app's toolbar;</li>
+          <li>press <code>Ctrl/⌘ + Shift + S</code> (Save to Drive) in the app;</li>
+          <li>follow a link to a file in Google Drive (an app address ending in <code>?drive=</code>).</li>
+        </ul>
+        <p>
+          Each of these loads Google's sign-in script from <code>accounts.google.com</code>, so
+          Google receives your network address and this site's address (and its own cookies, if you
+          are signed in to Google in this browser). Signing in is a separate click after that, in a
+          window shown by Google: it receives the app's client ID, and asks you to let the app use
+          the Drive files you make or choose with it — Google's <code>drive.file</code> permission
+          — and no others.
+        </p>
+      </section>
+
+      <section id="google-data">
+        <h2>What Google data the app reads</h2>
+        <ul>
+          <li>
+            <strong>Only files you create with the app or choose in Google's file picker.</strong>
+            The <code>drive.file</code> permission does not let the app see the rest of your Drive.
+            For those files it reads their text and these metadata fields, exactly as it asks
+            Google for them:
+            <p class="fields"><code>id, name, mimeType, version, modifiedTime, headRevisionId, md5Checksum, resourceKey, webViewLink, trashed, capabilities(canEdit), lastModifyingUser(displayName)</code></p>
+          </li>
+          <li>
+            <strong>Your account's email address and display name</strong>
+            (<code>user(emailAddress, displayName)</code>), shown in the Drive panel and in the
+            app's messages so you can see which account is signed in. The app also hands the email
+            back to Google as a hint when it renews your sign-in, and checks that the renewed
+            sign-in is the same account; if it is not, the app detaches the Drive file it had open
+            and clears the Recent list. They are not used for anything else and are not kept after
+            sign-out or tab close.
+          </li>
+        </ul>
+      </section>
+
+      <section id="processing">
+        <h2>Where it is processed, and who gets it</h2>
+        <p>
+          In your browser. Your files and their metadata travel between your browser and Google's
+          own APIs (<code>www.googleapis.com</code>, and for the file picker
+          <code>apis.google.com</code> and <code>docs.google.com</code>), each time at your request:
+          Save to Drive, Save to Drive as…, opening a file, the Recent list, Browse Drive….
+          They are never sent to the site's operator or to anyone else, not used for advertising,
+          and not sold. Information received from Google APIs is used as Google's
+          <a href="https://developers.google.com/terms/api-services-user-data-policy">API Services User Data Policy</a>
+          requires, including its Limited Use requirements, which we follow voluntarily.
+        </p>
+      </section>
+
+      <section id="storage">
+        <h2>What is stored, and where</h2>
+        <ul>
+          <li>
+            <strong>Your Google sign-in</strong> (an access token): the app keeps it in the page's
+            memory only, and never puts it in the browser's storage or in an address. It stays there
+            until you sign out or close the tab; it stops working after about an hour. Google's
+            file picker receives it when you use <strong>Browse Drive…</strong>, and what the
+            picker does with it is Google's.
+          </li>
+          <li>
+            <strong>Projects you keep with the app's Save</strong>: in this browser's IndexedDB
+            (localStorage if IndexedDB is unavailable), on this device only. With a Drive file
+            open, <strong>Save</strong> and <code>Ctrl/⌘ + S</code> also keep a copy of the model
+            here, as they always do. On a shared computer, remove these copies by clearing this
+            site's data (<code>cosmindxu.github.io</code>) in the browser's settings.
+          </li>
+          <li>
+            <strong>Preferences</strong> — the theme, the palette's collapsed state, your regroup
+            scenarios — in this browser's localStorage, as before Google Drive existed.
+          </li>
+          <li>
+            <strong>The app's own files</strong>, kept by its service worker in the browser's cache so
+            it opens offline.
+          </li>
+          <li>
+            <strong>Nothing of Google's from the app</strong>: the app writes no token or account
+            detail to browser storage. (The model copies that <strong>Save</strong> keeps, above,
+            are yours.)
+          </li>
+          <li><strong>Files you save to Drive</strong>: in your Google Drive, under your account.</li>
+        </ul>
+      </section>
+
+      <section id="sharing">
+        <h2>Sharing and earlier versions</h2>
+        <p>
+          A Drive file is shared only through Google Drive's own sharing controls, by you. A link
+          the app copies for you (<code>…/app/?drive=</code> and the file id) opens the file only for
+          someone the file is shared with; opening it sends that id to this site's host, like any
+          address. When you save, Drive keeps the earlier version of the file for about 30 days
+          (up to 100 versions) unless you mark it <em>Keep forever</em> under
+          <em>Manage versions</em> in Drive.
+        </p>
+      </section>
+
+      <section id="revoke">
+        <h2>Withdrawing the app's access</h2>
+        <p>
+          <strong>Drive ▾ → Sign out</strong> asks Google to revoke the app's access, then forgets
+          your sign-in, the Recent list and the attached file. When your sign-in has already
+          expired, it first asks Google for a fresh one in a brief window, because Google needs one
+          to revoke. If Google does not accept the request, the app says so, and you can remove
+          Sysprose yourself under your
+          <a href="https://myaccount.google.com/security">Google Account › Security</a> ›
+          <em>Third-party access</em>, as the app's message says. Files you saved stay in your
+          Drive until you delete them there.
+        </p>
+      </section>
+
+      <section id="schools">
+        <h2>School accounts and students under 18</h2>
+        <p>
+          A Google Workspace for Education account that the school has designated as under 18 can
+          sign in only once the school's administrator allows the app; until then Google shows an
+          <em>Access blocked</em> page inside the sign-in window. The administrator allows it in the
+          Admin console under Security → Access and data control → API controls → Manage
+          third-party app access → Add app, by its OAuth client ID; <em>Limited</em> access is
+          enough for <code>drive.file</code>.
+        </p>
+        <p>
+          The app's OAuth client ID:
+          <code id="client-id">(client ID: to be filled when the deployment is configured)</code>
+        </p>
+        <!-- Step 10 of the Drive plan (F.4 step 13): quote here what Google's block page says. -->
+        <!-- Also at step 10, against real Google: (1) the Picker iframe's src for an oauth_token
+             (F.4 step 11) — the #storage token bullet claims only what the app does;
+             (2) document.cookie, localStorage and sessionStorage on this origin after a real
+             sign-in and a Picker use; (3) Google's current label and URL for removing an app's
+             access (probably https://myaccount.google.com/connections) — then use one wording in
+             #revoke, the app's sign-out messages (store.drive.ts DRIVE_MESSAGES) and USER-GUIDE §8.1
+             in one change. -->
+      </section>
+
+      <section id="third-parties">
+        <h2>Third parties</h2>
+        <ul>
+          <li>
+            <strong>GitHub Pages</strong> hosts the site and, like any web host, receives your network
+            address with every page and file it serves —
+            <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.
+          </li>
+          <li>
+            <strong>Google</strong> serves the sign-in script, the sign-in window, the file picker and
+            the Drive API, loaded at run time from Google's own addresses —
+            <a href="https://policies.google.com/privacy">Google's privacy policy</a> and the
+            <a href="https://developers.google.com/terms">Google APIs Terms of Service</a>.
+          </li>
+        </ul>
+      </section>
+
+      <section id="terms">
+        <h2>Terms</h2>
+        <p>
+          The site and the app are provided as is. Sysprose is MIT-licensed software and its
+          standard-library data is under EPL-2.0 (see the
+          <a href="../app/docs/LICENSES.html">licences</a>); both come with no warranty of any kind.
+          You are responsible for what you store in your browser and in your Google Drive, and for
+          keeping copies of anything you need. Using the Google Drive commands also means using
+          Google's services under Google's terms.
+        </p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>
+          Questions and requests go to the repository's
+          <a href="https://github.com/cosmindxu/mbse-workflow/issues">GitHub issues</a>. Issues are
+          public, so do not put personal data in one.
+        </p>
+      </section>
+
+      <small>
+        Last changed 2026-10-08. Changes to this page are visible in the repository's history of
+        <code>site/privacy.html</code>. SysML is a trademark of the Object Management Group.
+      </small>
+    </main>
+  </body>
+</html>

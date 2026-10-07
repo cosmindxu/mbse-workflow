@@ -55,10 +55,17 @@ jobs:
         run: |
           mkdir -p _site/app/model
           cp -r sysprose/dist/. _site/app/
+          # Google Drive: from the Drive commit on, Sysprose's build ships a
+          # placeholder drive.json that leaves it off; a committed site/drive.json
+          # replaces it and turns it on (docs/site.md, "Google Drive"). Without
+          # one the placeholder, or at an older pin no file at all, stays.
+          if [ -f site/drive.json ]; then cp site/drive.json _site/app/drive.json; fi
           cp examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml _site/app/model/
           cp site/index.html docs/diagram/hero-light.svg docs/diagram/hero-dark.svg _site/
           mkdir -p _site/tutorials
           cp site/tutorials.html _site/tutorials/index.html
+          mkdir -p _site/privacy
+          cp site/privacy.html _site/privacy/index.html
           cp docs/tutorials/*.mp4 docs/tutorials/*.vtt docs/tutorials/*-poster.jpg _site/tutorials/
       - uses: actions/upload-pages-artifact@v3
         with:
