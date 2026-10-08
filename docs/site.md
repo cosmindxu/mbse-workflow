@@ -64,8 +64,7 @@ which records the commit the workflow's checks were calibrated against.
 
 Sysprose can open and save `.sysml` files in a student's own Google Drive
 (**Drive ▾** on its toolbar; what a student sees is in Sysprose's
-[user guide, §8.1](https://github.com/cosmindxu/sysprose/blob/main/docs/USER-GUIDE.md#81-google-drive-optional),
-once the feature is on Sysprose's `main`).
+[user guide, §8.1](https://github.com/cosmindxu/sysprose/blob/main/docs/USER-GUIDE.md#81-google-drive-optional)).
 It is off unless the deployed site supplies a `drive.json` next to the app.
 From the commit that added the feature on, Sysprose's build ships a
 placeholder there that names no client, so a site that does nothing has no
@@ -75,8 +74,8 @@ at or after that commit.
 **Not configured yet.** `site/drive.json` does not exist until the Google
 Cloud project below has been created; until then the workflow keeps the
 build's placeholder (`if [ -f site/drive.json ]`), and Google Drive is off on
-the site. The current pin (`65dd95d`) also predates the feature, so turning it
-on needs `SYSPROSE_REF` moved as well. `site/drive.json.example` shows the
+the site. The pin (`24773a5`, the feature's commit) already carries it, so
+committing `site/drive.json` is all that turns it on. `site/drive.json.example` shows the
 shape, with three ids that are each deliberately invalid — copied as it is, the
 app logs *drive.json is present but invalid* in the console and leaves the
 feature off.
