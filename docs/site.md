@@ -74,7 +74,7 @@ at or after that commit.
 **Not configured yet.** `site/drive.json` does not exist until the Google
 Cloud project below has been created; until then the workflow keeps the
 build's placeholder (`if [ -f site/drive.json ]`), and Google Drive is off on
-the site. The pin (`24773a5`, the feature's commit) already carries it, so
+the site. Every pin from `24773a5` (the feature's commit) on carries it, so
 committing `site/drive.json` is all that turns it on. `site/drive.json.example` shows the
 shape, with three ids that are each deliberately invalid — copied as it is, the
 app logs *drive.json is present but invalid* in the console and leaves the
