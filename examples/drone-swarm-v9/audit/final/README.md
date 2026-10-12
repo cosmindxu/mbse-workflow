@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: 0c9d2bd
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 15 legs
+Sysprose: 735f915
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 16 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -296,4 +296,4 @@ One row per function definition. A definition is on board when every usage sits 
 | S43 | done | 0 | — |
 | S50 | done | 0 | auto |
 | S60 | done | 0 | — |
-| S70 | running | 0 | approve |
+| S70 | running | 0 | auto |
