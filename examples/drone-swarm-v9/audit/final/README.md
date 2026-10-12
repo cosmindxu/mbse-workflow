@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: fd894f6
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 14 legs
+Sysprose: 0c9d2bd
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 15 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -109,7 +109,7 @@ Each state machine against the properties it states, or — for a machine writte
 | `LA::GroundStation::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
 | `LA::GroundStation::GroundStationStates` | recovery to Standby | holds | recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletio |
 | `PA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
-| `PA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
+| `PA::SwarmMember::SwarmMemberStates` | carried | undecided | inconclusive: no explored run opened the property's scope, and the walk did not finish — a trigger the machine names was never offered. The  |
 | `PA::GroundStationNode::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
 | `PA::GroundStationNode::GroundStationStates` | recovery to Standby | holds | recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletio |
 | `PA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxComple |
@@ -296,4 +296,4 @@ One row per function definition. A definition is on board when every usage sits 
 | S43 | done | 0 | — |
 | S50 | done | 0 | auto |
 | S60 | done | 0 | — |
-| S70 | running | 0 | auto |
+| S70 | running | 0 | approve |

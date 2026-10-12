@@ -187,14 +187,14 @@
       "property": "carried",
       "exitCode": 2,
       "counts": {
-        "passed": 2,
+        "passed": 0,
         "failed": 0,
         "vacuous": 0,
-        "inconclusive": 1,
+        "inconclusive": 3,
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet recallW, recallT, recallR, clearanceW, clearanceT, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 14 product state(s)."
+      "detail": "inconclusive: no explored run opened the property's scope, and the walk did not finish — a trigger the machine names was never offered. The absence of a violation in part of a graph is not the absence of one, and neither is the absence of an antecedent. Raise the bound (`--max-configs N`) and re-run."
     },
     {
       "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationModes",
