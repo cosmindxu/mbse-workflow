@@ -93,6 +93,9 @@ export const CODE_NOTES: Record<string, CodeNote> = {
     cv: 'CV-17',
     note: "This layer's own values violate the constraint. If it fixes an `#Estimate`, do not also state the estimate as a literal: make the `#Estimate` valueless and let the `assert constraint` derive it from this layer's values (CV-17). Otherwise correct the value that contradicts its documented basis.",
   },
+  'validation/constraint-by-instance': {
+    note: "A definition's relation read in one instance a binding gives its own value: the named instance breaks it. Change the value the binding carries into that instance (the line the finding points at), or the binding; the definition's default is overridden there.",
+  },
   'validation/target-by-specialisation': {
     cv: 'CV-17',
     note: "A target held against this layer's estimate of its measure: a verdict, per layer, on the brief's target — a result of the comparison, not a defect in the fragment. Do not change an estimate to meet it; an estimate is the worst case this design delivers, with its basis in the doc. A target no architecture meets is a question for whoever set it.",

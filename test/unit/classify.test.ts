@@ -120,4 +120,27 @@ describe('classification', () => {
     // An info is a target met or undecided: nothing was missed.
     expect(verdict('Swarm::PA::coverageUnderMeshJammingFraction', 'info').message).not.toContain('missed');
   });
+
+  it('reports a per-instance finding and never blocks on it, while a violated constraint still blocks', () => {
+    // The 27th rule `validation/constraint-by-instance`: a definition's relation
+    // read once per instance. It is emitted as a warning when an instance
+    // violates it and an info otherwise; a finding about the model, it reports.
+    expect(classifyCode('validation/constraint-by-instance', 'warning', S41, knobs()).blocking).toBe(false);
+    expect(classifyCode('validation/constraint-by-instance', 'info', S41, knobs()).blocking).toBe(false);
+    // The h2-family rows are now decided: the same binding makes an instance
+    // violate `constraint-violation`, which blocks (H1).
+    expect(classifyCode('validation/constraint-violation', 'warning', S41, knobs()).blocking).toBe(true);
+  });
+
+  it('carries the note for the per-instance code, with no convention', () => {
+    const item = itemFromDiagnostic(
+      { code: 'validation/constraint-by-instance', severity: 'warning', message: "Constraint 'load <= 10.0' violated in Q::p", elementName: 'X::Q::p' },
+      S41,
+      knobs(),
+      'check',
+    );
+    expect(item.blocking).toBe(false);
+    expect(item.cv).toBeUndefined();
+    expect(item.hint).toContain('binding carries');
+  });
 });
