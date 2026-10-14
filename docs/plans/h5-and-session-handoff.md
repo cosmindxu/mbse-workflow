@@ -10,6 +10,19 @@ This document is for the next agent. It records (1) what this session realized, 
 change that was attempted and deliberately reverted. Read it with the two binding plans
 `~/.claude/plans/behaviour-in-app.md` and `~/.claude/plans/per-instance-check.md`, and `~/sysprose/TODO.md`.
 
+> **Corrections, 2026-10-14** (a review of this session's work at Sysprose `5943654`; the full findings and the plan
+> that supersedes this document's "what is remaining" are in the review's `close-open-items.md`). The text below is
+> kept as written, with each wrong claim marked where it stands. In short:
+> - §2.6 item 2 ("parse *more*, never less") is **false**: the parse-free certificate vouches for text the CLI
+>   rejects (guard, trigger, effect, expression and metadata text are never checked).
+> - §3.1's "likely root cause" is **wrong**: `reachingAssert` never runs on the chain. The solver-units regression
+>   is the `quantityScopeFor` block in `units-eval.ts`.
+> - §3.2's heading contradicts its body, §2.6 lists five of the six decisions, and §3.3 lists `docs/TEST-SUMMARY`
+>   drift as untouched although it shipped in `0ac35a4`.
+> - The H5 decision quoted in §3.1 is recorded only here (it reached this session through a conversation); it
+>   awaits the user's confirmation (plan decision U4), and `per-instance-check.md` still says the opposite.
+> - This is an internal session log; whether it stays in the public repository is plan decision U12.
+
 ---
 
 ## 1. The starting point — the interruption
@@ -111,9 +124,9 @@ four surfaces (check, literal, numeric/SMT, obligations):
 Plus two follow-ups: the frame cap is now **per binding** (`BindingEnds.overCap`); and the Problems tab
 names the producer (`Diagnostic.producer`, `Problems (N check · M solve)`).
 
-### 2.6 The six decisions (`5943654`)
+### 2.6 The decisions (`5943654`)
 
-After the user answered six open questions:
+After the user answered six open questions (this list records five of them; the sixth was not written down):
 
 1. **Catalogue the `checks/*` codes — done.** Added a `checks` `DiagnosticSource` + a `checks/*` family to
    the Agent Diagnostics Contract, an entry per code with a documented **no-range**, and a test pinning
@@ -122,7 +135,10 @@ After the user answered six open questions:
    (`serializeUserModelSignals`) gives `loadHealth` a serializer-side raw-value flag + a **reference
    certificate**. A clean text is now parsed **zero** times; the pinned rename case is flagged
    not-faithful and still parses for the exact count. It is a **conservative certificate** — it can only
-   make `loadHealth` parse *more*, never less. (`679a5e5`.)
+   make `loadHealth` parse *more*, never less. (`679a5e5`.) **Correction:** this is false. The certificate
+   checks references and `value` only; a guard `true )`, an effect `}`, a trigger `go now` or a value
+   `2; attribute rate = 3` gives health 0 and Reachability `holds`, while the CLI rejects the saved text
+   (exit 1). There was no differential test for the claim.
 3. **`sysprose-evidence/2` — done.** A v2 schema with a version discriminator + an `instance` facet;
    `attachEvidence` upgrades a legacy `R in X` v1 record, so one reading is one live obligation and the
    requirement's facet is the min over readings. (`05e45a4`.)
@@ -164,7 +180,13 @@ cases fail — a 70-long **asserted chain** (`attribute x_i; assert constraint d
 `constraint chk { x70 <= 80.0 }`) stops solving: the check reads `unknown`. Bisected: reverting `075b306`
 alone restores 131/131 green, so the regression is entirely H5.
 
-**The likely root cause (verify, do not trust):** `reachingAssert` walks from `contextId` up its owning
+**Correction (verified 2026-10-14): the paragraph below is wrong.** `reachingAssert` never runs on the chain.
+The regression is the new block in `units-eval.ts` `quantityScopeFor` (~1440): it derives inside a constraint
+body scope and for value-less features, so the x70 chain goes past `MAX_DERIVATION_DEPTH` and the result is
+`unknown`. Dropping its `|| !hasStatedValue(...)` term gives solver-units 131/131, and the differential then stays
+green apart from 8 I3 rows, each back at its HEAD value.
+
+**The likely root cause (original text, WRONG — see the correction above):** `reachingAssert` walks from `contextId` up its owning
 feature names and returns the first owner whose equations define `chain…​.name`. For the chain, the assert
 `d_i` is owned by the **same** package the name is read in — a *local* assert — yet the walk can still
 match it and re-route the reading through `defineIn(model, reaching.at, …)`, which the solver then cannot
@@ -195,7 +217,7 @@ oracle. The key invariants to hold: (a) an assert overrides only a `default`, ne
 enclosing one; (c) the solver and SMT must agree with the check and literal, or the row must abstain — a
 clash is worse than an abstention. Add the solver/SMT sides **in the same step**, not after.
 
-### 3.2 The two behaviour S7 items left (both need a decision, not code)
+### 3.2 The two behaviour S7 items: both closed (nothing left to decide)
 
 - **Catalogue the rest of the app rows** — done for `checks/*`; nothing further.
 - **The cheaper raw-value signal** — done (parse-free). The only residual is the conservative
@@ -211,8 +233,9 @@ the palette's solver checks in-page (COOP/COEP vs Google Drive); scoping more ch
 `h2p0`… (`solver`, above); **stop a composite's last-active child from multiplying the walk's
 configurations** (`hashConfig`); the z3-timeout-floor guard; register row W2's per-step producer;
 inherited-contract-clause display; a batch of persistence/library-integration items (api-json round
-trips, library-writer guards); the hub-led `OA` crossings; tied centrality ranks; and `docs/TEST-SUMMARY`
-drift as a CI step. Read the file; most are concrete and independent.
+trips, library-writer guards); the hub-led `OA` crossings; and tied centrality ranks. (`docs/TEST-SUMMARY`
+drift as a CI step is **not** in this list: it shipped in `0ac35a4`.) Read the file; most are concrete and
+independent. Note that 22 of its 47 items had already shipped and were still listed when this was written.
 
 ### 3.4 The recurring coordinator chores
 
