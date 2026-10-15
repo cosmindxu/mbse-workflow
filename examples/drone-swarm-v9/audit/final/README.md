@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: 5943654
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 17 legs
+Sysprose: 71ff706
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 18 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -96,22 +96,22 @@ Each state machine against the properties it states, or — for a machine writte
 
 | Machine | Property | Verdict | Detail |
 |---|---|---|---|
-| `OA::SwarmMemberModes` | recovery to Nominal | undecided | inconclusive: this machine names triggers this walk offers at every configuration, so "reachable from every configuration" would be a claim  |
-| `OA::SwarmMemberStates` | recovery to Landed | undecided | inconclusive: this machine names triggers this walk offers at every configuration, so "reachable from every configuration" would be a claim  |
-| `OA::FleetModes` | recovery to MeshIntact | undecided | inconclusive: this machine names triggers this walk offers at every configuration, so "reachable from every configuration" would be a claim  |
-| `OA::FleetStates` | recovery to Grounded | undecided | inconclusive: this machine names triggers this walk offers at every configuration, so "reachable from every configuration" would be a claim  |
+| `OA::SwarmMemberModes` | recovery to Nominal | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
+| `OA::SwarmMemberStates` | recovery to Landed | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
+| `OA::FleetModes` | recovery to MeshIntact | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
+| `OA::FleetStates` | recovery to Grounded | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
 | `SA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
 | `SA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
-| `SA::FleetConfiguration` | recovery to MeshIntact | undecided | inconclusive: this machine names triggers this walk offers at every configuration, so "reachable from every configuration" would be a claim  |
+| `SA::FleetConfiguration` | recovery to MeshIntact | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
 | `LA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxComple |
 | `LA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
-| `LA::SwarmMember::SwarmMemberStates` | carried | holds | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
+| `LA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
 | `LA::GroundStation::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
-| `LA::GroundStation::GroundStationStates` | recovery to Standby | holds | recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletio |
+| `LA::GroundStation::GroundStationStates` | recovery to Standby | undecided | inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while t |
 | `PA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
-| `PA::SwarmMember::SwarmMemberStates` | carried | undecided | inconclusive: no explored run opened the property's scope, and the walk did not finish — a trigger the machine names was never offered. The  |
+| `PA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
 | `PA::GroundStationNode::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
-| `PA::GroundStationNode::GroundStationStates` | recovery to Standby | holds | recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletio |
+| `PA::GroundStationNode::GroundStationStates` | recovery to Standby | undecided | inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while t |
 | `PA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxComple |
 
 Fault tree: not applicable. It computes which component contract failures break a top requirement, and no layer of this workflow writes component contracts that refine one — so there is nothing to cut, and no claim about single points of failure is made here.

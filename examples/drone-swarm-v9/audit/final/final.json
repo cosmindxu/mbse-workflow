@@ -708,7 +708,7 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `positioningLostNotice`, `positioningBackNotice`, `sensingDegradedNotice`, `sensingRestoredNotice`, `contactLostNotice`, `contactBackNotice`, `admissionFailed`, `readmission` is a claim about that environment and not about one that withholds it"
+        "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `positioningLostNotice`, `positioningBackNotice`, `sensingDegradedNotice`, `sensingRestoredNotice`, `contactLostNotice`, `contactBackNotice`, `admissionFailed`, `readmission` is a claim about that environment and not about one that withholds it"
       },
       {
         "machine": "SurveillanceDroneSwarm::OA::SwarmMemberStates",
@@ -722,7 +722,7 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `taskingReceived`, `recallReceivedEarly`, `recallReceived`, `swarmContactLost` is a claim about that environment and not about one that withholds it"
+        "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `taskingReceived`, `recallReceivedEarly`, `recallReceived`, `swarmContactLost` is a claim about that environment and not about one that withholds it"
       },
       {
         "machine": "SurveillanceDroneSwarm::OA::FleetModes",
@@ -736,7 +736,7 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jammingNotice`, `jammingClearedNotice` is a claim about that environment and not about one that withholds it"
+        "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `jammingNotice`, `jammingClearedNotice` is a claim about that environment and not about one that withholds it"
       },
       {
         "machine": "SurveillanceDroneSwarm::OA::FleetStates",
@@ -750,7 +750,7 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `fleetTasking`, `fleetRecallOrder` is a claim about that environment and not about one that withholds it"
+        "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `fleetTasking`, `fleetRecallOrder` is a claim about that environment and not about one that withholds it"
       },
       {
         "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes",
@@ -792,7 +792,7 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes `jamming`, `linksRestored` is a claim about that environment and not about one that withholds it"
+        "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `jamming`, `linksRestored` is a claim about that environment and not about one that withholds it"
       },
       {
         "machine": "SurveillanceDroneSwarm::LA::FleetConfiguration",
@@ -825,12 +825,12 @@
       {
         "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberStates",
         "property": "carried",
-        "exitCode": 0,
+        "exitCode": 2,
         "counts": {
-          "passed": 3,
+          "passed": 2,
           "failed": 0,
           "vacuous": 0,
-          "inconclusive": 0,
+          "inconclusive": 1,
           "covered": 0,
           "notCovered": 0
         },
@@ -853,16 +853,16 @@
       {
         "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationStates",
         "property": "recovery to Standby",
-        "exitCode": 0,
+        "exitCode": 2,
         "counts": {
-          "passed": 1,
+          "passed": 0,
           "failed": 0,
           "vacuous": 0,
-          "inconclusive": 0,
+          "inconclusive": 1,
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+        "detail": "inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while the transitions the machine states lead on, so neither direction of this claim is made — the interpreter’s chase budget is spent with a completion transition still due, so where a run of this machine ends is decided by the budget and not by the edges the machine states"
       },
       {
         "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberModes",
@@ -876,21 +876,21 @@
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet peerVerdict, readmitVerdict, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 12 product state(s)."
+        "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet peerVerdict, readmitVerdict, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 632 product state(s)."
       },
       {
         "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberStates",
         "property": "carried",
         "exitCode": 2,
         "counts": {
-          "passed": 0,
+          "passed": 2,
           "failed": 0,
           "vacuous": 0,
-          "inconclusive": 3,
+          "inconclusive": 1,
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "inconclusive: no explored run opened the property's scope, and the walk did not finish — a trigger the machine names was never offered. The absence of a violation in part of a graph is not the absence of one, and neither is the absence of an antecedent. Raise the bound (`--max-configs N`) and re-run."
+        "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet recallW, recallT, recallR, clearanceW, clearanceT, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}, over 616 product state(s)."
       },
       {
         "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationModes",
@@ -909,16 +909,16 @@
       {
         "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationStates",
         "property": "recovery to Standby",
-        "exitCode": 0,
+        "exitCode": 2,
         "counts": {
-          "passed": 1,
+          "passed": 0,
           "failed": 0,
           "vacuous": 0,
-          "inconclusive": 0,
+          "inconclusive": 1,
           "covered": 0,
           "notCovered": 0
         },
-        "detail": "recoverable: `state Standby` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is read as false} — every claim above is about this MACHINE's semantics — the walk explores both branches of a nondeterministic choice; the simulator takes the first declared one, so a run this verdict quantifies over may be a run `simulate` never produces"
+        "detail": "inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while the transitions the machine states lead on, so neither direction of this claim is made — the interpreter’s chase budget is spent with a completion transition still due, so where a run of this machine ends is decided by the budget and not by the edges the machine states"
       },
       {
         "machine": "SurveillanceDroneSwarm::PA::FleetConfiguration",
