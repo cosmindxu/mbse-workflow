@@ -93,6 +93,7 @@ TEMPLATE = """<!doctype html>
         Sysprose, from the scenarios in <code>docs/tutorials/scenarios/</code>; the captions are
         also available as subtitles (CC). Sysprose is a candidate, not a certified or
         conformance-tested implementation. SysML is a trademark of the Object Management Group.
+        <a href="../privacy/">Privacy &amp; data</a>.
       </small>
     </main>
   </body>
