@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
 Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: dfa9e0a
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 19 legs
+Sysprose: 007b254
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 20 legs
 
 ## Checked by the shipped CLI, not by this workflow
 

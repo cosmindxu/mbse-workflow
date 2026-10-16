@@ -94,7 +94,7 @@ export const CODE_NOTES: Record<string, CodeNote> = {
     note: "This layer's own values violate the constraint. If it fixes an `#Estimate`, do not also state the estimate as a literal: make the `#Estimate` valueless and let the `assert constraint` derive it from this layer's values (CV-17). Otherwise correct the value that contradicts its documented basis.",
   },
   'validation/constraint-by-instance': {
-    note: "A definition's relation read in one instance a binding gives its own value: the named instance breaks it. Change the value the binding carries into that instance (the line the finding points at), or the binding; the definition's default is overridden there.",
+    note: "A definition's relation read in one instance a binding gives its own value. As a warning, the named instance breaks it: change the value the binding carries into that instance (the member the finding points at, or the instance's own usage or definition when no member states the value), or the binding; the definition's default is overridden there. As an info finding, the instance could not be read and no verdict was reached: read the sentence for why.",
   },
   'validation/target-by-specialisation': {
     cv: 'CV-17',
