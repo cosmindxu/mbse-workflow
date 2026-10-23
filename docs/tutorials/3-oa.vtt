@@ -1,91 +1,91 @@
 WEBVTT
 
 1
-00:00:04.000 --> 00:00:15.339
+00:00:04.000 --> 00:00:15.337
 SHOW ONLY THE OA LAYER
 In the Explorer, ⊞ on OA scopes every diagram to the operational-analysis package. The chip above the canvas says what is shown.
 
 2
-00:00:15.339 --> 00:00:34.737
+00:00:15.337 --> 00:00:34.690
 GENERAL VIEW
 All of OA as boxes: the people, drones and ground equipment of today's operation, and the activities allocated to each. The two representative drones, memberA and memberB, stand at the left with their activities fanned out to their right. No system is named.
 
 3
-00:00:34.737 --> 00:00:48.266
+00:00:34.690 --> 00:00:48.211
 READ ONE ELEMENT
 Select a box: Properties shows what it is. memberA stands for one of the twelve drones, not an extra one. The purple lines on its right: the 14 activities it performs.
 
 4
-00:00:48.266 --> 00:01:00.319
+00:00:48.211 --> 00:01:00.264
 TREE VIEW
 What OA contains, one branch at a time. +N on a box opens what it owns: here the action definition HandOverSector and its two ports, one out and one in.
 
 5
-00:01:00.319 --> 00:01:13.250
+00:01:00.264 --> 00:01:13.198
 INTERCONNECTION VIEW
 The twelve kinds of entity and their fourteen usages: people, drones, ground station, radios, recharge and recovery points, cameras. No connections at OA.
 
 6
-00:01:13.250 --> 00:01:28.393
+00:01:13.198 --> 00:01:28.343
 ACTION VIEW
 The 38 activities, each allocated to the entity that performs it. No successions: at OA they are a set, not a sequence. The lines are the 33 flows between them, each labelled with what it carries.
 
 7
-00:01:28.393 --> 00:01:41.111
+00:01:28.343 --> 00:01:41.058
 STATE VIEW
 Four state machines: one drone's sortie and its operating condition, the fleet's mission and its mesh. Lines are transitions; most are labelled trigger / effect.
 
 8
-00:01:41.111 --> 00:01:54.768
+00:01:41.058 --> 00:01:54.709
 READ ONE STATE MACHINE
 A drone that loses satellite positioning goes from Nominal to NavigationDegraded and navigates by camera; when positioning is back it resumes satellite navigation.
 
 9
-00:01:54.768 --> 00:02:06.305
+00:01:54.709 --> 00:02:06.243
 CASE VIEW
 The mission, WatchTheTaskedArea, and ten capabilities as use cases. Each names its subject, holder: a drone, the duty controller or the analyst.
 
 10
-00:02:06.305 --> 00:02:19.087
+00:02:06.243 --> 00:02:19.025
 REQUIREMENT VIEW
 OA's hazards, each satisfied by an activity. Before recording we deleted one, ReportLostInLinkGapHazard, and its «satisfy» went with it. Now we add it back.
 
 11
-00:02:19.087 --> 00:02:28.697
+00:02:19.025 --> 00:02:28.621
 SELECT WHERE IT GOES
 A new element goes under the selection, so first select the Hazards package, inside OA, in the Explorer.
 
 12
-00:02:28.697 --> 00:02:38.819
+00:02:28.621 --> 00:02:38.743
 PLACE A REQUIREMENT
 Pick Requirement in the palette, then click empty canvas. The new requirement is created in Hazards and selected.
 
 13
-00:02:38.819 --> 00:02:46.864
+00:02:38.743 --> 00:02:46.821
 NAME IT
 Type its name in Properties.
 
 14
-00:02:46.864 --> 00:03:01.197
+00:02:46.821 --> 00:03:00.954
 GIVE IT ITS TEXT
 The statement goes in Requirement text, word for word as in the model: a report is sent into a link gap and nobody knows it never arrived.
 
 15
-00:03:01.197 --> 00:03:14.309
+00:03:00.954 --> 00:03:14.081
 TAG IT AND NAME ITS SUBJECT
 Tags takes the #Hazard keyword, which resolves to Kinds::Hazard. Subject takes name : Type: the hazard is about holder, the operations-centre analyst.
 
 16
-00:03:14.309 --> 00:03:29.440
+00:03:14.081 --> 00:03:29.210
 ITS «SATISFY» GOES IN GENERAL
 acknowledgeReports, which satisfied it, left the Requirement view with it; General shows both. Select it and press Selection, then pick Satisfy and click it: the satisfier first.
 
 17
-00:03:29.440 --> 00:03:43.500
+00:03:29.210 --> 00:03:43.374
 THEN CLICK THE REQUIREMENT
 The strip above the canvas now asks for the target. Fit, zoom to the new hazard and click it: the «satisfy» is drawn, and filed in OA, where it was.
 
 18
-00:03:43.500 --> 00:04:01.045
+00:03:43.374 --> 00:04:00.909
 THE RESULT
 The Requirement view is as it was: four hazards, each satisfied by an activity, and the hazard has its tag and subject back. Not re-entered: SA's «satisfy» of it, which lives in SA. Edits stay in this browser until saved or exported.
