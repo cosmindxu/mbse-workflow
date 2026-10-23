@@ -250,17 +250,23 @@ export class InProcessBackend implements SysproseBackend {
         if (!el) return false;
         return isUserElement(m.model, el) || (includeLibrary && el.attrs.isLibrary === true);
       })
-      .map((r) => ({
-        id: r.id,
-        qualifiedName: qname(m.model, r.id),
-        name: r.cells.name,
-        metaclass: r.cells.metaclass,
-        type: r.cells.type,
-        multiplicity: r.cells.multiplicity,
-        value: r.cells.value,
-        redefines: r.cells.redefines,
-        doc: r.cells.doc,
-      }));
+      .map((r) => {
+        // Sysprose prints a default as `default 1.2`: keep the number as the
+        // value and say it was a default, so no reader parses the prefix.
+        const stated = /^default (.*)$/s.exec(r.cells.value);
+        return {
+          id: r.id,
+          qualifiedName: qname(m.model, r.id),
+          name: r.cells.name,
+          metaclass: r.cells.metaclass,
+          type: r.cells.type,
+          multiplicity: r.cells.multiplicity,
+          value: stated ? stated[1]! : r.cells.value,
+          ...(stated ? { isDefault: true } : {}),
+          redefines: r.cells.redefines,
+          doc: r.cells.doc,
+        };
+      });
   }
 
   tags(m: Loaded): TagIndex {

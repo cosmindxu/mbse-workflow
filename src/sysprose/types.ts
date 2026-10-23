@@ -62,7 +62,14 @@ export interface ElementRow {
   metaclass: string;
   type: string;
   multiplicity: string;
+  /**
+   * The stated value as text. Sysprose prints a default as `default 1.2`
+   * (small-defaults S1); the prefix is stripped here, once, and `isDefault`
+   * says it was there, so every reader keeps reading a number. A default
+   * stands against every assertion since default-stands (decision 14 amended).
+   */
   value: string;
+  isDefault?: boolean;
   redefines: string;
   doc: string;
 }

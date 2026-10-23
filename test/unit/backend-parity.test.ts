@@ -120,3 +120,28 @@ describe('version', () => {
     expect(typeof v.matches).toBe('boolean');
   });
 });
+
+// Sysprose (small-defaults S1) prints a default as `default 1.2`. The readers of
+// an element row (dutyCycleBound, moe.estimated, the realization adapter, the
+// authoring prompt) parse `value` as a number, so the backend strips the prefix
+// once and says it in `isDefault`; a bound value is untouched.
+describe('in-process backend: a default reads as its number', () => {
+  it('strips `default ` from the value and flags the row, and leaves `=` alone', async () => {
+    const text = [
+      'package D {',
+      '  part def P {',
+      '    attribute soft default = 0.92;',
+      '    attribute hard = 0.5;',
+      '    attribute none;',
+      '  }',
+      '}',
+    ].join('\n');
+    const rows = await backend.withModel(text, 'default-prefix.sysml', (m: Loaded) => backend.elements(m));
+    const row = (n: string) => rows.find((r) => r.qualifiedName === `D::P::${n}`)!;
+    expect(row('soft').value).toBe('0.92');
+    expect(row('soft').isDefault).toBe(true);
+    expect(row('hard').value).toBe('0.5');
+    expect(row('hard').isDefault).toBeUndefined();
+    expect(row('none').value).toBe('');
+  });
+});
