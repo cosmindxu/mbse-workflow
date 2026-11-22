@@ -5,13 +5,13 @@
 
         // the system, to be decomposed into physical components
         part def SurveillanceDroneSwarmPhysical {
-            out port reportsOut : LA::SwarmMember::reportsOut;
-            out port trackPictureOut : LA::SwarmMember::trackPictureOut;
-            out port statusOut : LA::SwarmMember::statusOut;
-            in port taskingIn : LA::SwarmMember::taskingIn;
-            in port priorityIn : LA::SwarmMember::priorityIn;
-            in port recallIn : LA::SwarmMember::recallIn;
-            in port receiptIn : LA::SwarmMember::receiptIn;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
             doc /* TODO: decompose into components and move the functions onto them. */
         }
 
@@ -201,13 +201,13 @@
             doc /* One of the twelve identical drones. It performs all eight coordination functions itself over the mesh, so the watch does not depend on the ground station or the ground link. It is built from a mesh radio, a ground-link radio, a mission computer, a navigation unit and an independent safety monitor. */
             out port meshOut : Common::MeshPort;
             in port meshIn : ~Common::MeshPort;
-            out port reportsOut : Common::DetectionReport;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            in port taskingIn : Common::TaskingOrder;
-            in port priorityIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port receiptIn : Common::ReportReceipt;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
 
             #Node part meshRadio : MeshRadioNode;
             #Node part groundRadio : GroundLinkRadioNode;
@@ -299,15 +299,15 @@
         // ===== node parts on the ground =====
         #Node part def GroundStationNode {
             doc /* The ground station, thin by design: command and control only (tasking, supervisory priorities, status picture, acknowledgements). It does not coordinate the swarm; if it or its link is lost the members keep the watch. Hosts the base radio of the ground link. */
-            in port statusIn : Common::MemberStatus;
-            in port trackPictureIn : Common::Track;
-            in port alertsIn : Common::TriagedAlerts;
-            in port recordsIn : Common::DecisionRecords;
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
-            out port receiptOut : Common::ReportReceipt;
-            out port recordReceiptOut : Common::ReportReceipt;
+            in port statusIn : ~Common::MemberStatusPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
+            out port receiptOut : Common::ReportReceiptPort;
+            out port recordReceiptOut : Common::ReportReceiptPort;
             part commandSoftware : CommandAndControlSoftware;
 
             #Mode state def GroundStationModes {
@@ -335,21 +335,21 @@
         }
         #Node part def GroundRecallTransmitterNode {
             doc /* A ground recall transmitter with its own radio and its own operator panel, so an order to land reaches the drones directly and does not depend on the ground station or the ground link. It also takes the order from the station when that is up. */
-            in port recallIn : Common::RecallDirective;
-            out port recallOut : Common::RecallDirective;
+            in port recallIn : ~Common::RecallDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
             part recallIssuer : RecallIssuerSoftware;
         }
         #Node part def GroundAlertTriageNode {
             doc /* A server that ranks the reports of all drones, merges duplicates and releases alerts to the operator inside the hourly cap. Kept apart from the record store so that losing the ranker does not lose the provenance record. */
-            in port reportsIn : Common::DetectionReport;
-            out port alertsOut : Common::TriagedAlerts;
+            in port reportsIn : ~Common::DetectionReportPort;
+            out port alertsOut : Common::TriagedAlertsPort;
             part alertRanker : AlertRankingSoftware;
         }
         #Node part def GroundDecisionRecordStoreNode {
             doc /* A server with durable storage for the decision records. It receives every report itself and the acknowledgements, independently of triage. */
-            in port reportsIn : Common::DetectionReport;
-            in port receiptIn : Common::ReportReceipt;
-            out port recordsOut : Common::DecisionRecords;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port receiptIn : ~Common::ReportReceiptPort;
+            out port recordsOut : Common::DecisionRecordsPort;
             part recordKeeper : DecisionRecordSoftware;
         }
         part mainAssembly : SurveillanceDroneSwarmPhysical;

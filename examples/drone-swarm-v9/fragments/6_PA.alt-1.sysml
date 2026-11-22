@@ -5,13 +5,13 @@
 
         // the system, to be decomposed into physical components
         part def SurveillanceDroneSwarmPhysical {
-            out port reportsOut : LA::SwarmMember::reportsOut;
-            out port trackPictureOut : LA::SwarmMember::trackPictureOut;
-            out port statusOut : LA::SwarmMember::statusOut;
-            in port taskingIn : LA::SwarmMember::taskingIn;
-            in port priorityIn : LA::SwarmMember::priorityIn;
-            in port recallIn : LA::SwarmMember::recallIn;
-            in port receiptIn : LA::SwarmMember::receiptIn;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
             doc /* TODO: decompose into components and move the functions onto them. */
         }
 
@@ -218,11 +218,11 @@
         }
         #Node part def GroundCoordinationNode {
             doc /* Server in the ground segment that runs the deciding coordination of the whole swarm. */
-            in port taskingIn : SurveillanceDroneSwarm::LA::SwarmMember::taskingIn;
+            in port taskingIn : ~Common::TaskingOrderPort;
             in port coordIn : ~Common::MeshPort;
             out port coordOut : Common::MeshPort;
-            in port trackObsIn : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
-            out port trackPictureOut : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+            in port trackObsIn : ~Common::TrackPort;
+            out port trackPictureOut : Common::TrackPort;
 
             #Mode state def GroundCoordinatorModes {
                 doc /* Whether the coordinator can reach the drones. When it cannot, each drone acts on its last assignment and coverage decays as endurance runs out. */
@@ -258,13 +258,13 @@
         }
         #Node part def GroundStationNode {
             doc /* The ground station the operator works at: command and control and the operator's pictures. It does not decide coordination. */
-            out port taskingOut : SurveillanceDroneSwarm::LA::SwarmMember::taskingIn;
-            out port priorityOut : SurveillanceDroneSwarm::LA::SwarmMember::priorityIn;
-            out port recallOut : SurveillanceDroneSwarm::LA::SwarmMember::recallIn;
-            out port receiptOut : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
-            out port recordReceiptOut : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
-            in port statusIn : SurveillanceDroneSwarm::LA::SwarmMember::statusOut;
-            in port trackPictureIn : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
+            out port receiptOut : Common::ReportReceiptPort;
+            out port recordReceiptOut : Common::ReportReceiptPort;
+            in port statusIn : ~Common::MemberStatusPort;
+            in port trackPictureIn : ~Common::TrackPort;
             in port alertsIn : SurveillanceDroneSwarm::LA::AlertTriageUnit::alertsOut;
             in port recordsIn : SurveillanceDroneSwarm::LA::AlertTriageUnit::decisionRecordsOut;
 
@@ -303,13 +303,13 @@
         }
         #Node part def GroundTriageNode {
             doc /* Node that ranks and merges reports for the operator. Kept apart from the decision record store, so that losing the ranker does not lose the provenance record. */
-            in port reportsIn : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
+            in port reportsIn : ~Common::DetectionReportPort;
             out port alertsOut : SurveillanceDroneSwarm::LA::AlertTriageUnit::alertsOut;
         }
         #Node part def GroundRecordNode {
             doc /* Node that keeps the decision records. It takes reports straight from the drones, not through the triage node. */
-            in port reportsIn : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
-            in port receiptIn : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port receiptIn : ~Common::ReportReceiptPort;
             out port recordsOut : SurveillanceDroneSwarm::LA::AlertTriageUnit::decisionRecordsOut;
         }
         #Node part def GroundLinkTransceiverNode {
@@ -323,12 +323,12 @@
             in port meshIn : ~Common::MeshPort;
             out port coordOut : Common::MeshPort;
             in port coordIn : ~Common::MeshPort;
-            out port reportsOut : SurveillanceDroneSwarm::LA::SwarmMember::reportsOut;
-            out port trackPictureOut : SurveillanceDroneSwarm::LA::SwarmMember::trackPictureOut;
-            out port statusOut : SurveillanceDroneSwarm::LA::SwarmMember::statusOut;
-            in port priorityIn : SurveillanceDroneSwarm::LA::SwarmMember::priorityIn;
-            in port recallIn : SurveillanceDroneSwarm::LA::SwarmMember::recallIn;
-            in port receiptIn : SurveillanceDroneSwarm::LA::SwarmMember::receiptIn;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
 
             #Node part missionComputer : MissionComputerNode {
                 doc /* Hosts everything the drone does with what it sees and hears. */

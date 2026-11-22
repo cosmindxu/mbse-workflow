@@ -6,20 +6,20 @@
         // the system, black box
         part def SurveillanceDroneSwarmSystem {
             doc /* The whole surveillance drone swarm seen as one black box: the twelve-drone population, its mesh, its on-board sensing and its tasking, reporting and status functions, with no internal structure. It takes tasking, supervisory command, recall, acknowledgements, airspace clearance, serviced drones and the moving objects in the area, and gives detection reports, triaged alerts, the track picture, the status picture, decision records and arriving drones. */
-            in port taskingIn : Common::TaskingOrder;
-            in port supervisoryIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port acknowledgementIn : Common::ReportReceipt;
-            in port objectsIn : Common::MovingObjectsInArea;
-            in port clearanceIn : Common::AirspaceClearance;
-            in port servicedDroneIn : Common::DroneServiced;
-            out port reportsOut : Common::DetectionReport;
-            out port alertsOut : Common::TriagedAlerts;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            out port decisionRecordsOut : Common::DecisionRecords;
-            out port rechargeArrivalOut : Common::DroneArrival;
-            out port recoveryArrivalOut : Common::DroneArrival;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port supervisoryIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port acknowledgementIn : ~Common::ReportReceiptPort;
+            in port objectsIn : ~Common::MovingObjectsInAreaPort;
+            in port clearanceIn : Common::AirspaceClearancePort;
+            in port servicedDroneIn : ~Common::DroneServicedPort;
+            out port reportsOut : Common::DetectionReportPort;
+            out port alertsOut : Common::TriagedAlertsPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            out port decisionRecordsOut : Common::DecisionRecordsPort;
+            out port rechargeArrivalOut : Common::DroneArrivalPort;
+            out port recoveryArrivalOut : Common::DroneArrivalPort;
         }
         part system : SurveillanceDroneSwarmSystem {
             doc /* The system under design: the twelve-drone swarm as one black box. */
@@ -162,9 +162,9 @@
         // actors: every operational entity the system is not
         #Actor part def DutyController {
             doc /* Operations-centre operator who tasks the swarm, issues supervisory command and recall. Exchanges through three outgoing ports. */
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
         }
         part dutyController : DutyController {
             doc /* The one operator who supervises the whole swarm. */
@@ -172,12 +172,12 @@
         trace dutyController to SurveillanceDroneSwarm::OA::dutyController;
         #Actor part def OperationsCentreAnalyst {
             doc /* Judges the alerts, acknowledges each detection report and merges swarm tracks with the fixed camera network's tracks. Receives reports, alerts, the swarm track picture, decision records and the camera tracks; returns the acknowledgement. */
-            in port reportsIn : Common::DetectionReport;
-            in port alertsIn : Common::TriagedAlerts;
-            in port trackPictureIn : Common::Track;
-            in port recordsIn : Common::DecisionRecords;
-            in port cameraTrackIn : Common::Track;
-            out port receiptOut : Common::ReportReceipt;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            in port cameraTrackIn : ~Common::TrackPort;
+            out port receiptOut : Common::ReportReceiptPort;
         }
         part operationsCentreAnalyst : OperationsCentreAnalyst {
             doc /* The analyst at the operations centre. */
@@ -185,7 +185,7 @@
         trace operationsCentreAnalyst to SurveillanceDroneSwarm::OA::operationsCentreAnalyst;
         #Actor part def AirspaceAuthority {
             doc /* Grants and withdraws the clearance that says when and where anything may fly. Exchanges through one outgoing port. */
-            out port clearanceOut : Common::AirspaceClearance;
+            out port clearanceOut : ~Common::AirspaceClearancePort;
         }
         part airspaceAuthority : AirspaceAuthority {
             doc /* The authority whose clearance bounds every flight. */
@@ -193,7 +193,7 @@
         trace airspaceAuthority to SurveillanceDroneSwarm::OA::airspaceAuthority;
         #Actor part def GroundCrew {
             doc /* Services drones between sorties and recovers drones that return on their own; hands serviced drones back to the swarm. */
-            out port servicedDroneOut : Common::DroneServiced;
+            out port servicedDroneOut : Common::DroneServicedPort;
         }
         part groundCrew : GroundCrew {
             doc /* The crew at the recharge point and the recovery point. */
@@ -208,7 +208,7 @@
         trace fixedCameraNetworkOperator to SurveillanceDroneSwarm::OA::fixedCameraNetworkOperator;
         #Actor part def GroundStationNode {
             doc /* The station that tasks and watches the swarm and shows its status picture. At SA it receives the status picture; whether it also coordinates the swarm is the command-and-control architecture decision taken later. */
-            in port statusIn : Common::MemberStatus;
+            in port statusIn : ~Common::MemberStatusPort;
         }
         part groundStation : GroundStationNode {
             doc /* The ground station used today. */
@@ -230,7 +230,7 @@
         trace groundLinkToOperationsCentre to SurveillanceDroneSwarm::OA::groundLinkToOperationsCentre;
         #Actor part def RechargePoint {
             doc /* Where batteries are swapped, not charged in place; about 20 minutes of turnaround. Receives drones that come down to be serviced. */
-            in port arrivalIn : Common::DroneArrival;
+            in port arrivalIn : ~Common::DroneArrivalPort;
         }
         part batterySwapAtRechargePoint : RechargePoint {
             doc /* The recharge point where ground crew swap batteries. */
@@ -238,7 +238,7 @@
         trace batterySwapAtRechargePoint to SurveillanceDroneSwarm::OA::batterySwapAtRechargePoint;
         #Actor part def RecoveryPoint {
             doc /* The point a drone that has lost contact with the swarm returns to on its own rather than becoming a hazard. Receives such drones. */
-            in port arrivalIn : Common::DroneArrival;
+            in port arrivalIn : ~Common::DroneArrivalPort;
         }
         part recoveryPoint : RecoveryPoint {
             doc /* The recovery point for drones that return on their own. */
@@ -246,7 +246,7 @@
         trace recoveryPoint to SurveillanceDroneSwarm::OA::recoveryPoint;
         #Actor part def FixedCameraNetwork {
             doc /* The existing camera network; it stays and keeps its own tracks, which swarm reports must be mergeable with. */
-            out port cameraTrackOut : Common::Track;
+            out port cameraTrackOut : Common::TrackPort;
         }
         part fixedCameraNetwork : FixedCameraNetwork {
             doc /* The existing fixed camera network. */
@@ -254,7 +254,7 @@
         trace fixedCameraNetwork to SurveillanceDroneSwarm::OA::fixedCameraNetwork;
         #Actor part def MovingObjectsSource {
             doc /* The moving objects in the tasked area that the swarm must detect, classify and place in time and space. An environment source, not an operational entity of OA, so it carries no trace. */
-            out port objectsOut : Common::MovingObjectsInArea;
+            out port objectsOut : Common::MovingObjectsInAreaPort;
         }
         part movingObjectsInArea : MovingObjectsSource {
             doc /* Whatever moves through the tasked area. */

@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3717 elements)
-Sysprose: 441cd30
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 30 legs
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3777 elements)
+Sysprose: 9ffa5bc
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 31 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -37,7 +37,7 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 30
 
 | Layer | Elements | Documented | |
 |---|---|---|---|
-| Common | 102 | 102 | 100 % |
+| Common | 117 | 117 | 100 % |
 | OA | 103 | 103 | 100 % |
 | SA | 113 | 98 | 87 % |
 | LA | 69 | 57 | 83 % |
@@ -127,7 +127,7 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Layer edited | Fragment lines | Re-checked | Runs again | Calls those steps made | USD |
 |---|---|---|---|---|---|
 | Kinds | 15 | S00 | S10…S60 (16) | 20 | 9.44 |
-| Common | 901 | S00 | S10…S60 (16) | 20 | 9.44 |
+| Common | 976 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
 | LA | 589 | S33 | S40…S60 (6) | 11 | 4.58 |
@@ -300,4 +300,4 @@ One row per function definition. A definition is on board when every usage sits 
 | S43 | done | 0 | — |
 | S50 | done | 0 | auto |
 | S60 | done | 0 | — |
-| S70 | running | 0 | auto |
+| S70 | running | 0 | — |

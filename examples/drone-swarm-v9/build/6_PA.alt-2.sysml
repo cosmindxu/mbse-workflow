@@ -556,6 +556,81 @@ package SurveillanceDroneSwarm {
         // Port definitions
         // ---------------------------------------------------------------
 
+        port def AdmissionRequestPort {
+            doc /* Where an AdmissionRequest crosses a boundary: the sender's port; the receiver's is its conjugate, ~AdmissionRequestPort. */
+            out item admissionRequest : AdmissionRequest;
+        }
+
+        port def CoordinationDirectivePort {
+            doc /* Where a CoordinationDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~CoordinationDirectivePort. */
+            out item coordinationDirective : CoordinationDirective;
+        }
+
+        port def DecisionRecordsPort {
+            doc /* Where a DecisionRecords crosses a boundary: the sender's port; the receiver's is its conjugate, ~DecisionRecordsPort. */
+            out item decisionRecords : DecisionRecords;
+        }
+
+        port def DetectionReportPort {
+            doc /* Where a DetectionReport crosses a boundary: the sender's port; the receiver's is its conjugate, ~DetectionReportPort. */
+            out item detectionReport : DetectionReport;
+        }
+
+        port def DirectiveAckPort {
+            doc /* Where a DirectiveAck crosses a boundary: the sender's port; the receiver's is its conjugate, ~DirectiveAckPort. */
+            out item directiveAck : DirectiveAck;
+        }
+
+        port def DroneArrivalPort {
+            doc /* Where a DroneArrival crosses a boundary: the sender's port; the receiver's is its conjugate, ~DroneArrivalPort. */
+            out item droneArrival : DroneArrival;
+        }
+
+        port def DroneServicedPort {
+            doc /* Where a DroneServiced crosses a boundary: the sender's port; the receiver's is its conjugate, ~DroneServicedPort. */
+            out item droneServiced : DroneServiced;
+        }
+
+        port def MemberStatusPort {
+            doc /* Where a MemberStatus crosses a boundary: the sender's port; the receiver's is its conjugate, ~MemberStatusPort. */
+            out item memberStatus : MemberStatus;
+        }
+
+        port def MovingObjectsInAreaPort {
+            doc /* Where a MovingObjectsInArea crosses a boundary: the sender's port; the receiver's is its conjugate, ~MovingObjectsInAreaPort. */
+            out item movingObjectsInArea : MovingObjectsInArea;
+        }
+
+        port def PriorityDirectivePort {
+            doc /* Where a PriorityDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~PriorityDirectivePort. */
+            out item priorityDirective : PriorityDirective;
+        }
+
+        port def RecallDirectivePort {
+            doc /* Where a RecallDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~RecallDirectivePort. */
+            out item recallDirective : RecallDirective;
+        }
+
+        port def ReportReceiptPort {
+            doc /* Where a ReportReceipt crosses a boundary: the sender's port; the receiver's is its conjugate, ~ReportReceiptPort. */
+            out item reportReceipt : ReportReceipt;
+        }
+
+        port def TaskingOrderPort {
+            doc /* Where a TaskingOrder crosses a boundary: the sender's port; the receiver's is its conjugate, ~TaskingOrderPort. */
+            out item taskingOrder : TaskingOrder;
+        }
+
+        port def TrackPort {
+            doc /* Where a Track crosses a boundary: the sender's port; the receiver's is its conjugate, ~TrackPort. */
+            out item track : Track;
+        }
+
+        port def TriagedAlertsPort {
+            doc /* Where a TriagedAlerts crosses a boundary: the sender's port; the receiver's is its conjugate, ~TriagedAlertsPort. */
+            out item triagedAlerts : TriagedAlerts;
+        }
+
         port def MeshPort {
             doc /* What one drone exchanges with a peer over the mesh radio. It carries everything the members settle between themselves and does not depend on the link to the operations centre. */
             out item update : CoordinationMessage {
@@ -1411,20 +1486,20 @@ package SurveillanceDroneSwarm {
         // the system, black box
         part def SurveillanceDroneSwarmSystem {
             doc /* The whole surveillance drone swarm seen as one black box: the twelve-drone population, its mesh, its on-board sensing and its tasking, reporting and status functions, with no internal structure. It takes tasking, supervisory command, recall, acknowledgements, airspace clearance, serviced drones and the moving objects in the area, and gives detection reports, triaged alerts, the track picture, the status picture, decision records and arriving drones. */
-            in port taskingIn : Common::TaskingOrder;
-            in port supervisoryIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port acknowledgementIn : Common::ReportReceipt;
-            in port objectsIn : Common::MovingObjectsInArea;
-            in port clearanceIn : Common::AirspaceClearance;
-            in port servicedDroneIn : Common::DroneServiced;
-            out port reportsOut : Common::DetectionReport;
-            out port alertsOut : Common::TriagedAlerts;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            out port decisionRecordsOut : Common::DecisionRecords;
-            out port rechargeArrivalOut : Common::DroneArrival;
-            out port recoveryArrivalOut : Common::DroneArrival;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port supervisoryIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port acknowledgementIn : ~Common::ReportReceiptPort;
+            in port objectsIn : ~Common::MovingObjectsInAreaPort;
+            in port clearanceIn : Common::AirspaceClearancePort;
+            in port servicedDroneIn : ~Common::DroneServicedPort;
+            out port reportsOut : Common::DetectionReportPort;
+            out port alertsOut : Common::TriagedAlertsPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            out port decisionRecordsOut : Common::DecisionRecordsPort;
+            out port rechargeArrivalOut : Common::DroneArrivalPort;
+            out port recoveryArrivalOut : Common::DroneArrivalPort;
         }
         part system : SurveillanceDroneSwarmSystem {
             doc /* The system under design: the twelve-drone swarm as one black box. */
@@ -1567,9 +1642,9 @@ package SurveillanceDroneSwarm {
         // actors: every operational entity the system is not
         #Actor part def DutyController {
             doc /* Operations-centre operator who tasks the swarm, issues supervisory command and recall. Exchanges through three outgoing ports. */
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
         }
         part dutyController : DutyController {
             doc /* The one operator who supervises the whole swarm. */
@@ -1577,12 +1652,12 @@ package SurveillanceDroneSwarm {
         trace dutyController to SurveillanceDroneSwarm::OA::dutyController;
         #Actor part def OperationsCentreAnalyst {
             doc /* Judges the alerts, acknowledges each detection report and merges swarm tracks with the fixed camera network's tracks. Receives reports, alerts, the swarm track picture, decision records and the camera tracks; returns the acknowledgement. */
-            in port reportsIn : Common::DetectionReport;
-            in port alertsIn : Common::TriagedAlerts;
-            in port trackPictureIn : Common::Track;
-            in port recordsIn : Common::DecisionRecords;
-            in port cameraTrackIn : Common::Track;
-            out port receiptOut : Common::ReportReceipt;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            in port cameraTrackIn : ~Common::TrackPort;
+            out port receiptOut : Common::ReportReceiptPort;
         }
         part operationsCentreAnalyst : OperationsCentreAnalyst {
             doc /* The analyst at the operations centre. */
@@ -1590,7 +1665,7 @@ package SurveillanceDroneSwarm {
         trace operationsCentreAnalyst to SurveillanceDroneSwarm::OA::operationsCentreAnalyst;
         #Actor part def AirspaceAuthority {
             doc /* Grants and withdraws the clearance that says when and where anything may fly. Exchanges through one outgoing port. */
-            out port clearanceOut : Common::AirspaceClearance;
+            out port clearanceOut : ~Common::AirspaceClearancePort;
         }
         part airspaceAuthority : AirspaceAuthority {
             doc /* The authority whose clearance bounds every flight. */
@@ -1598,7 +1673,7 @@ package SurveillanceDroneSwarm {
         trace airspaceAuthority to SurveillanceDroneSwarm::OA::airspaceAuthority;
         #Actor part def GroundCrew {
             doc /* Services drones between sorties and recovers drones that return on their own; hands serviced drones back to the swarm. */
-            out port servicedDroneOut : Common::DroneServiced;
+            out port servicedDroneOut : Common::DroneServicedPort;
         }
         part groundCrew : GroundCrew {
             doc /* The crew at the recharge point and the recovery point. */
@@ -1613,7 +1688,7 @@ package SurveillanceDroneSwarm {
         trace fixedCameraNetworkOperator to SurveillanceDroneSwarm::OA::fixedCameraNetworkOperator;
         #Actor part def GroundStationNode {
             doc /* The station that tasks and watches the swarm and shows its status picture. At SA it receives the status picture; whether it also coordinates the swarm is the command-and-control architecture decision taken later. */
-            in port statusIn : Common::MemberStatus;
+            in port statusIn : ~Common::MemberStatusPort;
         }
         part groundStation : GroundStationNode {
             doc /* The ground station used today. */
@@ -1635,7 +1710,7 @@ package SurveillanceDroneSwarm {
         trace groundLinkToOperationsCentre to SurveillanceDroneSwarm::OA::groundLinkToOperationsCentre;
         #Actor part def RechargePoint {
             doc /* Where batteries are swapped, not charged in place; about 20 minutes of turnaround. Receives drones that come down to be serviced. */
-            in port arrivalIn : Common::DroneArrival;
+            in port arrivalIn : ~Common::DroneArrivalPort;
         }
         part batterySwapAtRechargePoint : RechargePoint {
             doc /* The recharge point where ground crew swap batteries. */
@@ -1643,7 +1718,7 @@ package SurveillanceDroneSwarm {
         trace batterySwapAtRechargePoint to SurveillanceDroneSwarm::OA::batterySwapAtRechargePoint;
         #Actor part def RecoveryPoint {
             doc /* The point a drone that has lost contact with the swarm returns to on its own rather than becoming a hazard. Receives such drones. */
-            in port arrivalIn : Common::DroneArrival;
+            in port arrivalIn : ~Common::DroneArrivalPort;
         }
         part recoveryPoint : RecoveryPoint {
             doc /* The recovery point for drones that return on their own. */
@@ -1651,7 +1726,7 @@ package SurveillanceDroneSwarm {
         trace recoveryPoint to SurveillanceDroneSwarm::OA::recoveryPoint;
         #Actor part def FixedCameraNetwork {
             doc /* The existing camera network; it stays and keeps its own tracks, which swarm reports must be mergeable with. */
-            out port cameraTrackOut : Common::Track;
+            out port cameraTrackOut : Common::TrackPort;
         }
         part fixedCameraNetwork : FixedCameraNetwork {
             doc /* The existing fixed camera network. */
@@ -1659,7 +1734,7 @@ package SurveillanceDroneSwarm {
         trace fixedCameraNetwork to SurveillanceDroneSwarm::OA::fixedCameraNetwork;
         #Actor part def MovingObjectsSource {
             doc /* The moving objects in the tasked area that the swarm must detect, classify and place in time and space. An environment source, not an operational entity of OA, so it carries no trace. */
-            out port objectsOut : Common::MovingObjectsInArea;
+            out port objectsOut : Common::MovingObjectsInAreaPort;
         }
         part movingObjectsInArea : MovingObjectsSource {
             doc /* Whatever moves through the tasked area. */
@@ -2452,13 +2527,13 @@ package SurveillanceDroneSwarm {
             doc /* One of the twelve identical drones, member-centred: besides sensing, classifying and reporting, every member itself performs the whole of swarm coordination (sector handover, recharge rotation, coverage redistribution, deconfliction, link relay, track correlation, track handover, member admission) over the mesh, so the watch does not depend on the ground station or the ground link. */
             out port meshOut : Common::MeshPort;
             in port meshIn : ~Common::MeshPort;
-            out port reportsOut : Common::DetectionReport;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            in port taskingIn : Common::TaskingOrder;
-            in port priorityIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port receiptIn : Common::ReportReceipt;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
 
             #Mode state def SwarmMemberModes {
                 doc /* Operating condition of one member: nominal, without satellite positioning, sensors not trustworthy, cut off from the other members, or failed admission and readmitted. Carries the rule QuarantinedStaysOut. */
@@ -2565,15 +2640,15 @@ package SurveillanceDroneSwarm {
         }
         part def GroundStation {
             doc /* The thin ground component of the member-centred split: it only carries command and control (tasking, supervisory priorities, recall, status picture, acknowledgement). It does not coordinate the swarm; if it is lost the members keep the watch. */
-            in port statusIn : Common::MemberStatus;
-            in port trackPictureIn : Common::Track;
-            in port alertsIn : Common::TriagedAlerts;
-            in port recordsIn : Common::DecisionRecords;
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
-            out port receiptOut : Common::ReportReceipt;
-            out port recordReceiptOut : Common::ReportReceipt;
+            in port statusIn : ~Common::MemberStatusPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
+            out port receiptOut : Common::ReportReceiptPort;
+            out port recordReceiptOut : Common::ReportReceiptPort;
 
             #Mode state def GroundStationModes {
                 doc /* Whether the ground station can reach the swarm and the operations centre: with the link up it supervises, with the link down it can neither task nor recall and the members carry on alone. */
@@ -2610,10 +2685,10 @@ package SurveillanceDroneSwarm {
         }
         part def AlertTriageUnit {
             doc /* Ranks the reports of all members so that what most likely matters reaches the operator first, merges duplicates, and keeps the decision record of every report. Kept apart from the ground station so that command and control stays thin. */
-            in port reportsIn : Common::DetectionReport;
-            in port receiptIn : Common::ReportReceipt;
-            out port alertsOut : Common::TriagedAlerts;
-            out port decisionRecordsOut : Common::DecisionRecords;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port receiptIn : ~Common::ReportReceiptPort;
+            out port alertsOut : Common::TriagedAlertsPort;
+            out port decisionRecordsOut : Common::DecisionRecordsPort;
         }
         part fleet : SwarmMember [12] {
             doc /* The twelve identical drones; every function a member performs, and all eight coordination functions, sit here. */
@@ -2702,13 +2777,13 @@ package SurveillanceDroneSwarm {
 
         // the system, to be decomposed into physical components
         part def SurveillanceDroneSwarmPhysical {
-            out port reportsOut : LA::SwarmMember::reportsOut;
-            out port trackPictureOut : LA::SwarmMember::trackPictureOut;
-            out port statusOut : LA::SwarmMember::statusOut;
-            in port taskingIn : LA::SwarmMember::taskingIn;
-            in port priorityIn : LA::SwarmMember::priorityIn;
-            in port recallIn : LA::SwarmMember::recallIn;
-            in port receiptIn : LA::SwarmMember::receiptIn;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
             doc /* TODO: decompose into components and move the functions onto them. */
         }
 
@@ -2898,13 +2973,13 @@ package SurveillanceDroneSwarm {
             doc /* One of the twelve identical drones. It performs all eight coordination functions itself over the mesh, so the watch does not depend on the ground station or the ground link. It is built from a mesh radio, a ground-link radio, a mission computer, a navigation unit and an independent safety monitor. */
             out port meshOut : Common::MeshPort;
             in port meshIn : ~Common::MeshPort;
-            out port reportsOut : Common::DetectionReport;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            in port taskingIn : Common::TaskingOrder;
-            in port priorityIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port receiptIn : Common::ReportReceipt;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
 
             #Node part meshRadio : MeshRadioNode;
             #Node part groundRadio : GroundLinkRadioNode;
@@ -2996,15 +3071,15 @@ package SurveillanceDroneSwarm {
         // ===== node parts on the ground =====
         #Node part def GroundStationNode {
             doc /* The ground station, thin by design: command and control only (tasking, supervisory priorities, status picture, acknowledgements). It does not coordinate the swarm; if it or its link is lost the members keep the watch. Hosts the base radio of the ground link. */
-            in port statusIn : Common::MemberStatus;
-            in port trackPictureIn : Common::Track;
-            in port alertsIn : Common::TriagedAlerts;
-            in port recordsIn : Common::DecisionRecords;
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
-            out port receiptOut : Common::ReportReceipt;
-            out port recordReceiptOut : Common::ReportReceipt;
+            in port statusIn : ~Common::MemberStatusPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
+            out port receiptOut : Common::ReportReceiptPort;
+            out port recordReceiptOut : Common::ReportReceiptPort;
             part commandSoftware : CommandAndControlSoftware;
 
             #Mode state def GroundStationModes {
@@ -3032,21 +3107,21 @@ package SurveillanceDroneSwarm {
         }
         #Node part def GroundRecallTransmitterNode {
             doc /* A ground recall transmitter with its own radio and its own operator panel, so an order to land reaches the drones directly and does not depend on the ground station or the ground link. It also takes the order from the station when that is up. */
-            in port recallIn : Common::RecallDirective;
-            out port recallOut : Common::RecallDirective;
+            in port recallIn : ~Common::RecallDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
             part recallIssuer : RecallIssuerSoftware;
         }
         #Node part def GroundAlertTriageNode {
             doc /* A server that ranks the reports of all drones, merges duplicates and releases alerts to the operator inside the hourly cap. Kept apart from the record store so that losing the ranker does not lose the provenance record. */
-            in port reportsIn : Common::DetectionReport;
-            out port alertsOut : Common::TriagedAlerts;
+            in port reportsIn : ~Common::DetectionReportPort;
+            out port alertsOut : Common::TriagedAlertsPort;
             part alertRanker : AlertRankingSoftware;
         }
         #Node part def GroundDecisionRecordStoreNode {
             doc /* A server with durable storage for the decision records. It receives every report itself and the acknowledgements, independently of triage. */
-            in port reportsIn : Common::DetectionReport;
-            in port receiptIn : Common::ReportReceipt;
-            out port recordsOut : Common::DecisionRecords;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port receiptIn : ~Common::ReportReceiptPort;
+            out port recordsOut : Common::DecisionRecordsPort;
             part recordKeeper : DecisionRecordSoftware;
         }
         part mainAssembly : SurveillanceDroneSwarmPhysical;

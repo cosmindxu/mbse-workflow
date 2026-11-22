@@ -2,7 +2,7 @@
   "machines": [
     {
       "machine": {
-        "id": "59be4d04-c79c-4dd9-8338-9591549b570e",
+        "id": "03c0ef27-68e1-405b-ab5e-b48a41fa2072",
         "name": "SwarmMemberModes",
         "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes",
         "eClass": "StateDefinition"
@@ -12,46 +12,45 @@
         "maxDepth": 200,
         "maxCompletion": 64,
         "alphabet": [
-          "positioningLostNotice",
-          "positioningBackNotice",
-          "sensingDegradedNotice",
-          "sensingRestoredNotice",
-          "contactLostNotice",
-          "contactBackNotice",
-          "admissionFailed",
-          "readmission"
+          "Common::PositioningLostNotice",
+          "Common::PositioningBackNotice",
+          "Common::SensingDegradedNotice",
+          "Common::SensingRestoredNotice",
+          "Common::ContactLostNotice",
+          "Common::ContactBackNotice",
+          "Common::AdmissionExchange"
         ]
       },
       "configs": 5,
       "depth": 1,
       "exhaustive": true,
       "boundHit": "none",
-      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet positioningLostNotice, positioningBackNotice, sensingDegradedNotice, sensingRestoredNotice, contactLostNotice, contactBackNotice, admissionFailed, readmission, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::PositioningLostNotice, Common::PositioningBackNotice, Common::SensingDegradedNotice, Common::SensingRestoredNotice, Common::ContactLostNotice, Common::ContactBackNotice, Common::AdmissionExchange, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}",
       "states": {
         "total": 5,
         "reachable": [
           {
-            "id": "e2cdb828-0765-4fb1-abc5-5708762a4a27",
+            "id": "43654771-9e2a-450d-aee0-b066d24775be",
             "name": "Nominal",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal"
           },
           {
-            "id": "0aaf8a4b-7559-44e6-881c-ffff37400b86",
+            "id": "fa702f8f-f00a-4fcb-81a8-39d77ade3564",
             "name": "NavigationDegraded",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::NavigationDegraded"
           },
           {
-            "id": "93a82489-c544-4a5a-b8a0-fddd6c1cbb86",
+            "id": "d894c4c8-a7db-4366-bbfd-928ffbc91d49",
             "name": "SensingDegraded",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::SensingDegraded"
           },
           {
-            "id": "0e6278ae-4e82-436b-bc5e-55f307e4ba3f",
+            "id": "f31461f2-2268-4b8f-8931-1591458484a2",
             "name": "Isolated",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::Isolated"
           },
           {
-            "id": "34baab62-250b-46a6-8887-327884e38d19",
+            "id": "0a49a66a-e17a-4efe-9568-7a9561c18acd",
             "name": "Quarantined",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::Quarantined"
           }
@@ -61,73 +60,74 @@
       "transitions": {
         "total": 8,
         "fired": 8,
-        "dead": []
+        "dead": [],
+        "enabledNeverFired": []
       },
       "census": {
         "total": 9,
         "rows": [
           {
-            "id": "773909b5-80ed-4c6d-a5f5-8bf077095bad",
+            "id": "d421fb25-7f79-4b69-9a26-84f1dc720f3b",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::«TransitionUsage»",
             "account": "opening",
             "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
           },
           {
-            "id": "34a11131-8998-448d-ad8c-912d656de89b",
+            "id": "3a7a43ae-7bc3-4be7-9661-ff9e52c79b31",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::losePositioning",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "e98705f0-94e8-4054-bb51-652e7379514d",
+            "id": "b3ba4002-b97c-439e-9357-66720490d600",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::regainPositioning",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::NavigationDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::NavigationDegraded`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "35f7bc8e-aa71-4dee-8969-17a1ddc192b1",
+            "id": "b14cdc08-19c6-48c3-92fe-fa74e79d04ac",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::degradeSensing",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "1b2e0b20-f5f2-4614-b550-30df82e7d993",
+            "id": "96e99f7e-bf3a-47ec-aa25-b8b388ae445a",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::restoreSensing",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::SensingDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::SensingDegraded`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "2c42c9b9-4aa6-45b2-8971-21c0dde7586f",
+            "id": "8278a604-c0f1-49a1-a3ef-675814ce28d9",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::loseContact",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "91ed3750-ba65-49fd-8c9f-f9c23e09b712",
+            "id": "e035d2ec-a355-4d44-b91b-b24c07d84d15",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::regainContact",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Isolated`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Isolated`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "1f865f13-4c82-4a47-b3f1-d11ca8a29309",
+            "id": "5c67deb9-09cd-4cb3-ac81-74474072cf52",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::failAdmission",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Nominal`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "68c972d6-e97b-4109-87c0-7f261038790c",
+            "id": "53e7c05a-53cb-4624-899e-c9cb7c630bdf",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberModes::readmit",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Quarantined`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberModes::Quarantined`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           }
         ],
         "counts": {
@@ -146,7 +146,7 @@
         "edges": 8,
         "timedTransitions": 0,
         "timedLabels": 0,
-        "alphabet": 8,
+        "alphabet": 7,
         "undeterminedGuards": 0,
         "walkIsExact": false,
         "failedClause": "environment"
@@ -165,13 +165,15 @@
         "refusedByGate": "environment",
         "sentence": null
       },
+      "livelocks": [],
+      "livelocksWithheld": [],
       "unsupported": [],
       "undeterminedGuards": [],
       "suppressed": false
     },
     {
       "machine": {
-        "id": "4c8b3d57-c8ea-4482-9401-8f658d740311",
+        "id": "eeff75d9-ab2b-45ea-b499-a7719f8e6558",
         "name": "SwarmMemberStates",
         "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates",
         "eClass": "StateDefinition"
@@ -181,130 +183,212 @@
         "maxDepth": 200,
         "maxCompletion": 64,
         "alphabet": [
-          "taskingReceived",
-          "recallReceivedEarly",
-          "recallReceived",
-          "swarmContactLost"
+          "Common::TaskingOrder",
+          "Common::RecallDirective",
+          "Common::SwarmContactLostNotice"
         ]
       },
-      "configs": 6,
+      "configs": 4,
       "depth": 3,
       "exhaustive": true,
       "boundHit": "none",
-      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet taskingReceived, recallReceivedEarly, recallReceived, swarmContactLost, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}",
       "states": {
         "total": 6,
         "reachable": [
           {
-            "id": "c7591b91-a9f1-4734-b1a5-670889133f10",
+            "id": "80218da4-25ed-454c-b502-cca6dc89c92f",
             "name": "Landed",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Landed"
           },
           {
-            "id": "2851efa7-346f-4a98-99a6-83a8a6351515",
+            "id": "b9b8a25e-99c3-49e1-9435-3b49af8fd3a6",
             "name": "Transiting",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting"
           },
           {
-            "id": "0a16bbaf-7632-4fbb-8e68-6da308d2bf35",
+            "id": "d33195fa-8ae1-4156-a2d6-e21a72c273e5",
             "name": "Watching",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching"
           },
           {
-            "id": "7d2e0cbb-eb05-4a04-b062-acee3e2ee32c",
+            "id": "152753e6-ae46-48b7-bde8-fd17cf8b2c47",
             "name": "Returning",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Returning"
-          },
+          }
+        ],
+        "unreachable": [
           {
-            "id": "c3a57fe1-0687-4913-b2d2-91073339a709",
+            "id": "ce18b227-3d11-4363-9041-a73302ad6d4e",
             "name": "Recalled",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled"
           },
           {
-            "id": "bcc09580-f558-4fcf-882f-ff1a6bd979b9",
+            "id": "b36debf0-988a-49ce-a524-1487b64575bf",
             "name": "Recovering",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering"
           }
-        ],
-        "unreachable": []
+        ]
       },
       "transitions": {
         "total": 9,
-        "fired": 9,
-        "dead": []
+        "fired": 4,
+        "dead": [
+          {
+            "id": "b0d8679c-6fd8-4dc7-90f6-08e50c615d4d",
+            "name": "recallWhileTransiting",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileTransiting",
+            "from": {
+              "id": "b9b8a25e-99c3-49e1-9435-3b49af8fd3a6",
+              "name": "Transiting",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting"
+            },
+            "to": {
+              "id": "ce18b227-3d11-4363-9041-a73302ad6d4e",
+              "name": "Recalled",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled"
+            },
+            "label": "Common::RecallDirective"
+          },
+          {
+            "id": "c6aa1e08-3546-4fd0-b263-ee1ff7740db4",
+            "name": "recallWhileWatching",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileWatching",
+            "from": {
+              "id": "d33195fa-8ae1-4156-a2d6-e21a72c273e5",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching"
+            },
+            "to": {
+              "id": "ce18b227-3d11-4363-9041-a73302ad6d4e",
+              "name": "Recalled",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled"
+            },
+            "label": "Common::RecallDirective"
+          },
+          {
+            "id": "c4317a36-5694-43eb-848d-a05fe7d1e540",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
+            "from": {
+              "id": "ce18b227-3d11-4363-9041-a73302ad6d4e",
+              "name": "Recalled",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled"
+            },
+            "to": {
+              "id": "80218da4-25ed-454c-b502-cca6dc89c92f",
+              "name": "Landed",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Landed"
+            },
+            "label": ""
+          },
+          {
+            "id": "08051a04-f128-4629-bce3-ae7bbca84acd",
+            "name": "loseSwarmContact",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::loseSwarmContact",
+            "from": {
+              "id": "d33195fa-8ae1-4156-a2d6-e21a72c273e5",
+              "name": "Watching",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching"
+            },
+            "to": {
+              "id": "b36debf0-988a-49ce-a524-1487b64575bf",
+              "name": "Recovering",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering"
+            },
+            "label": "Common::SwarmContactLostNotice"
+          },
+          {
+            "id": "82b2128b-487f-429d-bd54-c808981053dd",
+            "name": "",
+            "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
+            "from": {
+              "id": "b36debf0-988a-49ce-a524-1487b64575bf",
+              "name": "Recovering",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering"
+            },
+            "to": {
+              "id": "80218da4-25ed-454c-b502-cca6dc89c92f",
+              "name": "Landed",
+              "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Landed"
+            },
+            "label": ""
+          }
+        ],
+        "enabledNeverFired": []
       },
       "census": {
         "total": 10,
         "rows": [
           {
-            "id": "69d0283b-33ea-4207-b698-32865915baf7",
+            "id": "75f9135d-d48d-4a7d-a33b-93521a1a31b1",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "opening",
             "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
           },
           {
-            "id": "3c872042-7f89-4a7f-8ac9-88160b3614e2",
+            "id": "9df3594d-4544-4c50-8a87-ba7b78805a7e",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::launch",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Landed`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Landed`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "a7a0401b-075a-47cb-a625-44c48620defd",
+            "id": "21c77a5b-e12b-441f-8325-2085309fec65",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "7bd42dcc-4cdf-4def-8d64-47cf59f6b7d4",
+            "id": "07c21d42-c05b-4d69-9c35-f04eece74a1a",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "e42a2cbc-2d57-4c46-a27b-bb1641400769",
+            "id": "af2cd480-4f63-41a5-abfa-1780031ddbe0",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Returning`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Returning`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "4ac62fbf-204b-4617-9329-70793842539f",
+            "id": "b0d8679c-6fd8-4dc7-90f6-08e50c615d4d",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileTransiting",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Transiting`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "3bcc2072-5bed-400e-9dec-a65c67f14a3b",
+            "id": "c6aa1e08-3546-4fd0-b263-ee1ff7740db4",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileWatching",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "0d1e6ba1-ed1d-4bec-9f3c-aea010e85eb0",
+            "id": "c4317a36-5694-43eb-848d-a05fe7d1e540",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "1bc072a7-ca56-45d6-b8e3-bbd8bc9a5f12",
+            "id": "08051a04-f128-4629-bce3-ae7bbca84acd",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::loseSwarmContact",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Watching`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "280958ff-0c32-406b-9feb-c656f838c369",
+            "id": "82b2128b-487f-429d-bd54-c808981053dd",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           }
         ],
         "counts": {
@@ -320,10 +404,10 @@
       "exactness": {
         "acyclic": null,
         "openFrontier": false,
-        "edges": 9,
+        "edges": 4,
         "timedTransitions": 0,
         "timedLabels": 0,
-        "alphabet": 4,
+        "alphabet": 3,
         "undeterminedGuards": 0,
         "walkIsExact": false,
         "failedClause": "environment"
@@ -342,13 +426,15 @@
         "refusedByGate": "environment",
         "sentence": null
       },
+      "livelocks": [],
+      "livelocksWithheld": [],
       "unsupported": [],
       "undeterminedGuards": [],
       "suppressed": false
     },
     {
       "machine": {
-        "id": "f906a532-fae3-4bbf-ad12-2cd992d873da",
+        "id": "ef4b3a13-cb1e-4bb0-b327-5e1be90a69c9",
         "name": "FleetModes",
         "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes",
         "eClass": "StateDefinition"
@@ -358,25 +444,25 @@
         "maxDepth": 200,
         "maxCompletion": 64,
         "alphabet": [
-          "jammingNotice",
-          "jammingClearedNotice"
+          "Common::JammingNotice",
+          "Common::JammingClearedNotice"
         ]
       },
       "configs": 2,
       "depth": 1,
       "exhaustive": true,
       "boundHit": "none",
-      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet jammingNotice, jammingClearedNotice, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::JammingNotice, Common::JammingClearedNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}",
       "states": {
         "total": 2,
         "reachable": [
           {
-            "id": "de4213f9-bf9a-43f7-804d-42af81ce52e2",
+            "id": "e1f91a2a-60ab-4430-9794-6d2457c868eb",
             "name": "MeshIntact",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes::MeshIntact"
           },
           {
-            "id": "51ac5bcf-b632-41b9-9012-cc712a6b0b77",
+            "id": "a42974b7-c400-4680-8acf-942d87c5fcb4",
             "name": "MeshDegraded",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes::MeshDegraded"
           }
@@ -386,31 +472,32 @@
       "transitions": {
         "total": 2,
         "fired": 2,
-        "dead": []
+        "dead": [],
+        "enabledNeverFired": []
       },
       "census": {
         "total": 3,
         "rows": [
           {
-            "id": "14f76f99-2ab7-4311-9ec6-037dce86a27c",
+            "id": "c3e603e8-9fd0-4829-a276-25173c6c1f2a",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes::«TransitionUsage»",
             "account": "opening",
             "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
           },
           {
-            "id": "bff58aa4-cc72-422d-a3d0-5f7e121fbbbe",
+            "id": "7c60dbf1-985d-4d8a-8d1a-89c4604d063c",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes::meshJammed",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetModes::MeshIntact`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetModes::MeshIntact`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "9b37f87e-8eec-48d0-b452-7f260ff2a153",
+            "id": "c21e4902-d6e0-46ff-a3a3-8996b6c99a91",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetModes::meshRestored",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetModes::MeshDegraded`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetModes::MeshDegraded`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           }
         ],
         "counts": {
@@ -448,13 +535,15 @@
         "refusedByGate": "environment",
         "sentence": null
       },
+      "livelocks": [],
+      "livelocksWithheld": [],
       "unsupported": [],
       "undeterminedGuards": [],
       "suppressed": false
     },
     {
       "machine": {
-        "id": "eb8044ed-508e-48db-8774-a6d5695138b7",
+        "id": "1b47926d-0295-49d7-8c4d-92ce4862dc4a",
         "name": "FleetStates",
         "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates",
         "eClass": "StateDefinition"
@@ -464,30 +553,30 @@
         "maxDepth": 200,
         "maxCompletion": 64,
         "alphabet": [
-          "fleetTasking",
-          "fleetRecallOrder"
+          "Common::TaskingOrder",
+          "Common::RecallDirective"
         ]
       },
       "configs": 3,
       "depth": 2,
       "exhaustive": true,
       "boundHit": "none",
-      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet fleetTasking, fleetRecallOrder, store seeded from declared literal values — a guard over an attribute with no declared value is read as false}",
+      "qualification": "exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}",
       "states": {
         "total": 3,
         "reachable": [
           {
-            "id": "9a615cea-03e2-424e-b6a5-7a65fd50b3d5",
+            "id": "6e0f92eb-b1d4-4ad3-9ee7-47351fd9337f",
             "name": "Grounded",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::Grounded"
           },
           {
-            "id": "2815f44b-6d8f-41f8-b91f-f4976349ff4d",
+            "id": "323185f5-5682-4206-b44c-fa5853a2548c",
             "name": "OnWatch",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::OnWatch"
           },
           {
-            "id": "07045a30-b4a7-44ea-859f-2954c4a21224",
+            "id": "61d9ebf8-e141-4440-8ac5-9918546299a9",
             "name": "Recalled",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::Recalled"
           }
@@ -497,38 +586,39 @@
       "transitions": {
         "total": 3,
         "fired": 3,
-        "dead": []
+        "dead": [],
+        "enabledNeverFired": []
       },
       "census": {
         "total": 4,
         "rows": [
           {
-            "id": "0d085ffa-0842-4859-afd2-42d982abcbc1",
+            "id": "4e1feb90-3575-4536-b449-91a0f8332fdc",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::«TransitionUsage»",
             "account": "opening",
             "reason": "`initialState` reads it to decide where the machine opens; no step fires it, and counting it as walkable would report it dead on every exhaustive walk"
           },
           {
-            "id": "7a7f35e0-830f-402c-9120-ec60506016b5",
+            "id": "da523d0b-6aa1-45c5-ad26-99578603cd96",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::fleetLaunch",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::Grounded`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::Grounded`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "e0201533-8b3d-4a74-9f13-2fe37df80e20",
+            "id": "6ab53969-725a-48c2-af17-e11b228073ea",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::fleetRecall",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::OnWatch`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::OnWatch`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           },
           {
-            "id": "ea572ecd-0ce1-4cc7-a08e-0125175a7968",
+            "id": "89d7c250-083e-4fe8-a3fe-5c5244a898f4",
             "eClass": "TransitionUsage",
             "qualifiedName": "SurveillanceDroneSwarm::OA::FleetStates::«TransitionUsage»",
             "account": "walked",
-            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::Recalled`, which a configuration's stack can hold, so every configuration standing there offers it"
+            "reason": "it is in the step relation and leaves `SurveillanceDroneSwarm::OA::FleetStates::Recalled`, which a configuration's stack can hold, so the walk tries it wherever a configuration standing there is offered its input"
           }
         ],
         "counts": {
@@ -566,6 +656,8 @@
         "refusedByGate": "environment",
         "sentence": null
       },
+      "livelocks": [],
+      "livelocksWithheld": [],
       "unsupported": [],
       "undeterminedGuards": [],
       "suppressed": false
@@ -574,7 +666,7 @@
   "profile": [
     {
       "field": "run-to-completion",
-      "reading": "a fired transition is followed by trigger-less (completion) transitions until none is enabled, bounded at 64 chase steps per driving step. The bound is a BUDGET, not a fixpoint: a chase that spends it stops mid-run and says so.",
+      "reading": "a fired transition is followed by trigger-less (completion) transitions until none is enabled, bounded at 64 chase steps per driving step. The bound is a BUDGET, not a fixpoint: a chase that spends it stops mid-run and says so. A trigger-less transition out of a composite state is enabled only once its active substate is a final state (SysML v2 Part 1 §9.2.11.2.1: completion follows the substates); a simple state completes after its entry/do.",
       "provenance": "src/semantics/execute.ts — chaseHierCompletion, RunStateOptions.maxCompletion"
     },
     {
@@ -583,14 +675,19 @@
       "provenance": "src/semantics/mc/config.ts — enabledTransitions; src/semantics/mc/explore.ts — exploreMachine"
     },
     {
+      "field": "exits",
+      "reading": "to the least common ancestor of the source and the target, and every transition is external: the source and every active state below it are exited, then each state above the source that does not also hold the target, innermost first; the effect runs; then the states that hold the target and did not stay active are entered, outermost first, down to the target and its initial substate. So a step out of a composite leaves it, and a self-transition, a step to an ancestor, or a step from a composite into one of its own substates exits that state and enters it again. A step whose target sits in no chain of the machine's states — its own root, or a node under an action — has no such ancestor and is taken by neither side: the explorer refuses the machine and the interpreter stops before the step. So is a step across the machine's boundary — into a nested `state def`, into another machine, or out of one.",
+      "provenance": "src/semantics/mc/config.ts — stepConfig, hierarchyPath, stepOutsideStates, stepAcrossBoundary"
+    },
+    {
       "field": "history",
       "reading": "shallow, and by parent map: leaving a composite state records its last-active child, and re-entry resumes that child only where the composite is marked as a history state.",
       "provenance": "src/semantics/mc/config.ts — exitTo, isHistoryComposite"
     },
     {
       "field": "regions",
-      "reading": "the interpreter CONCATENATES: each region is driven through the whole step sequence in turn and the results are appended, so regions do not interleave. The explorer does not explore a parallel machine at all — `attrs.parallel` has no keyword in sysml.langium and is reachable only through the API — it reports verification/behaviour-unsupported-construct and is never exhaustive.",
-      "provenance": "src/semantics/execute.ts — runHierMachine; src/semantics/mc/explore.ts — unsupportedConstructs"
+      "reading": "a parallel STATE nested in an ordinary machine, and a parallel MACHINE ROOT (the machine itself marked parallel, whose child states are its regions), are performed concurrently (SysML v2 §7.18.2), by the interpreter and by the explorer alike: every region is entered at its own start, an event is offered to every region in declaration order, each region takes its own first-declared enabled transition (all of them are explored where several are enabled), a region with none stays, each region sees the store the previous one left, and leaving the parallel state exits every region. The completions come AFTER the event, in the interpreter and in the explorer alike: an event is offered to every region, at every depth, each taking its event transition, and only then are the trigger-less (completion) transitions chased, regions in declaration order, nested regions before the region that holds them, so a region's completion never shows in the view another region has of the same event (SysML v2 performs the regions concurrently within one step). A region that is itself a parallel state has no states of its own: its substates are regions of it, entered at once. A region whose active states end in a parallel state of its own enters that state's regions too, so the active regions form a tree, and the declaration order is FLATTENED depth first: a region, then the regions of the parallel state it ends in, then its next sibling (a region's own transitions and its nested regions never both take one event, which is refused); leaving a nested parallel state exits its regions before it. The interpreter applies the regions in ONE fixed declaration order, where the specification fixes none, so the explorer, where the regions are COUPLED (one writes an attribute another reads or writes), explores EVERY order of them (each region still takes its own innermost enabled transitions, each alternative explored; identical results merged; at most 4 regions, more are refused): its result there is a superset of the interpreter's runs, and a witness is replayed through the interpreter (the transitions each event fires, in declaration order, and the leaves it ends in) and published only if it replays: a witness whose path applies coupled regions in another order is withheld, with that reason. Uncoupled regions give the same result in every order, so one order is explored. A refusal in one region (a step the interpreter does not take) stops the whole run, as the regions are performed together, and a run is complete when every region stands at a final state. A parallel state is complete when every one of its regions stands at a final state of its own, and a trigger-less transition out of it (a parallel machine root: out of the machine, to one of its states) is then taken, after every region is exited, with its guard read at that moment; before then it is not taken. Also refused, with a reason: a history state inside, a transition between regions, a step into a region, an entry action naming a start, an event taken both by a region and by a transition leaving the parallel state, and a timed transition in a region — all verification/behaviour-unsupported-construct, never exhaustive.",
+      "provenance": "src/semantics/execute.ts — runHierRegion, runHierMachine, nestedParallelRefusal; src/semantics/mc/parallel.ts — parallelRefusal, candidatesOf, advanceConfig"
     },
     {
       "field": "deferred events",
@@ -606,12 +703,91 @@
   "totals": {
     "machines": 4,
     "exhaustive": 4,
-    "configs": 16,
-    "unreachable": 0,
-    "dead": 0,
+    "configs": 14,
+    "unreachable": 2,
+    "dead": 5,
     "nondeterministic": 0,
     "deadlocks": 0,
-    "traps": 0
+    "traps": 0,
+    "livelocks": 0
   },
-  "diagnostics": []
+  "diagnostics": [
+    {
+      "id": "verification#0",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "state `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled` is not entered on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "ce18b227-3d11-4363-9041-a73302ad6d4e",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recalled",
+      "code": "verification/unreachable-state",
+      "hint": "Either a transition into it is missing or its guard can never hold. The claim holds under the printed bounds and the alphabet beside them, and under no others."
+    },
+    {
+      "id": "verification#1",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "state `SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering` is not entered on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "b36debf0-988a-49ce-a524-1487b64575bf",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::Recovering",
+      "code": "verification/unreachable-state",
+      "hint": "Either a transition into it is missing or its guard can never hold. The claim holds under the printed bounds and the alphabet beside them, and under no others."
+    },
+    {
+      "id": "verification#2",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "transition `recallWhileTransiting (Transiting -> Recalled) on `Common::RecallDirective`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "b0d8679c-6fd8-4dc7-90f6-08e50c615d4d",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileTransiting",
+      "code": "verification/dead-transition",
+      "hint": "Its source is unreachable, or its guard never holds where it is. Note the reading: dead means never ENABLED anywhere reachable, so a transition an inner state’s priority always beats is enabled and is not reported here."
+    },
+    {
+      "id": "verification#3",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "transition `recallWhileWatching (Watching -> Recalled) on `Common::RecallDirective`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "c6aa1e08-3546-4fd0-b263-ee1ff7740db4",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::recallWhileWatching",
+      "code": "verification/dead-transition",
+      "hint": "Its source is unreachable, or its guard never holds where it is. Note the reading: dead means never ENABLED anywhere reachable, so a transition an inner state’s priority always beats is enabled and is not reported here."
+    },
+    {
+      "id": "verification#4",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "transition `Recalled -> Landed` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "c4317a36-5694-43eb-848d-a05fe7d1e540",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
+      "code": "verification/dead-transition",
+      "hint": "Its source is unreachable, or its guard never holds where it is. Note the reading: dead means never ENABLED anywhere reachable, so a transition an inner state’s priority always beats is enabled and is not reported here."
+    },
+    {
+      "id": "verification#5",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "transition `loseSwarmContact (Watching -> Recovering) on `Common::SwarmContactLostNotice`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "08051a04-f128-4629-bce3-ae7bbca84acd",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::loseSwarmContact",
+      "code": "verification/dead-transition",
+      "hint": "Its source is unreachable, or its guard never holds where it is. Note the reading: dead means never ENABLED anywhere reachable, so a transition an inner state’s priority always beats is enabled and is not reported here."
+    },
+    {
+      "id": "verification#6",
+      "ruleId": "verification",
+      "source": "verification",
+      "severity": "warning",
+      "message": "transition `Recovering -> Landed` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RecallDirective, Common::SwarmContactLostNotice, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "elementId": "82b2128b-487f-429d-bd54-c808981053dd",
+      "elementName": "SurveillanceDroneSwarm::OA::SwarmMemberStates::«TransitionUsage»",
+      "code": "verification/dead-transition",
+      "hint": "Its source is unreachable, or its guard never holds where it is. Note the reading: dead means never ENABLED anywhere reachable, so a transition an inner state’s priority always beats is enabled and is not reported here."
+    }
+  ]
 }

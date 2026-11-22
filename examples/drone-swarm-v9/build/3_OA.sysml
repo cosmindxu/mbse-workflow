@@ -557,6 +557,81 @@ package SurveillanceDroneSwarm {
         // Port definitions
         // ---------------------------------------------------------------
 
+        port def AdmissionRequestPort {
+            doc /* Where an AdmissionRequest crosses a boundary: the sender's port; the receiver's is its conjugate, ~AdmissionRequestPort. */
+            out item admissionRequest : AdmissionRequest;
+        }
+
+        port def CoordinationDirectivePort {
+            doc /* Where a CoordinationDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~CoordinationDirectivePort. */
+            out item coordinationDirective : CoordinationDirective;
+        }
+
+        port def DecisionRecordsPort {
+            doc /* Where a DecisionRecords crosses a boundary: the sender's port; the receiver's is its conjugate, ~DecisionRecordsPort. */
+            out item decisionRecords : DecisionRecords;
+        }
+
+        port def DetectionReportPort {
+            doc /* Where a DetectionReport crosses a boundary: the sender's port; the receiver's is its conjugate, ~DetectionReportPort. */
+            out item detectionReport : DetectionReport;
+        }
+
+        port def DirectiveAckPort {
+            doc /* Where a DirectiveAck crosses a boundary: the sender's port; the receiver's is its conjugate, ~DirectiveAckPort. */
+            out item directiveAck : DirectiveAck;
+        }
+
+        port def DroneArrivalPort {
+            doc /* Where a DroneArrival crosses a boundary: the sender's port; the receiver's is its conjugate, ~DroneArrivalPort. */
+            out item droneArrival : DroneArrival;
+        }
+
+        port def DroneServicedPort {
+            doc /* Where a DroneServiced crosses a boundary: the sender's port; the receiver's is its conjugate, ~DroneServicedPort. */
+            out item droneServiced : DroneServiced;
+        }
+
+        port def MemberStatusPort {
+            doc /* Where a MemberStatus crosses a boundary: the sender's port; the receiver's is its conjugate, ~MemberStatusPort. */
+            out item memberStatus : MemberStatus;
+        }
+
+        port def MovingObjectsInAreaPort {
+            doc /* Where a MovingObjectsInArea crosses a boundary: the sender's port; the receiver's is its conjugate, ~MovingObjectsInAreaPort. */
+            out item movingObjectsInArea : MovingObjectsInArea;
+        }
+
+        port def PriorityDirectivePort {
+            doc /* Where a PriorityDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~PriorityDirectivePort. */
+            out item priorityDirective : PriorityDirective;
+        }
+
+        port def RecallDirectivePort {
+            doc /* Where a RecallDirective crosses a boundary: the sender's port; the receiver's is its conjugate, ~RecallDirectivePort. */
+            out item recallDirective : RecallDirective;
+        }
+
+        port def ReportReceiptPort {
+            doc /* Where a ReportReceipt crosses a boundary: the sender's port; the receiver's is its conjugate, ~ReportReceiptPort. */
+            out item reportReceipt : ReportReceipt;
+        }
+
+        port def TaskingOrderPort {
+            doc /* Where a TaskingOrder crosses a boundary: the sender's port; the receiver's is its conjugate, ~TaskingOrderPort. */
+            out item taskingOrder : TaskingOrder;
+        }
+
+        port def TrackPort {
+            doc /* Where a Track crosses a boundary: the sender's port; the receiver's is its conjugate, ~TrackPort. */
+            out item track : Track;
+        }
+
+        port def TriagedAlertsPort {
+            doc /* Where a TriagedAlerts crosses a boundary: the sender's port; the receiver's is its conjugate, ~TriagedAlertsPort. */
+            out item triagedAlerts : TriagedAlerts;
+        }
+
         port def MeshPort {
             doc /* What one drone exchanges with a peer over the mesh radio. It carries everything the members settle between themselves and does not depend on the link to the operations centre. */
             out item update : CoordinationMessage {

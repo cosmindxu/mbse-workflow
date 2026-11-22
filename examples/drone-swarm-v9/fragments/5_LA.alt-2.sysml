@@ -340,13 +340,13 @@
             doc /* One of the twelve identical drones, member-centred: besides sensing, classifying and reporting, every member itself performs the whole of swarm coordination (sector handover, recharge rotation, coverage redistribution, deconfliction, link relay, track correlation, track handover, member admission) over the mesh, so the watch does not depend on the ground station or the ground link. */
             out port meshOut : Common::MeshPort;
             in port meshIn : ~Common::MeshPort;
-            out port reportsOut : Common::DetectionReport;
-            out port trackPictureOut : Common::Track;
-            out port statusOut : Common::MemberStatus;
-            in port taskingIn : Common::TaskingOrder;
-            in port priorityIn : Common::PriorityDirective;
-            in port recallIn : Common::RecallDirective;
-            in port receiptIn : Common::ReportReceipt;
+            out port reportsOut : Common::DetectionReportPort;
+            out port trackPictureOut : Common::TrackPort;
+            out port statusOut : Common::MemberStatusPort;
+            in port taskingIn : ~Common::TaskingOrderPort;
+            in port priorityIn : ~Common::PriorityDirectivePort;
+            in port recallIn : ~Common::RecallDirectivePort;
+            in port receiptIn : ~Common::ReportReceiptPort;
 
             #Mode state def SwarmMemberModes {
                 doc /* Operating condition of one member: nominal, without satellite positioning, sensors not trustworthy, cut off from the other members, or failed admission and readmitted. Carries the rule QuarantinedStaysOut. */
@@ -453,15 +453,15 @@
         }
         part def GroundStation {
             doc /* The thin ground component of the member-centred split: it only carries command and control (tasking, supervisory priorities, recall, status picture, acknowledgement). It does not coordinate the swarm; if it is lost the members keep the watch. */
-            in port statusIn : Common::MemberStatus;
-            in port trackPictureIn : Common::Track;
-            in port alertsIn : Common::TriagedAlerts;
-            in port recordsIn : Common::DecisionRecords;
-            out port taskingOut : Common::TaskingOrder;
-            out port priorityOut : Common::PriorityDirective;
-            out port recallOut : Common::RecallDirective;
-            out port receiptOut : Common::ReportReceipt;
-            out port recordReceiptOut : Common::ReportReceipt;
+            in port statusIn : ~Common::MemberStatusPort;
+            in port trackPictureIn : ~Common::TrackPort;
+            in port alertsIn : ~Common::TriagedAlertsPort;
+            in port recordsIn : ~Common::DecisionRecordsPort;
+            out port taskingOut : Common::TaskingOrderPort;
+            out port priorityOut : Common::PriorityDirectivePort;
+            out port recallOut : Common::RecallDirectivePort;
+            out port receiptOut : Common::ReportReceiptPort;
+            out port recordReceiptOut : Common::ReportReceiptPort;
 
             #Mode state def GroundStationModes {
                 doc /* Whether the ground station can reach the swarm and the operations centre: with the link up it supervises, with the link down it can neither task nor recall and the members carry on alone. */
@@ -498,10 +498,10 @@
         }
         part def AlertTriageUnit {
             doc /* Ranks the reports of all members so that what most likely matters reaches the operator first, merges duplicates, and keeps the decision record of every report. Kept apart from the ground station so that command and control stays thin. */
-            in port reportsIn : Common::DetectionReport;
-            in port receiptIn : Common::ReportReceipt;
-            out port alertsOut : Common::TriagedAlerts;
-            out port decisionRecordsOut : Common::DecisionRecords;
+            in port reportsIn : ~Common::DetectionReportPort;
+            in port receiptIn : ~Common::ReportReceiptPort;
+            out port alertsOut : Common::TriagedAlertsPort;
+            out port decisionRecordsOut : Common::DecisionRecordsPort;
         }
         part fleet : SwarmMember [12] {
             doc /* The twelve identical drones; every function a member performs, and all eight coordination functions, sit here. */

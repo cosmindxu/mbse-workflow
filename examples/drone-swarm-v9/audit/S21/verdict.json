@@ -3,16 +3,16 @@
   "layer": "SA",
   "blocking": false,
   "prefix": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml",
-  "prefixHash": "ffa3390029a3c1c8",
-  "elements": 2063,
-  "durationMs": 488,
+  "prefixHash": "330392dd06823eaa",
+  "elements": 2150,
+  "durationMs": 884,
   "checks": [
     {
       "name": "check",
       "command": "npm run check -- /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 1,
+      "durationMs": 0,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/check.json",
       "findings": 21
     },
@@ -21,7 +21,7 @@
       "command": "npm run sysprose -- elements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 22,
+      "durationMs": 24,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/elements.json",
       "findings": 2
     },
@@ -30,7 +30,7 @@
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --relation trace --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 58,
+      "durationMs": 51,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/trace-trace.json",
       "findings": 0
     },
@@ -39,7 +39,7 @@
       "command": "npm run sysprose -- trace /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --relation allocate --from ActionUsage --to PartUsage --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 14,
+      "durationMs": 16,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/trace-allocate.json",
       "findings": 0
     },
@@ -48,7 +48,7 @@
       "command": "npm run sysprose -- connectivity /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 8,
+      "durationMs": 10,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/connectivity.json",
       "findings": 2
     },
@@ -59,7 +59,7 @@
       "ok": true,
       "durationMs": 7,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/reach.json",
-      "findings": 0
+      "findings": 3
     },
     {
       "name": "requirements",
@@ -75,7 +75,7 @@
       "command": "npm run sysprose -- requirements /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --kind requirement --json",
       "blocking": true,
       "ok": true,
-      "durationMs": 9,
+      "durationMs": 7,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/requirements-hazards.json",
       "findings": 0
     },
@@ -84,7 +84,7 @@
       "command": "npm run sysprose -- consistency /home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/build/4_SA.sysml --json",
       "blocking": false,
       "ok": true,
-      "durationMs": 76,
+      "durationMs": 248,
       "payload": "/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/audit/S21/consistency.json",
       "findings": 0
     }
@@ -96,7 +96,7 @@
       "blocking": false,
       "element": "areaUnderWatchTarget",
       "layer": "Common",
-      "line": 692,
+      "line": 767,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaUnderWatchFraction >= 0.9\"): Could not evaluate: areaUnderWatchFraction has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -107,7 +107,7 @@
       "blocking": false,
       "element": "coverageLossAfterMemberLossTarget",
       "layer": "Common",
-      "line": 700,
+      "line": 775,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coverageLossAfterMemberLossFraction <= 0.25\"): Could not evaluate: coverageLossAfterMemberLossFraction has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -118,7 +118,7 @@
       "blocking": false,
       "element": "coverageUnderMeshJammingTarget",
       "layer": "Common",
-      "line": 708,
+      "line": 783,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"coverageUnderMeshJammingFraction >= 0.75\"): Could not evaluate: coverageUnderMeshJammingFraction has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -129,7 +129,7 @@
       "blocking": false,
       "element": "reportAgeAtOperationsCentreTarget",
       "layer": "Common",
-      "line": 716,
+      "line": 791,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"reportAgeAtOperationsCentreSeconds <= 60.0\"): Could not evaluate: reportAgeAtOperationsCentreSeconds has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -140,7 +140,7 @@
       "blocking": false,
       "element": "positionErrorWithoutSatelliteTarget",
       "layer": "Common",
-      "line": 724,
+      "line": 799,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"positionErrorWithoutSatelliteMetres <= 50.0\"): Could not evaluate: positionErrorWithoutSatelliteMetres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -151,7 +151,7 @@
       "blocking": false,
       "element": "reportHoldWhileCutOffTarget",
       "layer": "Common",
-      "line": 732,
+      "line": 807,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"reportHoldWhileCutOffMinutes >= 30.0\"): Could not evaluate: reportHoldWhileCutOffMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -162,7 +162,7 @@
       "blocking": false,
       "element": "missedDetectionTarget",
       "layer": "Common",
-      "line": 740,
+      "line": 815,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"missedDetectionFraction <= 0.10\"): Could not evaluate: missedDetectionFraction has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -173,7 +173,7 @@
       "blocking": false,
       "element": "falseAlarmsPerHourTarget",
       "layer": "Common",
-      "line": 748,
+      "line": 823,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"falseAlarmsPerHour <= 2.0\"): Could not evaluate: falseAlarmsPerHour has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -184,7 +184,7 @@
       "blocking": false,
       "element": "alertsReachingOperatorTarget",
       "layer": "Common",
-      "line": 756,
+      "line": 831,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"alertsReachingOperatorPerHour <= 20.0\"): Could not evaluate: alertsReachingOperatorPerHour has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -195,7 +195,7 @@
       "blocking": false,
       "element": "acknowledgedReportsThatMatterTarget",
       "layer": "Common",
-      "line": 764,
+      "line": 839,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"acknowledgedReportsThatMatterFraction >= 0.8\"): Could not evaluate: acknowledgedReportsThatMatterFraction has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -206,7 +206,7 @@
       "blocking": false,
       "element": "onboardClassificationCostTarget",
       "layer": "Common",
-      "line": 772,
+      "line": 847,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"onboardClassificationCostUsdPerMember <= 300.0\"): Could not evaluate: onboardClassificationCostUsdPerMember has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -217,7 +217,7 @@
       "blocking": false,
       "element": "fleetSizeBudget",
       "layer": "Common",
-      "line": 788,
+      "line": 863,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"fleetSizeMembers <= 12\"): Could not evaluate: fleetSizeMembers has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -228,7 +228,7 @@
       "blocking": false,
       "element": "memberEnduranceBudget",
       "layer": "Common",
-      "line": 796,
+      "line": 871,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"memberEnduranceMinutes <= 40.0\"): Could not evaluate: memberEnduranceMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -239,7 +239,7 @@
       "blocking": false,
       "element": "groundTurnaroundBudget",
       "layer": "Common",
-      "line": 804,
+      "line": 879,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"groundTurnaroundMinutes >= 20.0\"): Could not evaluate: groundTurnaroundMinutes has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -250,7 +250,7 @@
       "blocking": false,
       "element": "cruiseSpeedBudget",
       "layer": "Common",
-      "line": 812,
+      "line": 887,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"cruiseSpeedMetresPerSecond <= 18.0\"): Could not evaluate: cruiseSpeedMetresPerSecond has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -261,7 +261,7 @@
       "blocking": false,
       "element": "instantaneousFootprintBudget",
       "layer": "Common",
-      "line": 820,
+      "line": 895,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"instantaneousFootprintSquareKilometres <= 3.0\"): Could not evaluate: instantaneousFootprintSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -272,7 +272,7 @@
       "blocking": false,
       "element": "areaOfInterestBudget",
       "layer": "Common",
-      "line": 828,
+      "line": 903,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"areaOfInterestSquareKilometres <= 25.0\"): Could not evaluate: areaOfInterestSquareKilometres has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -283,7 +283,7 @@
       "blocking": false,
       "element": "operatorSecondsPerAlertBudget",
       "layer": "Common",
-      "line": 836,
+      "line": 911,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"operatorSecondsPerAlert >= 30.0\"): Could not evaluate: operatorSecondsPerAlert has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -294,7 +294,7 @@
       "blocking": false,
       "element": "trackStaleAfterBudget",
       "layer": "Common",
-      "line": 844,
+      "line": 919,
       "rule": "CV-17",
       "message": "Constraint could not be evaluated (\"trackStaleAfterSeconds <= 120.0\"): Could not evaluate: trackStaleAfterSeconds has no value anywhere and nothing specialises it.",
       "check": "check"
@@ -305,9 +305,9 @@
       "blocking": false,
       "element": "satellitePositioningOutageBudget",
       "layer": "Common",
-      "line": 852,
+      "line": 927,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere and nothing specialises it.",
+      "message": "Constraint could not be evaluated (\"satellitePositioningOutageMinutes == 10.0\"): Could not evaluate: satellitePositioningOutageMinutes has no value anywhere, no asserted equation, and nothing specialises it.",
       "check": "check"
     },
     {
@@ -316,9 +316,9 @@
       "blocking": false,
       "element": "meshLinksJammedBudget",
       "layer": "Common",
-      "line": 860,
+      "line": 935,
       "rule": "CV-17",
-      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere and nothing specialises it.",
+      "message": "Constraint could not be evaluated (\"meshLinksJammedFraction == 0.5\"): Could not evaluate: meshLinksJammedFraction has no value anywhere, no asserted equation, and nothing specialises it.",
       "check": "check"
     },
     {
@@ -334,7 +334,7 @@
       "blocking": false,
       "element": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates",
       "rule": "CV-18",
-      "message": "the rule `ReturnsWhenIsolated` could not be decided on `SA::SwarmMember::SwarmMemberStates` (inconclusive): inconclusive: this machine names triggers this walk offers at every configuration, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names at every configuration, so a witness that consumes ",
+      "message": "the rule `ReturnsWhenIsolated` could not be decided on `SA::SwarmMember::SwarmMemberStates` (inconclusive): inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever ",
       "check": "elements"
     },
     {
@@ -354,6 +354,33 @@
       "rule": "CV-05",
       "message": "port `meshIn` is not connected to anything.",
       "check": "connectivity"
+    },
+    {
+      "code": "verification/dead-transition",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates::recallWhileTransiting",
+      "rule": "CV-07",
+      "message": "transition `recallWhileTransiting (Transiting -> Recalled) on `Common::RecallDirective`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RechargeRotationSlot, Common::RecallDirective, Common::MeshLinkStatus, Common::AirspaceClearance, Common::WeatherCondition, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "check": "reach"
+    },
+    {
+      "code": "verification/dead-transition",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates::loseContactInTransit",
+      "rule": "CV-07",
+      "message": "transition `loseContactInTransit (Transiting -> Recovering) on `Common::MeshLinkStatus`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RechargeRotationSlot, Common::RecallDirective, Common::MeshLinkStatus, Common::AirspaceClearance, Common::WeatherCondition, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "check": "reach"
+    },
+    {
+      "code": "verification/dead-transition",
+      "severity": "warning",
+      "blocking": false,
+      "element": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates::leaveClearanceInTransit",
+      "rule": "CV-07",
+      "message": "transition `leaveClearanceInTransit (Transiting -> OutsideClearance) on `Common::AirspaceClearance`` is never enabled on any explored run (exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RechargeRotationSlot, Common::RecallDirective, Common::MeshLinkStatus, Common::AirspaceClearance, Common::WeatherCondition, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}).",
+      "check": "reach"
     }
   ]
 }

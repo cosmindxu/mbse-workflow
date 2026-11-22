@@ -343,14 +343,14 @@
         attribute watchingMembers = fleetCount * (sortieMinutes - 2.0 * transitMinutesEachWay) / (sortieMinutes + turnaroundMinutes) { doc /* Average number of drones on station at any moment: each drone watches for its endurance minus the two transit legs out of every sortie plus turnaround cycle of 60 minutes. Each drone covers 3.0 km2 against a fair share of 25/12 km2, so the watched share below is derived from the per-member footprint and is not bounded by the airborne share of the fleet. */ }
         part def GroundSwarmCoordinator {
             doc /* Ground component that takes every decision needing the whole picture: it decides sector handover, recharge rotation, coverage redistribution and flight deconfliction, correlates the tracks of all drones into one track per object, and admits or refuses members by identity and classifier version. It is the deciding point of this architecture and therefore its single point of failure. */
-            in port taskingIn : Common::TaskingOrder { doc /* The tasked area, sectors and mission window from the console. */ }
-            in port priorityIn : Common::PriorityDirective { doc /* Priorities and the sector to look at more closely, used when redistributing coverage. */ }
-            in port statusIn : Common::MemberStatus { doc /* Position, activity, battery and degradations of every drone. */ }
-            in port trackIn : Common::Track { doc /* Tracks held by each drone, to be correlated. */ }
-            in port admissionIn : Common::AdmissionRequest { doc /* Identity and classifier version offered by a drone asking to take part. */ }
-            in port directiveAckIn : Common::DirectiveAck { doc /* Acknowledgement of each directive by the drone it went to. */ }
-            out port directiveOut : Common::CoordinationDirective { doc /* Sector assignment, handover, rotation, redistribution, deconfliction and admission verdict for the drones. */ }
-            out port correlatedTrackOut : Common::Track { doc /* One correlated track per object, with stale ones marked, for triage. */ }
+            in port taskingIn : ~Common::TaskingOrderPort { doc /* The tasked area, sectors and mission window from the console. */ }
+            in port priorityIn : ~Common::PriorityDirectivePort { doc /* Priorities and the sector to look at more closely, used when redistributing coverage. */ }
+            in port statusIn : ~Common::MemberStatusPort { doc /* Position, activity, battery and degradations of every drone. */ }
+            in port trackIn : ~Common::TrackPort { doc /* Tracks held by each drone, to be correlated. */ }
+            in port admissionIn : ~Common::AdmissionRequestPort { doc /* Identity and classifier version offered by a drone asking to take part. */ }
+            in port directiveAckIn : ~Common::DirectiveAckPort { doc /* Acknowledgement of each directive by the drone it went to. */ }
+            out port directiveOut : Common::CoordinationDirectivePort { doc /* Sector assignment, handover, rotation, redistribution, deconfliction and admission verdict for the drones. */ }
+            out port correlatedTrackOut : Common::TrackPort { doc /* One correlated track per object, with stale ones marked, for triage. */ }
 
             #Mode state def SwarmCoordinatorModes {
                 doc /* How far the coordinator can reach the drones: all of them, part of them because of jamming, or none. */
@@ -379,41 +379,41 @@
         }
         part def GroundOperatorConsole {
             doc /* Ground component through which the one operator tasks, commands, recalls and watches the swarm, and through which each detection report is acknowledged. It carries every command-and-control function. */
-            out port taskingOut : Common::TaskingOrder { doc /* Tasking issued to the coordinator and the drones. */ }
-            out port priorityOut : Common::PriorityDirective { doc /* Priorities and the reporting threshold issued to the coordinator, the drones and the record store. */ }
-            out port recallOut : Common::RecallDirective { doc /* Recall of the whole swarm or of one drone, issuable at any time. */ }
-            in port statusIn : Common::MemberStatus { doc /* Status of every drone, for the status picture. */ }
-            in port alertsIn : Common::TriagedAlerts { doc /* Triaged alerts the operator judges. */ }
-            in port recordsIn : Common::DecisionRecords { doc /* Decision records shown alongside the alerts. */ }
-            out port receiptOut : Common::ReportReceipt { doc /* Acknowledgement of a detection report; the drones clear it and the record store notes who acknowledged. */ }
+            out port taskingOut : Common::TaskingOrderPort { doc /* Tasking issued to the coordinator and the drones. */ }
+            out port priorityOut : Common::PriorityDirectivePort { doc /* Priorities and the reporting threshold issued to the coordinator, the drones and the record store. */ }
+            out port recallOut : Common::RecallDirectivePort { doc /* Recall of the whole swarm or of one drone, issuable at any time. */ }
+            in port statusIn : ~Common::MemberStatusPort { doc /* Status of every drone, for the status picture. */ }
+            in port alertsIn : ~Common::TriagedAlertsPort { doc /* Triaged alerts the operator judges. */ }
+            in port recordsIn : ~Common::DecisionRecordsPort { doc /* Decision records shown alongside the alerts. */ }
+            out port receiptOut : Common::ReportReceiptPort { doc /* Acknowledgement of a detection report; the drones clear it and the record store notes who acknowledged. */ }
         }
         part def GroundAlertTriage {
             doc /* Ground component that ranks reports so the ones most likely to matter reach the operator first and merges duplicates using the correlated tracks, keeping the alert rate inside what one operator can judge. */
-            in port reportsIn : Common::DetectionReport { doc /* Detection reports from all drones. */ }
-            in port trackIn : Common::Track { doc /* Correlated tracks, used to recognise duplicates of one object. */ }
-            out port alertsOut : Common::TriagedAlerts { doc /* Ranked, de-duplicated alerts for the console. */ }
+            in port reportsIn : ~Common::DetectionReportPort { doc /* Detection reports from all drones. */ }
+            in port trackIn : ~Common::TrackPort { doc /* Correlated tracks, used to recognise duplicates of one object. */ }
+            out port alertsOut : Common::TriagedAlertsPort { doc /* Ranked, de-duplicated alerts for the console. */ }
         }
         part def GroundDecisionRecordStore {
             doc /* Ground component that keeps, for every report, the frames it came from, the classifier version, the reporting threshold in force and who acknowledged it. */
-            in port reportIn : Common::DetectionReport { doc /* Each detection report with its provenance. */ }
-            in port thresholdIn : Common::PriorityDirective { doc /* The reporting threshold in force when the report was made. */ }
-            in port receiptIn : Common::ReportReceipt { doc /* Who acknowledged the report. */ }
-            out port recordsOut : Common::DecisionRecords { doc /* The decision records, shown at the console. */ }
+            in port reportIn : ~Common::DetectionReportPort { doc /* Each detection report with its provenance. */ }
+            in port thresholdIn : ~Common::PriorityDirectivePort { doc /* The reporting threshold in force when the report was made. */ }
+            in port receiptIn : ~Common::ReportReceiptPort { doc /* Who acknowledged the report. */ }
+            out port recordsOut : Common::DecisionRecordsPort { doc /* The decision records, shown at the console. */ }
         }
         #Member part def SwarmMember {
             doc /* One of the twelve identical drones. It detects and classifies in its sector, holds and delivers its reports, relays neighbours' reports and hands tracks over across the mesh, and carries out the directives the ground coordinator sends. Its own state machines carry the safety rules, so it lands, recovers or stays out of coordination without waiting for the ground. */
             out port meshOut : Common::MeshPort { doc /* Traffic to a neighbour over the mesh: relayed reports and track handover. */ }
             in port meshIn : ~Common::MeshPort { doc /* Traffic from a neighbour over the mesh. */ }
-            in port directiveIn : Common::CoordinationDirective { doc /* Directive from the ground coordinator. */ }
-            out port directiveAckOut : Common::DirectiveAck { doc /* Acknowledgement of each directive, so a lost hand-off is noticed. */ }
-            out port admissionOut : Common::AdmissionRequest { doc /* Identity and classifier version offered for admission. */ }
-            out port statusOut : Common::MemberStatus { doc /* Position, activity and degradations, sensing degradation included. */ }
-            out port trackOut : Common::Track { doc /* Tracks held by this drone, stale ones marked. */ }
-            out port reportOut : Common::DetectionReport { doc /* Detection reports, held while cut off. */ }
-            in port receiptIn : Common::ReportReceipt { doc /* Acknowledgement that lets the drone clear a held report. */ }
-            in port taskingIn : Common::TaskingOrder { doc /* Tasking and mission window. */ }
-            in port priorityIn : Common::PriorityDirective { doc /* Priorities and the reporting threshold in force. */ }
-            in port recallIn : Common::RecallDirective { doc /* Recall order, issuable at any time. */ }
+            in port directiveIn : ~Common::CoordinationDirectivePort { doc /* Directive from the ground coordinator. */ }
+            out port directiveAckOut : Common::DirectiveAckPort { doc /* Acknowledgement of each directive, so a lost hand-off is noticed. */ }
+            out port admissionOut : Common::AdmissionRequestPort { doc /* Identity and classifier version offered for admission. */ }
+            out port statusOut : Common::MemberStatusPort { doc /* Position, activity and degradations, sensing degradation included. */ }
+            out port trackOut : Common::TrackPort { doc /* Tracks held by this drone, stale ones marked. */ }
+            out port reportOut : Common::DetectionReportPort { doc /* Detection reports, held while cut off. */ }
+            in port receiptIn : ~Common::ReportReceiptPort { doc /* Acknowledgement that lets the drone clear a held report. */ }
+            in port taskingIn : ~Common::TaskingOrderPort { doc /* Tasking and mission window. */ }
+            in port priorityIn : ~Common::PriorityDirectivePort { doc /* Priorities and the reporting threshold in force. */ }
+            in port recallIn : ~Common::RecallDirectivePort { doc /* Recall order, issuable at any time. */ }
 
             #Mode state def SwarmMemberModes {
                 doc /* Operating condition of one drone: nominal, without satellite positioning, sensors not trustworthy, cut off from the other drones, or failed admission and readmitted. Carries the rule QuarantinedStaysOut. */
