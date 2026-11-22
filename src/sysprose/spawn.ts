@@ -38,12 +38,17 @@ function run(
   args: string[],
   input: string,
   timeoutMs: number,
+  cwd: string,
 ): Promise<{ stdout: string; stderr: string; code: number }> {
   return new Promise((resolvePromise, reject) => {
     const child = execFile(
       bin,
       args,
-      { maxBuffer: 64 * 1024 * 1024, timeout: timeoutMs, encoding: 'utf8' },
+      // cwd: the Sysprose tree, so tsx resolves its path aliases (`@validation/*`)
+      // from that tree's tsconfig. From another directory they resolve from
+      // whatever tsconfig is there — the workflow's maps them to ~/sysprose, and a
+      // run against $SYSPROSE_DIR would mix the two trees without a word.
+      { maxBuffer: 64 * 1024 * 1024, timeout: timeoutMs, encoding: 'utf8', cwd },
       (err, stdout, stderr) => {
         // A non-zero exit is an ANSWER here, not a failure: the exit contract is
         // part of the report. Only a signal or a spawn failure is an error.
@@ -65,7 +70,7 @@ export async function runSysprose<T>(
 ): Promise<CliRun<T>> {
   const started = Date.now();
   const argv = [resolve(opts.dir, 'scripts/sysprose.ts'), cmd, '-', ...args, '--json'];
-  const { stdout, code } = await run(runner(opts.dir), argv, text, opts.timeoutMs ?? 300_000);
+  const { stdout, code } = await run(runner(opts.dir), argv, text, opts.timeoutMs ?? 300_000, opts.dir);
   return {
     ...parseEnvelope<T>(cmd, stdout, code),
     command: `npm run sysprose -- ${cmd} <file> ${args.join(' ')} --json`,
@@ -80,7 +85,7 @@ export async function runCheck(
 ): Promise<{ ok: boolean; files: CheckReport[]; exitCode: number; meaning: string; command: string; durationMs: number }> {
   const started = Date.now();
   const argv = [resolve(opts.dir, 'scripts/sysml-check.ts'), '-', '--json'];
-  const { stdout, code } = await run(runner(opts.dir), argv, text, opts.timeoutMs ?? 300_000);
+  const { stdout, code } = await run(runner(opts.dir), argv, text, opts.timeoutMs ?? 300_000, opts.dir);
   return {
     ...parseCheckEnvelope(stdout, code),
     command: 'npm run check -- <file> --json',

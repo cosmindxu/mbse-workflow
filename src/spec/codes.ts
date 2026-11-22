@@ -27,6 +27,13 @@ export const KNOB_CONDITIONAL: Record<string, KnobId> = {
   'verification/dead-transition': 'modes_states',
   'verification/deadlock': 'modes_states',
   'validation/dangling-endpoint': 'interfaces',
+  // Interface conformance (Sysprose 0c650fb, SysML v2 §7.12): warnings in the
+  // tool, blocking here while the interfaces knob is on, because a port typed
+  // by an item or two ends that do not conform is a defect in the interfaces
+  // the layer claims, not a verdict on the design.
+  'validation/port-typing': 'interfaces',
+  'validation/interface-end-conformance': 'interfaces',
+  'validation/flow-end-compatibility': 'interfaces',
 };
 
 /**
@@ -70,7 +77,19 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   },
   'validation/connection-compatibility': {
     cv: 'CV-05',
-    note: 'A connection joins an `out` port to an `in` port carrying the same item. Two `in` ports (or two `out`) usually means one end is a port of the layer above — a delegation across layers, which is expressed by allocation and trace, not by a connection: remove it and connect the component to the actor of this layer instead. Otherwise type both ports with the same port def.',
+    note: 'The two ports do not conform (§7.12.1): every directed item on one must meet an item of the same def with the opposite direction on the other. The sender is typed `Common::<Item>Port`, the receiver `~Common::<Item>Port`. Two `in` ports (or two `out`) usually means one end is a port of the layer above — a delegation across layers, which is expressed by allocation and trace, not by a connection: remove it and connect the component to the actor of this layer instead.',
+  },
+  'validation/port-typing': {
+    cv: 'CV-05',
+    note: 'A port is typed by a port def, never by an item def or by another port (§7.12.2). Declare `port def <Item>Port { out item <item> : <Item>; }` in Common (in `commonAdditions` when it is missing) and type the sender `out port <p> : Common::<Item>Port;`, the receiver `in port <q> : ~Common::<Item>Port;`.',
+  },
+  'validation/interface-end-conformance': {
+    cv: 'CV-05',
+    note: 'A related port does not match the end of the interface def it is connected through: either its port def is not the end\'s, or its conjugation differs (`~`). With `end sender : P; end receiver : ~P;`, connect the `P` port first and the `~P` port second, or name the ends: `connect sender ::> a.p to receiver ::> b.q`.',
+  },
+  'validation/flow-end-compatibility': {
+    cv: 'CV-05',
+    note: 'A flow carries an item its ends are not typed by, or runs from an `in` or into an `out`. Flow `of <Item>` from an `out` parameter or port item of that item def to an `in` one.',
   },
   'validation/connector-endpoints': {
     cv: 'CV-05',
@@ -78,7 +97,7 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   },
   'validation/port-direction': {
     cv: 'CV-05',
-    note: 'A flow runs out of an `out` port into an `in` port. Check the direction on both port defs.',
+    note: 'A port needs a direction, on the port or on the items of its port def. Give the items of the port def their direction (`out item …`) and conjugate the receiving port (`~`), or write `in`/`out` on the port.',
   },
   'validation/unknown-unit': {
     note: 'Units come from the standard library (ISQ). Use a library unit, or drop the unit and state the budget in the doc.',

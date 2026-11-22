@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const sysprose = resolve(here, '../../sysprose');
+const sysprose = process.env.SYSPROSE_DIR ? resolve(process.env.SYSPROSE_DIR) : resolve(here, '../../sysprose'); // the runtime's rule (config/load.ts): $SYSPROSE_DIR, else ~/sysprose
 const alias = (name: string) => ({ find: new RegExp(`^@${name}/`), replacement: `${sysprose}/src/${name}/` });
 
 export default defineConfig({
