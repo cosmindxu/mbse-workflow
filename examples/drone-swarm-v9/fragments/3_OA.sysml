@@ -399,12 +399,12 @@
             state SensingDegraded { doc /* The drone's sensors cannot be trusted as they are, and what it reports from them is marked accordingly. */ }
             state Isolated { doc /* The drone is cut off from the other drones and coordinates with none of them. */ }
             state Quarantined { doc /* The drone has failed admission and takes no part in coordination until it has been readmitted. */ }
-            transition losePositioning first Nominal accept positioningLostNotice : Common::ConditionNotice do action navigateByCamera then NavigationDegraded;
-            transition regainPositioning first NavigationDegraded accept positioningBackNotice : Common::ConditionNotice do action resumeSatelliteNavigation then Nominal;
-            transition degradeSensing first Nominal accept sensingDegradedNotice : Common::ConditionNotice do action markReportsUnreliable then SensingDegraded;
-            transition restoreSensing first SensingDegraded accept sensingRestoredNotice : Common::ConditionNotice do action clearReportMarking then Nominal;
-            transition loseContact first Nominal accept contactLostNotice : Common::ConditionNotice do action coordinateWithNone then Isolated;
-            transition regainContact first Isolated accept contactBackNotice : Common::ConditionNotice do action rejoinCoordination then Nominal;
+            transition losePositioning first Nominal accept positioningLostNotice : Common::PositioningLostNotice do action navigateByCamera then NavigationDegraded;
+            transition regainPositioning first NavigationDegraded accept positioningBackNotice : Common::PositioningBackNotice do action resumeSatelliteNavigation then Nominal;
+            transition degradeSensing first Nominal accept sensingDegradedNotice : Common::SensingDegradedNotice do action markReportsUnreliable then SensingDegraded;
+            transition restoreSensing first SensingDegraded accept sensingRestoredNotice : Common::SensingRestoredNotice do action clearReportMarking then Nominal;
+            transition loseContact first Nominal accept contactLostNotice : Common::ContactLostNotice do action coordinateWithNone then Isolated;
+            transition regainContact first Isolated accept contactBackNotice : Common::ContactBackNotice do action rejoinCoordination then Nominal;
             transition failAdmission first Nominal accept admissionFailed : Common::AdmissionExchange do action withdrawFromCoordination then Quarantined;
             transition readmit first Quarantined accept readmission : Common::AdmissionExchange do action resumeCoordination then Nominal;
         }
@@ -426,7 +426,7 @@
             transition recallWhileTransiting first Transiting accept recallReceivedEarly : Common::RecallDirective do action abortTransit then Recalled;
             transition recallWhileWatching first Watching accept recallReceived : Common::RecallDirective do action abortWatch then Recalled;
             transition Recalled -> Landed;
-            transition loseSwarmContact first Watching accept swarmContactLost : Common::ConditionNotice do action headForRecoveryPoint then Recovering;
+            transition loseSwarmContact first Watching accept swarmContactLost : Common::SwarmContactLostNotice do action headForRecoveryPoint then Recovering;
             transition Recovering -> Landed;
         }
 
@@ -436,8 +436,8 @@
             transition start -> MeshIntact;
             state MeshIntact { doc /* The links between drones are all usable. */ }
             state MeshDegraded { doc /* A share of the links between drones is jammed and the swarm coordinates over what is left. */ }
-            transition meshJammed first MeshIntact accept jammingNotice : Common::ConditionNotice do action coordinateOverRemainingLinks then MeshDegraded;
-            transition meshRestored first MeshDegraded accept jammingClearedNotice : Common::ConditionNotice do action restoreFullCoordination then MeshIntact;
+            transition meshJammed first MeshIntact accept jammingNotice : Common::JammingNotice do action coordinateOverRemainingLinks then MeshDegraded;
+            transition meshRestored first MeshDegraded accept jammingClearedNotice : Common::JammingClearedNotice do action restoreFullCoordination then MeshIntact;
         }
 
         #State state def FleetStates {

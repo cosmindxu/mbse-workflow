@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3690 elements)
-Sysprose: fe6cbc7
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 29 legs
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3717 elements)
+Sysprose: 441cd30
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 30 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -37,7 +37,7 @@ Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 29
 
 | Layer | Elements | Documented | |
 |---|---|---|---|
-| Common | 93 | 93 | 100 % |
+| Common | 102 | 102 | 100 % |
 | OA | 103 | 103 | 100 % |
 | SA | 113 | 98 | 87 % |
 | LA | 69 | 57 | 83 % |
@@ -103,18 +103,22 @@ Each state machine against the properties it states, or — for a machine writte
 | `SA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
 | `SA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
 | `SA::FleetConfiguration` | recovery to MeshIntact | undecided | inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so "reachable f |
-| `LA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxComple |
+| `LA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, ma |
 | `LA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
 | `LA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
-| `LA::GroundStation::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
+| `LA::GroundStation::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCom |
 | `LA::GroundStation::GroundStationStates` | recovery to Standby | undecided | inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while t |
 | `PA::SwarmMember::SwarmMemberModes` | carried | holds | pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted` |
 | `PA::SwarmMember::SwarmMemberStates` | carried | undecided | pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exha |
-| `PA::GroundStationNode::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion |
+| `PA::GroundStationNode::GroundStationModes` | recovery to LinkUp | holds | recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCom |
 | `PA::GroundStationNode::GroundStationStates` | recovery to Standby | undecided | inconclusive: a run of this machine comes to rest where the interpreter’s chase budget stops it and gets back to nothing from there, while t |
-| `PA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxComple |
+| `PA::FleetConfiguration` | recovery to MeshIntact | holds | recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, ma |
 
 Fault tree: not applicable. It computes which component contract failures break a top requirement, and no layer of this workflow writes component contracts that refine one — so there is nothing to cut, and no claim about single points of failure is made here.
+
+## Product families
+
+The model writes no product family (no `variation`): there is no configuration to check.
 
 ## What an edit costs
 
@@ -123,7 +127,7 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Layer edited | Fragment lines | Re-checked | Runs again | Calls those steps made | USD |
 |---|---|---|---|---|---|
 | Kinds | 15 | S00 | S10…S60 (16) | 20 | 9.44 |
-| Common | 890 | S00 | S10…S60 (16) | 20 | 9.44 |
+| Common | 901 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
 | LA | 589 | S33 | S40…S60 (6) | 11 | 4.58 |

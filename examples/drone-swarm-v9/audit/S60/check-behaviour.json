@@ -12,7 +12,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `positioningLostNotice`, `positioningBackNotice`, `sensingDegradedNotice`, `sensingRestoredNotice`, `contactLostNotice`, `contactBackNotice`, `admissionFailed`, `readmission` is a claim about that environment and not about one that withholds it"
+      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `Common::PositioningLostNotice`, `Common::PositioningBackNotice`, `Common::SensingDegradedNotice`, `Common::SensingRestoredNotice`, `Common::ContactLostNotice`, `Common::ContactBackNotice`, `Common::AdmissionExchange` is a claim about that environment and not about one that withholds it"
     },
     {
       "machine": "SurveillanceDroneSwarm::OA::SwarmMemberStates",
@@ -26,7 +26,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `taskingReceived`, `recallReceivedEarly`, `recallReceived`, `swarmContactLost` is a claim about that environment and not about one that withholds it"
+      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `Common::TaskingOrder`, `Common::RecallDirective`, `Common::SwarmContactLostNotice` is a claim about that environment and not about one that withholds it"
     },
     {
       "machine": "SurveillanceDroneSwarm::OA::FleetModes",
@@ -40,7 +40,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `jammingNotice`, `jammingClearedNotice` is a claim about that environment and not about one that withholds it"
+      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `Common::JammingNotice`, `Common::JammingClearedNotice` is a claim about that environment and not about one that withholds it"
     },
     {
       "machine": "SurveillanceDroneSwarm::OA::FleetStates",
@@ -54,7 +54,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `fleetTasking`, `fleetRecallOrder` is a claim about that environment and not about one that withholds it"
+      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `Common::TaskingOrder`, `Common::RecallDirective` is a claim about that environment and not about one that withholds it"
     },
     {
       "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberModes",
@@ -68,7 +68,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet positioningLost, positioningRegained, sensorHealthLost, sensorHealthRestored, meshContactLost, meshContactRegained, admissionFailed, readmissionPassed, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 11 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::PositioningStatus, Common::SensorHealthStatus, Common::MeshLinkStatus, Common::AdmissionExchange, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 11 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::SA::SwarmMember::SwarmMemberStates",
@@ -82,7 +82,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet assignment, rotationSlot, recallDirective, contactLost, contactLostEnRoute, clearanceUpdate, clearanceUpdateEnRoute, weatherNow, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 14 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::TaskingOrder, Common::RechargeRotationSlot, Common::RecallDirective, Common::MeshLinkStatus, Common::AirspaceClearance, Common::WeatherCondition, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 14 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::SA::FleetConfiguration",
@@ -96,7 +96,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `jamming`, `linksRestored` is a claim about that environment and not about one that withholds it"
+      "detail": "inconclusive: this machine names triggers this walk offers wherever it can decide that the interpreter takes its next event, so \"reachable from every configuration\" would be a claim about an environment this walk has no carrier for — the environment offered every trigger this machine names wherever the walk could decide that the interpreter takes its next event (no completion transition due, or the chase budget spent), so a witness that consumes `Common::MeshLinkStatus` is a claim about that environment and not about one that withholds it"
     },
     {
       "machine": "SurveillanceDroneSwarm::LA::FleetConfiguration",
@@ -110,7 +110,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
+      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
     },
     {
       "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberModes",
@@ -124,7 +124,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 11 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 11 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::LA::SwarmMember::SwarmMemberStates",
@@ -138,7 +138,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 14 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 14 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationModes",
@@ -152,7 +152,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
+      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
     },
     {
       "machine": "SurveillanceDroneSwarm::LA::GroundStation::GroundStationStates",
@@ -180,7 +180,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet peerVerdict, readmitVerdict, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 632 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Nominal` never holds, between each `state Quarantined` and the next `state Readmitted`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::MemberStatus, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 632 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::PA::SwarmMember::SwarmMemberStates",
@@ -194,7 +194,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet recallW, recallT, recallR, clearanceW, clearanceT, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 616 product state(s)."
+      "detail": "pass — holds on every reachable configuration: `state Watching` never holds, between each `state Recalled` and the next `state Landed`. exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet Common::RecallDirective, Common::TaskingOrder, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}, over 616 product state(s)."
     },
     {
       "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationModes",
@@ -208,7 +208,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
+      "detail": "recoverable: `state LinkUp` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
     },
     {
       "machine": "SurveillanceDroneSwarm::PA::GroundStationNode::GroundStationStates",
@@ -236,7 +236,7 @@
         "covered": 0,
         "notCovered": 0
       },
-      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
+      "detail": "recoverable: `state MeshIntact` is reachable from every reachable configuration, exhaustive under {maxConfigs 10000, maxDepth 200 events, maxCompletion 64, alphabet no named trigger, store seeded from declared literal values — a guard over an attribute with no declared value is undecided and takes no edge}"
     }
   ],
   "skipped": 0

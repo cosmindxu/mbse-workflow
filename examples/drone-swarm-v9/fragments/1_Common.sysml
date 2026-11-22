@@ -871,6 +871,17 @@
         item def RecallDirective { doc /* An order to recall and land the whole swarm or one drone. */ }
         item def ReportReceipt { doc /* The operations centre's acknowledgement of one detection report. */ }
         item def ConditionNotice { doc /* A notice that a condition has changed: positioning, sensing, contact, or mesh jamming. */ }
+        // One kind per condition change: SysML v2 triggers an `accept p : T` on any T, so a shared type would let every
+        // notice fire every transition that accepts it (§7.17.8).
+        item def PositioningLostNotice :> ConditionNotice { doc /* Satellite positioning was lost. */ }
+        item def PositioningBackNotice :> ConditionNotice { doc /* Satellite positioning is back. */ }
+        item def SensingDegradedNotice :> ConditionNotice { doc /* Sensing has degraded. */ }
+        item def SensingRestoredNotice :> ConditionNotice { doc /* Sensing is restored. */ }
+        item def ContactLostNotice :> ConditionNotice { doc /* Contact with the swarm was lost. */ }
+        item def ContactBackNotice :> ConditionNotice { doc /* Contact with the swarm is back. */ }
+        item def SwarmContactLostNotice :> ConditionNotice { doc /* Contact with the swarm was lost while watching. */ }
+        item def JammingNotice :> ConditionNotice { doc /* The mesh is being jammed. */ }
+        item def JammingClearedNotice :> ConditionNotice { doc /* Mesh jamming has cleared. */ }
         // ── shared definitions asked for by SA ──
         item def MovingObjectsInArea { doc /* The objects moving through the tasked area that the swarm must detect, classify and place in time and space. */ }
         item def TriagedAlerts { doc /* Detection reports ranked so that what is most likely to matter reaches the operator first, with duplicates merged. */ }
