@@ -361,7 +361,9 @@ offline and read Sysprose's verdict on the exact text before theorising.
   (the evaluator read a field `bounds` does not emit), so no example before v5 was
   decided on its measures.
 - The dialect has no `expose`, no `allocation def`, no time triggers, no guarded
-  successions; `variation`/`variant` parse but carry no meaning. The house rules
+  successions. `variation`/`variant` are read by the bonus step's `variability`
+  check (each configuration of a product family judged against its selection
+  constraints), but no step asks the author for a product family. The house rules
   in `src/spec/conventions.ts` say what to write instead, and every one of them
   was measured rather than assumed.
 - The reference model clears every gate but one: it is a thin thread and never

@@ -177,14 +177,14 @@
   \node[tb] at (795,500) {per alternative, then bounds}; \node[tmono] at (795,518) {everything LA has,}; \node[tmono] at (795,533) {plus pa.bearer:}; \node[tmono] at (795,548) {bounds per measure};
   \draw[check] (902,480) rectangle (998,558);
   \node[tb] at (950,500) {closure}; \node[tmono] at (950,518) {PA -> EPBS}; \node[tmono] at (950,533) {every part has}; \node[tmono] at (950,548) {an item};
-  \draw[check, dash pattern=on 3pt off 2pt] (1020,480) rectangle (1120,558);
-  \node[tb] at (1070,500) {never blocks}; \node[tmono] at (1070,518) {behaviour sweep}; \node[tmono] at (1070,533) {fault tree}; \node[tmono] at (1070,548) {refine, evidence};
+  \draw[check, dash pattern=on 3pt off 2pt] (1014,480) rectangle (1126,558);
+  \node[tb] at (1070,497) {never blocks}; \node[tmono, font=\ttfamily\fontsize{7.4}{9}\selectfont] at (1070,513) {verify, consistency}; \node[tmono, font=\ttfamily\fontsize{7.4}{9}\selectfont] at (1070,525) {behaviour sweep}; \node[tmono, font=\ttfamily\fontsize{7.4}{9}\selectfont] at (1070,537) {fault tree, refine}; \node[tmono, font=\ttfamily\fontsize{7.4}{9}\selectfont] at (1070,549) {evidence, variability};
   \draw[check] (1140,480) rectangle (1250,558);
   \node[tb] at (1195,500) {CLI witness}; \node[tmono] at (1195,518) {spawned, not in}; \node[tmono] at (1195,533) {process; only the}; \node[tmono] at (1195,548) {parse check blocks};
 
   % records
   \draw[record] (146,584) rectangle (1254,624);
-  \foreach \x/\r in {205/00-brief.md, 325/audit packet, 445/audit packet, 605/trade-off.md + packets, 795/trade-off.md + packets, 950/audit packet, 1070/Behaviour table, 1195/final README}
+  \foreach \x/\r in {205/00-brief.md, 325/audit packet, 445/audit packet, 605/trade-off.md + packets, 795/trade-off.md + packets, 950/audit packet, 1070/Behaviour + families, 1195/final README}
     \node[t] at (\x,609) {\r};
   \node[tmono] at (700,642) {state.json: fragment hashes per step, spend saved after every call, where a resume re-enters};
 \end{tikzpicture}
