@@ -62,7 +62,8 @@ export type CheckCmd =
   | 'refine'
   | 'evidence-status'
   | 'fault-tree'
-  | 'check-behaviour';
+  | 'check-behaviour'
+  | 'variability';
 
 export interface CheckArgs {
   relation?: TraceRelation;
@@ -582,6 +583,8 @@ export const STEPS: readonly StepSpec[] = [
       // Per state machine: the properties it states, or — when it states none —
       // that every reachable configuration can get back to its initial state.
       { name: 'check-behaviour', cmd: 'check-behaviour', blocking: false },
+      // The product families the model writes (`variation`/`variant`), if any, and each configuration's verdict.
+      { name: 'variability', cmd: 'variability', blocking: false },
     ],
     failCodes: [],
   },

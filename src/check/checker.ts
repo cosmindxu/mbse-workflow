@@ -580,6 +580,8 @@ function runOne(backend: SysproseBackend, m: Loaded, spec: CheckSpec): Promise<u
       return backend.faultTree(m);
     case 'check-behaviour':
       return behaviourSweep(backend, m);
+    case 'variability':
+      return backend.variability(m);
     default: {
       const never: never = spec.cmd;
       throw new Error(`unhandled check command ${String(never)}`);

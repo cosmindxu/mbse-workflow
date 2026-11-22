@@ -48,6 +48,8 @@ export interface FinalAudit {
   /** The bonus lane's state-machine sweep and fault tree, read back from its packet. */
   behaviour?: { machines: Array<{ machine: string; property: string; exitCode: number; detail?: string }>; skipped: number };
   faultTree?: { exitCode: number; withCutSets: number; singlePointsOfFailure: number; contracts: number; applicable?: boolean };
+  /** The bonus lane's `variability` run: the product families the model writes, and each configuration's verdict. */
+  variability?: VariabilityLane;
   /** Each measure as the chosen architectures state it, LA and PA (CV-17). */
   measures?: MeasureRow[];
   measuresError?: string;
@@ -432,6 +434,7 @@ function markdown(ctx: AgentContext, verdict: Verdict, audit: FinalAudit, witnes
     lines.push('## Blocking', '', ...blocking.map((i) => `- \`${i.code}\` ${i.qualifiedName ?? ''}: ${i.message}`), '');
   }
   if (audit.behaviour || audit.faultTree) lines.push(...behaviourMarkdown(audit));
+  if (audit.variability) lines.push(...variabilityMarkdown(audit.variability));
   if (audit.contribution) lines.push(...contributionMarkdown(audit.contribution));
   if (audit.measures) lines.push(...measuresMarkdown(audit.measures));
   if (audit.measuresError) lines.push('## Measures', '', `Could not be measured: ${audit.measuresError}`, '');
@@ -487,7 +490,7 @@ export function epbsFleet(text: string, elements: Array<{ qualifiedName: string;
 }
 
 /** The S60 payloads, when the bonus lane ran; never an error when it did not. */
-export function bonusLane(dir: string): Pick<FinalAudit, 'behaviour' | 'faultTree'> {
+export function bonusLane(dir: string): Pick<FinalAudit, 'behaviour' | 'faultTree' | 'variability'> {
   const read = <T>(name: string): T | undefined => {
     const file = resolve(dir, `${name}.json`);
     try {
@@ -499,7 +502,9 @@ export function bonusLane(dir: string): Pick<FinalAudit, 'behaviour' | 'faultTre
   const behaviour = read<FinalAudit['behaviour']>('check-behaviour');
   const tree = read<{ exitCode: number; withCutSets?: number; singlePointsOfFailure?: unknown; contracts?: number; groups?: unknown[] }>('fault-tree');
   const count = (x: unknown): number => (Array.isArray(x) ? x.length : typeof x === 'number' ? x : 0);
+  const families = read<RawVariability>('variability');
   return {
+    variability: families ? variabilityLane(families) : undefined,
     behaviour,
     faultTree: tree
       ? { exitCode: tree.exitCode, withCutSets: count(tree.withCutSets), singlePointsOfFailure: count(tree.singlePointsOfFailure), contracts: count(tree.contracts), applicable: count(tree.groups) > 0 }
@@ -529,6 +534,88 @@ export function behaviourMarkdown(audit: Pick<FinalAudit, 'behaviour' | 'faultTr
         : `Fault tree over the contracts: ${audit.faultTree.contracts} contract(s), ${audit.faultTree.withCutSets} with cut sets, ${audit.faultTree.singlePointsOfFailure} single point(s) of failure.`,
       '',
     );
+  return lines;
+}
+
+/** What the final audit keeps of a `variability` payload. */
+export interface VariabilityLane {
+  exitCode: number;
+  owners: Array<{
+    name: string;
+    status: string;
+    reasons: string[];
+    valid?: number;
+    structural?: number;
+    exact?: boolean;
+    void?: boolean;
+    dead: string[];
+    configurations: Array<{ name: string; status: string }>;
+  }>;
+}
+interface RawVariability {
+  exitCode: number;
+  owners?: Array<{
+    name: string;
+    status: string;
+    reasons?: string[];
+    analysis?: { established?: boolean; valid?: number; structural?: number; exact?: boolean; void?: boolean; dead?: string[] } | null;
+    configurations?: Array<{ name: string; status: string }>;
+  }>;
+}
+export function variabilityLane(r: RawVariability): VariabilityLane {
+  return {
+    exitCode: r.exitCode,
+    owners: (r.owners ?? []).map((o) => {
+      const a = o.analysis && o.analysis.established !== false ? o.analysis : undefined;
+      return {
+        name: o.name,
+        status: o.status,
+        reasons: o.reasons ?? [],
+        ...(a ? { valid: a.valid, structural: a.structural, exact: a.exact, void: a.void } : {}),
+        dead: a?.dead ?? [],
+        configurations: (o.configurations ?? []).map((c) => ({ name: c.name, status: c.status })),
+      };
+    }),
+  };
+}
+
+const CONFIG_VERDICT: Record<string, string> = {
+  holds: 'holds',
+  'holds-over-read-constraints': 'holds over the constraints read',
+  violated: '**violated**',
+  invalid: '**invalid selection**',
+  partial: 'partial',
+  'not-evaluated': 'not evaluated',
+};
+
+/** The product families, as `sysprose variability` decides them; a model that writes none says so. */
+export function variabilityMarkdown(v: VariabilityLane): string[] {
+  const lines = ['## Product families', ''];
+  if (v.owners.length === 0) {
+    lines.push('The model writes no product family (no `variation`): there is no configuration to check.', '');
+    return lines;
+  }
+  lines.push(
+    'Each family the model writes (`variation` points and their `variant`s, SysML v2 §7.6.7) and each configuration of it, decided by exhaustive enumeration (`sysprose variability`).',
+    '',
+  );
+  for (const o of v.owners) {
+    const short = o.name.split('::').slice(1).join('::') || o.name;
+    if (o.status !== 'read') {
+      lines.push(`- \`${short}\`: not read — ${o.reasons.join('; ')}`);
+      continue;
+    }
+    const family =
+      o.valid === undefined
+        ? 'family figures not established'
+        : o.void
+          ? '**void**: no configuration satisfies it'
+          : `${o.exact === false ? 'at most ' : ''}${o.valid} valid configuration(s) of ${o.structural}`;
+    const dead = o.dead.length > 0 ? `; dead variant(s): ${o.dead.join(', ')}` : '';
+    lines.push(`- \`${short}\`: ${family}${dead}`);
+    for (const c of o.configurations) lines.push(`  - \`${c.name.split('::').pop()}\`: ${CONFIG_VERDICT[c.status] ?? c.status}`);
+  }
+  lines.push('');
   return lines;
 }
 

@@ -39,6 +39,7 @@ import { buildGrid } from '@diagram/grid';
 import { buildRequirementsTable } from '@diagram/requirements-table';
 import { loadModelText } from '@text/load';
 import { checkText } from '@text/check';
+import { variabilityReport } from '@semantics/variability';
 import { TRACE_PRESETS } from '@sysprose/scripts/lib/sysprose-spec';
 import { ElementRefError, SolverCrashedError, type Loaded, type SysproseBackend, type TagIndex } from './backend.ts';
 import { SerialQueue } from './queue.ts';
@@ -495,6 +496,10 @@ export class InProcessBackend implements SysproseBackend {
 
   behaviour(m: Loaded, machineId: string, pattern?: string) {
     return behaviourReport(m.model, { machineId, ...(pattern ? { pattern } : {}) });
+  }
+
+  variability(m: Loaded) {
+    return variabilityReport(m.model);
   }
 
   /** The CLI's three-step narrowing: id, then the language's own resolution, then a unique suffix. */

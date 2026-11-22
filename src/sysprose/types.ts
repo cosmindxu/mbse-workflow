@@ -24,6 +24,7 @@ import type {
   behaviourReport,
 } from '@api/index';
 import type { CheckReport } from '@text/load';
+import type { VariabilityReport } from '@semantics/variability';
 
 export type { CheckReport };
 export type ConnectivityReport = ReturnType<typeof connectivityReport>;
@@ -39,6 +40,8 @@ export type BoundsReport = Awaited<ReturnType<typeof boundsReport>>;
 export type FaultTreeReport = Awaited<ReturnType<typeof faultTreeReport>>;
 export type BehaviourReport = ReturnType<typeof behaviourReport>;
 export type EvidenceStatusReport = ReturnType<typeof evidenceStatus>;
+/** `variability`: the variation points of each owner, its family figures and each configuration's verdict. */
+export type { VariabilityReport };
 
 /** The six relationship families `trace --relation` accepts. */
 export type TraceRelation = 'satisfy' | 'allocate' | 'verify' | 'refine' | 'derive' | 'trace';

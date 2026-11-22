@@ -5,8 +5,8 @@
  * chevrotain ambiguity warning on stdout ahead of the report, so the text is
  * cut to its first `{`. And exit code 1 does not mean one thing: for a
  * reporting subcommand it means the model did not load cleanly, for `verify`
- * and `consistency` it means REFUTED, and `bounds`, `refine`, `fault-tree` and
- * `check-behaviour` each carry a contract of their own. Branching on the number
+ * and `consistency` it means REFUTED, and `bounds`, `refine`, `fault-tree`,
+ * `check-behaviour` and `variability` each carry a contract of their own. Branching on the number
  * without the contract is how an automation reports a refuted requirement as a
  * parse failure, so the contract is read from the command table and carried
  * beside the number.
@@ -58,6 +58,11 @@ const MEANINGS: Record<Contract, Record<number, string>> = {
   bounds: { 0: 'every bound decided', 2: 'undecided, or usage error' },
   'fault-tree': { 0: 'enumerated, no single point of failure', 1: 'a single point of failure', 2: 'usage error or unenumerable' },
   behaviour: { 0: 'holds on every reachable configuration', 1: 'refuted', 2: 'inconclusive or usage error' },
+  variability: {
+    0: 'every configuration holds and every family is satisfiable',
+    1: 'a configuration is invalid or violated, or a family is void',
+    2: 'undecided, nothing to read, or usage error',
+  },
   write: { 0: 'written', 2: 'usage or IO error, or a degraded model' },
   check: { 0: 'clean', 1: 'at least one file has findings', 2: 'usage or IO error' },
 };

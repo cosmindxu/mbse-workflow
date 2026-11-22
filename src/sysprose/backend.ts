@@ -18,6 +18,7 @@ import type {
   ConsistencyReport,
   ElementRow,
   EvidenceStatusReport,
+  VariabilityReport,
   FaultTreeReport,
   BehaviourReport,
   ImpactReport,
@@ -84,6 +85,8 @@ export interface Analyses {
   /** One state machine's properties — its own, or `pattern` when it states none. */
   behaviour(m: Loaded, machineId: string, pattern?: string): BehaviourReport;
   evidenceStatus(m: Loaded): EvidenceStatusReport;
+  /** The product families the model writes (`variation`/`variant`) and each configuration's verdict. No solver. */
+  variability(m: Loaded): VariabilityReport;
 }
 
 export interface SysproseBackend extends Analyses {
