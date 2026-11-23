@@ -1,3 +1,21 @@
 #!/bin/sh
 # Thin shim: the project runs from source through tsx, like Sysprose itself.
-exec npx tsx "$(dirname "$0")/../src/cli.ts" "$@"
+#
+# The Sysprose imports (@core/*, @text/*, …) resolve through tsconfig.json's
+# paths, which name ../../sysprose. When $SYSPROSE_DIR names another checkout
+# (a branch worktree), hand tsx a copy of tsconfig.json whose paths point
+# there, so the in-process checker loads the tree the run reports.
+here="$(cd "$(dirname "$0")/.." && pwd)"
+if [ -n "$SYSPROSE_DIR" ]; then
+  want="$(cd "$SYSPROSE_DIR" && pwd -P)"
+  default="$(cd "$here/../../sysprose" 2>/dev/null && pwd -P)"
+  if [ "$want" != "$default" ]; then
+    cache="${XDG_CACHE_HOME:-$HOME/.cache}/mbse-workflow"
+    mkdir -p "$cache"
+    tsconfig="$cache/tsconfig.$(printf '%s' "$want" | cksum | cut -d' ' -f1).json"
+    sed -e "s#\"baseUrl\": \"\\.\"#\"baseUrl\": \"$here\"#" \
+        -e "s#\"\\.\\./\\.\\./sysprose/#\"$want/#g" "$here/tsconfig.json" > "$tsconfig"
+    export TSX_TSCONFIG_PATH="$tsconfig"
+  fi
+fi
+exec npx tsx "$here/src/cli.ts" "$@"

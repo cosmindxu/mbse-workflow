@@ -34,6 +34,9 @@ export const KNOB_CONDITIONAL: Record<string, KnobId> = {
   'validation/port-typing': 'interfaces',
   'validation/interface-end-conformance': 'interfaces',
   'validation/flow-end-compatibility': 'interfaces',
+  // Exchange allocation (Sysprose xalloc, Arcadia §19.11, §20.4, §21.9): an
+  // allocation the layer writes that no link can carry is a defect in it.
+  'validation/exchange-allocation': 'interfaces',
 };
 
 /**
@@ -90,6 +93,10 @@ export const CODE_NOTES: Record<string, CodeNote> = {
   'validation/flow-end-compatibility': {
     cv: 'CV-05',
     note: 'A flow carries an item its ends are not typed by, or runs from an `in` or into an `out`. Flow `of <Item>` from an `out` parameter or port item of that item def to an `in` one.',
+  },
+  'validation/exchange-allocation': {
+    cv: 'CV-05',
+    note: 'A flow is allocated to a connection that cannot carry it: the connection joins other components than the ones its two functions are allocated to, its ports do not carry the flow\'s item `out` of the sender and `in` to the receiver, or the flow is allocated twice; or a connection is allocated to a medium link between nodes its components are not on. Allocate the flow to the one connection between the components of its two functions, sender to receiver, whose port def has the item (or a def it specialises); add the item to the port def in Common when it is missing.',
   },
   'validation/connector-endpoints': {
     cv: 'CV-05',

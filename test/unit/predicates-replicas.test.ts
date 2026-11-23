@@ -103,7 +103,7 @@ describe('replicas.memberPair', () => {
     expect(PREDICATES['replicas.memberPair'](input({ fleet: '10..12' }))).toEqual([]);
     expect(PREDICATES['replicas.memberPair'](input({ fleet: '2..*' }))).toEqual([]);
     expect(messages(input({ fleet: '2..8' }))).toContain('sized `[2..8]`');
-    expect(messages(input({ reps: ['memberA'] }))).toContain('part memberB : SwarmMember;');
+    expect(messages(input({ reps: ['memberA'] }))).toContain('part memberB : SwarmMember :> fleet;');
     expect(messages(input({ links: [] }))).toContain('interface peerLink : Common::MeshLink');
   });
 

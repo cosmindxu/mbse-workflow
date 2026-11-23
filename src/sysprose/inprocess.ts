@@ -10,7 +10,8 @@
  * numbers back; `test/unit/backend-parity.test.ts` is what keeps it true.
  */
 import { execFile } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import type { ElementRecord, Model } from '@core/index';
 import {
@@ -195,6 +196,35 @@ export interface InProcessOptions {
   expectedCommit: string;
 }
 
+/**
+ * The Sysprose code this process imported is the tree `dir` names. The imports
+ * resolve through tsconfig paths, not through `dir`: a run pointed at a branch
+ * worktree with `SYSPROSE_DIR` reported that tree's commit while it checked
+ * with ~/sysprose (found 2026-11-23). `bin/mbse-workflow` now hands tsx a
+ * tsconfig for `SYSPROSE_DIR`; this refuses any other way in that mixes them.
+ * Skipped where the runtime cannot say (a bundler without import.meta.resolve).
+ */
+function assertImportedFrom(dir: string): void {
+  let imported: string;
+  try {
+    imported = realpathSync(fileURLToPath(import.meta.resolve('@text/load')));
+  } catch {
+    return;
+  }
+  let root: string;
+  try {
+    root = realpathSync(dir);
+  } catch {
+    return;
+  }
+  if (!imported.startsWith(root + '/')) {
+    throw new Error(
+      `Sysprose is imported from ${imported}, but the run names ${root}. Start the workflow through bin/mbse-workflow ` +
+        `with SYSPROSE_DIR=${root}, which points the imports at that tree.`,
+    );
+  }
+}
+
 export class InProcessBackend implements SysproseBackend {
   readonly kind = 'inprocess' as const;
   readonly #queue = new SerialQueue();
@@ -202,6 +232,7 @@ export class InProcessBackend implements SysproseBackend {
 
   constructor(opts: InProcessOptions) {
     this.#opts = opts;
+    assertImportedFrom(opts.dir);
     // Once per process: there is one z3 module per process, whatever the backends.
     if (!installed) {
       installed = true;

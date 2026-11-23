@@ -363,7 +363,7 @@ const replicasMemberPair: Predicate = (input) => {
   else if (!sizeCovers(f.fleet.multiplicity, p.size))
     fail(`\`${f.fleet.name}\` is sized \`[${f.fleet.multiplicity}]\` and the brief sizes the population at ${p.size}. Write \`[${p.size}]\`, or a range that contains it.`);
   if (f.representatives.length < 2)
-    fail(`${f.representatives.length} representative(s) of \`${p.memberDef}\`. Add \`part memberA : ${p.memberDef};\` and \`part memberB : ${p.memberDef};\` — an exchange between two members is written between two named usages; \`${p.fleetPart}[1]\` does not parse.`);
+    fail(`${f.representatives.length} representative(s) of \`${p.memberDef}\`. Add \`part memberA : ${p.memberDef} :> ${p.fleetPart};\` and \`part memberB : ${p.memberDef} :> ${p.fleetPart};\` — an exchange between two members is written between two named usages; \`${p.fleetPart}[1]\` does not parse.`);
   if (f.peerLinks.length === 0) {
     const typeHint = input.layer === 'PA' ? 'a connection typed by the connection def of the medium that carries it' : `\`interface peerLink : Common::${p.meshInterface}\``;
     fail(`no link between two members. Write ${typeHint} \`connect memberA.meshOut to memberB.meshIn;\` — without it the swarm is ${p.size} drones that never talk to each other.`);
