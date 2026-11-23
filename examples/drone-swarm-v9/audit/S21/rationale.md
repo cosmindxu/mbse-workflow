@@ -2,7 +2,7 @@
 
 ## What was decided
 
-Re-checked after a person edited the fragment.
+Re-checked against the layers above it: a person kept this fragment as written.
 
 ## Checks
 

@@ -637,6 +637,12 @@ package SurveillanceDroneSwarm {
             out item update : CoordinationMessage {
                 doc /* A coordination message to a peer; the peer receives it through the conjugate of this port. */
             }
+            out item relayedReport : DetectionReport {
+                doc /* A detection report a member passes to a peer to carry onward. */
+            }
+            out item sharedTrack : Track {
+                doc /* A track a member shares with a peer, to correlate or to hand it over. */
+            }
         }
 
         port def MemberGroundPort {
@@ -957,10 +963,10 @@ package SurveillanceDroneSwarm {
             meshLinksJammedFraction == 0.5
         }
         // ── shared definitions asked for by OA ──
-        item def SectorHandoverProposal { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }
-        item def RechargeRotationSlot { doc /* A drone's place in the recharge rotation: when it leaves and who takes over. */ }
-        item def CoverageAssignment { doc /* A share of the tasked area assigned to a drone when coverage is re-spread. */ }
-        item def FlightIntent { doc /* A drone's announced flight path and altitude, exchanged to deconflict flight. */ }
+        item def SectorHandoverProposal :> CoordinationMessage { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }
+        item def RechargeRotationSlot :> CoordinationMessage { doc /* A drone's place in the recharge rotation: when it leaves and who takes over. */ }
+        item def CoverageAssignment :> CoordinationMessage { doc /* A share of the tasked area assigned to a drone when coverage is re-spread. */ }
+        item def FlightIntent :> CoordinationMessage { doc /* A drone's announced flight path and altitude, exchanged to deconflict flight. */ }
         item def TaskingOrder { doc /* Tasking given by the duty controller: the area of interest, its sectors and the mission window. */ }
         item def PriorityDirective { doc /* Supervisory command: priorities, a sector to look at more closely, and the reporting threshold. */ }
         item def RecallDirective { doc /* An order to recall and land the whole swarm or one drone. */ }
@@ -991,8 +997,7 @@ package SurveillanceDroneSwarm {
         item def CoordinationDirective { doc /* A directive from the coordinator to a drone: sector assignment, handover, rotation, redistribution, deconfliction, launch, release, or an admission verdict. */ attribute directiveKind { doc /* Which kind of directive this is. */ } attribute memberId { doc /* The drone the directive is for. */ } attribute sectorId { doc /* The sector the directive concerns, where it has one. */ } attribute effectiveTime { doc /* When the directive takes effect. */ } }
         item def DirectiveAck { doc /* A drone's acknowledgement of one coordination directive. */ attribute memberId { doc /* The drone acknowledging. */ } attribute directiveKind { doc /* The kind of directive acknowledged. */ } attribute ackTime { doc /* When the drone acknowledged. */ } }
         item def AdmissionRequest { doc /* What a drone offers to be admitted to coordination. */ attribute memberId { doc /* Identity the drone claims. */ } attribute classifierVersion { doc /* The classifier version the drone runs. */ } attribute credential { doc /* Proof that the drone is one of the twelve. */ } }
-        item def MemberSituationNotice { doc /* A notice of a change in a drone's or the mesh's situation that triggers a transition: positioning lost or back, sensing degraded or restored, contact lost or back, jamming, wind above moderate. */ attribute memberId { doc /* The drone concerned, or empty for the mesh as a whole. */ } attribute situation { doc /* What changed. */ } }
-    }
+        item def MemberSituationNotice { doc /* A notice of a change in a drone's or the mesh's situation that triggers a transition: positioning lost or back, sensing degraded or restored, contact lost or back, jamming, wind above moderate. */ attribute memberId { doc /* The drone concerned, or empty for the mesh as a whole. */ } attribute situation { doc /* What changed. */ } }}
     package OA {
         doc /* Operational analysis: how the tasked area is watched and reported today, without any system named. The entities, what each does, what they exchange, and the operational modes. */
 

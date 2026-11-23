@@ -637,6 +637,12 @@ package SurveillanceDroneSwarm {
             out item update : CoordinationMessage {
                 doc /* A coordination message to a peer; the peer receives it through the conjugate of this port. */
             }
+            out item relayedReport : DetectionReport {
+                doc /* A detection report a member passes to a peer to carry onward. */
+            }
+            out item sharedTrack : Track {
+                doc /* A track a member shares with a peer, to correlate or to hand it over. */
+            }
         }
 
         port def MemberGroundPort {
@@ -957,10 +963,10 @@ package SurveillanceDroneSwarm {
             meshLinksJammedFraction == 0.5
         }
         // ── shared definitions asked for by OA ──
-        item def SectorHandoverProposal { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }
-        item def RechargeRotationSlot { doc /* A drone's place in the recharge rotation: when it leaves and who takes over. */ }
-        item def CoverageAssignment { doc /* A share of the tasked area assigned to a drone when coverage is re-spread. */ }
-        item def FlightIntent { doc /* A drone's announced flight path and altitude, exchanged to deconflict flight. */ }
+        item def SectorHandoverProposal :> CoordinationMessage { doc /* A drone's proposal to hand a sector, with the watch it carries, to a neighbour. */ }
+        item def RechargeRotationSlot :> CoordinationMessage { doc /* A drone's place in the recharge rotation: when it leaves and who takes over. */ }
+        item def CoverageAssignment :> CoordinationMessage { doc /* A share of the tasked area assigned to a drone when coverage is re-spread. */ }
+        item def FlightIntent :> CoordinationMessage { doc /* A drone's announced flight path and altitude, exchanged to deconflict flight. */ }
         item def TaskingOrder { doc /* Tasking given by the duty controller: the area of interest, its sectors and the mission window. */ }
         item def PriorityDirective { doc /* Supervisory command: priorities, a sector to look at more closely, and the reporting threshold. */ }
         item def RecallDirective { doc /* An order to recall and land the whole swarm or one drone. */ }
@@ -991,8 +997,7 @@ package SurveillanceDroneSwarm {
         item def CoordinationDirective { doc /* A directive from the coordinator to a drone: sector assignment, handover, rotation, redistribution, deconfliction, launch, release, or an admission verdict. */ attribute directiveKind { doc /* Which kind of directive this is. */ } attribute memberId { doc /* The drone the directive is for. */ } attribute sectorId { doc /* The sector the directive concerns, where it has one. */ } attribute effectiveTime { doc /* When the directive takes effect. */ } }
         item def DirectiveAck { doc /* A drone's acknowledgement of one coordination directive. */ attribute memberId { doc /* The drone acknowledging. */ } attribute directiveKind { doc /* The kind of directive acknowledged. */ } attribute ackTime { doc /* When the drone acknowledged. */ } }
         item def AdmissionRequest { doc /* What a drone offers to be admitted to coordination. */ attribute memberId { doc /* Identity the drone claims. */ } attribute classifierVersion { doc /* The classifier version the drone runs. */ } attribute credential { doc /* Proof that the drone is one of the twelve. */ } }
-        item def MemberSituationNotice { doc /* A notice of a change in a drone's or the mesh's situation that triggers a transition: positioning lost or back, sensing degraded or restored, contact lost or back, jamming, wind above moderate. */ attribute memberId { doc /* The drone concerned, or empty for the mesh as a whole. */ } attribute situation { doc /* What changed. */ } }
-    }
+        item def MemberSituationNotice { doc /* A notice of a change in a drone's or the mesh's situation that triggers a transition: positioning lost or back, sensing degraded or restored, contact lost or back, jamming, wind above moderate. */ attribute memberId { doc /* The drone concerned, or empty for the mesh as a whole. */ } attribute situation { doc /* What changed. */ } }}
     package OA {
         doc /* Operational analysis: how the tasked area is watched and reported today, without any system named. The entities, what each does, what they exchange, and the operational modes. */
 
@@ -2687,10 +2692,10 @@ package SurveillanceDroneSwarm {
         part fleet : SwarmMember [12] {
             doc /* The twelve identical drones; every function a member performs, and all eight coordination functions, sit here. */
         }
-        part memberA : SwarmMember {
+        part memberA : SwarmMember :> fleet {
             doc /* First representative member, one end of the peer link. */
         }
-        part memberB : SwarmMember {
+        part memberB : SwarmMember :> fleet {
             doc /* Second representative member, the other end of the peer link. */
         }
         interface peerLink : Common::MeshInterface connect memberA.meshOut to memberB.meshIn;
@@ -2730,6 +2735,47 @@ package SurveillanceDroneSwarm {
         allocate acknowledgeDetectionReport to groundStation;
         allocate triageAlerts to triageUnit;
         allocate keepDecisionRecords to triageUnit;
+        // ---------------------------------------------------------------
+        // Functional exchanges between the logical functions, each one that crosses components
+        // allocated to the one link that carries it (Arcadia §20.4; the link's ports carry its item, §21.9).
+        // SA's direct report to the operator (reportFromAlpha) is realised here by reportsToTriage then
+        // alertsToJudgement; the track picture and the camera tracks end at the analyst, an actor.
+        // ---------------------------------------------------------------
+        flow handOverSectorAtoB of Common::SectorHandoverProposal from handOverSector.handoverOut to handOverSector.handoverIn;
+        flow rotateRechargeAtoB of Common::RechargeRotationSlot from rotateRecharge.rotationOut to rotateRecharge.rotationIn;
+        flow redistributeCoverageAtoB of Common::CoverageAssignment from redistributeCoverage.coverageOut to redistributeCoverage.coverageIn;
+        flow deconflictFlightAtoB of Common::FlightIntent from deconflictFlight.intentOut to deconflictFlight.intentIn;
+        flow relayReportsAtoB of Common::DetectionReport from relayReportsThroughNeighbour.relayOut to relayReportsThroughNeighbour.relayIn;
+        flow correlateTracksAtoB of Common::Track from correlateTracks.correlationOut to correlateTracks.correlationIn;
+        flow handOverTrackAtoB of Common::Track from handOverTrack.trackHandoverOut to handOverTrack.trackHandoverIn;
+        flow admitMemberAtoB of Common::AdmissionExchange from admitMember.admissionOut to admitMember.admissionIn;
+        flow detectionAlpha of Common::DetectionReport from detectAndClassifyObject.detectionOut to deliverDetectionReport.detectionIn;
+        flow receiptToAlpha of Common::ReportReceipt from acknowledgeDetectionReport.receiptOut to deliverDetectionReport.receiptIn;
+        flow statusFromAlpha of Common::MemberStatus from reportMemberStatus.statusOut to presentStatusPicture.statusIn;
+        flow taskingToAlpha of Common::TaskingOrder from taskSurveillanceArea.taskingOut to applySupervisoryDirectives.taskingIn;
+        flow prioritiesToAlpha of Common::PriorityDirective from commandSupervisoryPriorities.priorityOut to applySupervisoryDirectives.priorityIn;
+        flow recallToAlpha of Common::RecallDirective from recallAndLand.recallOut to applySupervisoryDirectives.recallIn;
+        flow reportsToTriage of Common::DetectionReport from deliverDetectionReport.reportOut to triageAlerts.reportsIn;
+        flow alertsToJudgement of Common::TriagedAlerts from triageAlerts.alertsOut to acknowledgeDetectionReport.alertsIn;
+        flow reportsToRecords of Common::DetectionReport from deliverDetectionReport.reportOut to keepDecisionRecords.reportIn;
+        flow receiptsToRecords of Common::ReportReceipt from acknowledgeDetectionReport.receiptOut to keepDecisionRecords.receiptIn;
+        allocate handOverSectorAtoB to peerLink;
+        allocate rotateRechargeAtoB to peerLink;
+        allocate redistributeCoverageAtoB to peerLink;
+        allocate deconflictFlightAtoB to peerLink;
+        allocate relayReportsAtoB to peerLink;
+        allocate correlateTracksAtoB to peerLink;
+        allocate handOverTrackAtoB to peerLink;
+        allocate admitMemberAtoB to peerLink;
+        allocate receiptToAlpha to receiptFeed;
+        allocate statusFromAlpha to statusFeed;
+        allocate taskingToAlpha to taskingFeed;
+        allocate prioritiesToAlpha to priorityFeed;
+        allocate recallToAlpha to recallFeed;
+        allocate reportsToTriage to reportsFeed;
+        allocate alertsToJudgement to alertsFeed;
+        allocate reportsToRecords to reportsFeed;
+        allocate receiptsToRecords to recordReceiptFeed;
         satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
         satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by fleet;
         satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;

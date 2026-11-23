@@ -356,10 +356,10 @@
         part fleet : SwarmMember [12] {
             doc /* The twelve identical drones. Every function a member performs, and all eight coordination functions, sit here. */
         }
-        part memberA : SwarmMember {
+        part memberA : SwarmMember :> fleet {
             doc /* First representative member, one end of the peer link. */
         }
-        part memberB : SwarmMember {
+        part memberB : SwarmMember :> fleet {
             doc /* Second representative member, the other end of the peer link. */
         }
         #Node part groundStation : GroundStationNode {
@@ -456,6 +456,9 @@
         allocate returnToRecoveryPoint to fleet;
         allocate triageAlerts to groundAlertTriage;
         allocate keepDecisionRecords to groundDecisionRecordStore;
+        // The logical peer links ride on the mesh radio (Arcadia §19.11).
+        allocate peerLink to meshRadioLinkAB;
+        allocate peerLinkReturn to meshRadioLinkBA;
         trace fleet to SurveillanceDroneSwarm::LA::fleet;
         trace memberA to SurveillanceDroneSwarm::LA::memberA;
         trace memberB to SurveillanceDroneSwarm::LA::memberB;

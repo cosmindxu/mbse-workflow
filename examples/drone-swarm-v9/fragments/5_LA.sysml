@@ -503,10 +503,10 @@
         part fleet : SwarmMember [12] {
             doc /* The twelve identical drones; every function a member performs, and all eight coordination functions, sit here. */
         }
-        part memberA : SwarmMember {
+        part memberA : SwarmMember :> fleet {
             doc /* First representative member, one end of the peer link. */
         }
-        part memberB : SwarmMember {
+        part memberB : SwarmMember :> fleet {
             doc /* Second representative member, the other end of the peer link. */
         }
         interface peerLink : Common::MeshInterface connect memberA.meshOut to memberB.meshIn;
@@ -546,6 +546,47 @@
         allocate acknowledgeDetectionReport to groundStation;
         allocate triageAlerts to triageUnit;
         allocate keepDecisionRecords to triageUnit;
+        // ---------------------------------------------------------------
+        // Functional exchanges between the logical functions, each one that crosses components
+        // allocated to the one link that carries it (Arcadia §20.4; the link's ports carry its item, §21.9).
+        // SA's direct report to the operator (reportFromAlpha) is realised here by reportsToTriage then
+        // alertsToJudgement; the track picture and the camera tracks end at the analyst, an actor.
+        // ---------------------------------------------------------------
+        flow handOverSectorAtoB of Common::SectorHandoverProposal from handOverSector.handoverOut to handOverSector.handoverIn;
+        flow rotateRechargeAtoB of Common::RechargeRotationSlot from rotateRecharge.rotationOut to rotateRecharge.rotationIn;
+        flow redistributeCoverageAtoB of Common::CoverageAssignment from redistributeCoverage.coverageOut to redistributeCoverage.coverageIn;
+        flow deconflictFlightAtoB of Common::FlightIntent from deconflictFlight.intentOut to deconflictFlight.intentIn;
+        flow relayReportsAtoB of Common::DetectionReport from relayReportsThroughNeighbour.relayOut to relayReportsThroughNeighbour.relayIn;
+        flow correlateTracksAtoB of Common::Track from correlateTracks.correlationOut to correlateTracks.correlationIn;
+        flow handOverTrackAtoB of Common::Track from handOverTrack.trackHandoverOut to handOverTrack.trackHandoverIn;
+        flow admitMemberAtoB of Common::AdmissionExchange from admitMember.admissionOut to admitMember.admissionIn;
+        flow detectionAlpha of Common::DetectionReport from detectAndClassifyObject.detectionOut to deliverDetectionReport.detectionIn;
+        flow receiptToAlpha of Common::ReportReceipt from acknowledgeDetectionReport.receiptOut to deliverDetectionReport.receiptIn;
+        flow statusFromAlpha of Common::MemberStatus from reportMemberStatus.statusOut to presentStatusPicture.statusIn;
+        flow taskingToAlpha of Common::TaskingOrder from taskSurveillanceArea.taskingOut to applySupervisoryDirectives.taskingIn;
+        flow prioritiesToAlpha of Common::PriorityDirective from commandSupervisoryPriorities.priorityOut to applySupervisoryDirectives.priorityIn;
+        flow recallToAlpha of Common::RecallDirective from recallAndLand.recallOut to applySupervisoryDirectives.recallIn;
+        flow reportsToTriage of Common::DetectionReport from deliverDetectionReport.reportOut to triageAlerts.reportsIn;
+        flow alertsToJudgement of Common::TriagedAlerts from triageAlerts.alertsOut to acknowledgeDetectionReport.alertsIn;
+        flow reportsToRecords of Common::DetectionReport from deliverDetectionReport.reportOut to keepDecisionRecords.reportIn;
+        flow receiptsToRecords of Common::ReportReceipt from acknowledgeDetectionReport.receiptOut to keepDecisionRecords.receiptIn;
+        allocate handOverSectorAtoB to peerLink;
+        allocate rotateRechargeAtoB to peerLink;
+        allocate redistributeCoverageAtoB to peerLink;
+        allocate deconflictFlightAtoB to peerLink;
+        allocate relayReportsAtoB to peerLink;
+        allocate correlateTracksAtoB to peerLink;
+        allocate handOverTrackAtoB to peerLink;
+        allocate admitMemberAtoB to peerLink;
+        allocate receiptToAlpha to receiptFeed;
+        allocate statusFromAlpha to statusFeed;
+        allocate taskingToAlpha to taskingFeed;
+        allocate prioritiesToAlpha to priorityFeed;
+        allocate recallToAlpha to recallFeed;
+        allocate reportsToTriage to reportsFeed;
+        allocate alertsToJudgement to alertsFeed;
+        allocate reportsToRecords to reportsFeed;
+        allocate receiptsToRecords to recordReceiptFeed;
         satisfy SurveillanceDroneSwarm::SA::Hazards::PositionDriftHazard by fleet;
         satisfy SurveillanceDroneSwarm::SA::Hazards::MeshJammingHazard by fleet;
         satisfy SurveillanceDroneSwarm::SA::Hazards::MisclassificationHazard by fleet;

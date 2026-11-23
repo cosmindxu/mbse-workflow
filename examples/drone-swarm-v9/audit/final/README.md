@@ -1,8 +1,8 @@
 # SurveillanceDroneSwarm — final audit
 
-Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3777 elements)
-Sysprose: 9ffa5bc
-Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 31 legs
+Model: `/home/xcos/Work/mbse-workflow-public/examples/drone-swarm-v9/SurveillanceDroneSwarm.sysml` (3896 elements)
+Sysprose: ef2c997
+Run: autonomous mode, 21 model call(s), 10.82 USD, 5356 s of model time, over 32 legs
 
 ## Checked by the shipped CLI, not by this workflow
 
@@ -127,11 +127,11 @@ If a person edits one layer's fragment and resumes: the step that wrote it is re
 | Layer edited | Fragment lines | Re-checked | Runs again | Calls those steps made | USD |
 |---|---|---|---|---|---|
 | Kinds | 15 | S00 | S10…S60 (16) | 20 | 9.44 |
-| Common | 976 | S00 | S10…S60 (16) | 20 | 9.44 |
+| Common | 981 | S00 | S10…S60 (16) | 20 | 9.44 |
 | OA | 483 | S10 | S20…S60 (14) | 19 | 8.90 |
 | SA | 708 | S21 | S30…S60 (11) | 18 | 8.23 |
-| LA | 589 | S33 | S40…S60 (6) | 11 | 4.58 |
-| PA | 617 | S42 | S50…S60 (2) | 7 | 1.96 |
+| LA | 630 | S33 | S40…S60 (6) | 11 | 4.58 |
+| PA | 620 | S42 | S50…S60 (2) | 7 | 1.96 |
 | EPBS | 499 | S50 | — | 0 | 0.00 |
 
 ## Measures
@@ -179,8 +179,8 @@ They added the same to every alternative's score, so the choice was made by the 
 | Layer | Member definition | Fleet | Representatives | Links between members | Coordination and C2 on board |
 |---|---|---|---|---|---|
 | SA | yes | — | — | — | 0/13 |
-| LA | yes | [12] | `memberA`, `memberB` | `peerLink` : MeshInterface | 8/13 |
-| PA | yes | [12] | `memberA`, `memberB` | `peerLink` : MeshInterface, `peerLinkReturn` : MeshInterface, `meshRadioLinkAB` : MeshRadioMedium, `meshRadioLinkBA` : MeshRadioMedium | 8/13 |
+| LA | yes | [12] | — | — | 8/13 |
+| PA | yes | [12] | — | — | 8/13 |
 | EPBS | — | `DroneAirframe` [1] | — | — | — |
 
 Connectivity counts usages, not instances: a link between two representatives is one wired occurrence standing for every pair of members that exchange (CV-16).
